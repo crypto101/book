@@ -1,0 +1,60 @@
+\newacronym{FIPS}{FIPS}{Federal Information Processing Standards}
+\newacronym{AES}{AES}{Advanced Encryption Standard}
+\newacronym{CBC}{CBC}{Cipher Block Chaining}
+\newacronym{DES}{DES}{Data Encryption Standard}
+\newacronym{HSTS}{HSTS}{HTTP Strict Transport Security}
+
+\newglossaryentry{secret-key encryption}{
+  name=secret-key encryption, description={Encryption that uses the
+  same key for both encryption and decryption. Also known as
+  symmetric-key encryption. Contrast with \gls{public-key encryption}}
+  }
+\newglossaryentry{symmetric-key encryption}{
+  name=symmetric-key encryption, description={See \gls{secret-key
+  encryption}} }
+\newglossaryentry{block cipher}{
+  name=block cipher, description={Symmetric encryption algorithm that
+  encrypts and decrypts blocks of fixed size}, }
+\newglossaryentry{stream cipher}{
+  name=stream cipher, description={Symmetric encryption algorithm that
+  encrypts streams of arbitrary size} }
+\newglossaryentry{mode of operation}{
+  name=mode of operation, description={Generic construction that
+  encrypts and decrypts streams, built from a block
+  cipher},plural=modes of operation }
+\newglossaryentry{CBC mode}{
+  name=CBC mode, description={Cipher block chaining; common mode of
+  operation that XORs the previous ciphertext block with the plaintext
+  block during encryption} }
+\newglossaryentry{CTR mode}{
+  name=CTR mode, description={Counter mode; a \gls{nonce} combined
+  with a counter produces a sequence of inputs to the block cipher;
+  the resulting ciphertext blocks are the keystream} }
+\newglossaryentry{nonce}{
+  name=nonce, description={\emph{N}umber used \emph{once}. Used in
+  many cryptographic protocols. Generally does not have to be secret
+  or unpredictable} }
+\newglossaryentry{public-key algorithm}{
+  name=public-key algorithm, description={Algorithm that uses a pair
+  of two related but distinct keys. Also known
+  as \glspl{asymmetric-key algorithm}. Examples
+  include \gls{public-key encryption} and most \gls{key exchange}
+  protocols} }
+\newglossaryentry{asymmetric-key algorithm}{
+  name=asymmetric-key algorithm, description={See \gls{public-key
+  algorithm}} }
+\newglossaryentry{public-key encryption}{
+  name=public-key encryption, description={Encryption using a pair of
+  distinct keys for encryption and decryption. Also known as
+  asymmetric-key encryption. Contrast with \gls{secret-key
+  encryption}} }
+\newglossaryentry{asymmetric-key encryption}{
+  name=asymmetric-key encryption, description={See \gls{public-key
+  encryption}} }
+\newglossaryentry{key exchange}{
+  name=key exchange, description={The process of exchanging keys
+  across an insecure medium using a particular cryptographic protocol.
+  Typically designed to be secure against eavesdroppers. Also known
+  as key agreement.} }
+\newglossaryentry{key agreement}{
+  name=key agreement, description={See \gls{key exchange}}}
