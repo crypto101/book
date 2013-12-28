@@ -812,7 +812,7 @@ Since AES' block size is only 128 bits, that would equate to
 $5.\overline{3}$ pixels [fn::The line over the $3$ in $5.\overline{3}$
 means it repeats, so the value is $5.333\ldots$.] per block,
 significantly less than the larger block sizes in the example. But AES
-is the workhorse of modern block ciphers: it can't be at fault,
+is the workhorse of modern block ciphers---it can't be at fault,
 certainly not because of an insufficient block size.
 
 When we look at a picture of what would happen with an idealized
