@@ -766,29 +766,29 @@ outputs.
     \end{subfigure}
     \quad
     \begin{subfigure}[b]{.45\textwidth}
-      \includegraphics[width=\textwidth]{./Illustrations/ECB/Random.png}
-      \caption{Ciphertext under idealized encryption.}
-      \label{fig:ECBDemoIdealizedCiphertext}
-    \end{subfigure}
-
-    \begin{subfigure}[b]{.45\textwidth}
       \includegraphics[width=\textwidth]{./Illustrations/ECB/Ciphertext5.png}
       \caption{ECB mode ciphertext, 5 pixel (120 bit) block size.}
     \end{subfigure}
-    \quad
+
     \begin{subfigure}[b]{.45\textwidth}
       \includegraphics[width=\textwidth]{./Illustrations/ECB/Ciphertext30.png}
       \caption{ECB mode ciphertext, 30 pixel (720 bit) block size.}
     \end{subfigure}
-
+    \quad
     \begin{subfigure}[b]{.45\textwidth}
       \includegraphics[width=\textwidth]{./Illustrations/ECB/Ciphertext100.png}
       \caption{ECB mode ciphertext, 100 pixel (2400 bit) block size.}
     \end{subfigure}
-    \quad
+
     \begin{subfigure}[b]{.45\textwidth}
       \includegraphics[width=\textwidth]{./Illustrations/ECB/Ciphertext400.png}
       \caption{ECB mode ciphertext, 400 pixel (9600 bit) block size.}
+    \end{subfigure}
+    \quad
+    \begin{subfigure}[b]{.45\textwidth}
+      \includegraphics[width=\textwidth]{./Illustrations/ECB/Random.png}
+      \caption{Ciphertext under idealized encryption.}
+      \label{fig:ECBDemoIdealizedCiphertext}
     \end{subfigure}
 
     \caption{Plaintext image with ciphertext images under idealized
@@ -796,7 +796,7 @@ outputs.
       Information about the macro-structure of the image clearly leaks.
       This becomes less apparent as block sizes increase, but only at
       block sizes far larger than typical block ciphers. Only the first
-      block size is realistic.}
+      block size (5 pixels or 120 bits) is realistic.}
   \end{figure}
 #+END_LATEX
 
