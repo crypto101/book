@@ -752,7 +752,7 @@ To demonstrate that this is, in fact, a serious problem, we'll use a
 simulated block cipher of various block sizes and apply it to an
 image[fn:: This particular demonstration only works on uncompressed
 bitmaps. For other media, the effect isn't significantly less damning:
-it's just less visual.]. We then visually inspect the different
+it's just less visual.]. We'll then visually inspect the different
 outputs.
 
 #+BEGIN_LATEX
