@@ -923,8 +923,8 @@ The following diagram demonstrates encryption in CBC mode:
 
 [[./Illustrations/CBC/Encryption.pdf]]
 
-Decryption, is, obviously, the inverse construction, with block
-ciphers in decryption mode instead of encryption mode:
+Decryption is the inverse construction, with block ciphers in
+decryption mode instead of encryption mode:
 
 [[./Illustrations/CBC/Decryption.pdf]]
 
