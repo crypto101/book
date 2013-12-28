@@ -882,16 +882,20 @@ $256 \cdot 16 = 4096$ tries, a far more manageable number.
 
 **** Conclusion
 
-In the real world, block ciphers are typically used to encrypt data.
-However, none of these issues apply. Even when we use idealized block
-ciphers with unrealistic properties, such as block sizes of more than
-a thousand bits, or even if we use block ciphers of /any/ block size,
-we can discover many things about the data.
+In the real world, block ciphers are used in some mode of operation to
+encrypt data all the time. We've seen that with ECB mode, an attacker
+can both analyze ciphertexts to recognize repeating patterns, and even
+decrypt messages directly when given access to an encryption oracle.
 
-Real world block ciphers obviously have many more limitations. This
-isn't even taking into account any weakness in the block cipher. It's
-not AES (or our test block ciphers) that cause this problem, it's our
-construction. Clearly, we need something better.
+Even when we use idealized block ciphers with unrealistic properties,
+such as block sizes of more than a thousand bits, an attacker ends up
+being able to decrypt the ciphertexts. Real world block ciphers only
+have more limitations than our idealized examples, such as much
+smaller block sizes.
+
+We aren't even taking into account any potential weaknesses in the
+block cipher. It's not AES (or our test block ciphers) that cause this
+problem, it's our ECB construction. Clearly, we need something better.
 
 *** Block cipher modes of operation
 
