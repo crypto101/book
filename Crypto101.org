@@ -726,7 +726,7 @@ incoming stream into different blocks, and encrypt each block:
 \end{equation}
 #+END_LATEX
 
-This scheme is called "ECB mode". Unfortunately, while being very
+This scheme is called \gls{ECB mode}. Unfortunately, while being very
 common in home-grown cryptosystems, it poses very serious security
 flaws. For example, in ECB mode, identical input blocks will always
 map to identical output blocks:
@@ -823,14 +823,14 @@ methods this trivial.
 
 **** Encryption oracle attack
 
-Using ECB mode with a plaintext consisting of an attacker-controlled
-part followed by some secret data, allows the attacker to decrypt a
-block's worth of that secret data.
+Using \gls{ECB mode} with a plaintext consisting of an
+attacker-controlled part followed by some secret data, allows the
+attacker to decrypt a block's worth of that secret data.
 
 Suppose an attacker has access to an encryption oracle (that is, a
 function that will encrypt something for him) that produces a
-ciphertext $C$ that encrypts some attacker-provided input $A$
-followed by a secret suffix $S$ in ECB mode under key $k$:
+ciphertext $C$ that encrypts some attacker-provided input $A$ followed
+by a secret suffix $S$ in ECB mode under key $k$:
 
 #+BEGIN_LATEX
 \[
@@ -2496,7 +2496,8 @@ Authenticate-and-encrypt has obvious problems. For example, since the
 plaintext is authenticated, and that MAC is part of the transmitted
 message, an attacker will be able to recognize two identical messages
 sent independently using the same MAC key are in fact the same,
-essentially leading to a similar problem to what we saw with [[ECB mode]].
+essentially leading to a similar problem to what we saw with
+\gls{ECB mode}.
 
 TODO: Explain how this works in SSH (see Moxie's Doom article)
 
