@@ -929,11 +929,11 @@ ciphers in decryption mode instead of encryption mode:
 [[./Illustrations/CBC/Decryption.pdf]]
 
 While CBC mode itself is not inherently insecure (unlike ECB mode),
-its particular use in TLS 1.0 was. This eventually led to the BEAST
-attack, which we'll cover in more detail in the section on SSL/TLS.
-The short version is that instead of choosing truly random IVs, the
-previous ciphertext block was used. That sounds reasonable at face
-value: it's as if you had one very long CBC transmission chain.
+its particular use in TLS 1.0 was. This eventually led to the
+\gls{BEAST} attack, which we'll cover in more detail in the section on
+SSL/TLS. The short version is that instead of choosing truly random
+IVs, the previous ciphertext block was used. That sounds reasonable at
+face value: it's as if you had one very long CBC transmission chain.
 Unfortunately, it turns out that attackers figured out how to exploit
 that property.
 
