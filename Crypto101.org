@@ -686,7 +686,7 @@ the financial industry. With a plethora of standards already in
 existence and new ones continuing to be created, in such an extremely
 technologically conservative industry where Fortran and Cobol still
 reign supreme on massive mainframes, it will probably continue to be
-used ofr many years to come, unless there are some large cryptanalytic
+used for many years to come, unless there are some large cryptanalytic
 breakthroughs that threaten the security of 3DES.
 
 TODO: Explain security levels? See also: explain entropy?
