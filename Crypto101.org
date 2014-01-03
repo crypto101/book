@@ -829,14 +829,23 @@ methods this trivial.
 
 **** Encryption oracle attack
 
-Using \gls{ECB mode} with a plaintext consisting of an
-attacker-controlled part followed by some secret data, allows the
-attacker to decrypt a block's worth of that secret data.
+In the previous section, we've focused on how an attacker can inspect
+a ciphertext encrypted using \gls{ECB mode}. That's a /passive/,
+ciphertext-only attack. It's passive because the attacker doesn't
+really interfere in any communication; they're simply examining a
+ciphertext. In this section, we'll study an /active/ attack, where
+the attacker actively communicates with their target, can enable an
+attacker to decrypt ciphertexts encrypted using ECB mode.
 
-Suppose an attacker has access to an encryption oracle (that is, a
-function that will encrypt something for them) that produces a
-ciphertext $C$ that encrypts some attacker-provided input $A$ followed
-by a secret suffix $S$ in ECB mode under key $k$:
+To do this, we'll introduce a new concept called an \gls{oracle}.
+Formally defined oracles are used in the study of computer science,
+but for our purposes it's sufficient to just say that an oracle is
+something that will compute some particular function for you.
+
+In our case, the oracle will perform a specific encryption for the
+attacker, which is why it's called an \gls{encryption oracle}. Given
+some data $A$ chosen by the attacker, the oracle will encrypt that
+data, followed by a secret prefix $S$, in ECB mode. Or, in symbols:
 
 #+BEGIN_LATEX
 \[
@@ -844,17 +853,26 @@ C = ECB(E_k, A \| S)
 \]
 #+END_LATEX
 
+You can see why the concept of an oracle is important here: the
+attacker would not be able to compute $C$ themselves, since they do
+not have access to the encryption key $k$ or the secret suffix $S$.
+The goal of the oracle is for those to remain secret, but we'll see
+how an attacker can recover $S$ by inspecting the ciphertext $C$ for
+many carefully chosen values of the prefix $A$.
+
+TODO: This would undoubtedly benefit from a bunch of illustrations.
+
 The attacker starts by sending in a plaintext $A$ that's just one byte
 shorter than the block size. That means the block that's being
 encrypted will consist of those bytes, plus the first byte of $S$,
 which we'll call $s_0$. The attacker remembers the encrypted block.
-They don't know the value of $s_0$, but they do know the value of
-$E_k(A \| s_0)$.
+They don't know the value of $s_0$ yet, but now they do know the value
+of the first encrypted block: $E_k(A \| s_0)$.
 
 Then, the attacker tries a full-size block, trying all possible values
-for the final byte. Eventually, they'll guess $s_0$ correctly; they
-know the guess is correct because the block will match the block they
-remembered earlier.
+for the final byte. Eventually, they'll find the value of $s_0$; they
+know the guess is correct because the resulting block will match the
+block they remembered earlier.
 
 The attacker can repeat this for the penultimate byte. They submit a
 plaintext $A$ that's two bytes short of a block size. The oracle will
@@ -891,7 +909,7 @@ most $256 \cdot 16 = 4096$ tries, a far more manageable number.
 In the real world, block ciphers are used in some mode of operation to
 encrypt data all the time. We've seen that with ECB mode, an attacker
 can both analyze ciphertexts to recognize repeating patterns, and even
-decrypt messages directly when given access to an encryption oracle.
+decrypt messages when given access to an \gls{encryption oracle}.
 
 Even when we use idealized block ciphers with unrealistic properties,
 such as block sizes of more than a thousand bits, an attacker ends up
