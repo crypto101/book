@@ -741,10 +741,12 @@ map to identical output blocks:
 \end{equation}
 #+END_LATEX
 
-At first, this might not seem like a particularly serious problem. If
-the properties of the block cipher hold, an attacker still wouldn't be
-able to determine what the plaintext was just from this stream, only
-that some plaintext block was repeated.
+At first, this might not seem like a particularly serious problem.
+Assuming the block cipher is secure, it doesn't look like an attacker
+would be able to decrypt anything. (We'll see later that even that
+often isn't true.) By diving the ciphertext stream up into blocks, an
+attacker would only be able to see that a ciphertext block, and
+therefore a plaintext block, was repeated.
 
 **** Visual inspection of an encrypted stream
 
