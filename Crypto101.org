@@ -907,9 +907,10 @@ most $256 \cdot 16 = 4096$ tries, a far more manageable number.
 **** Conclusion
 
 In the real world, block ciphers are used in some mode of operation to
-encrypt data all the time. We've seen that with ECB mode, an attacker
-can both analyze ciphertexts to recognize repeating patterns, and even
-decrypt messages when given access to an \gls{encryption oracle}.
+encrypt data all the time. We've seen that when using \gls{ECB mode},
+an attacker can both analyze ciphertexts to recognize repeating
+patterns, and even decrypt messages when given access to an
+\gls{encryption oracle}.
 
 Even when we use idealized block ciphers with unrealistic properties,
 such as block sizes of more than a thousand bits, an attacker ends up
@@ -929,8 +930,8 @@ behaves like a stream cipher. These configurations are commonly called
 \glspl{mode of operation}. They aren't specific to a particular block
 cipher.
 
-ECB mode, which we've just seen, is the simplest such mode of
-operation. The letters "ECB" stand for electronic code book[fn::
+\Gls{ECB mode}, which we've just seen, is the simplest such mode of
+operation. The letters ~ECB~ stand for electronic code book[fn::
 Traditionally, modes of operation seem to be referred to by a
 three-letter acronym.]. For reasons we've already gone into, ECB mode
 is very ineffective. Fortunately, there's plenty of other choices.
