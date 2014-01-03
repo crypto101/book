@@ -878,11 +878,11 @@ would be:
 \]
 #+END_LATEX
 
-For a typical block size of 16 bytes, brute forcing would mean trying
-$256^{16}$ combinations. That's a huge number, consisting of 39
-digits, a number large enough that trying all combinations is
-considered impossible. This attack allows them to do it in at most
-$256 \cdot 16 = 4096$ tries, a far more manageable number.
+For a typical block size of 16 bytes (or 128 bits), brute forcing
+would mean trying $256^{16}$ combinations. That's a huge, 39 digit
+number. It's so large that trying all of those combinations is
+considered impossible. This attack allows an attacker to do it in at
+most $256 \cdot 16 = 4096$ tries, a far more manageable number.
 
 **** Conclusion
 
