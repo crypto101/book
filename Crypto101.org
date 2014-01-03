@@ -804,9 +804,9 @@ outputs.
   \end{figure}
 #+END_LATEX
 
-Because identical blocks of pixels in the input map to identical
-blocks of pixels in the output, the global structure of the image is
-mostly preserved.
+Because identical blocks of pixels in the plaintext will map to
+identical blocks of pixels in the ciphertext, the global structure of
+the image is largely preserved.
 
 As you can see, the situation gets slightly "better" with larger block
 sizes, but the fundamental problem still remains. Furthermore, these
