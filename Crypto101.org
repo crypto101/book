@@ -809,15 +809,17 @@ identical blocks of pixels in the ciphertext, the global structure of
 the image is largely preserved.
 
 As you can see, the situation gets slightly "better" with larger block
-sizes, but the fundamental problem still remains. Furthermore, these
-block sizes are quite large. For an uncompressed bitmap with three
-color channels of 8 bit depth, each pixel takes 24 bits to store.
-Since AES' block size is only 128 bits, that would equate to
-$5.\overline{3}$ pixels [fn::The line over the $3$ in $5.\overline{3}$
-means it repeats, so the value is $5.333\ldots$.] per block,
-significantly less than the larger block sizes in the example. But AES
-is the workhorse of modern block ciphers---it can't be at fault,
-certainly not because of an insufficient block size.
+sizes, but the fundamental problem still remains: the macrostructure
+of the image remains visible in all but the most extreme block sizes.
+Furthermore, all but the smallest of these block sizes are
+unrealistically large. For an uncompressed bitmap with three color
+channels of 8 bit depth, each pixel takes 24 bits to store. Since AES'
+block size is only 128 bits, that would equate to $5.\overline{3}$
+pixels [fn::The line over the $3$ in $5.\overline{3}$ means it
+repeats, so the value is $5.333\ldots$.] per block, significantly less
+than the larger block sizes in the example. But AES is the workhorse
+of modern block ciphers---it can't be at fault, certainly not because
+of an insufficient block size.
 
 When we look at a picture of what would happen with an idealized
 encryption scheme, we notice that it looks like random noise. Keep in
