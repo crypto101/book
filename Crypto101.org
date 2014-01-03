@@ -768,6 +768,7 @@ outputs.
     \begin{subfigure}[b]{.45\textwidth}
       \includegraphics[width=\textwidth]{./Illustrations/ECB/Ciphertext5.png}
       \caption{ECB mode ciphertext, 5 pixel (120 bit) block size.}
+      \label{fig:ECBDemo5px}
     \end{subfigure}
 
     \begin{subfigure}[b]{.45\textwidth}
@@ -796,7 +797,8 @@ outputs.
       Information about the macro-structure of the image clearly leaks.
       This becomes less apparent as block sizes increase, but only at
       block sizes far larger than typical block ciphers. Only the first
-      block size (5 pixels or 120 bits) is realistic.}
+      block size (figure \subref{fig:ECBDemo5px}, a block size of 5
+      pixels or 120 bits) is realistic.}
   \end{figure}
 #+END_LATEX
 
