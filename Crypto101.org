@@ -832,7 +832,7 @@ attacker-controlled part followed by some secret data, allows the
 attacker to decrypt a block's worth of that secret data.
 
 Suppose an attacker has access to an encryption oracle (that is, a
-function that will encrypt something for him) that produces a
+function that will encrypt something for them) that produces a
 ciphertext $C$ that encrypts some attacker-provided input $A$ followed
 by a secret suffix $S$ in ECB mode under key $k$:
 
@@ -1134,7 +1134,7 @@ D(C_i)[b] = \mathtt{01} \xor r_b \xor a_b
 #+END_LATEX
 
 The attacker has now tricked the receiver into decrypting the last
-byte of the block $C_i$. He can also trick him into decrypting the
+byte of the block $C_i$. He can also trick them into decrypting the
 next byte. Remember the previous equation, where we reasoned that the
 last byte of the plaintext was \verb|01|:
 
