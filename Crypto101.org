@@ -2237,7 +2237,7 @@ TODO: Explain the parameter change debacle in SHA-3
 
 TODO: Explain BLAKE, BLAKE2
 
-*** Password storage
+*** Password storage<<password storage>>
 
 One of the most common use cases for cryptographic hash functions,
 and unfortunately one which is also completely and utterly broken, is
@@ -2357,7 +2357,7 @@ against an attacker that actually knows the salt.
 **** So where do we go from here?
 
 In order to protect passwords, you don't need a hash function, but a
-key derivation function. We'll deal with those in a following chapter.
+[[key%20derivation%20function][key derivation function]]. We'll deal with those in a following chapter.
 
 *** Length extension attacks
 
@@ -2814,17 +2814,54 @@ anyone else that the sender sent that particular message.
 
 TODO: explain
 
-** Key derivation functions
+** Key derivation functions<<key derivation function>>
+
+A key derivation function is a function that derives one or more
+secret values from one secret value.
+
+There are two main categories of key derivation function, depending on
+the entropy content of the secret value, which determines how many
+different possible values the secret value can take.
+
+If the secret value is a user-supplied password, for example, it
+typically contains very little entropy. There are very few values the
+password will take. As we've already established in [[password%20storage][a previous section
+on password storage]], that means it is necessary that the key
+derivation function is hard to compute, requiring a non-trivial amount
+of computing resources, such as CPU cycles or memory. If the key
+derivation function were easy to compute, an attacker could simply
+enumerate all possible values of the shared secret, since there are
+few possibilities, and then compute the key derivation function for
+all of them. As we've seen in that previous section on password
+storage, this is how most modern attacks on password stores work.
+Using an appropriate key derivation function, such as scrypt, would
+prevent these attacks. In this chapter, we'll see scrypt, as well as
+other key derivation functions in this category.
+
+On the other hand, the secret value could also have a high entropy
+content. For example, it could be a shared secret derived from a
+Diffie-Hellman key agreement protocol, or an API key consisting of
+cryptographically random bytes (we'll discuss cryptographically secure
+random number generation in the next chapter). In that case, it isn't
+necessary to have a key derivation function that's hard to compute:
+even if the key derivation function is trivial to compute, there are
+too many possible values the secret can take, so an attacker would not
+be able to enumerate them all. We'll see the best-of-breed of this
+kind of key derivation function, HKDF, in this chapter.
+
 *** Password strength
 
 TODO: NIST Special Publication 800-63
 
-*** PBKDF2
+*** <<<PBKDF2>>>
 
-*** bcrypt
+*** <<<bcrypt>>>
 
-*** scrypt
+*** <<<scrypt>>>
 
+*** <<<HKDF>>>
+
+\cite{rfc5869}
 
 ** Random number generators
 
