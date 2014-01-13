@@ -2841,7 +2841,11 @@ Key derivation functions can be useful, for example, when a
 cryptographic protocol starts with a single secret value, such as a
 shared password or a secret derived using Diffie-Hellman key exchange,
 but requires multiple secret values to operate, such as encryption and
-MAC keys.
+MAC keys. Another use case of key derivation functions is in
+cryptographically secure random number generators, which we'll see in
+more detail in a following chapter, where they are used to extract
+randomness with high entropy density from many sources that each have
+low entropy density.
 
 There are two main categories of key derivation function, depending on
 the entropy content of the secret value, which determines how many
