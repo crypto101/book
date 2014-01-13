@@ -713,6 +713,8 @@ real-world stream ciphers have limits, but they are normally
 sufficiently large that they don't pose a practical problem.
 
 *** A naive attempt with block ciphers<<ECB mode>>
+
+Let's try to build a stream cipher using the tools we already have.
 Since we already have block ciphers, we could simply divide an
 incoming stream into different blocks, and encrypt each block:
 
