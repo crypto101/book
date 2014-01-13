@@ -842,9 +842,10 @@ In the previous section, we've focused on how an attacker can inspect
 a ciphertext encrypted using \gls{ECB mode}. That's a /passive/,
 ciphertext-only attack. It's passive because the attacker doesn't
 really interfere in any communication; they're simply examining a
-ciphertext. In this section, we'll study an /active/ attack, where
-the attacker actively communicates with their target, can enable an
-attacker to decrypt ciphertexts encrypted using ECB mode.
+ciphertext. In this section, we'll study an /active/ attack, where the
+attacker actively communicates with their target. We'll see how the
+active attack can enable an attacker to decrypt ciphertexts encrypted
+using ECB mode.
 
 To do this, we'll introduce a new concept called an \gls{oracle}.
 Formally defined oracles are used in the study of computer science,
