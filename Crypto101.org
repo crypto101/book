@@ -3369,22 +3369,55 @@ show the code instead of explaining how it works:
 #+END_SRC
 
 It may not be obvious, especially if you're not used to binary
-arithmetic, but this function is /bijective/: each 32 bit integer
-input maps to exactly one output, and vice versa: for each 32 bit
-integer we get as an output there was exactly one 32 bit integer it
-could have come from.
+arithmetic, but this function is /bijective/ or /one-to-one/: each 32
+bit integer input maps to exactly one output, and vice versa: for each
+32 bit integer we get as an output there was exactly one 32 bit
+integer it could have come from.
 
-Because it's bijective, there is an inverse function, a function that
-tells you which $y$ was given to the tempering function as an input,
-given its output. It may not be obvious to you how to construct that
-function; that's fine. Just because it's bijective, we could at the
-very least brute-force it. Suppose we just try every single 32 bit
-integer, and remember the result. Then, when we get a result, we look
-it up in the table, and find the original.
+Because the tempering function is one-to-one, there is an inverse
+function: a function that gives you the untempered equivalent of a
+number. It may not be obvious to you how to construct that function
+unless you're a bitwise arithmetic wizard, but that's okay; in the
+worst case scenario we could still brute-force it. Suppose we just try
+every single 32 bit integer, and remember the result in a table. Then,
+when we get a result, we look it up in the table, and find the
+original. That table would have to be at least $2^{32} \cdot 32$ bits
+in length, or about 17.18 GB; big, but not impossibly so.
 
 Fortunately, there's a much simpler method to compute the inverse of
 the temper function. We'll see why that's interesting when we evaluate
-the cryptographic security of the Mersenne Twister.
+the cryptographic security of the Mersenne Twister in the next
+section. For those interested in the result, the untempering function
+looks like this:
+
+#+BEGIN_SRC python
+def untemper(y):
+    y ^= y >> 18
+    y ^= ((y << 15) & _TEMPER_MASK_2)
+
+    y = _undo_shift_2(y)
+    y = _undo_shift_1(y)
+
+    return y
+
+def _undo_shift_2(y):
+    t = y
+
+    for _ in xrange(5):
+        t <<= 7
+        t = y ^ (t & _TEMPER_MASK_1)
+
+    return t
+
+def _undo_shift_1(y):
+    t = y
+
+    for _ in xrange(2):
+        t >>= 11
+        t ^= y
+
+    return t
+#+END_SRC
 
 **** Cryptographic security
 
