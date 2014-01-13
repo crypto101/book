@@ -751,8 +751,8 @@ up into blocks, an attacker would only be able to see that a
 ciphertext block, and therefore a plaintext block, was repeated.
 
 We'll now illustrate the many flaws of ECB mode with two attacks.
-First, we'll exploit the fact that repeating input blocks result in
-repeating ciphertext blocks, by visually inspecting an encrypted
+First, we'll exploit the fact that repeating plaintext blocks result
+in repeating ciphertext blocks, by visually inspecting an encrypted
 image. Then, we'll demonstrate that attackers can often decrypt
 messages encrypted in ECB mode by communicating with the person
 performing the encryption.
@@ -855,7 +855,7 @@ something that will compute some particular function for you.
 In our case, the oracle will perform a specific encryption for the
 attacker, which is why it's called an \gls{encryption oracle}. Given
 some data $A$ chosen by the attacker, the oracle will encrypt that
-data, followed by a secret prefix $S$, in ECB mode. Or, in symbols:
+data, followed by a secret suffix $S$, in ECB mode. Or, in symbols:
 
 #+BEGIN_LATEX
 \[
@@ -866,9 +866,9 @@ C = ECB(E_k, A \| S)
 You can see why the concept of an oracle is important here: the
 attacker would not be able to compute $C$ themselves, since they do
 not have access to the encryption key $k$ or the secret suffix $S$.
-The goal of the oracle is for those to remain secret, but we'll see
-how an attacker can recover $S$ by inspecting the ciphertext $C$ for
-many carefully chosen values of the prefix $A$.
+The goal of the oracle is for those values to remain secret, but we'll
+see how an attacker can recover $S$ by inspecting the ciphertext $C$
+for many carefully chosen values of the prefix $A$.
 
 TODO: This would undoubtedly benefit from a bunch of illustrations.
 
@@ -881,17 +881,17 @@ of the first encrypted block: $E_k(A \| s_0)$.
 
 Then, the attacker tries a full-size block, trying all possible values
 for the final byte. Eventually, they'll find the value of $s_0$; they
-know the guess is correct because the resulting block will match the
-block they remembered earlier.
+know the guess is correct because the resulting ciphertext block will
+match the ciphertext block they remembered earlier.
 
 The attacker can repeat this for the penultimate byte. They submit a
-plaintext $A$ that's two bytes short of a block size. The oracle will
-encrypt a first block consisting of that $A$ followed by the first two
-bytes of the secret suffix, $s_0s_1$. The attacker remembers that
-block. Since the attacker already knows $s_0$, so they try $A \| s_0$
-followed by all possible values of $s_1$. Eventually they'll guess
-correctly, which, again, they'll know because the ciphertext blocks
-match.
+plaintext $A$ that's two bytes shorter than the block size. The oracle
+will encrypt a first block consisting of that $A$ followed by the
+first two bytes of the secret suffix, $s_0s_1$. The attacker remembers
+that block. Since the attacker already knows $s_0$, they try $A \|
+s_0$ followed by all possible values of $s_1$. Eventually they'll
+guess correctly, which, again, they'll know because the ciphertext
+blocks match.
 
 The attacker can rinse and repeat, eventually decrypting an entire
 block.
@@ -909,17 +909,17 @@ would be:
 #+END_LATEX
 
 For a typical block size of 16 bytes (or 128 bits), brute forcing
-would mean trying $256^{16}$ combinations. That's a huge, 39 digit
+would mean trying $256^{16}$ combinations. That's a huge, 39-digit
 number. It's so large that trying all of those combinations is
 considered impossible. This attack allows an attacker to do it in at
 most $256 \cdot 16 = 4096$ tries, a far more manageable number.
 
 **** Conclusion
 
-In the real world, block ciphers are used in some mode of operation to
-encrypt data all the time. We've seen that when using \gls{ECB mode},
-an attacker can both analyze ciphertexts to recognize repeating
-patterns, and even decrypt messages when given access to an
+In the real world, block ciphers are used in systems that encrypt
+large amounts of data all the time. We've seen that when using
+\gls{ECB mode}, an attacker can both analyze ciphertexts to recognize
+repeating patterns, and even decrypt messages when given access to an
 \gls{encryption oracle}.
 
 Even when we use idealized block ciphers with unrealistic properties,
@@ -944,7 +944,7 @@ cipher.
 operation. The letters ~ECB~ stand for electronic code book[fn::
 Traditionally, modes of operation seem to be referred to by a
 three-letter acronym.]. For reasons we've already gone into, ECB mode
-is very ineffective. Fortunately, there's plenty of other choices.
+is very ineffective. Fortunately, there are plenty of other choices.
 
 *** <<<CBC mode>>>
 
