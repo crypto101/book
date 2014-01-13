@@ -2817,7 +2817,11 @@ TODO: explain
 ** Key derivation functions<<key derivation function>>
 
 A key derivation function is a function that derives one or more
-secret values from one secret value.
+secret values from one secret value. It can be useful, for example,
+when a cryptographic protocol starts with a single secret value, such
+as a shared password, or a secret derived using Diffie-Hellman key
+exchange, but requires multiple secret values to continue, such as
+encryption and MAC keys.
 
 There are two main categories of key derivation function, depending on
 the entropy content of the secret value, which determines how many
