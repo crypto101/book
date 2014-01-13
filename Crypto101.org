@@ -746,10 +746,16 @@ input blocks will always map to identical output blocks:
 
 At first, this might not seem like a particularly serious problem.
 Assuming the block cipher is secure, it doesn't look like an attacker
-would be able to decrypt anything. (We'll see later that even that
-often isn't true.) By diving the ciphertext stream up into blocks, an
-attacker would only be able to see that a ciphertext block, and
-therefore a plaintext block, was repeated.
+would be able to decrypt anything. By dividing the ciphertext stream
+up into blocks, an attacker would only be able to see that a
+ciphertext block, and therefore a plaintext block, was repeated.
+
+We'll now illustrate the many flaws of ECB mode with two attacks.
+First, we'll exploit the fact that repeating input blocks result in
+repeating ciphertext blocks, by visually inspecting an encrypted
+image. Then, we'll demonstrate that attackers can often decrypt
+messages encrypted in ECB mode by communicating with the person
+performing the encryption.
 
 **** Visual inspection of an encrypted stream
 
