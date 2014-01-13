@@ -2817,10 +2817,12 @@ TODO: explain
 ** Key derivation functions<<key derivation function>>
 
 A key derivation function is a function that derives one or more
-secret values (called keys) from one secret value. Many key derivation
+secret values (the /keys/) from one secret value. Many key derivation
 functions additionally take an (often optional) /salt/, so that
 different invocations of the key derivation function won't always
-return the same output keys for the same input secret.
+return the same output keys for the same input secret. As with other
+cryptosystems, salts are fundamentally different from the secret
+input: salt do not have to be secret, and can be re-used.
 
 Key derivation functions can be useful, for example, when a
 cryptographic protocol starts with a single secret value, such as a
