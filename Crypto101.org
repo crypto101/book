@@ -2826,6 +2826,8 @@ TODO: explain
 
 ** Key derivation functions<<key derivation function>>
 
+*** Description
+
 A key derivation function is a function that derives one or more
 secret values (the /keys/) from one secret value. Many key derivation
 functions additionally take an (often optional) /salt/, so that
