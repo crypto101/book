@@ -981,33 +981,45 @@ that property.
 *** <<<CBC bit flipping attacks>>>
 
 An interesting attack on \gls{CBC mode} is called a bit flipping
-attack.
+attack. Using a CBC bit flipping attack, attackers can modify
+ciphertexts encrypted in CBC mode so that it will have a predictable
+effect on the plaintext.
 
 Suppose we have a CBC encrypted ciphertext. This could be, for
 example, a cookie. We take a particular ciphertext block, and we flip
 some bits in it. What happens to the plaintext?
 
+When we "flip some bits", we do that by XORing with a sequence of
+bits, which we'll call $X$. If the corresponding bit in $X$ is 1, the
+bit will be flipped; otherwise, the bit will remain the same.
+
 #+BEGIN_LATEX
-\begin{figure}
+\begin{figure}[h!]
 \centering
 \includegraphics[width=.6\linewidth]{./Illustrations/CBC/BitFlipping.pdf}
 \end{figure}
 #+END_LATEX
 
-The ciphertext block we modified, once decrypted by the block cipher,
-gets turned into indecipherable[fn::Excuse the pun.] nonsense. $D(k,
-P_i)$ may have been something useful, but, $D(k, P_i \xor X)$ will
-be an unpredictable block, and, statistically speaking, unintelligible
-nonsense. In the illustration, this unintelligible plaintext block is
-$P_i^{\prime}$.
+The plaintext block for the ciphertext block we modified will get
+turned into indecipherable[fn::Excuse the pun.] nonsense. Remember how
+CBC decryption works: the output of the block cipher is XORed with the
+previous ciphertext block to produce the plaintext block. Now that the
+input ciphertext block $C_i$ has been modified, the output of the
+block cipher will be some random block, and, statistically speaking,
+nonsense. After being XORed with that previous ciphertext block, it
+will still be nonsense. As a result, the produced plaintext block is
+still just nonsense. In the illustration, this unintelligible
+plaintext block is $P_i^{\prime}$.
 
 However, in the block /after/ that, the bits we flipped in the
-ciphertext are flipped in the plaintext as well ($P_{i + 1} \xor
-X$)! This is because, in CBC decryption, ciphertext blocks are
-decrypted by the block cipher, and the result is XORed with the
-previous ciphertext block. So: $P_{i+1} = D(k, C_{i+1}) \xor C_i$.
-But since we modified the previous ciphertext block $C_i$ by XORing it
-with $X$, the plaintext block $P_{i + 1}$ will also be XORed with $X$.
+ciphertext will be flipped in the plaintext as well! This is because,
+in CBC decryption, ciphertext blocks are decrypted by the block
+cipher, and the result is XORed with the previous ciphertext block.
+But since we modified the previous ciphertext block by XORing it with
+$X$, the plaintext block $P_{i + 1}$ will also be XORed with $X$. As a
+result, the attacker completely controls that ciphertext block, since
+they can just flip the bits that aren't the value they want them to
+be.
 
 This may not sound like a huge deal at first. If you don't know the
 plaintext bytes of that next block, you have no idea which bits to
