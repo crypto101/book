@@ -957,7 +957,10 @@ Of course, this leaves us with a problem for the first plaintext
 block: there is no previous ciphertext block to XOR it with. Instead,
 we pick an \gls{IV}: a random number that takes the place of the
 "first" ciphertext in this construction. \Glspl{initialization vector}
-also appear in many other algorithms.
+also appear in many other algorithms. An initialization vector should
+be unpredictable; ideally, they will be cryptographically random. They
+do not have to be secret: IVs are typically just added to ciphertext
+messages in plaintext.
 
 The following diagram demonstrates encryption in CBC mode:
 
@@ -971,11 +974,10 @@ decryption mode instead of encryption mode:
 While CBC mode itself is not inherently insecure (unlike ECB mode),
 its particular use in TLS 1.0 was. This eventually led to the
 \gls{BEAST} attack, which we'll cover in more detail in the section on
-SSL/TLS. The short version is that instead of choosing truly random
-IVs, the previous ciphertext block was used. That sounds reasonable at
-face value: it's as if you had one very long CBC transmission chain.
-Unfortunately, it turns out that attackers figured out how to exploit
-that property.
+SSL/TLS. The short version is that instead of using unpredictable
+\glspl{initialization vector}, for example by choosing random ones,
+the previous ciphertext block was used. Unfortunately, it turns out
+that attackers figured out how to exploit that property.
 
 *** <<<CBC bit flipping attacks>>>
 
