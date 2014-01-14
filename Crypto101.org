@@ -955,10 +955,9 @@ cipher.
 
 Of course, this leaves us with a problem for the first plaintext
 block: there is no previous ciphertext block to XOR it with. Instead,
-we pick an initialization vector (commonly referred to as "IV"): a
-random number that takes the place of the "first" ciphertext in this
-construction. Initialization vectors also appear in many other
-algorithms.
+we pick an \gls{IV}: a random number that takes the place of the
+"first" ciphertext in this construction. \Glspl{initialization vector}
+also appear in many other algorithms.
 
 The following diagram demonstrates encryption in CBC mode:
 
@@ -1596,11 +1595,11 @@ For CTR mode to be secure, it is critical that \glspl{nonce} aren't
 reused. If they are, the entire keystream will be repeated, allowing
 an attacker to mount multi-time pad attacks.
 
-This is different from an initialization vector such as the one used
-by CBC. An IV has to be unpredictable. An attacker being able to
-predict a CTR \gls{nonce} doesn't really matter: without the secret
-key, he has no idea what the output of the block cipher (the sequence
-in the keystream) would be.
+This is different from an \gls{initialization vector} such as the one
+used by CBC. An \gls{IV} has to be unpredictable. An attacker being
+able to predict a CTR \gls{nonce} doesn't really matter: without the
+secret key, he has no idea what the output of the block cipher (the
+sequence in the keystream) would be.
 
 Like [[Salsa20]], CTR mode has the interesting property that you can jump
 to any point in the keystream easily: just increment the counter to
@@ -2326,12 +2325,13 @@ The reason rainbow tables were so incredibly effective was because
 everyone was using one of a handful of hash functions. The same
 password would result in the same hash everywhere.
 
-Enter salts. By mixing (appending or prepending) the password with
-some random value before hashing it, you could produce completely
-different hash values out of the same hash function. It effectively
-turns a hash function into a whole family of related hash functions,
-with virtually identical security and performance properties, except
-with completely different output values.
+This problem was generally solved by using \glspl{salt}. By mixing
+(appending or prepending) the password with some random value before
+hashing it, you could produce completely different hash values out of
+the same hash function. It effectively turns a hash function into a
+whole family of related hash functions, with virtually identical
+security and performance properties, except with completely different
+output values.
 
 The salt value is stored next to the password hash in the database.
 When the user authenticates using the password, you just compute the
@@ -2843,11 +2843,12 @@ TODO: explain
 A key derivation function is a function that derives one or more
 secret values (the /keys/) from one secret value.
 
-Many key derivation functions can also take a (usually optional) salt
-parameter. This parameter causes the key derivation function to not
-always return the same output keys for the same input secret. As with
-other cryptosystems, salts are fundamentally different from the secret
-input: salts generally do not have to be secret, and can be re-used.
+Many key derivation functions can also take a (usually optional)
+\gls{salt} parameter. This parameter causes the key derivation
+function to not always return the same output keys for the same input
+secret. As with other cryptosystems, salts are fundamentally different
+from the secret input: salts generally do not have to be secret, and
+can be re-used.
 
 Key derivation functions can be useful, for example, when a
 cryptographic protocol starts with a single secret value, such as a
@@ -2911,10 +2912,10 @@ secure for low-entropy inputs such as passwords.
 HKDF exists to give people an appropriate, off-the-shelf key
 derivation function. Previously, key derivation was often something
 that was done ad hoc for a particular standard. Usually these ad hoc
-solutions did not have the extra provisions HKDF does, such as salting
-and the optional info parameter (which we'll discuss later in this
-section); and that's only in the best case scenario where the KDF
-wasn't fundamentally broken to begin with.
+solutions did not have the extra provisions HKDF does, such as
+\glspl{salt} or the optional info parameter (which we'll discuss later
+in this section); and that's only in the best case scenario where the
+KDF wasn't fundamentally broken to begin with.
 
 HKDF is based on HMAC. Like HMAC, it is a generic construction that
 uses hash functions, and can be built using any cryptographically
@@ -2939,9 +2940,9 @@ The extraction phase just uses HMAC with a salt:
 
 #+END_SRC
 
-The salt value is optional. If the salt is not specified, a string of
-zeroes equal to the length of the hash function's output is used.
-While the salt is technically optional, the designers stress its
+The salt value is optional. If the \gls{salt} is not specified, a
+string of zeroes equal to the length of the hash function's output is
+used. While the salt is technically optional, the designers stress its
 importance, because it makes the independent uses of the KDF (for
 example, in different applications, or with different users) produce
 independent results. Even a fairly low-entropy salt can already

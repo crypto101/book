@@ -5,7 +5,8 @@
 \newacronym{FIPS}{FIPS}{Federal Information Processing Standards}
 \newacronym{HKDF}{HKDF}{HMAC-based (Extract-and-Expand) Key Derivation Function}
 \newacronym{HSTS}{HSTS}{HTTP Strict Transport Security}
-\newacronym{KDF}{KDF}{Key Derivation Function}
+\newacronym{IV}{IV}{\gls{initialization vector}}
+\newacronym{KDF}{KDF}{key derivation function}
 
 \newglossaryentry{secret-key encryption}{
   name=secret-key encryption, description={Encryption that uses the
@@ -33,7 +34,14 @@
 \newglossaryentry{CBC mode}{
   name=CBC mode, description={Cipher block chaining mode; common mode
   of operation where the previous ciphertext block is XORed with the
-  plaintext block during encryption} }
+  plaintext block during encryption. Uses an \gls{initialization
+  vector} to fill the role of the ``previous'' ciphertext block for
+  encrypting the first ciphertext block} }
+\newglossaryentry{initialization vector}{
+  name=initialization vector, description={Data used to initialize
+  some algorithms, e.g. takes the role of the ``block before the first
+  block'' in \gls{CBC mode}. Generally not required to be secret, but
+  required to be unpredictable. Compare \gls{nonce}, \gls{salt}} }
 \newglossaryentry{CTR mode}{
   name=CTR mode, description={Counter mode; a \gls{nonce} combined
   with a counter produces a sequence of inputs to the block cipher;
@@ -41,7 +49,16 @@
 \newglossaryentry{nonce}{
   name=nonce, description={\emph{N}umber used \emph{once}. Used in
   many cryptographic protocols. Generally does not have to be secret
-  or unpredictable} }
+  or unpredictable, but does have to be unique.
+  Compare \gls{initialization vector}, \gls{salt}} }
+\newglossaryentry{salt}{
+  name=salt, description={Random data that is added to a cryptographic
+  primitive (usually a one-way function such as a cryptographic hash
+  function or a key derivation function) Customizes such functions to
+  produce different outputs (provided the salt is different). Can be
+  used to prevent e.g. dictionary attacks. Typically does not have to
+  be secret, but secrecy may improve security properties of the
+  system. Compare \gls{nonce}, \gls{initialization vector}} }
 \newglossaryentry{public-key algorithm}{
   name=public-key algorithm, description={Algorithm that uses a pair
   of two related but distinct keys. Also known
