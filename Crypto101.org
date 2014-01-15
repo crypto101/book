@@ -870,33 +870,57 @@ The goal of the oracle is for those values to remain secret, but we'll
 see how an attacker can recover $S$ by inspecting the ciphertext $C$
 for many carefully chosen values of the prefix $A$.
 
-TODO: This would undoubtedly benefit from a bunch of illustrations.
+**** Decrypting a block using the oracle
 
 The attacker starts by sending in a plaintext $A$ that's just one byte
 shorter than the block size. That means the block that's being
 encrypted will consist of those bytes, plus the first byte of $S$,
 which we'll call $s_0$. The attacker remembers the encrypted block.
 They don't know the value of $s_0$ yet, but now they do know the value
-of the first encrypted block: $E_k(A \| s_0)$.
+of the first encrypted block: $E_k(A \| s_0)$. In the illustration,
+this is block $C_{R1}$:
+
+#+BEGIN_LATEX
+\newcommand{\ecbencoracleimg}[1]{
+\begin{figure}[ht!]
+\centering
+\includegraphics[width=.60\linewidth]{./Illustrations/ECBEncryptionOracle/#1.pdf}
+\end{figure}
+}
+
+\ecbencoracleimg{RememberFirst}
+#+END_LATEX
 
 Then, the attacker tries a full-size block, trying all possible values
 for the final byte. Eventually, they'll find the value of $s_0$; they
 know the guess is correct because the resulting ciphertext block will
-match the ciphertext block they remembered earlier.
+match the ciphertext block $C_{R1}$ they remembered earlier.
+
+#+BEGIN_LATEX
+\ecbencoracleimg{GuessFirst}
+#+END_LATEX
 
 The attacker can repeat this for the penultimate byte. They submit a
 plaintext $A$ that's two bytes shorter than the block size. The oracle
 will encrypt a first block consisting of that $A$ followed by the
 first two bytes of the secret suffix, $s_0s_1$. The attacker remembers
-that block. Since the attacker already knows $s_0$, they try $A \|
+that block.
+
+#+BEGIN_LATEX
+\ecbencoracleimg{RememberSecond}
+#+END_LATEX
+
+Since the attacker already knows $s_0$, they try $A \|
 s_0$ followed by all possible values of $s_1$. Eventually they'll
 guess correctly, which, again, they'll know because the ciphertext
-blocks match.
+blocks match:
+
+#+BEGIN_LATEX
+\ecbencoracleimg{GuessSecond}
+#+END_LATEX
 
 The attacker can rinse and repeat, eventually decrypting an entire
-block.
-
-This allows an attacker to brute-force a block in $p \cdot b$
+block. This allows them to brute-force a block in $p \cdot b$
 attempts, where $p$ is the number of possible values for each byte
 (so, for 8-bit bytes, that's $2^8 = 256$) and $b$ is the block size.
 Normally, they'd have to try all of the possible combinations, which
