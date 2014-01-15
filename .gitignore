@@ -3,7 +3,8 @@
 *.blg
 *.fdb_latexmk
 *.fls
-*.pdf
+Crypto101.pdf
+Illustrations/*/*.pdf
 *.acn
 *.acr
 *.alg
