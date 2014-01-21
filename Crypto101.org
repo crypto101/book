@@ -2349,8 +2349,8 @@ than that. They commonly have a padding step that an attacker needs to
 recreate. MD5 and SHA-1 have the same padding step. It's fairly
 simple, so we'll go through it:
 
- 1. Add a $1$ bit to the message.
- 2. Add zero bits until the length is $448 \pmod 512$.
+ 1. Add a 1 bit to the message.
+ 2. Add zero bits until the length is $448 \pmod {512}$.
  3. Take the total length of the message, before padding, and add it
     as a 64-bit integer.
 
