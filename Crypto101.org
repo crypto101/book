@@ -3099,10 +3099,6 @@ attacker perceives" is necessary in a good definition!
 
 TODO: explain synchronous stream ciphers as CSPRNGs
 
-*** Cryptographically secure random number generation in Linux
-
-**** Hardware entropy sources
-
 *** Yarrow
 
 The Yarrow algorithm is a cryptographically secure pseudorandom number
