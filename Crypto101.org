@@ -1776,7 +1776,8 @@ modular arithmetic to understand. If you are unfamiliar with modular
 arithmetic, you can either skip this chapter, or first read the
 [[Modular arithmetic][mathematical background appendix]].
 
-Computing the following equation is computationally fairly easy:
+Discrete log Diffie-Hellman is based on the idea that computing $y$ in
+the following equation is easy (at least for a computer):
 
 #+BEGIN_LATEX
 \begin{equation}
@@ -1785,12 +1786,14 @@ y \equiv g^x \pmod{p}
 #+END_LATEX
 
 However, computing $x$ given $y$, $g$ and $p$ is believed to be very
-hard. It's called the discrete logarithm problem, since a similar
+hard. This is called the discrete logarithm problem, because a similar
 operation without the modular arithmetic is called a logarithm.
 
-The common base color is a large prime $p$ and base $g$. The "color
-mixing" operation is the equation given above, where $x$ is the input
-value and $y$ is the mixed value.
+This is just a concrete implementation of the abstract Diffie-Hellman
+process we discussed earlier. The common base color is a large prime
+$p$ and the base $g$. The "color mixing" operation is the equation
+given above, where $x$ is the input value and $y$ is the resulting
+mixed value.
 
 When Alice or Bob select their random numbers $r_A$ and $r_B$, they
 mix them with the base to produce the mixed numbers $m_A$ and $m_B$:
