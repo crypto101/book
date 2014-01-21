@@ -3114,9 +3114,6 @@ Mac OS X. On both of these operating systems, it's used to implement
 \verb|/dev/random|. Unlike on Linux, \verb|/dev/urandom| is just an
 alias for \verb|/dev/random|.
 
-*** Random number generation in Windows
-*** OpenSSL's CSPRNG
-
 *** Blum Blum Shub
 
 TODO: explain this, and why it's good (provable), but why we don't use
