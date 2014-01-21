@@ -1774,7 +1774,7 @@ Diffie-Hellman algorithm, based on the discrete logarithm problem. It
 is intended to provide some mathematical background, and requires
 modular arithmetic to understand. If you are unfamiliar with modular
 arithmetic, you can either skip this chapter, or first read the
-[[Modular%20arithmetic][mathematical background appendix]].
+[[Modular arithmetic][mathematical background appendix]].
 
 Computing the following equation is computationally fairly easy:
 
