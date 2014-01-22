@@ -950,15 +950,15 @@ bit will be flipped; otherwise, the bit will remain the same.
 \end{figure}
 #+END_LATEX
 
-The plaintext block for the ciphertext block we modified will get
-turned into indecipherable[fn::Excuse the pun.] nonsense. Remember how
+When we try to decrypt the ciphertext block with the flipped bits, we
+will get indecipherable[fn::Excuse the pun.] nonsense. Remember how
 CBC decryption works: the output of the block cipher is XORed with the
 previous ciphertext block to produce the plaintext block. Now that the
 input ciphertext block $C_i$ has been modified, the output of the
-block cipher will be some random block, and, statistically speaking,
-nonsense. After being XORed with that previous ciphertext block, it
-will still be nonsense. As a result, the produced plaintext block is
-still just nonsense. In the illustration, this unintelligible
+block cipher will be some random unrelated block, and, statistically
+speaking, nonsense. After being XORed with that previous ciphertext
+block, it will still be nonsense. As a result, the produced plaintext
+block is still just nonsense. In the illustration, this unintelligible
 plaintext block is $P_i^{\prime}$.
 
 However, in the block /after/ that, the bits we flipped in the
@@ -971,24 +971,37 @@ result, the attacker completely controls that ciphertext block, since
 they can just flip the bits that aren't the value they want them to
 be.
 
+TODO: add previous illustration, but mark the path X takes to
+influence P prime {i + 1} in red or something
+
 This may not sound like a huge deal at first. If you don't know the
 plaintext bytes of that next block, you have no idea which bits to
 flip in order to get the plaintext you want.
 
-An attacker can often control at least part of the plaintext. It might
-be a cookie that has an e-mail address or a username. In that case,
-they can just pick a very long string of "Z" bytes as their username.
-The server will happily encrypt such a cookie, giving them an
+To illustrate how attackers can turn this into a practical attack,
+let's consider a website using cookies. When you register, your chosen
+user name is put into a cookie. The website encrypts the cookie and
+sends it to your browser. The next time your browser visits the
+website, it will provide the encrypted cookie; the website decrypts it
+and knows who you are.
+
+An attacker can often control at least part of the plaintext being
+encrypted. In this example, the user name is part of the plaintext of
+the cookie. Of course, the website just lets you provide whatever
+value for the user name you want at registration, so the attacker can
+just add a very long string of "Z" bytes to their user name. The
+server will happily encrypt such a cookie, giving the attacker an
 encrypted ciphertext that matches a plaintext with many such "Z"s in
 them. The plaintext getting modified will then probably be part of
 that sequence of "Z"s.
 
 An attacker may have some target bytes that he'd like to see in the
-decrypted plaintext, for example, \verb*|;admin=1;|. They XOR the
-filler bytes ("Z") with that target. Because two XOR operations with
-the same value cancel each other out, the two filler values ("Z"s) will
-cancel out, and the attacker can expect to see \verb|;admin=1;| pop up
-in the next ciphertext block:
+decrypted plaintext, for example, \verb*|;admin=1;|. In order to
+figure out which bytes they should flip (so, the value of $X$ in the
+illustration), they just XOR the filler bytes ("Z") with that target.
+Because two XOR operations with the same value cancel each other out,
+the two filler values ("Z"s) will cancel out, and the attacker can
+expect to see \verb|;admin=1;| pop up in the next ciphertext block:
 
 #+BEGIN_LATEX
 \begin{eqnarray*}
@@ -1011,10 +1024,12 @@ necessary to modify it to say what you want it to.
 
 *** Padding
 
-So far, we've conveniently assumed that all streams just happened to
-fit exactly in our system of block ciphers, be it CBC or ECB. Of
-course, real streams can be of arbitrary length. We need some scheme
-to make them fit. That process is called padding.
+So far, we've conveniently assumed that all messages just happened to
+fit exactly in our system of block ciphers, be it CBC or ECB. That
+means that all messages happen to be a multiple of the block size,
+which, in a typical block cipher such as AES, is 16 bytes. Of course,
+real messages can be of arbitrary length. We need some scheme to make
+them fit. That process is called padding.
 
 **** Padding with zeroes (or some other pad byte)
 
@@ -1095,12 +1110,16 @@ $P_i$ ends in one of the following byte sequences:
  - \verb|03 03 03|
  - ...
 
-Obviously, the first option is much more likely. That said, we still
-need to figure out which one of those it was. To do that, we start
-modifying bytes starting at the left-hand side, until padding breaks
-again. As soon as padding breaks, you know that byte was part of the
-valid padding, which tells you how many bytes there are, and, in
-PKCS#5 padding, what their value is.
+The first option (~01~) is much more likely. It only requires one byte
+to have a specific value; all the other ones require multiple bytes to
+be some specific value.
+
+In order to successfully decrypt the message, we still need to figure
+out which one of those options it was. To do that, we start modifying
+bytes starting at the left-hand side of the block, until padding
+breaks again. As soon as padding breaks, you know that byte was part
+of the valid padding, which tells you how many bytes there are, and,
+since we're using PKCS#5 padding, what their value is.
 
 For the next section, we'll assume that it was just \verb|01|.
 
