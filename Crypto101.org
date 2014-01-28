@@ -1069,6 +1069,17 @@ recipient typically rejects the message, saying that the padding was
 invalid. We can use that tiny bit of information about the padding of
 the plaintext to iteratively decrypt the entire message.
 
+The attacker will do this, one ciphertext block at a time, by trying
+to get an entire plaintext block worth of valid padding. We'll see
+that this tells them the what the decryption of their target
+ciphertext block is, under the block cipher. We'll also see that you
+can do this efficiently and iteratively, just from that little leak of
+information about the padding being valid or not.
+
+It may be helpful to keep in mind that a CBC padding attack does not
+actually attack the padding for a given message; instead the attacker
+will be /constructing/ paddings to decrypt a message.
+
 To mount this attack, an attacker only needs two things:
 
  1. A target ciphertext to decrypt
@@ -1086,9 +1097,8 @@ r_b$. They also pick a target block $C_i$ from the ciphertext that
 they'd like to decrypt. The attacker asks the padding oracle if $R \|
 C_i$ has valid padding. Statistically speaking, such a random
 plaintext block probably won't have valid padding: the odds are in the
-half a percent ballpark. (In the next step, the attacker will attempt
-to produce valid padding. If by pure chance they happen to already
-have valid padding, they can simply skip that step.)
+half-a-percent ballpark. If by pure chance the message happens to
+already have valid padding, they can simply skip the next step.
 
 #+BEGIN_LATEX
 \begin{figure}[ht!]
@@ -1124,8 +1134,15 @@ ends in one of the following byte sequences:
  - \ldots
 
 The first option (~01~) is much more likely than the others, since it
-only requires one byte to have a specific value; all the other ones
-require multiple bytes to be some specific value.
+only requires one byte to have a particular value. The attacker is
+modifying that byte to take /every/ possible value, so it is quite
+likely that they happened to stumble upon ~01~. All of the other valid
+padding options not only require that byte to have some particular
+value, but also one or more other bytes. For an attacker to end up
+with a valid ~01~ padding, they just have to try every possible byte;
+for an attacker to end up with a valid ~02 02~ padding, they have to
+try every possible byte /and/ happen to have picked a block that has a
+~02~ in the second-to-last position.
 
 In order to successfully decrypt the message, we still need to figure
 out which one of those options is the actual value of the padding. To
@@ -1187,27 +1204,27 @@ correctly, that just means that there are fewer remaining bytes you
 will have to guess manually. (This will become clear once you
 understand the rest of the attack.)
 
-**** Determining the value f
+**** Decrypting one byte
 
 At this point, we've actually already successfully decrypted the last
-byte of the last block of ciphertext! (Actually, we've decrypted as
+byte of the target block of ciphertext! (Actually, we've decrypted as
 many bytes as we have valid padding; we're just assuming the worst
 case scenario that that's only a single byte.) Since we know that the
 last byte of the decrypted ciphertext block $C_i$ (we'll call that
-byte $D(C_i)[b]$), XORed with our iteratively found $r_b \xor a_b$, is
-\verb|01|. So, we get this equation:
+byte $D(C_i)[b]$), XORed with our iteratively found value $r_b$, is
+\verb|01|:
 
 #+BEGIN_LATEX
 \[
-D(C_i)[b] \xor r_b \xor a_b = \mathtt{01}
+D(C_i)[b] \xor r_b = \mathtt{01}
 \]
 #+END_LATEX
 
-We can just move the XOR operations to the other side, and we get:
+We can just move the XOR operation to the other side, and we get:
 
 #+BEGIN_LATEX
 \[
-D(C_i)[b] = \mathtt{01} \xor r_b \xor a_b
+D(C_i)[b] = \mathtt{01} \xor r_b
 \]
 #+END_LATEX
 
@@ -1222,7 +1239,7 @@ of the plaintext was ~01~:
 
 #+BEGIN_LATEX
 \[
-D(C_i)[b] \xor r_b \xor a_b = \mathtt{01}
+D(C_i)[b] \xor r_b = \mathtt{01}
 \]
 #+END_LATEX
 
@@ -1235,7 +1252,7 @@ then we XOR with ~02~ to get ~02~:
 
 #+BEGIN_LATEX
 \begin{eqnarray*}
-D(C_i)[b] \xor r_b \xor a_b \xor \mathtt{01} \xor \mathtt{02} & = & \mathtt{01} \xor \mathtt{01} \xor \mathtt{02} \\
+D(C_i)[b] \xor r_b \xor \mathtt{01} \xor \mathtt{02} & = & \mathtt{01} \xor \mathtt{01} \xor \mathtt{02} \\
 & = & \mathtt{02}
 \end{eqnarray*}
 #+END_LATEX
