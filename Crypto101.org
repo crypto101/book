@@ -1097,29 +1097,97 @@ have valid padding, they can simply skip that step.)
 \end{figure}
 #+END_LATEX
 
-One way to try all values for that last byte of the penultimate block
-is to XOR it with all values up to 256, since a byte has 256 possible
-values. Eventually, the padding oracle will report that $r_1r_2\ldots
-r_b \xor a_b$ has valid padding. That means that the plaintext block
-$P_i$ ends in one of the following byte sequences:
+Next, the attacker tries to modify the message so that it does have
+valid padding. They can do that by playing with the last byte of the
+plaintext: eventually that byte will be ~01~, which is always valid
+padding. In order to modify the last byte of a plaintext block, the
+attacker modifies the last byte of the /previous/ ciphertext block.
+This works exactly like it did with CBC bit flipping attacks. That
+previous ciphertext block is the block $R$, so the byte being modified
+is the last byte of $R$, $r_b$.
 
- - \verb|01|
- - \verb|02 02|
- - \verb|03 03 03|
- - ...
+One way to try all values for that last byte of $R$ is to XOR it with
+all values up to 256, since a byte has 256 possible values.
+Eventually, the padding oracle will report that for some ciphertext
+block $R$, the decrypted plaintext of $R \| C_i$ has valid padding.
 
-The first option (~01~) is much more likely. It only requires one byte
-to have a specific value; all the other ones require multiple bytes to
-be some specific value.
+**** Discovering the padding length
+
+The oracle has just told the attacker that for our chosen value of
+$R$, the plaintext of $R \| C_i$ has valid padding. Since we're
+working with PKCS#5 padding, that means that the plaintext block $P_i$
+ends in one of the following byte sequences:
+
+ - ~01~
+ - ~02 02~
+ - ~03 03 03~
+ - \ldots
+
+The first option (~01~) is much more likely than the others, since it
+only requires one byte to have a specific value; all the other ones
+require multiple bytes to be some specific value.
 
 In order to successfully decrypt the message, we still need to figure
-out which one of those options it was. To do that, we start modifying
-bytes starting at the left-hand side of the block, until padding
-breaks again. As soon as padding breaks, you know that byte was part
-of the valid padding, which tells you how many bytes there are, and,
-since we're using PKCS#5 padding, what their value is.
+out which one of those options is the actual value of the padding. To
+do that, we try to discover the length of the padding by modifying
+bytes starting at the left-hand side of $P_i$ until the padding
+becomes invalid again. As with everything else in this attack, we
+modify those bytes in $P_i$ by modifying the equivalent bytes in our
+chosen block $R$. As soon as padding breaks, you know that the last
+byte you modified was part of the valid padding, which tells you how
+many padding bytes there are. Since we're using PKCS#5 padding, that
+also tells you what their value is.
 
-For the next section, we'll assume that it was just \verb|01|.
+Let's illustrate this with an example. Suppose we've successfully
+found some block $R$ so that $R \| C_i$ has valid padding. Let's say
+that padding is ~03 03 03~. Normally, you wouldn't know this; the
+point of this procedure is to discover what that padding is. Suppose
+the block size is 8 bytes. So, we know that $P_i$ is currently:
+
+#+BEGIN_LATEX
+\begin{equation}
+p_0 p_1 p_2 p_3 p_4 p_5 \mathtt{03} \mathtt{03} \mathtt{03}
+\end{equation}
+#+END_LATEX
+
+Where $p_0$ \ldots are some bytes of the plaintext. Their actual value
+doesn't matter: the only thing that matters is that they're not part
+of the padding. When we modify the first byte of $R$, we'll cause a
+change in the first byte of $P_i$, so that $p_0$ becomes some other
+byte $p^{\prime}_0$:
+
+#+BEGIN_LATEX
+\begin{equation}
+p^{\prime}_0 p_1 p_2 p_3 p_4 p_5 \mathtt{03} \mathtt{03} \mathtt{03}
+\end{equation}
+#+END_LATEX
+
+As you can see, this doesn't affect the validity of the padding. The
+same goes for $p_1$, $p_2$, $p_3$, $p_4$ and $p_5$. However, when we
+modify the byte after that (say, we turn that first ~03~ into a ~02~),
+$P_i$ looks like this:
+
+#+BEGIN_LATEX
+\begin{equation}
+p^{\prime}_0 p^{\prime}_1 p^{\prime}_2 p^{\prime}_3 p^{\prime}_4 p^{\prime}_5 \mathtt{02} \mathtt{03} \mathtt{03}
+\end{equation}
+#+END_LATEX
+
+Since ~02 03 03~ isn't valid PKCS#5 padding, the server will reject
+the message. At that point, we know that once we modify six bytes, the
+padding breaks. That means the sixth byte is the first byte of the
+padding. Since the block is 8 bytes long, we know that the padding
+consists of bytes 6, 7 and 8, which means that the padding is three
+bytes long, and, in PKCS#5, equal to ~03 03 03~.
+
+For the next section, we'll assume that it was just ~01~, since that
+is the most common case. The attack doesn't really change depending on
+the length of the padding. If you guess more bytes of padding
+correctly, that just means that there are fewer remaining bytes you
+will have to guess manually. (This will become clear once you
+understand the rest of the attack.)
+
+**** Determining the value f
 
 At this point, we've actually already successfully decrypted the last
 byte of the last block of ciphertext! (Actually, we've decrypted as
@@ -1144,9 +1212,13 @@ D(C_i)[b] = \mathtt{01} \xor r_b \xor a_b
 #+END_LATEX
 
 The attacker has now tricked the receiver into decrypting the last
-byte of the block $C_i$. He can also trick them into decrypting the
-next byte. Remember the previous equation, where we reasoned that the
-last byte of the plaintext was \verb|01|:
+byte of the block $C_i$.
+
+**** Decrypting subsequent bytes
+
+Next, the attacker tricks the receiver into decrypting the next byte.
+Remember the previous equation, where we reasoned that the last byte
+of the plaintext was ~01~:
 
 #+BEGIN_LATEX
 \[
@@ -1154,11 +1226,12 @@ D(C_i)[b] \xor r_b \xor a_b = \mathtt{01}
 \]
 #+END_LATEX
 
-Now, we'd like to get that byte to say \verb|02|, to produce an
-/almost/ valid padding. To do that, we XOR with \verb|01| to cancel
-the \verb|01| that's already there (since two XORs with the same value
-cancel each other out), and then we XOR with \verb|02| to get
-\verb|02|:
+Now, we'd like to get that byte to say ~02~, to produce an /almost/
+valid padding: the last byte would be correct for a 2-byte PKCS#5
+padding (~02 02~), but that second-to-last byte probably isn't ~02~
+yet. To do that, we XOR with ~01~ to cancel the ~01~ that's already
+there (since two XORs with the same value cancel each other out), and
+then we XOR with ~02~ to get ~02~:
 
 #+BEGIN_LATEX
 \begin{eqnarray*}
@@ -1170,10 +1243,11 @@ D(C_i)[b] \xor r_b \xor a_b \xor \mathtt{01} \xor \mathtt{02} & = & \mathtt{01} 
 The attacker uses that value for the last byte. Then, they try all
 possible values for the second-to-last byte (index $b - 1$).
 Eventually, one of them will cause the message to have valid padding.
-Since we modified the random block so that the final byte will be
-\verb|02|, the only byte in the second-to-last position that can cause
-valid padding is \verb|02| as well. Using the same math as above, the
-attacker has recovered the second-to-last byte.
+Since we modified the random block so that the final byte of the
+plaintext will be \verb|02|, the only byte in the second-to-last
+position that can cause valid padding is \verb|02| as well. Using the
+same math as above, the attacker has recovered the second-to-last
+byte.
 
 Then, it's just rinse and repeat. The last two bytes are modified to
 create an almost-valid padding of \verb|03 03|, then the third byte
