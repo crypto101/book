@@ -1065,32 +1065,30 @@ decrypting arbitrary messages!
 
 As we've just discussed, \gls{CBC mode} requires padding the message
 to a multiple of the block size. If the padding is incorrect, the
-recipient typically rejects the message with an "invalid padding"
-message. We can use that tiny bit of information about the padding of
+recipient typically rejects the message, saying that the padding was
+invalid. We can use that tiny bit of information about the padding of
 the plaintext to iteratively decrypt the entire message.
 
-In this section, we'll assume that PKCS#5/PKCS#7 padding is being
-used, since that's the most popular option. The attack is general
-enough to work on other kinds of padding, with minor modifications.
-
-To mount this attack, an attacker needs two things:
+To mount this attack, an attacker only needs two things:
 
  1. A target ciphertext to decrypt
  2. A /padding oracle/: a function that takes ciphertexts and tells
     the attacker if the padding was correct
 
+In this chapter, we'll assume that PKCS#5/PKCS#7 padding is being
+used, since that's the most popular option. The attack is general
+enough to work on other kinds of padding, with minor modifications.
+
+**** Decrypting the first byte
+
 The attacker fills a block with arbitrary bytes $R = r_1, r_2\ldots
 r_b$. They also pick a target block $C_i$ from the ciphertext that
 they'd like to decrypt. The attacker asks the padding oracle if $R \|
-C_i$ has valid padding. Statistically speaking, it probably doesn't.
-(If it does, they can just skip the next step.)
-
-The attacker tries to modify the last byte of the plaintext to have
-every possible value. Due to the way CBC decryption works, the
-attacker modifies the last byte of the /previous/ block in order to
-modify the last byte of this block. In our case, that means they
-modify the block full of random bytes, starting with the last byte
-$r_b$:
+C_i$ has valid padding. Statistically speaking, such a random
+plaintext block probably won't have valid padding: the odds are in the
+half a percent ballpark. (In the next step, the attacker will attempt
+to produce valid padding. If by pure chance they happen to already
+have valid padding, they can simply skip that step.)
 
 #+BEGIN_LATEX
 \begin{figure}[ht!]
