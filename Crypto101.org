@@ -2610,6 +2610,141 @@ and a hash function.
 
 TODO: explain HMAC
 
+
+*** <<<One-time MACs>>>
+
+So far, we've always assumed that MAC functions can be used with a
+single key to produce secure MACs for a very large number of messages.
+By contrast, one-time MACs are MAC functions that can only securely be
+used once with a single key. That might sound like a silly idea, since
+we've already talked about regular secure MACs. An algorithm that only
+works once just seems objectively worse. However, they have several big
+advantages:
+
+ - They can be incredibly fast to evaluate, even for very large
+   messages.
+ - They have a compelling security proof based on the information
+   content of the tag.
+ - A construction exists to turn a one-time MAC into a secure
+   multiple-use MAC, removing the principal problem.
+
+A typical simple example of such one-time MACs consists of a simple
+multiplication and addition modulo some large prime $p$. In this case,
+the secret key consists of two truly random numbers $a$ and $b$, both
+between 1 and $p$.
+
+#+BEGIN_LATEX
+\[
+t = m \cdot a + b \pmod p
+\]
+#+END_LATEX
+
+This simple example only works for one-block messages $m$, and some
+prime $p$ slightly bigger than the biggest $m$. It can be extended to
+support bigger messages $M$ consisting of blocks $m_i$ by using a
+message-specific polynomial $P$:
+
+#+BEGIN_LATEX
+  \[
+  t = \underbrace{(m_i \cdot a^i + \cdots + m_1 \cdot a)}_{P(M, a)} + b \pmod p
+  \]
+#+END_LATEX
+
+In many ways, a one-time MAC is to authentication what a one-time pad
+is to encryption. The security argument is similar: because an
+attacker learns no information about the key or the message, because
+they are being mixed irreversibly. This demonstrates that the MAC is
+secure against attackers trying to produce existential forgeries, even
+when that attacker has infinite computational power.
+
+Also like a one-time pad, the security argument relies on two very
+important properties about the keys $a, b$:
+
+ - They have to be truly random.
+ - They have to be used at most once.
+
+**** Re-using $a$ and $b$
+
+We'll illustrate that our example MAC is insecure if used to authenticate
+two messages $m_1, m_2$ with the same key $(a, b)$:
+
+#+BEGIN_LATEX
+  \begin{align*}
+  t_1 &= m_1 \cdot a + b \pmod p \\
+  t_2 &= m_2 \cdot a + b \pmod p
+  \end{align*}
+#+END_LATEX
+
+An attacker can reconstruct $a, b$ with some simple arithmetic,
+starting by subtracting the two equations:
+
+#+BEGIN_LATEX
+  \begin{align*}
+    t_1 - t_2 &= (m_1 \cdot a + b) - (m_2 \cdot a + b) \pmod p \\
+    &\Downarrow \text{(remove parentheses)} \\
+    t_1 - t_2 &= m_1 \cdot a + b - m_2 \cdot a - b \pmod p \\
+    &\Downarrow \text{($b$ and $-b$ cancel out)} \\
+    t_1 - t_2 &= m_1 \cdot a + m_2 \cdot a \pmod p \\
+    &\Downarrow \text{(factor out $a$)} \\
+    t_1 - t_2 &= a \cdot (m_1 + m_2) \pmod p \\
+    &\Downarrow \text{(flip sides, multiply by inverse of $(m_1 + m_2)$)} \\
+    a &= (t_1 - t_2)(m_1 + m_2)^{-1} \pmod p
+  \end{align*}
+#+END_LATEX
+
+The attacker has a direct way of computing $a$, allowing them to plug
+it into either the equation for $t_1$ or $t_2$ to get $b$:
+
+#+BEGIN_LATEX
+  \begin{align*}
+  t_1 &= m_1 \cdot a + b \pmod p \\
+  &\Downarrow \text{(reorder terms)}\\
+  b &= t_1 - m_1 \cdot a \pmod p
+  \end{align*}
+#+END_LATEX
+
+*** Carter-Wegman MACs
+
+As we've already stated, the obvious problem with [[One-time MACs][one-time MACs]] is
+their limited practicality. Fortunately, it turns out that there is a
+construction, called a Carter-Wegman MAC, that turns any secure
+one-time MAC into a secure many-time MAC while preserving most of the
+performance benefit.
+
+The idea behind a Carter-Wegman MAC is that you can use a one-time MAC
+$O$ to produce a tag for the bulk of the data, and then encrypt a
+nonce $n$ with a pseudorandom function $F$, such as a block cipher, to
+protect that one-time tag:
+
+#+BEGIN_LATEX
+  \[
+  CW((k_1, k_2), n, M) = F(k_1, n) \xor O(k_2, M)
+  \]
+#+END_LATEX
+
+Keep in mind that while Carter-Wegman MACs take two distinct keys $k1$
+and $k2$, and that Carter-Wegman MACs are related to one-time MACs
+which also take two distinct keys, these keys are unrelated. The
+Carter-Wegman MAC's $k_2$ is the only input here to the fast one-time
+MAC $O$. If that fast one-time MAC is our earlier example that takes
+two keys, that $k_2$ would have to get split up into those two keys.
+
+You can tell how a Carter-Wegman MAC exploits the benefits of both
+kinds of MACs by considering the two terms of the equation separately.
+In $F(k_1, n)$, $F$ is just a regular pseudorandom function, such as a
+block cipher. It is quite slow by comparison to the one-time MAC.
+However, its input, the nonce, is very small. The unpredictable output
+of the block cipher masks the output of the one-time MAC. In the
+second term, $O(k_2, M)$, the large input message $M$ is only handled
+by the very fast one-time MAC $O$.
+
+These constructions, in particular Poly1305-AES, currently represent
+some of the state of the art in MAC functions. The paper (\cite{umac})
+and RFC (\cite{rfc4418}) for an older, related MAC function called
+UMAC may also be good sources of extra background information, since
+they go into extensive details of the hows and whys of a practical
+Carter-Wegman MAC.
+
 *** Authenticated encryption modes
 
 So far, we've always clearly distinguished encryption from
