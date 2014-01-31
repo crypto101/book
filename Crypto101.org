@@ -2546,10 +2546,10 @@ important cryptographic primitives. They just happen to be commonly
 ** Message authentication codes
 *** Description
 
-A message authentication code, usually called MAC or a tag, is a small
-code that can be used to check the authenticity and the integrity of a
-message. A MAC algorithm takes a message of arbitrary length and a
-secret key of fixed length, and produces the MAC.
+A \Gls{MAC} is a small bit of information that can be used to check
+the authenticity and the integrity of a message. These codes are often
+called "tags". A MAC algorithm takes a message of arbitrary length and
+a secret key of fixed length, and produces the tag.
 
 Note that we say "message" here, which is intentionally ambiguous.
 While in this book we're only considering MACs as a way to achieve
