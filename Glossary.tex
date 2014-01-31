@@ -4,6 +4,7 @@
 \newacronym{CBC}{CBC}{Cipher Block Chaining}
 \newacronym{DES}{DES}{Data Encryption Standard}
 \newacronym{FIPS}{FIPS}{Federal Information Processing Standards}
+\newacronym{GCM}{GCM}{Galois Counter Mode}
 \newacronym{HKDF}{HKDF}{HMAC-based (Extract-and-Expand) Key Derivation Function}
 \newacronym{HSTS}{HSTS}{HTTP Strict Transport Security}
 \newacronym{IV}{IV}{\gls{initialization vector}}
@@ -54,6 +55,11 @@
   many cryptographic protocols. Generally does not have to be secret
   or unpredictable, but does have to be unique.
   Compare \gls{initialization vector}, \gls{salt}} }
+\newglossaryentry{GCM mode}{
+  name=GCM mode, description={Galois Counter Mode; \gls{block
+  cipher} \gls{mode of operation} that combines encryption and
+  authentication simultaneously. Combination of \gls{CTR mode} with
+  a Carter-Wegman MAC.}}
 \newglossaryentry{salt}{
   name=salt, description={Random data that is added to a cryptographic
   primitive (usually a one-way function such as a cryptographic hash
