@@ -10,6 +10,7 @@
 \newacronym{IV}{IV}{\gls{initialization vector}}
 \newacronym{KDF}{KDF}{key derivation function}
 \newacronym{MAC}{MAC}{message authentication code}
+\newacronym{OCB}{OCB}{offset codebook}
 \newacronym{PRF}{PRF}{pseudorandom function}
 \newacronym{PRP}{PRP}{pseudorandom permutation}
 
@@ -56,6 +57,15 @@
   many cryptographic protocols. Generally does not have to be secret
   or unpredictable, but does have to be unique.
   Compare \gls{initialization vector}, \gls{salt}} }
+\newglossaryentry{AEAD mode of operation}{
+  name=AEAD mode of operation, description={class of \gls{block
+  cipher} \glspl{mode of operation} that combines encryption and
+  authentication and additionally authenticates some (unencrypted)
+  associated data}}
+\newglossaryentry{OCB mode}{
+  name=OCB mode, description={Offset codebook mode;
+  high-performance \gls{AEAD mode of operation}, unfortunately
+  encumbered by patents} }
 \newglossaryentry{GCM mode}{
   name=GCM mode, description={Galois Counter Mode; \gls{block
   cipher} \gls{mode of operation} that combines encryption and
