@@ -2767,11 +2767,59 @@ Carter-Wegman MAC.
 *** Authenticated encryption modes
 
 So far, we've always clearly distinguished encryption from
-authentication, and explained the need for both. Some modes of
-operation of block ciphers allow for simultaneous encryption and
-authentication.
+authentication, and explained the need for both. The majority of
+secure connections that are set up every day have that distinction as
+well: they treat encryption and authentication as fundamentally
+different steps.
 
-TODO: explain more about authenticating encryption
+TODO: talk about modes
+
+As we've already seen, many of the methods of composing authentication
+and encryption are inherently insecure. By doing that in a fixed,
+secure way such as a properly designed authenticated encryption mode,
+an application developer no longer has to make that choice; which
+means they also can't make the wrong one.
+
+**** \Gls{AEAD}
+
+\Gls{AEAD} is a feature of certain kinds of authenticated encryption.
+It starts with the premise that many messages actually consist of two
+parts:
+
+- The actual content itself
+- Metadata: data /about/ the content
+
+Consider an e-mail alternative as an example cryptosystem. The
+metadata about the content might contain the intended recipient. We
+definitely want to encrypt and authenticate the content itself, so
+that only the recipient can read it. The metadata, however, has to be
+in plaintext: the e-mail servers performing the message delivery have
+to know which recipient to send the message to.
+
+Many systems would leave this metadata unauthenticated, allowing
+attackers to modify it. In our case, that looks like it may just lead
+to messages being delivered to the wrong inbox. That also means that
+an attacker can force e-mail to be delivered to the wrong person, or
+not delivered at all.
+
+\Gls{AEAD} modes address this issue by providing a specified way to
+add metadata to encrypted content, so that the whole of the encrypted
+content and the metadata is authenticated, and not the two pieces
+separately:
+
+TODO: illustrate.
+
+Because the authentication here applies to the entire message, invalid
+messages, such as messages that have been tampered with, can be
+immediately discarded.
+
+*** <<<OCB mode>>>
+
+OCB mode is an \gls{AEAD} mode of operation.
+
+*** <<<GCM mode>>>
+
+\Gls{GCM mode}
 
 ** Signature algorithms
 *** Description
