@@ -2815,7 +2815,30 @@ immediately discarded.
 
 *** <<<OCB mode>>>
 
-OCB mode is an \gls{AEAD} mode of operation.
+OCB mode is an \gls{AEAD} mode of operation. It is one of the earliest
+developed \gls{AEAD} modes.
+
+This design has a number of interesting properties:
+
+- It is fully parallelizable; only the final authentication tag is
+  dependent on all the preceding information.
+- It is quite performant; it only requires one block cipher operation
+  per encrypted or associate data block, as well as one additional
+  block cipher operation for the final tag. The offsets ($\Delta_i$)
+  are also extremely easy to compute.
+
+OCB mode also comes with a built-in padding scheme: it behaves
+slightly differently when the plaintexts or authentication text is not
+exactly a multiple of the block size. This means that, unlike with
+PKCS#5/PKCS#7 padding, there isn't an entire block of "wasted" padding
+if the plaintext happens to be a multiple of the block size.
+
+Despite having several interesting properties going for it, OCB mode
+has not received as much attention as some of the alternatives; one of
+the main reasons being that it is patent encumbered. Even though a
+number of patent licenses are available\cite{ocb:license}, including a
+free-of-charge one for open source software, this does not appear to
+have significantly impacted how much OCB mode is used in the field.
 
 *** <<<GCM mode>>>
 
