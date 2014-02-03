@@ -20,6 +20,10 @@
 #+LATEX_CLASS_OPTIONS: [11pt,ebook,table,dvipsnames]
 #+LATEX_HEADER: \input{Header}
 
+#+BEGIN_LATEX
+\OnehalfSpacing
+#+END_LATEX
+
 * Foreword
 ** About this book
 
