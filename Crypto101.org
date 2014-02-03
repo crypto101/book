@@ -2782,12 +2782,17 @@ means they also can't make the wrong one.
 
 **** \Gls{AEAD}
 
-\Gls{AEAD} is a feature of certain kinds of authenticated encryption.
-It starts with the premise that many messages actually consist of two
-parts:
+\Gls{AEAD} is a feature of certain modes of authenticated encryption.
+Such modes of operation are called \glspl{AEAD mode}. It starts with
+the premise that many messages actually consist of two parts:
 
 - The actual content itself
 - Metadata: data /about/ the content
+
+In many cases the metadata should be plaintext, but the content itself
+should be encrypted. The entire message should be authenticated: it
+should not be possible for an attacker to mess with the metadata and
+have the resulting message still be considered valid.
 
 Consider an e-mail alternative as an example cryptosystem. The
 metadata about the content might contain the intended recipient. We
@@ -2816,7 +2821,7 @@ immediately discarded.
 *** <<<OCB mode>>>
 
 OCB mode is an \gls{AEAD} mode of operation. It is one of the earliest
-developed \gls{AEAD} modes.
+developed \glspl{AEAD mode}.
 
 This design has a number of interesting properties:
 
