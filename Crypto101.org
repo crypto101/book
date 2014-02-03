@@ -2726,6 +2726,12 @@ it into either the equation for $t_1$ or $t_2$ to get $b$:
   \end{align*}
 #+END_LATEX
 
+As you can see, as with one-time pads, re-using the key even once
+leads to a complete failure of the cryptosystem to preserve privacy or
+integrity, as the case may be. As a result, one-time MACs are a bit
+dangerous to use directly; but we'll see that with the appropriate
+construction, that issue can be remedied.
+
 *** Carter-Wegman MACs
 
 As we've already stated, the obvious problem with [[One-time MACs][one-time MACs]] is
