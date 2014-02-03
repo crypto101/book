@@ -11,12 +11,29 @@
 \usepackage{amsmath}
 \newcommand\xor{\oplus}
 
+% Advanced command definitions
+\usepackage{xparse}
+
 % Figures and subfigures
 \usepackage{subcaption}
 \usepackage{array}
 \usepackage{calc}
 \newcolumntype{C}[1]{>{\centering\arraybackslash$}p{#1}<{$}}
 \usepackage[export]{adjustbox}
+
+% Fancy figure command
+\DeclareDocumentCommand{\illustration}{
+   O{.8} % width as fraction of line width, optional
+   o     % caption, optional
+   o     % label, optional
+   m     % sub-path to illustration, /Illustrations/{this}.pdf, mandatory
+  }{
+  \begin{figure}[ht!]
+    \centering
+    \includegraphics[width=#1\linewidth]{./Illustrations/#3.pdf}
+    \IfValueTF{#2}{\caption{#2}}{}
+  \end{figure}
+}
 
 % Colors, links, syntax highlighting
 \usepackage[dvipsnames,table]{xcolor}
