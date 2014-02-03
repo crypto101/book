@@ -2812,7 +2812,7 @@ add metadata to encrypted content, so that the whole of the encrypted
 content and the metadata is authenticated, and not the two pieces
 separately:
 
-\illustration{AEAD/AEAD}
+\illustration{AEAD/AEAD}[.4]
 
 Because the authentication here applies to the entire message, invalid
 messages, such as messages that have been tampered with, can be
