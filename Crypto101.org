@@ -2823,14 +2823,27 @@ immediately discarded.
 OCB mode is an \gls{AEAD} mode of operation. It is one of the earliest
 developed \glspl{AEAD mode}.
 
-This design has a number of interesting properties:
+\illustration{OCB/Encryption}[.6]
 
-- It is fully parallelizable; only the final authentication tag is
-  dependent on all the preceding information.
-- It is quite performant; it only requires one block cipher operation
-  per encrypted or associate data block, as well as one additional
-  block cipher operation for the final tag. The offsets ($\Delta_i$)
-  are also extremely easy to compute.
+As you can see, most of this scheme looks quite similar to [[ECB%20mode][ECB mode]].
+The name \gls{OCB} is quite similar to electronic codebook, as well.
+OCB does not share the security issues ECB mode has, of course; there
+are several important differences, such as the offsets $\Delta_i$
+introduced in each individual block encryption. Additionally, there is
+an authentication tag $t$, built from $x$, a simple checksum over the
+plaintext as well as $t_a$, which authenticates the \gls{AEAD}
+associated data. That associated data tag $t_a$ is computed as
+follows:
+
+\illustration{OCB/Auth}[.4]
+
+This design has a number of interesting properties. For example, it is
+very fast: only requiring roughly one block cipher operation per
+encrypted or associate data block, as well as one additional block
+cipher operation for the final tag. The offsets ($\Delta_i$) are also
+extremely easy to compute. It is easy to compute in parallel; only the
+final authentication tag is dependent on all the preceding
+information.
 
 OCB mode also comes with a built-in padding scheme: it behaves
 slightly differently when the plaintexts or authentication text is not
