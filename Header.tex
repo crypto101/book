@@ -23,15 +23,16 @@
 
 % Fancy figure command
 \DeclareDocumentCommand{\illustration}{
+   m     % sub-path to illustration, /Illustrations/{this}.pdf, mandatory
    O{.8} % width as fraction of line width, optional
    o     % caption, optional
    o     % label, optional
-   m     % sub-path to illustration, /Illustrations/{this}.pdf, mandatory
   }{
   \begin{figure}[ht!]
     \centering
-    \includegraphics[width=#1\linewidth]{./Illustrations/#3.pdf}
-    \IfValueTF{#2}{\caption{#2}}{}
+    \includegraphics[width=#2\linewidth]{./Illustrations/#1.pdf}
+    \IfValueTF{#3}{\caption{#3}}{}
+    \IfValueTF{#4}{\label{#4}}{}
   \end{figure}
 }
 
