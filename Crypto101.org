@@ -2732,7 +2732,7 @@ integrity, as the case may be. As a result, one-time MACs are a bit
 dangerous to use directly; but we'll see that with the appropriate
 construction, that issue can be remedied.
 
-*** Carter-Wegman MACs
+*** <<<Carter-Wegman MAC>>>
 
 As we've already stated, the obvious problem with one-time MACs is
 their limited practicality. Fortunately, it turns out that there is a
