@@ -4208,8 +4208,6 @@ compression on the channel that actually contains secrets. It makes
 things slower, of course, but at least the majority of data can still
 be served over a CDN.
 
-**** Lucky 13
-
 *** HSTS
 
 \Gls{HSTS} is a way for web servers to communicate that what they're
