@@ -3391,8 +3391,6 @@ numbers. Shot noise is based on the fact that light and electricity
 are caused by the movement of indivisible little packets: photons in
 the case of light, and electrons in the case of electricity.
 
-TODO: more about shot noise
-
 **** Nyquist noise
 
 An example of a thermal process used to produce random numbers is
