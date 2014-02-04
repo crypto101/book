@@ -4398,15 +4398,16 @@ do with TLS.
 ** Off-The-Record Messaging (<<<OTR>>>)
 *** Description
 
-OTR is a protocol for securing instant messaging communication between
-people. \cite{borisov:otr} It intends to be the online equivalent of a
-private, real-life conversation. It encrypts messages, preventing
-eavesdroppers from reading them. It also authenticates peers to each
-other, so they know who they're talking to. Despite authenticating
-peers, it is designed to be deniable: participants can later deny to
-third parties anything they said to each other. It is also designed to
-have perfect forward secrecy: even a compromise of a long-term public
-key pair doesn't compromise any previous conversations.
+\Gls{OTR} messaging is a protocol for securing instant messaging
+communication between people\cite{borisov:otr}. It intends to be the
+online equivalent of a private, real-life conversation. It encrypts
+messages, preventing eavesdroppers from reading them. It also
+authenticates peers to each other, so they know who they're talking
+to. Despite authenticating peers, it is designed to be deniable:
+participants can later deny to third parties anything they said to
+each other. It is also designed to have perfect forward secrecy: even
+a compromise of a long-term public key pair doesn't compromise any
+previous conversations.
 
 The deniability and perfect forward secrecy properties are very
 different from those of other systems such as PGP. PGP intentionally
