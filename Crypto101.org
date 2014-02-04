@@ -2617,10 +2617,6 @@ essentially leading to a similar problem to what we saw with
 
 TODO: Explain how this works in SSH (see Moxie's Doom article)
 
-*** A naive attempt with hash functions
-
-TODO: Explain prefix-MAC, explain why it's broken
-
 *** <<<HMAC>>>
 
 HMAC is a standard to produce a MAC with a cryptographic hash function
@@ -2632,7 +2628,6 @@ provably secure MAC that didn't require anything beyond a secret key
 and a hash function.
 
 TODO: explain HMAC
-
 
 *** <<<One-time MACs>>>
 
