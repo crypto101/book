@@ -4410,14 +4410,14 @@ a compromise of a long-term public key pair doesn't compromise any
 previous conversations.
 
 The deniability and perfect forward secrecy properties are very
-different from those of other systems such as PGP. PGP intentionally
-guarantees non-repudiability. It's a great property if you're signing
-software packages, talking on mailing lists or signing business
-invoices, but the authors of OTR argue that those aren't desirable
-properties for the online equivalent of one-on-one conversations.
-Furthermore, PGP's static model of communication makes the constant
-key renegotiation to facilitate OTR's perfect forward secrecy
-impossible.
+different from those of other systems such as OpenPGP. OpenPGP
+intentionally guarantees non-repudiability. It's a great property if
+you're signing software packages, talking on mailing lists or signing
+business invoices, but the authors of OTR argue that those aren't
+desirable properties for the online equivalent of one-on-one
+conversations. Furthermore, OpenPGP's static model of communication
+makes the constant key renegotiation to facilitate OTR's perfect
+forward secrecy impossible.
 
 OTR is typically configured opportunistically, which means that it
 will attempt to secure any communication between two peers, if both
