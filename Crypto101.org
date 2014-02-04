@@ -4509,17 +4509,18 @@ modulus, in this case, is 12. We can write the above equations as:
 
 #+BEGIN_LATEX
 \[
-10 + 4 = 2 \pmod{12}
+(10 + 4) \bmod{12} = 2
 \]
 \[
-2 - 5 = 9 \pmod{12}
+(2 - 5) \bmod{12} = 9
 \]
 #+END_LATEX
 
-In these equations, the $\pmod$ is an operator, giving the remainder
+In these equations, the $\bmod$ is an operator, giving the remainder
 after division. When we are dealing with modular arithmetic, where all
-operations are affected by the modulus and it's not a simple single
-operation, we'll write the equations differently:
+operations are affected by the modulus instead of a simple single
+operation, we'll write $\negthickspace\pmod{12}$ at the end of the
+equation:
 
 #+BEGIN_LATEX
 \[
