@@ -4315,7 +4315,7 @@ TODO: say stuff we generally want from TLS configurations
 
 TODO: http://tools.ietf.org/html/draft-agl-tls-chacha20poly1305-01
 
-** OpenPGP and GPG
+** <<<OpenPGP>>> and <<<GPG>>>
 
 *** Description
 
