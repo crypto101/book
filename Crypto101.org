@@ -2827,18 +2827,14 @@ add metadata to encrypted content, so that the whole of the encrypted
 content and the metadata is authenticated, and not the two pieces
 separately:
 
-\illustration{AEAD/AEAD}[.4]
-
-Because the authentication here applies to the entire message, invalid
-messages, such as messages that have been tampered with, can be
-immediately discarded.
+\illustration{AEAD/AEAD}[.6]
 
 *** <<<OCB mode>>>
 
 OCB mode is an \gls{AEAD} mode of operation. It is one of the earliest
 developed \glspl{AEAD mode}.
 
-\illustration{OCB/Encryption}[.6]
+\illustration{OCB/Encryption}[.7]
 
 As you can see, most of this scheme looks quite similar to [[ECB%20mode][ECB mode]].
 The name \gls{OCB} is quite similar to electronic codebook, as well.
@@ -2850,7 +2846,7 @@ plaintext as well as $t_a$, which authenticates the \gls{AEAD}
 associated data. That associated data tag $t_a$ is computed as
 follows:
 
-\illustration{OCB/Auth}[.4]
+\illustration{OCB/Auth}[.5]
 
 This design has a number of interesting properties. For example, it is
 very fast: only requiring roughly one block cipher operation per
