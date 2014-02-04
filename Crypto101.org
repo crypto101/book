@@ -4426,7 +4426,14 @@ instant messaging clients either directly, or with a plugin. Because
 it works over instant messages, it can be used across many different
 instant messaging protocols.
 
-TOOD: Explain whitespace tags (https://otr.cypherpunks.ca/Protocol-v3-4.0.0.html)
+A peer can signal that they would like to speak OTR with an explicit
+message, called the OTR Query message. If the peer is just willing to
+speak OTR but doesn't require it, they can optionally invisibly add
+that information to a plaintext message. That happens with a clever
+system of whitespace tags: a bunch of whitespace such as spaces and
+tab characters are used to encode that information. An OTR-capable
+client can interpret that tag and start an OTR conversation; an client
+that isn't OTR-capable just displays some extra whitespace.
 
 OTR uses many of the primitives we've seen so far:
 
