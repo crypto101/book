@@ -4395,7 +4395,7 @@ nothing stopping you from shipping a particular public key with some
 software, and using that to sign messages, just like you might want to
 do with TLS.
 
-** Off-The-Record Messaging (OTR)
+** Off-The-Record Messaging (<<<OTR>>>)
 *** Description
 
 OTR is a protocol for securing instant messaging communication between
