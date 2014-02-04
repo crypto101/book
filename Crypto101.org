@@ -2782,13 +2782,18 @@ secure connections that are set up every day have that distinction as
 well: they treat encryption and authentication as fundamentally
 different steps.
 
-TODO: talk about modes
+Alternatively, we could make authentication a fundamental part of the
+mode of operation. After all, we've already seen that unauthenticated
+encryption is virtually never what you want; it is, at best, something
+you occasionally have to live with. It makes sense to use
+constructions that not only guarantee the privacy of an arbitrary
+stream, but also its integrity.
 
 As we've already seen, many of the methods of composing authentication
 and encryption are inherently insecure. By doing that in a fixed,
 secure way such as a properly designed authenticated encryption mode,
-an application developer no longer has to make that choice; which
-means they also can't make the wrong one.
+an application developer no longer has to make that choice, which
+means they also can't inadvertently make the /wrong/ choice.
 
 **** \Gls{AEAD}
 
