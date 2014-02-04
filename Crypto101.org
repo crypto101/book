@@ -4118,7 +4118,6 @@ distinct categories:
 Unfortunately, SSL/TLS has had many successful attacks in both
 categories. This section is particularly about the latter.
 
-**** <<<BEAST>>>
 **** <<<CRIME>>> and BREACH
 
 CRIME[fn::Compression Ratio Info-leak Made Easy] is an attack by the
