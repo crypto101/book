@@ -2867,7 +2867,16 @@ have significantly impacted how much OCB mode is used in the field.
 
 *** <<<GCM mode>>>
 
-\Gls{GCM mode}
+GCM mode is an \gls{AEAD mode} with an unfortunate case of RAS
+syndrome (redundant acronym syndrome): GCM itself stands for "Galois
+Counter Mode". It is formalized in a NIST Special
+Publication\cite{gcm} and roughly boils down to a combination of
+classical CTR mode with a Carter-Wegman MAC. That MAC can be used by
+itself as well, which is called \gls{GMAC}.
+
+**** Authentication
+
+GCM mode (and by extension GMAC)
 
 ** Signature algorithms
 *** Description
