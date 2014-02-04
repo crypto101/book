@@ -2734,7 +2734,7 @@ construction, that issue can be remedied.
 
 *** Carter-Wegman MACs
 
-As we've already stated, the obvious problem with [[One-time MACs][one-time MACs]] is
+As we've already stated, the obvious problem with one-time MACs is
 their limited practicality. Fortunately, it turns out that there is a
 construction, called a Carter-Wegman MAC, that turns any secure
 one-time MAC into a secure many-time MAC while preserving most of the
