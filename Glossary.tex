@@ -40,14 +40,14 @@
 \newglossaryentry{CBC mode}{
   name=CBC mode, description={Cipher block chaining mode; common mode
   of operation where the previous ciphertext block is XORed with the
-  plaintext block during encryption. Uses an \gls{initialization
-  vector} to fill the role of the ``previous'' ciphertext block for
-  encrypting the first ciphertext block} }
+  plaintext block during encryption. Takes an initialization vector,
+  which assumes the role of the \enquote{block before the first
+  block}}}
 \newglossaryentry{initialization vector}{
   name=initialization vector, description={Data used to initialize
-  some algorithms, e.g. takes the role of the ``block before the first
-  block'' in \gls{CBC mode}. Generally not required to be secret, but
-  required to be unpredictable. Compare \gls{nonce}, \gls{salt}} }
+  some algorithms such as \gls{CBC mode}. Generally not required to be
+  secret, but required to be unpredictable.
+  Compare \gls{nonce}, \gls{salt}} }
 \newglossaryentry{CTR mode}{
   name=CTR mode, description={Counter mode; a \gls{nonce} combined
   with a counter produces a sequence of inputs to the block cipher;
@@ -113,8 +113,8 @@
 \newglossaryentry{key agreement}{
   name=key agreement, description={See \gls{key exchange}}}
 \newglossaryentry{oracle}{
-  name=oracle, description={A ``black box'' that will perform some
-  computation for you}}
+  name=oracle, description={A \enquote{black box} that will perform
+  some computation for you}}
 \newglossaryentry{encryption oracle}{
   name=encryption oracle, description={An \gls{oracle} that will
   encrypt some data}}
