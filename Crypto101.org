@@ -4443,12 +4443,11 @@ OTR uses many of the primitives we've seen so far:
 
 **** Authenticated key exchange (AKE)
 
-TODO: Explain (https://otr.cypherpunks.ca/Protocol-v3-4.0.0.html)
+TODO: Explain (https://otr.cypherpunks.ca/Protocol-v3-4.0.0.html), #33
 
 **** Data exchange
 
-TODO: Explain (https://otr.cypherpunks.ca/Protocol-v3-4.0.0.html)
-
+TODO: Explain (https://otr.cypherpunks.ca/Protocol-v3-4.0.0.html), #33
 
 * Appendices
 #+BEGIN_LATEX
