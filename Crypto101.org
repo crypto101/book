@@ -3500,9 +3500,6 @@ expected to be state-of-the-art, while still staying conservative.
 Elliptic curves had been considered before in an academic context, but
 that was a far cry from being suggested as a standard for common use.
 
-(TODO: double check? just because I haven't heard of it doesn't mean
-it doesn't exist :))
-
 There is a second reason elliptic curves seem strange. HMAC and block
 ciphers are obviously symmetric algorithms. Hash functions have their
 applications in asymmetric algorithms such as digital signatures, but
