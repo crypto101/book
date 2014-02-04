@@ -2731,14 +2731,14 @@ construction, that issue can be remedied.
 
 As we've already stated, the obvious problem with one-time MACs is
 their limited practicality. Fortunately, it turns out that there is a
-construction, called a Carter-Wegman MAC, that turns any secure
+construction, called a \gls{Carter-Wegman MAC}, that turns any secure
 one-time MAC into a secure many-time MAC while preserving most of the
 performance benefit.
 
-The idea behind a Carter-Wegman MAC is that you can use a one-time MAC
-$O$ to produce a tag for the bulk of the data, and then encrypt a
-nonce $n$ with a pseudorandom function $F$, such as a block cipher, to
-protect that one-time tag:
+The idea behind a \gls{Carter-Wegman MAC} is that you can use a
+one-time MAC $O$ to produce a tag for the bulk of the data, and then
+encrypt a nonce $n$ with a pseudorandom function $F$, such as a block
+cipher, to protect that one-time tag:
 
 #+BEGIN_LATEX
   \[
