@@ -1967,7 +1967,7 @@ complexity:
 
 #+BEGIN_LATEX
 \[
-O\left(\exp\left(\left(\frac{64}{9} n\right)^{\frac{1}{3}} (\log n)^{\frac{2}{3}}\right)\right)
+O\left(\exp\left(\left(\frac{64}{9} \log n\right)^{\frac{1}{3}} (\log \log n)^{\frac{2}{3}}\right)\right)
 \]
 #+END_LATEX
 
