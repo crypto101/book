@@ -1,22 +1,24 @@
 # LaTeX build process artifacts
+*.acn
+*.acr
+*.alg
+*.aux
 *.bbl
 *.blg
 *.fdb_latexmk
 *.fls
-Crypto101.pdf
-Illustrations/*/*.pdf
-*.acn
-*.acr
-*.alg
 *.glg
 *.glo
 *.gls
+*.idx
 *.ilg
 *.ind
 *.ist
-*.aux
-*.idx
 *.log
 *.out
-Crypto101.tex
 *.toc
+# Book, rendered or partially rendered
+Crypto101.pdf
+Crypto101.tex
+# Illustrations, vectorized
+Illustrations/*/*.pdf
