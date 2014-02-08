@@ -4007,13 +4007,13 @@ these algorithms, anyone can generate as many key pairs as they'd
 like. There's nothing stopping someone from generating a key pair
 pretending to be your bank
 
-When someone actually tries to use a certificate to impersonate a bank,
-real browsers don't believe you. They notify the user that the
-certificate is untrusted. They do this using TLS' standard trust model
-of certificate authorities. TLS clients come with a list of trusted
-certificate authorities, commonly shipped with your operating system
-or your browser. These are special, trusted certificates, that are
-carefully guarded by their owners.
+When someone actually tries to use a certificate to impersonate a
+bank, real browsers don't believe you. They notify the user that the
+certificate is untrusted. They do this using the standard TLS trust
+model of certificate authorities. TLS clients come with a list of
+trusted certificate authorities, commonly shipped with your operating
+system or your browser. These are special, trusted certificates, that
+are carefully guarded by their owners.
 
 For a fee, these owners will use their certificate authority to sign
 other certificates. The idea is that the certificate authority
