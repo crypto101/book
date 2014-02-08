@@ -2,20 +2,28 @@
 #+DESCRIPTION: An introduction to cryptography for programmers
 
 #+BEGIN_SRC emacs-lisp :results silent :exports results
-(unless (find "per-file-class" org-latex-classes :key 'car :test 'equal)
-  (add-to-list 'org-latex-classes
-           '("per-file-class"
-              "\\documentclass{memoir}"
-              ("\\part{%s}" . "\\part{%s}")
-              ("\\chapter{%s}" . "\\chapter*{%s}")
-              ("\\section{%s}" . "\\section*{%s}")
-              ("\\subsection{%s}" . "\\subsection*{%s}")
-              ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-              ("\\paragraph{%s}" . "\\paragraph*{%s}")
-              ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+  (unless (find "per-file-class" org-latex-classes :key 'car :test 'equal)
+    (add-to-list 'org-latex-classes
+             '("per-file-class"
+                "\\documentclass{memoir}"
+                ("\\part{%s}" . "\\part{%s}")
+                ("\\chapter{%s}" . "\\chapter*{%s}")
+                ("\\section{%s}" . "\\section*{%s}")
+                ("\\subsection{%s}" . "\\subsection*{%s}")
+                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+  (add-to-list 'org-export-smart-quotes-alist
+               '("en"
+                 (opening-double-quote :utf-8 " " :html "&ldquo;" :latex "\\enquote{" :texinfo "``")
+                 (closing-double-quote :utf-8 " " :html "&rdquo;" :latex "}" :texinfo "''")
+                 (opening-single-quote :utf-8 " " :html "&lsquo;" :latex "\\enquote*{" :texinfo "`")
+                 (closing-single-quote :utf-8 " " :html "&rsquo;" :latex "}" :texinfo "'")
+                 (apostrophe :utf-8 " " :html "&rsquo;")))
 #+END_SRC
 
-#+OPTIONS: H:5
+#+LANGUAGE: en
+#+OPTIONS: H:5 ':t
 #+LATEX_CLASS: per-file-class
 #+LATEX_CLASS_OPTIONS: [11pt,ebook,table,dvipsnames]
 #+LATEX_HEADER: \input{Header}
