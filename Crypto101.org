@@ -4538,8 +4538,8 @@ equation:
 \]
 #+END_LATEX
 
-This is read as "ten plus four is equivalent to two (modulo twelve)"
-and "two minus five is equivalent to nine (modulo twelve)". That might
+This is read as "ten plus four is equivalent to two, modulo twelve"
+and "two minus five is equivalent to nine, modulo twelve". That might
 seems like a trivial notational hack now, but the difference will
 become apparent once we start applying tricks for doing more complex
 modular computations, like multiplication and exponentiation.
