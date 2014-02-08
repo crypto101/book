@@ -1003,9 +1003,9 @@ the cookie. Of course, the website just lets you provide whatever
 value for the user name you want at registration, so the attacker can
 just add a very long string of ~Z~ bytes to their user name. The
 server will happily encrypt such a cookie, giving the attacker an
-encrypted ciphertext that matches a plaintext with many such ~Z~s in
+encrypted ciphertext that matches a plaintext with many such ~Z~ bytes in
 them. The plaintext getting modified will then probably be part of
-that sequence of ~Z~s.
+that sequence of ~Z~ bytes.
 
 An attacker may have some target bytes that he'd like to see in the
 decrypted plaintext, for example, \verb*|;admin=1;|. In order to
