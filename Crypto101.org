@@ -752,7 +752,7 @@ macrostructure of the image remains visible in all but the most
 extreme block sizes. Furthermore, all but the smallest of these block
 sizes are unrealistically large. For an uncompressed bitmap with three
 color channels of 8 bit depth, each pixel takes 24 bits to store.
-Since AES' block size is only 128 bits, that would equate to
+Since the block size of AES is only 128 bits, that would equate to
 $5.\overline{3}$ pixels [fn::The line over the $3$ in $5.\overline{3}$
 means it repeats, so the value is $5.333\ldots$.] per block,
 significantly less than the larger block sizes in the example. But AES
@@ -993,19 +993,20 @@ An attacker can often control at least part of the plaintext being
 encrypted. In this example, the user name is part of the plaintext of
 the cookie. Of course, the website just lets you provide whatever
 value for the user name you want at registration, so the attacker can
-just add a very long string of "Z" bytes to their user name. The
+just add a very long string of ~Z~ bytes to their user name. The
 server will happily encrypt such a cookie, giving the attacker an
-encrypted ciphertext that matches a plaintext with many such "Z"s in
+encrypted ciphertext that matches a plaintext with many such ~Z~s in
 them. The plaintext getting modified will then probably be part of
-that sequence of "Z"s.
+that sequence of ~Z~s.
 
 An attacker may have some target bytes that he'd like to see in the
 decrypted plaintext, for example, \verb*|;admin=1;|. In order to
 figure out which bytes they should flip (so, the value of $X$ in the
-illustration), they just XOR the filler bytes ("Z") with that target.
-Because two XOR operations with the same value cancel each other out,
-the two filler values ("Z"s) will cancel out, and the attacker can
-expect to see \verb|;admin=1;| pop up in the next ciphertext block:
+illustration), they just XOR the filler bytes (~ZZZ~ \ldots) with that
+target. Because two XOR operations with the same value cancel each
+other out, the two filler values (~ZZZ~ \ldots) will cancel out, and
+the attacker can expect to see \verb|;admin=1;| pop up in the next
+ciphertext block:
 
 #+BEGIN_LATEX
 \begin{eqnarray*}
@@ -4304,7 +4305,7 @@ wide adoption.
 Therefore, good advice necessarily changes over time, and it's
 impossible to do so in a persistent medium such as a book. Instead,
 you should look at continuously updated third party sources such as
-[[https://www.ssllabs.com/][Qualys' SSL Labs]]. They provide tests for both SSL clients and servers,
+[[https://www.ssllabs.com/][Qualys SSL Labs]]. They provide tests for both SSL clients and servers,
 and extensive advice on how to improve configurations.
 
 That said, there are certainly some general things we want from a TLS
