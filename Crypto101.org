@@ -2125,6 +2125,40 @@ As we already mentioned, RSA is one of the first practical
 \gls{public-key encryption} schemes. It remains the most common one
 to this day.
 
+**** Encryption and decryption
+
+RSA encryption and decryption relies on modular arithmetic. You may
+want to review the [[Modular arithmetic][modular arithmetic primer]] before continuing.
+
+In order to generate a key, you pick two large prime numbers $p$ and
+$q$. These numbers have to be picked at random, and in secret. You
+multiply them together to produce the modulus $N$, which is public.
+Then, you pick an /encryption exponent/ $e$, which is also public.
+Usually, this value is either 3 or 65537; because those numbers have
+few ~1~ numbers in their binary expansion, you can compute the
+exponentiation more efficiently. Put together, $(N, e)$ is the public
+key. Anyone can use the public key to encrypt a message $M$ into a
+ciphertext $C$:
+
+#+BEGIN_LATEX
+\[
+C \equiv M^e \pmod{N}
+\]
+#+END_LATEX
+
+The next problem is decryption. It turns out that there is a value
+$d$, the /decryption exponent/, that can turn $C$ back into $M$. That
+value is fairly easy to compute assuming that you know $p$ and $q$,
+which we do. Using $d$, you can decrypt the message like so:
+
+#+BEGIN_LATEX
+\[
+M \equiv C^d \pmod{N}
+\]
+#+END_LATEX
+
+**** Breaking RSA
+
 Like many cryptosystems, RSA relies on the presumed difficulty of a
 particular mathematical problem. For RSA, this is the RSA problem,
 specifically: to find the plaintext message $M$, given a ciphertext
@@ -2137,15 +2171,18 @@ C \equiv M^e \pmod{N}
 #+END_LATEX
 
 The easiest way we know how to do that is to factor $N$ back into $p
-\cdot q$. Given $p$ and $q$, you could just repeat the process of key
-generation. Fortunately, we don't have an algorithm that can factor
-such large numbers in reasonable time. Unfortunately, we also haven't
-proven it doesn't exist. Even more unfortunate, is that we have a
-theoretical algorithm, called Shor's algorithm, that /would/ be able
-to factor such a number in reasonable time, on a quantum computer.
-Right now, quantum computers are far from practical, but it does
-appear that if someone in the future manages to build one that's
-sufficiently large, RSA becomes ineffective.
+\cdot q$. Given $p$ and $q$, you could just repeat the process that
+the legitimate owner of the key does during key generation in order to
+compute the private exponent $d$, and then you've won.
+
+Fortunately, we don't have an algorithm that can factor such large
+numbers in reasonable time. Unfortunately, we also haven't proven it
+doesn't exist. Even more unfortunate, is that we have a theoretical
+algorithm, called Shor's algorithm, that /would/ be able to factor
+such a number in reasonable time, on a quantum computer. Right now,
+quantum computers are far from practical, but it does appear that if
+someone in the future manages to build one that's sufficiently large,
+RSA becomes ineffective.
 
 **** Implementation pitfalls
 
