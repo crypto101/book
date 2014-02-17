@@ -2635,6 +2635,24 @@ authenticated encryption, and therefore the message is always the
 ciphertext, there's nothing inherently wrong with a MAC being applied
 to a plaintext message. Often, a signing algorithm is closer to what
 you actually want, but we'll cover those later.
+**** Secure MACs
+
+We haven't quite defined yet exactly which properties we want from a
+secure MAC.
+
+We will be defending against an active attacker. The attacker will be
+performing a /chosen message attack/. That means that an attacker will
+ask us the tag for any number of messages $m_i$, and we'll answer
+truthfully with the appropriate tag $t_i$.
+
+An attacker will then attempt to produce an /existential forgery/, a
+fancy way of saying that they will produce some new valid combination
+of $(m, t)$. The obvious target for the attacker is the ability to
+produce valid tags $t^{\prime}$ for new messages $m^{\prime}$ of their
+choosing. We will also consider the MAC insecure if an attacker can
+compute a new, different valid tag $t^{\prime}$ for a message $m_i$
+that we previously gave them a valid tag for.
+
 
 *** Combining MAC and message
 
