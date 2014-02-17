@@ -2627,14 +2627,26 @@ important cryptographic primitives. They just happen to be commonly
 A \Gls{MAC} is a small bit of information that can be used to check
 the authenticity and the integrity of a message. These codes are often
 called "tags". A MAC algorithm takes a message of arbitrary length and
-a secret key of fixed length, and produces the tag.
+a secret key of fixed length, and produces the tag. The MAC algorithm
+also comes with a verification algorithm that takes a message, the key
+and a tag, and tells you if the tag was valid or not. (It is not
+always sufficient to just recompute a tag and check if they are the
+same; many secure MAC algorithms are randomized, and will produce
+different tags every time you apply them.)
 
-Note that we say "message" here, which is intentionally ambiguous.
-While in this book we're only considering MACs as a way to achieve
-authenticated encryption, and therefore the message is always the
-ciphertext, there's nothing inherently wrong with a MAC being applied
-to a plaintext message. Often, a signing algorithm is closer to what
-you actually want, but we'll cover those later.
+Note that we say "message" here instead of "plaintext" or
+"ciphertext". This ambiguity is intentional. In this book we're mostly
+interested in MACs as a way to achieve authenticated encryption, so
+the message will always be a ciphertext. That said, there's nothing
+wrong with a MAC being applied to a plaintext message. In fact, we
+will be seeing examples of secure authenticated encryption schemes
+that explicitly allow for authenticated (but not encrypted)
+information to be sent along with the authenticated ciphertext.
+
+Often, when you just want to talk about the authenticity and integrity
+of a particular plaintext message, it may be more practical to use a
+/signing algorithm/, which we'll talk about in a later chapter.
+
 **** Secure MACs
 
 We haven't quite defined yet exactly which properties we want from a
