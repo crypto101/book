@@ -86,6 +86,31 @@ This book hopes to be a bridge: to teach everyday programmers from any
 field or specialization to understand just enough cryptography to do
 their jobs, or maybe just satisfy their appetite.
 
+** Development
+
+The entire Crypto 101 project is publicly developed on Github under the
+~crypto101~ organization, including [[https://www.github.com/crypto101/book][this book]].
+
+This is an early pre-release of this book. All of your questions,
+comments and bug reports are highly appreciated. If you don't
+understand something after reading it, or a sentence is particularly
+clumsily worded, /that's a bug/ and I would very much like to fix it!
+Of course, if I never hear about your issue, it's very hard for me to
+address...
+
+#+NAME: gitcommit
+#+BEGIN_SRC emacs-lisp :exports none :tangle no
+  (substring (shell-command-to-string "git rev-parse HEAD") 0 -1)
+#+END_SRC
+
+#+NAME: gitdesc
+#+BEGIN_SRC emacs-lisp :exports none :tangle no
+  (substring (shell-command-to-string "git describe") 0 -1)
+#+END_SRC
+
+The copy of this book that you are reading right now is based on the
+git commit with hash call_gitcommit() and description call_gitdesc().
+
 ** Acknowledgments
 
 Various people have made this book possible. Some people reviewed the
