@@ -1987,26 +1987,27 @@ picks smooth values to produce weak secrets?
 This section describes a practical implementation of the abstract
 Diffie-Hellman algorithm, based on the elliptic curve discrete
 logarithm problem. It is intended to provide some mathematical
-background, and requires an understanding of the mathematics
-underneath elliptic curve cryptography. If you are unfamiliar with
-them, you can either skip this chapter, or first read the [[Elliptic%20curves][mathematical
-background appendix]].
+background, and requires a (very basic) understanding of the
+mathematics behind elliptic curve cryptography. If you are unfamiliar
+with elliptic curves, you can either skip this chapter, or first read
+the [[Elliptic curves][mathematical background appendix]].
 
 One of the benefits of the elliptic curve Diffie-Hellman variant is
 that the required key size is much, much smaller than the variant
 based on the discrete log problem. This is because the fastest
-algorithms for breaking the the discrete log problem (by factoring the
-modulus with $n$ bits, using a general number field sieve), has
-complexity:
+algorithms for breaking the discrete log problem have a larger
+asymptotic complexity than their elliptic curve variants. For example,
+one of the fastest algorithms for attacking discrete log
+Diffie-Hellman, the function field sieve, has complexity:
 
 #+BEGIN_LATEX
-\[
-O\left(\exp\left(\left(\frac{64}{9} \log n\right)^{\frac{1}{3}} (\log \log n)^{\frac{2}{3}}\right)\right)
-\]
+  \[
+  O\left(\exp\left(\left(\frac{64}{9} \log n\right)^{\frac{1}{3}} (\log \log n)^{\frac{2}{3}}\right)\right)
+  \]
 #+END_LATEX
 
 On the other hand, the fastest algorithms that could be used to break
-the elliptic curve discrete log problem have complexity:
+the elliptic curve discrete log problem all have complexity:
 
 #+BEGIN_LATEX
 \[
@@ -2018,8 +2019,10 @@ Relatively speaking, that means that it's much harder to solve the
 elliptic curve problem than it is to solve the regular discrete log
 problem, using state of the art algorithms for both. The flip side of
 that is that for equivalent security levels, the elliptic curve
-algorithm needs much smaller key sizes: \cite{rsa:keysizes}
-\cite{nist:keymanagement}
+algorithm needs much smaller key
+sizes\cite{rsa:keysizes}\cite{nist:keymanagement}[fn::These figures are
+actually for the RSA problem versus the equivalent EC problem, but
+their security levels are sufficiently close to give you an idea.]:
 
 | Security level in bits | Discrete log key bits | ECC key bits |
 |------------------------+-----------------------+--------------|
