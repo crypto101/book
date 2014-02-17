@@ -26,3 +26,17 @@ similar, but just in case you're feeling adventurous:
    you can imagine.
 
 .. _lvh: https://twitter.com/lvh
+
+Style guide
+===========
+
+Pronoun gender
+--------------
+
+Use gender-neutral pronouns where appropriate. For example, when
+talking about an attacker, use "they", "them", et cetera instead of
+"he" and "him" or "she" and "her".
+
+When talking about specific people, use the gender pronoun they
+prefer. Also use gendered pronouns when using placeholder names like
+Alice, Bob, Carol.
