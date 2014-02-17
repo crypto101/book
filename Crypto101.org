@@ -2653,6 +2653,38 @@ choosing. We will also consider the MAC insecure if an attacker can
 compute a new, different valid tag $t^{\prime}$ for a message $m_i$
 that we previously gave them a valid tag for.
 
+**** Why does a MAC take a secret key?
+
+If you've had to deal with verifying the integrity of a message
+before, you may have used checksums (like CRC32 or Adler32) or even
+cryptographic hashes (like the SHA family) in order to compute a
+checksum for the message (depending on the algorithm and who you're
+talking to, they may have called it "hash" or "digest", too).
+
+Let's say that you're distributing a software package. You have some
+tarballs with source code in them, and maybe some binary packages for
+popular operating systems. Then you put some (cryptographically
+secure!) hashes right next to them, so that anyone who downloads them
+can verify the hashes and be confident that they downloaded what they
+think they downloaded.
+
+Of course, this scheme is actually totally broken. Computing those
+hashes is something everyone can do. You're even relying on that fact
+for your user to be able to verify their download. That also means
+that an attacker that modified any of the downloads can just compute
+the hash again for the modified download, and save that value. A user
+downloading the modified file will compute its hash and compare it
+against the modified hash, and conclude that the download worked. The
+scheme provided no help whatsoever against an attacker modifying the
+download, either as stored, or in transit.
+
+In order to do this securely, you would either apply signing
+algorithms to the binaries directly, or by signing the digests, as
+long as the hash function used to produce the digest is secure against
+second-preimage attacks. The important difference is that producing a
+signature (using either a pre-shared key with your users, or,
+preferably, a public-key signing algorithm) is /not/ something that an
+attacker can do. Only someone who has the secret keys can do that.
 
 *** Combining MAC and message
 
