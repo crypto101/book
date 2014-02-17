@@ -2195,8 +2195,6 @@ with RSA implementations, please refer to \cite{boneh:twentyyears} and
 \cite{anderson:mindingyourpsandqs}. In this book, we'll just highlight
 a few interesting ones.
 
-***** Low public exponents with unpadded RSA
-
 ***** PKCSv1.5 padding
 
 ***** Salt
