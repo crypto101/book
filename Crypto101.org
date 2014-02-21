@@ -2808,7 +2808,7 @@ The internal state of the hash function is now what you get when you
 feed it $k \| m \| p \| m^{\prime}$. The attacker tells the hash
 function to produce a digest. Again, the hash function appends a
 padding, so we're now at $k \| m \| p \| m^{\prime} \| p^{\prime}$.
-The attacker outputs that digest as the tag. That is *exactly* the
+The attacker outputs that digest as the tag. That is /exactly/ the
 same thing as what happens when you try to compute the tag for the
 message $m \| p \| m^{\prime}$ under the secret key $k$. So, the
 attacker has successfully forged a tag for a new message, and the MAC
