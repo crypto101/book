@@ -2762,30 +2762,31 @@ message with the secret key and hash the whole thing:
 t = H(k \| m)
 \]
 
-This scheme doesn't have a terribly common name; perhaps the most
-common one (which we'll use in this book) is Prefix-MAC; because it is
-a MAC algorithm that works by using the secret key as a prefix.
+This scheme doesn't have an ubiquitous name. The one we'll use in this
+book is "Prefix-MAC", because it is a MAC algorithm that works by
+using the secret key as a prefix.
 
 The cryptographically secure hash function $H$ guarantees two things
 that are important to us here:
 
  - The tag $t$ will be easy to compute; the hash function $H$ itself
-   is typically very fast, and in many cases we can precompute the
-   common key part, so we only have to hash the message itself,
- - Given any number of tags $t_i = H(k \| m_i)$, there is no way for
-   an attacker to "invert" the hash function to recover $k$, or even
-   "rewind" the hash function to recover $H(k)$; being able to do
-   either of them would obviously allow them to forge arbitrary
-   messages.
+   is typically very fast. In many cases we can compute the common
+   key part ahead of time, so we only have to hash the message itself.
+ - Given any number of tags, there is no way for an attacker to
+   "invert" the hash function to recover $k$, which would allow them
+   to forge arbitrary messages.
+ - Given any number of tags, there is no way for an attacker to
+   "rewind" the hash function to recover $H(k)$, which may allow them
+   to forge /almost/ arbitrary messages.
 
-One small caveat: the latter point assumes that your secret key $k$
-has enough entropy. Otherwise, we have the same issue that we had for
-password storage using hash functions: an attacker could just try
-every single $k$ until one of them matches. Once they've done that,
-they've almost certainly found the correct $k$. That's not really a
-failure of the MAC though: if your secret key contains so little
-entropy that it's feasible for an attacker to try all of them, you've
-already lost, no matter which MAC algorithm you pick.
+One small caveat: we're assuming that the secret key $k$ has enough
+entropy. Otherwise, we have the same issue that we had for password
+storage using hash functions: an attacker could just try every single
+$k$ until one of them matches. Once they've done that, they've almost
+certainly found the correct $k$. That's not really a failure of the
+MAC though: if your secret key contains so little entropy that it's
+feasible for an attacker to try all of them, you've already lost, no
+matter which MAC algorithm you pick.
 
 **** Breaking the Prefix-MAC
 
@@ -2797,7 +2798,7 @@ As we saw in the chapter on hash functions, many hash functions such
 as MD5, SHA-0, SHA-1, SHA-2... all pad the message with a predictable
 padding before producing the output digest. The output digest is the
 same thing as the internal state of the hash function. That's a
-problem: now the attacker can forge messages.
+problem: the attacker can use those properties to forge messages.
 
 First, they use the digest as the internal state of the hash function.
 That state matches the state you get when you hash $k \| m \| p$,
@@ -2811,8 +2812,8 @@ padding, so we're now at $k \| m \| p \| m^{\prime} \| p^{\prime}$.
 The attacker outputs that digest as the tag. That is /exactly/ the
 same thing as what happens when you try to compute the tag for the
 message $m \| p \| m^{\prime}$ under the secret key $k$. So, the
-attacker has successfully forged a tag for a new message, and the MAC
-is insecure.
+attacker has successfully forged a tag for a new message, and, by our
+definition, the MAC is insecure.
 
 This attack is called a length extension attack, because you are
 extending a valid message. The padding in the middle $p$, which
@@ -2821,17 +2822,17 @@ just some data in the middle, is called /glue padding/, because it
 glues the original message $m$ and the attacker's message $m^{\prime}$
 together.
 
-This attack might sound a little academic, and far from practical. We
-may have proven that the MAC is insecure by our definition, but the
-only signatures the attacker can successfully forge are for
-modifications of messages that we sent and signed; specifically, the
-message we sent, followed by some binary junk, followed by something
-the attacker chooses. It turns out that for many systems, this is
-plenty to result in real breaks. Consider the following Python code
-that parses a sequence of key-value pairs that look like
-~k1=v1&k2=v2&...~:[fn::I realize there are briefer ways to write that
-function. I am trying to make it comprehensible to most programmers;
-not pleasing to advanced Pythonistas.]
+This attack might sound a little academic, and far from a practical
+problem. We may have proven that the MAC is insecure by our
+definition, but the only signatures the attacker can successfully
+forge are for modifications of messages that we sent and signed;
+specifically, the message we sent, followed by some binary junk,
+followed by something the attacker chooses. It turns out that for many
+systems, this is plenty to result in real breaks. Consider the
+following Python code that parses a sequence of key-value pairs that
+look like ~k1=v1&k2=v2&...~:[fn::I realize there are briefer ways to
+write that function. I am trying to make it comprehensible to most
+programmers; not pleasing to advanced Pythonistas.]
 
 #+BEGIN_SRC python
   def parse(s):
@@ -2847,15 +2848,18 @@ Since the parsing function only remembers the last value for a given
 key (previous values in the dictionary are overwritten), an attacker
 can effectively control the parsed data entirely.
 
-Sure, that code has many issues. For example, it doesn't handle
-escaping correctly. But even if it did; that wouldn't really fix this
-problem. Hopefully, it illustrates that there is in fact a pretty good
-chance that an attacker can produce messages with valid tags that say
-something entirely different from what you intended.
+If you're thinking that that code has many issues; sure, it does. For
+example, it doesn't handle escaping correctly. But even if it did;
+that wouldn't really fix the length extension attack problem. Most
+parsing functions will perfectly happily live with that binary junk in
+the middle. Hopefully it convinces you that there is in fact a pretty
+good chance that an attacker can produce messages with valid tags that
+say something entirely different from what you intended.
 
-Under many modern, SHA-3 era hash functions such as Keccak (the
-algorithm behind SHA-3) and BLAKE2, this construction is in fact
-secure.
+This construction is actually secure in many modern, SHA-3 era hash
+functions such as Keccak (the algorithm behind SHA-3) and BLAKE(2); in
+fact, the specifications for these functions recommend it as a secure
+and fast MAC.
 
 *** <<<HMAC>>>
 
