@@ -2861,6 +2861,23 @@ functions such as Keccak (the algorithm behind SHA-3) and BLAKE(2); in
 fact, the specifications for these functions recommend it as a secure
 and fast MAC.
 
+**** Variants
+
+Issues with prefix-MAC has tempted people to come up with all sorts of
+clever variations. For example, why not add the key to the end instead
+of the beginning ($t = H(m \| k)$, or "suffix-MAC", if you will)? Or
+maybe we should append the key to both ends for good measure ($t = H(k
+\| m \| k)$, "sandwich-MAC" perhaps?)?
+
+For what it's worth, both of these are at least better than
+prefix-MAC, but both of these have serious issues. For example, a
+suffix-MAC system is more vulnerable to weaknesses in the underlying
+hash function; a successful collision attack breaks the MAC.
+Sandwich-MAC has other, more complex issues.
+
+Cryptography has produced much stronger MACs, which we'll see in the
+next few sections. There are no good reasons not to use them.
+
 *** <<<HMAC>>>
 
 HMAC is a standard to produce a MAC with a cryptographic hash function
