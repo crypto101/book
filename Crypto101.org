@@ -2761,6 +2761,11 @@ attempts failed. The goal of that paper specifically was to produce a
 provably secure MAC that didn't require anything beyond a secret key
 and a hash function.
 
+One of the nice features of HMAC is that it has a fairly strong
+security proof. As long as the underlying hash function is a
+pseudorandom function, HMAC itself is also a pseudorandom function.
+TODO: link http://cseweb.ucsd.edu/~mihir/papers/hmac-new.html
+
 TODO: explain HMAC
 
 *** <<<One-time MACs>>>
