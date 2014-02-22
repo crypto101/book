@@ -2893,9 +2893,31 @@ and a hash function.
 One of the nice features of HMAC is that it has a fairly strong
 security proof. As long as the underlying hash function is a
 pseudorandom function, HMAC itself is also a pseudorandom function.
-TODO: link http://cseweb.ucsd.edu/~mihir/papers/hmac-new.html
+The underlying hash function doesn't even have to be collision
+resistant for HMAC to be a secure MAC. \cite{hmac:proof2} This proof
+was introduced after HMAC itself, and matched real-world observations:
+even though MD5 and to a lesser extent SHA-0 had serious collision
+attacks, HMAC constructions built from those hash functions still
+appeared to be entirely secure.
 
-TODO: explain HMAC
+The biggest difference between HMAC and prefix-MAC or its variants is
+that the message passes through a hash function twice, and is combined
+with the key before each pass. Visually, HMAC looks like this:
+
+\illustration{HMAC/HMAC}[.4]
+
+The only surprising thing here perhaps are the two constants $p_i$
+(the inner padding, one hash function's block length worth of ~0x36~
+bytes) and $p_0$ (the outer padding, one block length worth of ~0x5x~
+bytes). These are necessary for the security proof of HMAC to work;
+their particular values aren't very important, as long as the two
+constants are different.
+
+The two pads are XORed with the key before use. The result is either
+prepended to the original message (for the inner padding $p_i$) or the
+intermediate hash output (for the outer padding $p_o$). Because
+they're prepended, they can be computed ahead of time, shaving a few
+cycles off the MAC computation time.
 
 *** <<<One-time MACs>>>
 
