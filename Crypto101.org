@@ -2762,9 +2762,8 @@ message with the secret key and hash the whole thing:
 t = H(k \| m)
 \]
 
-This scheme doesn't have an ubiquitous name. The one we'll use in this
-book is "Prefix-MAC", because it is a MAC algorithm that works by
-using the secret key as a prefix.
+This scheme is most commonly called "Prefix-MAC", because it is a MAC
+algorithm that works by using the secret key as a prefix.
 
 The cryptographically secure hash function $H$ guarantees two things
 that are important to us here:
@@ -2788,7 +2787,7 @@ MAC though: if your secret key contains so little entropy that it's
 feasible for an attacker to try all of them, you've already lost, no
 matter which MAC algorithm you pick.
 
-**** Breaking the Prefix-MAC
+**** Breaking prefix-MAC
 
 Despite being quite common, this MAC is actually completely insecure
 for most (cryptographically secure!) hash functions $H$, including
@@ -2856,10 +2855,13 @@ the middle. Hopefully it convinces you that there is in fact a pretty
 good chance that an attacker can produce messages with valid tags that
 say something entirely different from what you intended.
 
-This construction is actually secure in many modern, SHA-3 era hash
-functions such as Keccak (the algorithm behind SHA-3) and BLAKE(2); in
-fact, the specifications for these functions recommend it as a secure
-and fast MAC.
+This construction is actually secure in current (SHA-3-era) hash
+functions, such as Keccak and BLAKE(2). The specifications for these
+algorithms even recommend it as a secure and fast MAC. They use
+various techniques to foil length extension attacks: for example,
+BLAKE keeps track of the number of bits that have been hashed so far,
+while BLAKE2 has a finalization flag that marks a specific block as
+the last.
 
 **** Variants
 
