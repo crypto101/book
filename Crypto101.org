@@ -3397,7 +3397,7 @@ TODO: Debian http://rdist.root.org/2009/05/17/the-debian-pgp-disaster-that-almos
 
 *** ECDSA
 
-TODO: explain
+TODO: explain (see #53)
 
 As with regular DSA, the choice of $k$ is extremely critical. There
 are attacks that manage to recover the signing key using a few
