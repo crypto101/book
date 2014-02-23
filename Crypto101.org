@@ -3203,11 +3203,11 @@ TODO (see #49)
 
 *** DSA
 
-TODO: intro
+TODO: intro (see #50)
 
 **** Parameter generation
 
-TODO: explain parameter generation
+TODO: explain parameter generation (see #51)
 
 **** Signing a message
 
@@ -3232,7 +3232,7 @@ s = k^{-1} (H(m) + xr) \pmod q
 If either of these happen to be 0 (a rare event, with 1 in $q$ odds,
 and $q$ being a pretty large number), pick a different $k$.
 
-TODO: Talk about k^-1, the modular inverse
+TODO: Talk about k^-1, the modular inverse (see #52)
 
 **** Verifying a signature
 
