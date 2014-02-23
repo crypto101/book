@@ -3427,10 +3427,6 @@ intended recipient, the sender can later deny (to third parties)
 having sent the message. Equivalently, the recipient can't convince
 anyone else that the sender sent that particular message.
 
-*** Ring signatures
-
-TODO: explain
-
 ** Key derivation functions<<key derivation function>>
 
 *** Description
