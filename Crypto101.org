@@ -3257,12 +3257,6 @@ v = (g^{u_1}y^{u_2} \pmod p) \pmod q
 If the signature is valid that final result $v$ will be equal to $r$,
 the second part of the signature.
 
-**** Why DSA works
-
-REVIEW: Do we actually have to prove the correctness of DSA? It's
-quite involved and requires more knowledge of modular arithmetic; I
-doubt I can do it without being awfully handwavy :-)
-
 **** The trouble with $k$
 
 While there is nothing wrong with DSA done right, it's very easy to
