@@ -3195,9 +3195,11 @@ discuss real schemes in more detail below.
 *** RSA-based signatures
 **** PKCS#1 v1.5
 
+TODO (see #48)
+
 **** PSS
 
-TODO: explain PSS and its RSA implementation
+TODO (see #49)
 
 *** DSA
 
