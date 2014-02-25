@@ -109,7 +109,7 @@ address...
 #+END_SRC
 
 The copy of this book that you are reading right now is based on the
-git commit with hash call_gitcommit() and description call_gitdesc().
+git commit with hash call_gitcommit(), also known as call_gitdesc().
 
 ** Acknowledgments
 
