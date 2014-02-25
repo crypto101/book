@@ -100,7 +100,7 @@ address...
 
 #+NAME: gitcommit
 #+BEGIN_SRC emacs-lisp :exports none :tangle no
-  (substring (shell-command-to-string "git rev-parse HEAD") 0 -1)
+  (substring (shell-command-to-string "git rev-parse --short HEAD") 0 -1)
 #+END_SRC
 
 #+NAME: gitdesc
