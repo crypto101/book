@@ -152,6 +152,47 @@ such bit. On top, we have the key bit $k_i$, that decides whether or
 not to invert $p_i$. On the right, we have the ciphertext bit, $c_i$,
 which is the result of the XOR operation.
 
+*** A few properties of XOR
+
+Since we'll be dealing with XOR extensively during this book, we'll
+take a closer look at some of its properties. If you're already
+familiar with how XOR works, feel free to skip this section.
+
+We saw that the output XOR is 1 when one input or the other (but not
+both) is 1:
+
+#+BEGIN_LATEX
+\[
+\begin{array}{c@{\hspace{2em}}c}
+0 \xor 0 = 0 & 1 \xor 0 = 1 \\
+0 \xor 1 = 1 & 1 \xor 1 = 0
+\end{array}
+\]
+#+END_LATEX
+
+There's a few useful arithmetic tricks we can derive from that.
+
+1. You can apply XOR in any order: $a \xor b = b \xor a$, no matter
+   what values $a$ and $b$ are.
+2. Any bit XOR itself is 0: $a \xor a = 0$. If $a$ is 0, then it's $0
+   \xor 0 = 0$; if $a$ is 1, then it's $1 \xor 1 = 0$.
+3. Any bit XOR 0 is that bit again: $a \xor 0 = a$. If $a$ is 0, then
+   it's $0 \xor 0 = 0$; if $a$ is 1, then it's $1 \xor 0 = 1$.
+
+These rules also imply $a \xor b \xor a = b$:
+
+#+BEGIN_LATEX
+\begin{align*}
+a \xor b \xor a & = a \xor a \xor b & \; & \text{(first rule)} \\
+                & = 0 \xor b        & \; & \text{(second rule)} \\
+                & = b               & \; & \text{(third rule)}
+\end{align*}
+#+END_LATEX
+
+We'll use this property often when using XOR for encryption; you can
+think of that first XOR with $a$ as encrypting, and the second one as
+decrypting.
+
 *** Bitwise XOR
 
 XOR, as we've just defined it, operates only on single bits or Boolean
