@@ -193,7 +193,11 @@ not only in its simplicity, but also because it has the strongest
 possible security guarantee. If the bits are truly random (and
 therefore unpredictable by an attacker), and the pad is only used
 once, the attacker learns nothing about the plaintext when they see a
-ciphertext.
+ciphertext.[fn::The attacker does learn that the message exists, and,
+in this simple scheme, the length of the message. While this typically
+isn't too important, there are situations where this might matter, and
+there are secure cryptosystems to both hide the existence and the
+length of a message.]
 
 Suppose we can translate our plaintext into a sequence of bits. We
 also have the pad of random bits, shared between the sender and the
