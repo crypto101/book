@@ -2310,7 +2310,7 @@ encrypted using the standard RSA encryption primitive, to produce the
 ciphertext.
 
 To see how decryption works, we reverse all the steps. The recipient
-gets $X \| Y$ when decrypting the message. They know $k$, since is a
+gets $X \| Y$ when decrypting the message. They know $k$, since it is a
 fixed parameter of the protocol. so they can split up $X \| Y$ into
 $X$ (the first $n$ bits) and $Y$ (the first $n - k$ bits).
 
