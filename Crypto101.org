@@ -1585,7 +1585,7 @@ there are $2^8$ different byte values. If RC4 was a good stream
 cipher, two adjacent bytes would both each have probability $2^{-8}$,
 so any given pair of two bytes would have probability $2^{-8} \cdot
 2^{-8} = 2^{-16}$. However, RC4 isn't an ideal stream cipher, so these
-properties aren't true. By writing the probability in the $2^{16} (1 +
+properties aren't true. By writing the probability in the $2^{-16} (1 +
 2^{-k})$ form, it's easier to see how much RC4 deviates from what
 you'd expect from an ideal stream cipher.
 
