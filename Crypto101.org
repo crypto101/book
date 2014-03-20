@@ -1362,7 +1362,7 @@ would cause modified messages to be rejected. However, many systems
 decrypted (and removed padding) before authenticating the message; so
 the information about the padding being valid already leaked.
 
-You might consider to just get rid of the "invalid padding" message;
+You might consider just getting rid of the "invalid padding" message;
 declaring the message invalid without specifying /why/ it was invalid.
 That turns out to only be a partial solution for systems that decrypt
 before authenticating. Those systems would typically reject messages
