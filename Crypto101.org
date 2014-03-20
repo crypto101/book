@@ -2112,7 +2112,10 @@ mechanisms are extremely slow. A single 2048-bit RSA encryption takes
 \cite{cryptopp:bench} To put this into comparison, symmetric key
 algorithms work in order of magnitude 10 or so cycles per byte in
 either direction. In order to encrypt or decrypt 2048 bytes, that
-means approximately 2500 cycles.
+means approximately 20 kilocycles. The state of the art in secure
+symmetric ciphers is even faster: AES-GCM with hardware acceleration
+or Salsa20/ChaCha20 only need about 2 to 4 cycles per byte, making the
+difference even larger.
 
 There are a few other problems with most practical cryptosystems. For
 example, RSA can't encrypt anything larger than its modulus, which is
