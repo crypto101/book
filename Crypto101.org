@@ -1154,10 +1154,10 @@ the plaintext to iteratively decrypt the entire message.
 
 The attacker will do this, one ciphertext block at a time, by trying
 to get an entire plaintext block worth of valid padding. We'll see
-that this tells them the what the decryption of their target
-ciphertext block is, under the block cipher. We'll also see that you
-can do this efficiently and iteratively, just from that little leak of
-information about the padding being valid or not.
+that this tells them the decryption of their target ciphertext block,
+under the block cipher. We'll also see that you can do this
+efficiently and iteratively, just from that little leak of information
+about the padding being valid or not.
 
 It may be helpful to keep in mind that a CBC padding attack does not
 actually attack the padding for a given message; instead the attacker
