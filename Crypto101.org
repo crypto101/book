@@ -2769,7 +2769,7 @@ t = H(k \| m)
 This scheme is most commonly called "Prefix-MAC", because it is a MAC
 algorithm that works by using the secret key as a prefix.
 
-The cryptographically secure hash function $H$ guarantees two things
+The cryptographically secure hash function $H$ guarantees a few things
 that are important to us here:
 
  - The tag $t$ will be easy to compute; the hash function $H$ itself
