@@ -1648,14 +1648,26 @@ mode, which we will see in more detail in a later chapter.] with
 specialized hardware instructions.
 
 <<keystream jump>>
-Salsa20 has one particularly interesting property. It's possible to
-"jump" to a particular point in the keystream without computing all
-previous bits. This can be useful, for example, if a large file is
-encrypted, and you'd like to be able to do random reads in the middle
-of the file. While many encryption schemes require the entire file to
-be decrypted, with Salsa20, you can just select the portion you need.
-Another construction that has this property is a mode of operation
-called \gls{CTR mode}, which we'll talk about later.
+Salsa20 has a two particularly interesting properties. Firstly, It's 
+possible to "jump" to a particular point in the keystream without 
+computing all previous bits. This can be useful, for example, if a 
+large file is encrypted, and you'd like to be able to do random reads
+in the middle of the file. While many encryption schemes require the 
+entire file to be decrypted, with Salsa20, you can just select the 
+portion you need. Another construction that has this property is a 
+mode of operation called \gls{CTR mode}, which we'll talk about later.
+
+This ability to "jump" also means that blocks from Salsa20 can be 
+computed independently of one another, allowing for encryption or
+decryption to work in parallel, which can increase performance on
+multi-core CPUs.
+
+Secondly, it is resistant to many side-channel attacks. This is 
+done by ensuring that no key material is ever used choose between 
+different code paths in the cipher, and that every round is made up 
+of a fixed-number of constant-time operations. The result is that 
+every block is produced with exactly the same number of operations, 
+regardless of what the key is. 
 
 *** Native stream ciphers versus modes of operation
 
