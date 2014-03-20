@@ -25,6 +25,18 @@ similar, but just in case you're feeling adventurous:
 
 .. _lvh: https://twitter.com/lvh
 
+
+Dependencies
+------------
+
+Fonts are included in the fonts directory. Consult your operating
+system documentation for instructions on how to install them on your
+particular system.
+
+On Debian, you can some install dependencies via `apt-get install
+texlive-latex-recommended texlive-xetex python-pygment` This list is
+surely incomplete.
+
 Style guide
 ===========
 
