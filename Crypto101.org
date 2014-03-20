@@ -1663,11 +1663,11 @@ decryption to work in parallel, which can increase performance on
 multi-core CPUs.
 
 Secondly, it is resistant to many side-channel attacks. This is 
-done by ensuring that no key material is ever used to make a decision
-in the cipher, and that every round is made up of a fixed-number of 
-constant-time operations. The result is that every block is produced
-with exactly the same number of operations, regardless of what the 
-key is. 
+done by ensuring that no key material is ever used choose between 
+different code paths in the cipher, and that every round is made up 
+of a fixed-number of constant-time operations. The result is that 
+every block is produced with exactly the same number of operations, 
+regardless of what the key is. 
 
 *** Native stream ciphers versus modes of operation
 
