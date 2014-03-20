@@ -1648,7 +1648,7 @@ mode, which we will see in more detail in a later chapter.] with
 specialized hardware instructions.
 
 <<keystream jump>>
-Salsa20 has a few particularly interesting properties. Firstly, It's 
+Salsa20 has a two particularly interesting properties. Firstly, It's 
 possible to "jump" to a particular point in the keystream without 
 computing all previous bits. This can be useful, for example, if a 
 large file is encrypted, and you'd like to be able to do random reads
