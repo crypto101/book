@@ -600,8 +600,8 @@ C = E_{DES}(k_1, D_{DES}(k_2, E_{DES}(k_3, p)))
 
 This scheme provides two improvements:
 
- - By applying the algorithm several three times, the cipher becomes
-   harder to attack directly through cryptanalysis.
+ - By applying the algorithm three times, the cipher becomes harder to
+   attack directly through cryptanalysis.
  - By having the option of using many more total key bits, spread over
    the three keys, the set of all possible keys becomes much larger,
    making brute-forcing impractical.[fn::The set of all keys is
