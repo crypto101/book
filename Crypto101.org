@@ -678,15 +678,14 @@ cycles per byte, while 3DES takes up to 134.5 cycles per byte.
 view, it is literally an order of magnitude slower.
 
 While more iterations of DES might increase the security margin, they
-aren't used in practice. Not only has the process never been
-standardized, but the performance picture only becomes worse when you
-add more iterations of the DES algorithm, since more computation is
-required for all those extra iterations. Furthermore, increasing the
-key bits has diminishing security returns, only increasing the
-security level of the resulting algorithm by a smaller amount as the
-number of key bits increases. While 3DES with keying option 1 has a
-key length of 168 bits, the effective security level is estimated at
-only 112 bits.
+aren't used in practice. First of all, the process has never been
+standardized beyond three iterations. Also, the performance only
+becomes worse as you add more iterations. Finally, increasing the key
+bits has diminishing security returns, only increasing the security
+level of the resulting algorithm by a smaller amount as the number of
+key bits increases. While 3DES with keying option 1 has a key length
+of 168 bits, the effective security level is estimated at only 112
+bits.
 
 Even though 3DES is significantly worse in terms of performance and
 slightly worse in terms of security, 3DES is still the workhorse of
