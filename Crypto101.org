@@ -152,6 +152,25 @@ such bit. On top, we have the key bit $k_i$, that decides whether or
 not to invert $p_i$. On the right, we have the ciphertext bit, $c_i$,
 which is the result of the XOR operation.
 
+XOR has a few properties that are very useful. Firstly, it is the case
+that $1 \xor 0 = 0 \xor 1$, and $1 \xor 1 = 0 \xor 0$. From this, we 
+can see that for all $a$ and $b$, binary values, $a \xor b == b \xor 
+a$.
+
+Secondly, we know that for any binary value $a$, $a \xor a = 0$.
+
+Thirdly, We also know that for any binary value $a$, $a \xor 0 = a$. 
+We can show this to ourselves by letting $a = 1$ first, and seeing 
+that $1 \xor 0 = 1 = a$, and secondly letting $a = 0$, and seeing 
+that $0 \xor 0 = 0 = a$.
+
+We can, from these two rules, see that $a \xor b \xor a = b$. This is
+because we can rearrange the left hand side to $a \xor a \xor b$ (by 
+the first rule), and then, by the second rule, we can simplify this 
+to $0 \xor b$, and a final application of the third rule shows us that
+this is just the same as $b$.
+
+
 *** Bitwise XOR
 
 XOR, as we've just defined it, operates only on single bits or Boolean
