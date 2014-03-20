@@ -62,11 +62,12 @@ The exercises accompanying this book focus on teaching cryptography by
 breaking inferior systems. That way, you won't just "know" that some
 particular thing is broken; you'll know exactly /how/ it's broken, and
 that you, yourself, armed with little more than some spare time and
-your favorite programming language, can break them. By seeing how many
-systems that are ostensibly secure to the layman, you will understand
-why certain primitives and constructions are necessary. Hopefully,
-these exercises will also leave you with healthy distrust of DIY
-cryptography in all its forms.
+your favorite programming language, can break them. By seeing how
+these ostensibly secure systems are actually completely broken, you
+will understand /why/ all these primitives and constructions are
+necessary for complete cryptosystems. Hopefully, these exercises will
+also leave you with healthy distrust of DIY cryptography in all its
+forms.
 
 For a long time, cryptography has been deemed the exclusive realm of
 experts. From the many internal leaks we've seen over the years of the
