@@ -2524,7 +2524,7 @@ against an attacker that actually knows the salt.
 **** So where do we go from here?
 
 In order to protect passwords, you don't need a hash function, but a
-[[key%20derivation%20function][key derivation function]]. We'll deal with those in a following chapter.
+[[key derivation function][key derivation function]]. We'll deal with those in a following chapter.
 
 *** Length extension attacks
 
