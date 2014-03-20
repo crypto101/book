@@ -5033,7 +5033,7 @@ Now, we need to compute those individual powers of 3: 1, 16, 64
 and 128. A nice property of this algorithm is that we don't actually
 have to compute the big powers separately from scratch. We can use
 previously computed smaller powers to compute the larger ones. For
-example, we need both $3^{128} \pmod 19$ and $3^{64} \pmod 19$, but
+example, we need both $3^{128} \pmod {19}$ and $3^{64} \pmod {19}$, but
 you can write the former in terms of the latter:
 
 #+BEGIN_LATEX
