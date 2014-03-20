@@ -8,9 +8,7 @@ about cryptography by lvh_.
 License
 =======
 
-See the LICENSE file. The short version is that everything in this
-repository is available under a Creative Commons Attribution 4.0
-International License.
+See the LICENSE file.
 
 Building
 ========
