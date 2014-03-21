@@ -531,10 +531,12 @@ Or, in blocks:
 }
 #+END_LATEX
 
-A block cipher is a /keyed permutation/. In the set of possible
-blocks, which is the set of all possible byte sequences of the
-cipher's block size, the block cipher maps every block to some other
-block. For illustration purposes, we'll look at a block cipher with a
+A block cipher is a /keyed permutation/. It's a /permutation/, because
+the block cipher maps every possible block to some other block. It's
+also a /keyed/ permutation, because the key determines exactly which
+blocks map to which.
+
+We'll illustrate this by looking at a block cipher with a
 impractically tiny 3-bit block size, so $2^3 = 8$ possible blocks.
 Encryption would look like this:
 
