@@ -608,7 +608,7 @@ Standard, the algorithm was known as Rijndael. Rijndael defined a
 family of block ciphers, with block sizes and key sizes that could be
 any multiple of 32 bits between 128 bits and 256 bits.
 \cite{daemen:aes} When Rijndael became AES through the \gls{FIPS}
-standardization process, the the parameters were restricted to a block
+standardization process, the parameters were restricted to a block
 size of 128 bits and keys sizes of 128, 192 and 256 bits.
 \cite{fips:aes}
 
