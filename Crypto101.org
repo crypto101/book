@@ -2094,7 +2094,7 @@ their security levels are sufficiently close to give you an idea.]:
 *** Remaining problems
 
 Using Diffie-Hellman, we can agree on shared secrets across an
-insecure Internet, safe from eavesdroppers. However, while n attacker
+insecure Internet, safe from eavesdroppers. However, while an attacker
 may not be able to simply get the secret from eavesdropping, an active
 attacker can still break the system. If an attacker (Mallory) is in
 between Alice and Bob, they can still perform the Diffie-Hellman
@@ -2310,7 +2310,7 @@ encrypted using the standard RSA encryption primitive, to produce the
 ciphertext.
 
 To see how decryption works, we reverse all the steps. The recipient
-gets $X \| Y$ when decrypting the message. They know $k$, since is a
+gets $X \| Y$ when decrypting the message. They know $k$, since it is a
 fixed parameter of the protocol. so they can split up $X \| Y$ into
 $X$ (the first $n$ bits) and $Y$ (the first $n - k$ bits).
 
