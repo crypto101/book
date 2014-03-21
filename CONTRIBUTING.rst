@@ -9,6 +9,13 @@ many different comments stuck on a single issue makes it extremely
 difficult to discuss them separately. This doesn't count for obviously
 wrong things like markup, grammar or spelling errors.
 
+Screenshots demonstrating issues are extremely helpful and highly
+encouraged.
+
+When mentioning page numbers, please use the page numbers that are
+noted on the page itself. This can be different from the page that a
+PDF reader thinks you're on due to cover pages.
+
 Feel free to submit pull requests, although all of the above counts as
 well.
 
