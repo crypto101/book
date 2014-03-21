@@ -20,6 +20,5 @@
 *.toc
 # Book, rendered or partially rendered
 Crypto101.pdf
-Crypto101.tex
 # Illustrations, vectorized
 Illustrations/*/*.pdf
