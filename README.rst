@@ -5,6 +5,8 @@
 This is the source repository for Crypto 101, the introductory book
 about cryptography by lvh_.
 
+.. _lvh: https://twitter.com/lvh
+
 License
 =======
 
@@ -22,5 +24,3 @@ similar, but just in case you're feeling adventurous:
 3. Compile the TeX file. This may require a bunch of packages; I
    pretty much just have a TeX Live installation with every package
    you can imagine.
-
-.. _lvh: https://twitter.com/lvh
