@@ -15,12 +15,48 @@ See the LICENSE file.
 Building
 ========
 
-Unfortunately, the build process is somewhat intricate right now. This
-should all (at some point) be turned into a Makefile or something
-similar, but just in case you're feeling adventurous:
+Please note that building anywhere besides on the machine lvh_ builds
+on is a very new and experimental feature, and is likely to be many
+different kinds of broken. If you try this, and it doesn't work out,
+*please* file an issue so we can resolve it.
 
-1. Compile all the PBM files to vector PDFs using e.g. ``potrace``.
-2. Compile the ``org-mode`` file to TeX.
-3. Compile the TeX file. This may require a bunch of packages; I
-   pretty much just have a TeX Live installation with every package
-   you can imagine.
+Run ``make`` in the root directory of the repository to convert the
+source files into rendered versions of all supported formats.
+
+Dependencies
+------------
+
+Emacs 24
+~~~~~~~~
+
+The easiest way to get this on OS X is to install Emacs via Homebrew_
+or by downloading it from `Emacs For Mac OS X`_.
+
+.. _Homebrew: http://brew.sh/
+.. _`Emacs For Mac OS X`: http://emacsformacosx.com/
+
+Keep in mind that the Makefile will build using whatever ``emacs`` is
+in your current environment. Notably, if you're on OS X and using
+Emacs for Mac OS X, there's a decent chance that ``emacs`` in your
+shell environment will actually refer to the massively ancient version
+that came shipped with your OS.
+
+LaTeX environment
+~~~~~~~~~~~~~~~~~
+
+You will need `TeX Live`_ with a great many installed packages. You
+will also need ``latexmk`` and ``xetex``, which come with TeX Live.
+Any effort to make this list more precise is greatly appreciated.
+
+On Debian, you will need at *least* ``texlive-latex-recommended`` and
+``texlive-xetex``.
+
+.. _`TeX Live`: https://www.tug.org/texlive/
+
+pygments
+~~~~~~~~
+
+pygments is used to render source code. You can either install it
+through the usual Python channels, or your operating system's package
+manager. On Debian and Ubuntu, this package is called
+``python-pygments``.

@@ -1,4 +1,4 @@
-% Created 2014-03-21 Fri 12:15
+% Created 2014-03-21 Fri 17:07
 \documentclass[11pt,ebook,table,dvipsnames]{memoir}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -74,10 +74,10 @@ internals of both large and small corporations alike, it has become
 obvious that that approach is doing more harm than good. We can no
 longer afford to keep the two worlds strictly separate. We must join
 them into one world where all programmers are educated in the basic
-underpinnings of information security, so that they, together with
-information security professionals, can work together to produce more
-secure software systems for all. That does not make people such as
-penetration testers and security researchers obsolete or less
+underpinnings of information security, so that they can work together
+together with information security professionals to produce more
+secure software systems for everyone. That does not make people such
+as penetration testers and security researchers obsolete or less
 valuable; quite the opposite, in fact. By sensitizing all programmers
 to security concerns, the need for professional security audits will
 become more apparent, not less.
@@ -99,7 +99,7 @@ Of course, if I never hear about your issue, it's very hard for me to
 address\ldots{}
 
 The copy of this book that you are reading right now is based on the
-git commit with hash \texttt{fd6aae0}, also known as \texttt{v0.1.0-30-gfd6aae0}.
+git commit with hash \texttt{035a6c5}, also known as \texttt{v0.1.0-43-g035a6c5}.
 \chapter{Acknowledgments}
 \label{sec-1-3}
 
@@ -254,8 +254,11 @@ bits are truly random, both options are exactly equally probable.
 The one-time pad security guarantee only holds if it is used
 correctly. First of all, the one-time pad has to consist of truly
 random data. Secondly, the one-time pad can only be used once (hence
-the name). Unfortunately, most commercial \enquote{one-time pads} are snake
-oil, and don't satisfy at least one of those two properties.
+the name). Unfortunately, most commercial products that claim to be
+\enquote{one-time pads} are snake oil\footnote{\enquote{Snake oil} is a term for all sorts
+of dubious products that claim extraordinary benefits and features,
+but don't really realize any of them}, and don't satisfy at least one
+of those two properties.
 
 \subsection{Not using truly random data}
 \label{sec-2-1-5-1}
@@ -506,10 +509,12 @@ Or, in blocks:
 \end{figure}
 }
 
-A block cipher is a \emph{keyed permutation}. In the set of possible
-blocks, which is the set of all possible byte sequences of the
-cipher's block size, the block cipher maps every block to some other
-block. For illustration purposes, we'll look at a block cipher with a
+A block cipher is a \emph{keyed permutation}. It's a \emph{permutation}, because
+the block cipher maps every possible block to some other block. It's
+also a \emph{keyed} permutation, because the key determines exactly which
+blocks map to which.
+
+We'll illustrate this by looking at a block cipher with a
 impractically tiny 3-bit block size, so $2^3 = 8$ possible blocks.
 Encryption would look like this:
 
@@ -541,11 +546,12 @@ there's no easier way to decrypt a block other than to \enquote{brute-force}
 the key: i.e. just try every single one of them until you find the
 right one.
 
-Our toy illustration block cipher only has $2^3 = 8$ possible blocks.
-Real, modern block ciphers have much larger block sizes, such as 128
-bits. Mathematics tells us that there are $n!$ (pronounced \emph{n
-factorial}) different permutations of an $n$ element set. It's defined
-as the product of all of the numbers from 1 up to and including $n$:
+Our toy illustration block cipher only has 3 bit blocks, or $2^3 = 8$
+possibilities. Real, modern block ciphers have much larger block
+sizes, such as 128 bits, or $2^{128}$ possible blocks. Mathematics
+tells us that there are $n!$ (pronounced \emph{n factorial}) different
+permutations of an $n$ element set. It's defined as the product of all
+of the numbers from 1 up to and including $n$:
 
 \[
 n! = 1 \cdot 2 \cdot 3 \cdot \ldots \cdot (n - 1) \cdot n
@@ -574,7 +580,7 @@ Standard, the algorithm was known as Rijndael. Rijndael defined a
 family of block ciphers, with block sizes and key sizes that could be
 any multiple of 32 bits between 128 bits and 256 bits.
 \cite{daemen:aes} When Rijndael became \hyperref[AES]{AES} through the \gls{FIPS}
-standardization process, the the parameters were restricted to a block
+standardization process, the parameters were restricted to a block
 size of 128 bits and keys sizes of 128, 192 and 256 bits.
 \cite{fips:aes}
 
@@ -2026,7 +2032,7 @@ Security level in bits & Discrete log key bits & ECC key bits\\
 \label{sec-2-4-5}
 
 Using Diffie-Hellman, we can agree on shared secrets across an
-insecure Internet, safe from eavesdroppers. However, while n attacker
+insecure Internet, safe from eavesdroppers. However, while an attacker
 may not be able to simply get the secret from eavesdropping, an active
 attacker can still break the system. If an attacker (Mallory) is in
 between Alice and Bob, they can still perform the Diffie-Hellman
@@ -2242,7 +2248,7 @@ encrypted using the standard \hyperref[RSA]{RSA} encryption primitive, to produc
 ciphertext.
 
 To see how decryption works, we reverse all the steps. The recipient
-gets $X \| Y$ when decrypting the message. They know $k$, since is a
+gets $X \| Y$ when decrypting the message. They know $k$, since it is a
 fixed parameter of the protocol. so they can split up $X \| Y$ into
 $X$ (the first $n$ bits) and $Y$ (the first $n - k$ bits).
 

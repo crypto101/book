@@ -2,6 +2,7 @@
 #+DESCRIPTION: An introduction to cryptography for programmers
 
 #+BEGIN_SRC emacs-lisp :results silent :exports results
+  (require 'cl) ; the find function is in the common lisp library
   (unless (find "per-file-class" org-latex-classes :key 'car :test 'equal)
     (add-to-list 'org-latex-classes
              '("per-file-class"
