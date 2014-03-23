@@ -3,6 +3,8 @@ SVG_FILES := $(shell find Illustrations/ -type f -name '*.svg')
 PDF_FILES = $(patsubst %.pbm,%.pdf,${PBM_FILES})
 SVG_PDF_FILES = $(patsubst %.svg,%.pdf,${SVG_FILES})
 
+.PHONY: all clean
+
 all: Illustrations/ModularArithmetic/Clock2.pdf Crypto101.pdf
 
 Illustrations/ModularArithmetic/Clock2.pdf: Illustrations/ModularArithmetic/Source/Clock.svg
