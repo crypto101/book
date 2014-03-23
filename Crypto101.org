@@ -114,9 +114,10 @@ git commit with hash call_gitcommit(), also known as call_gitdesc().
 
 ** Acknowledgments
 
-Various people have made this book possible. Some people reviewed the
-text, some people provided technical review, and some people helped
-with the original talk. In no particular order:
+This book is would not have been possible without the support and
+contributions of many people, even before the first public release.
+Some people reviewed the text, some people provided technical review,
+and some people helped with the original talk. In no particular order:
 
  - My wife, Ewa
  - Brian Warner
@@ -124,6 +125,18 @@ with the original talk. In no particular order:
  - Ian Cordasco
  - Zooko Wilcox-O'Hearn
  - Nathan Nguyen (@nathanhere)
+
+Following the public release, many more people contributed changes.
+I'd like to thank the following people in particular (again, in no
+particular order):
+
+ - coh2, for work on illustrations
+ - TinnedTuna, for review work on the XOR section (and others)
+ - dfc, for work on typography and alternative formats
+ - jvasile, for work on typefaces and automated builds
+
+.. as well as the huge number of people that contributed spelling,
+grammar and content improvements. Thank you!
 
 * Building blocks
 ** Exclusive or
