@@ -1,7 +1,11 @@
 PBM_FILES := $(shell find Illustrations/ -type f -name '*.pbm')
+RENDERED_PBM_FILES = $(patsubst %.pbm,%.pdf,${PBM_FILES})
+
 SVG_FILES := $(shell find Illustrations/ -type f -name '*.svg')
-PDF_FILES = $(patsubst %.pbm,%.pdf,${PBM_FILES})
-SVG_PDF_FILES = $(patsubst %.svg,%.pdf,${SVG_FILES})
+RENDERED_SVG_FILES = $(patsubst %.svg,%.pdf,${SVG_FILES})
+
+MP_FILES := $(shell find Illustrations/ -type f -name '*.mp')
+RENDERED_MP_FILES = $(patsubst %.mp,%.pdf,${MP_FILES})
 
 .PHONY: all clean
 
@@ -10,7 +14,7 @@ all: Illustrations/ModularArithmetic/Clock2.pdf Crypto101.pdf
 Illustrations/ModularArithmetic/Clock2.pdf: Illustrations/ModularArithmetic/Source/Clock.svg
 	convert $< $@
 
-Crypto101.pdf: ${PDF_FILES} ${SVG_PDF_FILES} Crypto101.tex Header.tex Glossary.tex Crypto101.bib
+Crypto101.pdf: ${RENDERED_PBM_FILES} ${RENDERED_SVG_FILES} Crypto101.tex Header.tex Glossary.tex Crypto101.bib
 	latexmk -bibtex -pdf -gg Crypto101.tex
 
 Crypto101.tex: Crypto101.org
