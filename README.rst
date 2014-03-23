@@ -15,10 +15,11 @@ See the LICENSE file.
 Building
 ========
 
-Please note that building anywhere besides on the machine lvh_ builds
-on is a very new and experimental feature, and is likely to be many
-different kinds of broken. If you try this, and it doesn't work out,
-*please* file an issue so we can resolve it.
+WARNING: Please note that building (anywhere besides on the machine
+lvh_ builds on, in any way besides the way that lvh_ builds it) is a
+very new and experimental feature, and is many different kinds of
+broken. If you try this, and it doesn't work out, *please* file an
+issue so we can resolve it.
 
 Run ``make`` in the root directory of the repository to convert the
 source files into rendered versions of all supported formats.
