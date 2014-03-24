@@ -4,7 +4,7 @@ if scantokens(mpversion) > 1.005:
 else:
   filenametemplate
 fi
-"%j-%c.mps";
+"%j.mps";
 
 input TEX;
 
