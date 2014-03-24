@@ -689,7 +689,7 @@ impractical, 3DES is a poor choice for any modern cryptosystem. The
 security margin is already small, and continues to shrink as
 cryptographic attacks improve and processing power grows.
 
-Far better alternatives, such as [[AES]], are available. Not only are they
+Far better alternatives, such as AES, are available. Not only are they
 more secure than 3DES, they are also generally much, much faster. On
 the same hardware and in the same \gls{mode of operation} (we'll
 explain what that means in the next chapter), AES-128 only takes 12.6
