@@ -21,11 +21,10 @@ Crypto101.tex: Crypto101.org
 	emacs -Q --batch --file Crypto101.org --eval "(progn (setq org-confirm-babel-evaluate nil) (org-latex-export-to-latex))"
 
 %.pdf: %.svg
-	@cd $(dir $@); convert $(notdir $<) ../$(notdir $@)
+	inkscape $< --export-pdf=$@
 
 %.pdf: %.pbm
 	potrace -b pdf $<
 
 clean:
-	find Illustrations -name '*.pdf' -exec rm {} \;
-	rm -f Crypto101.tex Crypto101.pdf Crypto101.acn  Crypto101.aux  Crypto101.glo  Crypto101.idx  Crypto101.ist  Crypto101.log  Crypto101.out  Crypto101.pdf  Crypto101.pyg
+	git clean -fdx
