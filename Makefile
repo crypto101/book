@@ -15,7 +15,7 @@ Crypto101.pdf: ${RENDERED_PBM_FILES} ${RENDERED_SVG_FILES} Crypto101.tex Header.
 	latexmk -bibtex -pdf -gg Crypto101.tex
 
 Crypto101.tex: Crypto101.org
-	emacs -Q --batch --file Crypto101.org --eval "(progn (setq org-confirm-babel-evaluate nil) (org-latex-export-to-latex))"
+	org2tex Crypto101.org
 
 %.pdf: %.svg
 	inkscape $(realpath $<) --export-pdf=$(addprefix ${CURDIR}/,$@)

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+ORG_DIR=/Users/lvh/.emacs.d/elpa/org-20140317
+emacs -Q --batch \
+      --eval "(add-to-list 'load-path \"$ORG_DIR\")" \
+      --eval "(require 'org)" \
+      --eval "(setq org-confirm-babel-evaluate nil)" \
+      --visit=$1 --funcall org-latex-export-to-latex
