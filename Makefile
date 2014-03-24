@@ -15,7 +15,7 @@ Crypto101.pdf: ${RENDERED_PBM_FILES} ${RENDERED_SVG_FILES} Crypto101.tex Header.
 	latexmk -bibtex -pdf -gg Crypto101.tex
 
 Crypto101.tex: Crypto101.org
-	org2tex Crypto101.org
+	./org2tex Crypto101.org
 
 %.pdf: %.svg
 	inkscape $(realpath $<) --export-pdf=$(addprefix ${CURDIR}/,$@)
