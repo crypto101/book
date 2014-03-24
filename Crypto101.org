@@ -608,8 +608,7 @@ number, impossible to comprehend. Common key sizes are only in the
 range of 128 to 256 bits, yielding $2^{128}$ to $2^{256}$
 possibilities. That means that only a tiny fraction of all possible
 permutations are possible. That's okay: that tiny fraction is still
-more than large enough that it's impossible for an attacker to just
-try them all.
+nowhere near small enough for an attacker to just try them all.
 
 Of course, a block cipher should be as easy to compute as possible,
 as long as it doesn't sacrifice any of the above properties.
