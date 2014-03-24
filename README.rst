@@ -54,6 +54,17 @@ On Debian, you will need at *least* ``texlive-latex-recommended`` and
 
 .. _`TeX Live`: https://www.tug.org/texlive/
 
+Inkscape
+~~~~~~~~
+
+Inkscape is necessary to render SVG sources to PDF. If you install it
+on OS X using the .app, you won't have a command line script; create
+an executable file named ``inkscape`` somewhere on your ``$PATH`` with
+the following contents::
+
+  #!/usr/bin/env bash
+  /Applications/Inkscape.app/Contents/Resources/script $@
+
 pygments
 ~~~~~~~~
 
