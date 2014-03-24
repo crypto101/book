@@ -27,6 +27,11 @@ source files into rendered versions of all supported formats.
 Dependencies
 ------------
 
+Please note that for now, producing a better book is the primary goal.
+All other things being equal, an easier to build book is better than a
+harder to build book, but, for example, a better illustration that
+relies on a new tool is better than a worse illustration.
+
 Emacs 24
 ~~~~~~~~
 
