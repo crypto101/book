@@ -18,7 +18,7 @@ Crypto101.tex: Crypto101.org
 	emacs -Q --batch --file Crypto101.org --eval "(progn (setq org-confirm-babel-evaluate nil) (org-latex-export-to-latex))"
 
 %.pdf: %.svg
-	inkscape $< --export-pdf=$@
+	inkscape $(realpath $<) --export-pdf=$(addprefix ${CURDIR}/,$@)
 
 %.pdf: %.pbm
 	potrace -b pdf $<
