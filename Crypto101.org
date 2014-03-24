@@ -4834,10 +4834,9 @@ the principles of modular arithmetic using a clock.
 \end{figure}
 #+END_LATEX
 
-For simplicity's sake, our 12-hour clock only shows hours, not
-minutes or seconds. Unlike real clocks, the hour hand always shows an
-exact hour, such as 2 or 9, and is never halfway in between two
-hours.
+For simplicity's sake, our 12-hour clock only shows hours, not minutes
+or seconds. Unlike real clocks, the hour hand always shows an exact
+hour, such as 2 or 9, and is never halfway in between two hours.
 
 *** Addition and subtraction<<Modular addition>><<Modular subtraction>>
 
