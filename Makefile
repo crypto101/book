@@ -11,7 +11,7 @@ RENDERED_MP_FILES = $(patsubst %.mp,%.pdf,${MP_FILES})
 
 all: Crypto101.pdf
 
-Crypto101.pdf: ${RENDERED_PBM_FILES} ${RENDERED_SVG_FILES} Crypto101.tex Header.tex Glossary.tex Crypto101.bib
+Crypto101.pdf: ${RENDERED_PBM_FILES} ${RENDERED_SVG_FILES} ${RENDERED_MP_FILES} Crypto101.tex Header.tex Glossary.tex Crypto101.bib
 	latexmk -bibtex -pdf -f Crypto101.tex
 
 Crypto101.tex: Crypto101.org
@@ -22,6 +22,9 @@ Crypto101.tex: Crypto101.org
 
 %.pdf: %.pbm
 	potrace -b pdf $<
+
+%.pdf: %.mp
+	mptopdf $<
 
 clean:
 	git clean -fdx
