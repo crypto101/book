@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   inkscape:label="Pozadí"
+   sodipodi:version="0.32"
+   inkscape:version="0.48.2 r9819"
+   sodipodi:docname="kotik_clock.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   sodipodi:modified="true"
+   version="1.1">
+  <defs
+     id="defs3" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.88773705"
+     inkscape:cx="431.91436"
+     inkscape:cy="794.79798"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     inkscape:window-width="1440"
+     inkscape:window-height="852"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     showgrid="false"
+     inkscape:window-maximized="1" />
+  <g
+     inkscape:label="Vrstva 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:12.34776497px;stroke-linecap:square;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 372.104,593.34057 C 372.104,162.54138 372.104,162.54138 372.104,162.54138"
+       id="path3132" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#path3132"
+       id="use4103"
+       transform="matrix(0,1,-1,0,749.98821,5.8369752)"
+       width="744.09448"
+       height="1052.3622" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#path3132"
+       id="use5074"
+       transform="matrix(0.8660254,-0.5,0.5,0.8660254,-139.17477,236.68649)"
+       width="744.09448"
+       height="1052.3622" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#path3132"
+       id="use5076"
+       transform="matrix(0.5,-0.8660254,0.8660254,0.5,-141.31125,511.22201)"
+       width="744.09448"
+       height="1052.3622" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#path3132"
+       id="use6051"
+       transform="matrix(0.5,0.8660254,-0.8660254,0.5,513.30173,-133.28103)"
+       width="744.09448"
+       height="1052.3622" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#path3132"
+       id="use6053"
+       transform="matrix(0.8660254,0.5,-0.5,0.8660254,238.76621,-135.41751)"
+       width="744.09448"
+       height="1052.3622" />
+    <path
+       sodipodi:type="arc"
+       style="opacity:1;fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:7.08661413;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+       id="path2159"
+       sodipodi:cx="550.71429"
+       sodipodi:cy="489.50504"
+       sodipodi:rx="177.14285"
+       sodipodi:ry="177.14285"
+       d="M 727.85715 489.50504 A 177.14285 177.14285 0 1 1  373.57144,489.50504 A 177.14285 177.14285 0 1 1  727.85715 489.50504 z"
+       transform="matrix(1.0321,0,0,0.9902456,-196.345,-106.78923)" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.001;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="M 316.24367,377.94098 C 428.20795,377.94098 427.85081,377.94098 427.85081,377.94098"
+       id="path7995" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#path7995"
+       id="use7997"
+       transform="matrix(0,-1,1,0,-5.8937328,749.98823)"
+       width="744.09448"
+       height="1052.3622" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:14.83807564;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 352.80028,387.99606 c 90.13978,-46.6635 90.13978,-46.6635 90.13978,-46.6635"
+       id="path8035"
+       inkscape:transform-center-y="-13.277025"
+       inkscape:transform-center-x="-25.822028"
+       inkscape:connector-curvature="0" />
+    <path
+       sodipodi:type="arc"
+       style="opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:10;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.54794521"
+       id="path3145"
+       sodipodi:cx="372.04688"
+       sodipodi:cy="377.94031"
+       sodipodi:rx="1.03125"
+       sodipodi:ry="1.03125"
+       d="M 373.07812 377.94031 A 1.03125 1.03125 0 1 1  371.01562,377.94031 A 1.03125 1.03125 0 1 1  373.07812 377.94031 z"
+       transform="matrix(14.176165,0,0,14.176165,-4902.1511,-4979.8039)" />
+  </g>
+  <metadata
+     id="metadata18">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/publicdomain/" />
+        <dc:publisher>
+          <cc:Agent
+             rdf:about="http://openclipart.org/">
+            <dc:title>Open Clip Art Library</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title></dc:title>
+        <dc:date>2006-12-26T00:00:00</dc:date>
+        <dc:description />
+        <dc:source>http://openclipart.org/detail/3578/-by--3578</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>kotik</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>b_w</rdf:li>
+            <rdf:li>clip art</rdf:li>
+            <rdf:li>clipart</rdf:li>
+            <rdf:li>clock</rdf:li>
+            <rdf:li>time</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/publicdomain/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>
