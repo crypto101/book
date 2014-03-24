@@ -1602,14 +1602,14 @@ wouldn't have this weakness; TLS and other standards were therefore
 not affected.
 
 Again, attacks only get better. Andreas Klein showed more extensive
-correlation between the key and the keystream\cite{klein:rc4}. Instead
-of tens of millions of messages with the Fluhrer, Mantin, Shamir
-attacks, attackers now only needed several tens of thousands messages
-to make the attack practical. This was applied against WEP with great
-effect.
+correlation between the key and the keystream. \cite{klein:rc4}
+Instead of tens of millions of messages with the Fluhrer, Mantin,
+Shamir attacks, attackers now only needed several tens of thousands
+messages to make the attack practical. This was applied against WEP
+with great effect.
 
 In 2013, a team of researchers at Royal Holloway in London produced a
-combination of devastating practical attacks\cite{rhul:rc4}. They
+combination of devastating practical attacks. \cite{rhul:rc4} They
 demonstrated two attacks.
 
 The first attack is based on single-byte biases in the first 256 bytes
