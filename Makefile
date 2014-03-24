@@ -9,10 +9,7 @@ RENDERED_MP_FILES = $(patsubst %.mp,%.pdf,${MP_FILES})
 
 .PHONY: all clean
 
-all: Illustrations/ModularArithmetic/Clock2.pdf Crypto101.pdf
-
-Illustrations/ModularArithmetic/Clock2.pdf: Illustrations/ModularArithmetic/Source/Clock.svg
-	convert $< $@
+all: Crypto101.pdf
 
 Crypto101.pdf: ${RENDERED_PBM_FILES} ${RENDERED_SVG_FILES} Crypto101.tex Header.tex Glossary.tex Crypto101.bib
 	latexmk -bibtex -pdf -gg Crypto101.tex
