@@ -1,4 +1,4 @@
-% Created 2014-03-24 Mon 12:11
+% Created 2014-03-24 Mon 15:50
 \documentclass[11pt,ebook,table,dvipsnames]{memoir}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -99,7 +99,7 @@ Of course, if I never hear about your issue, it's very hard for me to
 address\ldots{}
 
 The copy of this book that you are reading right now is based on the
-git commit with hash \texttt{c768865}, also known as \texttt{v0.1.0-80-gc768865}.
+git commit with hash \texttt{6b0454c}, also known as \texttt{v0.1.0-89-g6b0454c}.
 \chapter{Acknowledgments}
 \label{sec-1-3}
 
@@ -624,8 +624,7 @@ is no longer considered secure, mainly due to its tiny key size of 56
 bits. (The DES algorithm actually takes a 64 bit key input, but the
 remaining 8 bits are only used for parity checking, and are discarded
 immediately.) It shouldn't be used in new systems. On modern hardware,
-DES can be brute forced in less
- than a day. \cite{sciengines:breakdes}
+DES can be brute forced in less than a day. \cite{sciengines:breakdes}
 
 In an effort to extend the life of the DES algorithm, in a way that
 allowed much of the spent hardware development effort to be reused,
@@ -970,7 +969,7 @@ be unpredictable; ideally, they will be cryptographically random. They
 do not have to be secret: IVs are typically just added to ciphertext
 messages in plaintext.
 
-The following diagram demonstrates encryption in \hyperref[CBC mode]{CBC-mode}:
+The following diagram demonstrates encryption in \hyperref[CBC-mode]{CBC mode}:
 
 \includegraphics[width=.9\linewidth]{./Illustrations/CBC/Encryption.pdf}
 
@@ -979,7 +978,7 @@ decryption mode instead of encryption mode:
 
 \includegraphics[width=.9\linewidth]{./Illustrations/CBC/Decryption.pdf}
 
-While \hyperref[CBC mode]{CBC-mode} itself is not inherently insecure (unlike ECB mode),
+While \hyperref[CBC-mode]{CBC mode} itself is not inherently insecure (unlike ECB mode),
 its particular use in TLS 1.0 was. This eventually led to the
 \gls{BEAST} attack, which we'll cover in more detail in the section on
 SSL/TLS. The short version is that instead of using unpredictable
@@ -991,7 +990,7 @@ that attackers figured out how to exploit that property.
 
 An interesting attack on \gls{CBC mode} is called a bit flipping
 attack. Using a CBC bit flipping attack, attackers can modify
-ciphertexts encrypted in \hyperref[CBC mode]{CBC-mode} so that it will have a predictable
+ciphertexts encrypted in \hyperref[CBC-mode]{CBC mode} so that it will have a predictable
 effect on the plaintext.
 
 Suppose we have a CBC encrypted ciphertext. This could be, for
@@ -1098,7 +1097,7 @@ unable to distinguish between padding and the actual message.
 \subsection{\label{PKCS-5/PKCS-7-padding}PKCS\#5/PKCS\#7 padding}
 \label{sec-2-3-6-2}
 
-A better, and much more popular scheme, is \hyperref[PKCS\#5/PKCS\#7 padding]{PKCS-5/PKCS-7-padding}.
+A better, and much more popular scheme, is \hyperref[PKCS-5/PKCS-7-padding]{PKCS\#5/PKCS\#7 padding}.
 
 PKCS\#5, PKCS\#7 and later CMS padding are all more or less the same
 idea\footnote{Technically, PKCS\#5 padding is only defined for 8 byte block
@@ -1117,7 +1116,7 @@ This scheme is described in \cite{cms:padding}.
 \section{CBC padding attacks}
 \label{sec-2-3-7}
 
-We can refine \hyperref[CBC bit flipping attacks]{CBC-bit-flipping-attacks} to trick a recipient into
+We can refine \hyperref[CBC-bit-flipping-attacks]{CBC bit flipping attacks} to trick a recipient into
 decrypting arbitrary messages!
 
 As we've just discussed, \gls{CBC mode} requires padding the message
@@ -1145,7 +1144,7 @@ To mount this attack, an attacker only needs two things:
 the attacker if the padding was correct
 \end{enumerate}
 
-In this chapter, we'll assume that \hyperref[PKCS\#5/PKCS\#7 padding]{PKCS-5/PKCS-7-padding} is being
+In this chapter, we'll assume that \hyperref[PKCS-5/PKCS-7-padding]{PKCS\#5/PKCS\#7 padding} is being
 used, since that's the most popular option. The attack is general
 enough to work on other kinds of padding, with minor modifications.
 
@@ -1170,7 +1169,7 @@ valid padding. They can do that by playing with the last byte of the
 plaintext: eventually that byte will be \verb~01~, which is always valid
 padding. In order to modify the last byte of a plaintext block, the
 attacker modifies the last byte of the \emph{previous} ciphertext block.
-This works exactly like it did with \hyperref[CBC bit flipping attacks]{CBC-bit-flipping-attacks}. That
+This works exactly like it did with \hyperref[CBC-bit-flipping-attacks]{CBC bit flipping attacks}. That
 previous ciphertext block is the block $R$, so the byte being modified
 is the last byte of $R$, $r_b$.
 
@@ -1389,7 +1388,7 @@ modes of operation and padding. Clocking in at around 13.9 cycles per
 byte, it's comparable to \hyperref[AES]{AES}-128 in CTR (12.6 cycles per byte) or CBC
 (16.0 cycles per byte) modes. \hyperref[AES]{AES} came out a few years after \hyperref[RC4]{RC4}; when
 \hyperref[RC4]{RC4} was designed, the state of the art was 3DES, which was
-excruciatingly slow by comparison (134.5 cycles per byte in \hyperref[CTR mode]{CTR-mode}).
+excruciatingly slow by comparison (134.5 cycles per byte in \hyperref[CTR-mode]{CTR mode}).
 \cite{cryptopp:bench}
 
 This algorithm is, unfortunately, quite broken. To better understand
@@ -1443,7 +1442,7 @@ used 16 times.
 
 Or, in Python:
 
-\begin{verbatim}
+\begin{minted}[]{python}
 from itertools import cycle
 
 def key_schedule(key):
@@ -1452,11 +1451,11 @@ def key_schedule(key):
 
     j = 0
     for i in xrange(256):
-	j = (j + s[i] + next(key_bytes)) % 256
-	s[i], s[j] = s[j], s[i]
+        j = (j + s[i] + next(key_bytes)) % 256
+        s[i], s[j] = s[j], s[i]
 
     return s
-\end{verbatim}
+\end{minted}
 \subsection{The pseudorandom generator}
 \label{sec-2-3-9-2}
 
@@ -1474,16 +1473,16 @@ is the keystream byte $K_i$:
 
 We can express this in Python:
 
-\begin{verbatim}
+\begin{minted}[]{python}
 def pseudorandom_generator(s):
     j = 0
     for i in cycle(range(256)):
-	j = (j + s[i]) % 256
-	s[i], s[j] = s[j], s[i]
+        j = (j + s[i]) % 256
+        s[i], s[j] = s[j], s[i]
 
-	k = (s[i] + s[j]) % 256
-	yield s[k]
-\end{verbatim}
+        k = (s[i] + s[j]) % 256
+        yield s[k]
+\end{minted}
 \subsection{Attacks}
 \label{sec-2-3-9-3}
 
@@ -1550,14 +1549,14 @@ wouldn't have this weakness; TLS and other standards were therefore
 not affected.
 
 Again, attacks only get better. Andreas Klein showed more extensive
-correlation between the key and the keystream\cite{klein:rc4}. Instead
-of tens of millions of messages with the Fluhrer, Mantin, Shamir
-attacks, attackers now only needed several tens of thousands messages
-to make the attack practical. This was applied against WEP with great
-effect.
+correlation between the key and the keystream. \cite{klein:rc4}
+Instead of tens of millions of messages with the Fluhrer, Mantin,
+Shamir attacks, attackers now only needed several tens of thousands
+messages to make the attack practical. This was applied against WEP
+with great effect.
 
 In 2013, a team of researchers at Royal Holloway in London produced a
-combination of devastating practical attacks\cite{rhul:rc4}. They
+combination of devastating practical attacks. \cite{rhul:rc4} They
 demonstrated two attacks.
 
 The first attack is based on single-byte biases in the first 256 bytes
@@ -1655,7 +1654,7 @@ stands for \enquote{modified alleged RC4}. The RC4 section explains why it's
 \enquote{alleged}, and modified means it throws away the first 256 bytes
 because of a weakness in RC4.}, approximately three times faster than
 \hyperref[AES]{AES}-CTR with a 128 bit key at 12.6 cycles per byte, and roughly in the
-ballpark of \hyperref[AES]{AES} \hyperref[GCM mode]{GCM-mode}\footnote{GCM mode is an authenticated encryption
+ballpark of \hyperref[AES]{AES} \hyperref[GCM-mode]{GCM mode}\footnote{GCM mode is an authenticated encryption
 mode, which we will see in more detail in a later chapter.} with
 specialized hardware instructions.
 
@@ -1721,7 +1720,7 @@ decryption is the same thing: in both cases you produce the keystream,
 and you XOR either the plaintext or the ciphertext with it in order to
 get the other one.
 
-For \hyperref[CTR mode]{CTR-mode} to be secure, it is critical that \glspl{nonce} aren't
+For \hyperref[CTR-mode]{CTR mode} to be secure, it is critical that \glspl{nonce} aren't
 reused. If they are, the entire keystream will be repeated, allowing
 an attacker to mount multi-time pad attacks.
 
@@ -1731,7 +1730,7 @@ able to predict a CTR \gls{nonce} doesn't really matter: without the
 secret key, he has no idea what the output of the block cipher (the
 sequence in the keystream) would be.
 
-Like \texttt{Salsa20}, \hyperref[CTR mode]{CTR-mode} has the interesting property that you can jump
+Like \texttt{Salsa20}, \hyperref[CTR-mode]{CTR mode} has the interesting property that you can jump
 to any point in the keystream easily: just increment the counter to
 that point. \hyperref[keystream-jump]{The Salsa20 paragraph on this topic} explains why that
 might be useful.
@@ -1744,14 +1743,14 @@ are trivial to compute in parallel.
 
 Stream ciphers, such as native stream ciphers or a block cipher in
 \gls{CTR mode}, are also vulnerable to a bit flipping attack. It's
-similar to \hyperref[CBC bit flipping attacks]{CBC-bit-flipping-attacks} in the sense that an attacker
+similar to \hyperref[CBC-bit-flipping-attacks]{CBC bit flipping attacks} in the sense that an attacker
 flips several bits in the ciphertext, and that causes some bits to be
 flipped in the plaintext.
 
 This attack is actually much simpler to perform on stream ciphers than
 it is on \gls{CBC mode}. First of all, the bits flipped affect the
 exact same bit in the ciphertext, not a bit in the following block. It
-only affects that bit; in the \hyperref[CBC bit flipping attacks]{CBC-bit-flipping-attacks}, the plaintext
+only affects that bit; in the \hyperref[CBC-bit-flipping-attacks]{CBC bit flipping attacks}, the plaintext
 of the modified block is scrambled. Since the attacker is modifying a
 sequence of bytes and not a sequence of blocks, they're not limited to
 a block size.
@@ -2858,15 +2857,15 @@ look like \verb~k1=v1&k2=v2&...~:\footnote{I realize there are briefer ways to
 write that function. I am trying to make it comprehensible to most
 programmers; not pleasing to advanced Pythonistas.}
 
-\begin{verbatim}
+\begin{minted}[]{python}
 def parse(s):
     pairs = s.split("&")
     parsed = {}
     for pair in pairs:
-	key, value = pair.split("=")
-	parsed[key] = value
+        key, value = pair.split("=")
+        parsed[key] = value
     return parsed
-\end{verbatim}
+\end{minted}
 
 Since the parsing function only remembers the last value for a given
 key (previous values in the dictionary are overwritten), an attacker
@@ -2948,7 +2947,7 @@ cycles off the MAC computation time.
 
 So far, we've always assumed that MAC functions can be used with a
 single key to produce secure MACs for a very large number of messages.
-By contrast, \hyperref[One-time MACs]{one-time-MACs} are MAC functions that can only securely be
+By contrast, \hyperref[one-time-MACs]{One-time MACs} are MAC functions that can only securely be
 used once with a single key. That might sound like a silly idea, since
 we've already talked about regular secure MACs. An algorithm that only
 works once just seems objectively worse. However, they have several big
@@ -2963,7 +2962,7 @@ content of the tag.
 multiple-use MAC, removing the principal problem.
 \end{itemize}
 
-A typical simple example of such \hyperref[One-time MACs]{one-time-MACs} consists of a simple
+A typical simple example of such \hyperref[one-time-MACs]{One-time MACs} consists of a simple
 multiplication and addition modulo some large prime $p$. In this case,
 the secret key consists of two truly random numbers $a$ and $b$, both
 between 1 and $p$.
@@ -3033,13 +3032,13 @@ b &= t_1 - m_1 \cdot a \pmod p
 
 As you can see, as with one-time pads, re-using the key even once
 leads to a complete failure of the cryptosystem to preserve privacy or
-integrity, as the case may be. As a result, \hyperref[One-time MACs]{one-time-MACs} are a bit
+integrity, as the case may be. As a result, \hyperref[one-time-MACs]{One-time MACs} are a bit
 dangerous to use directly; but we'll see that with the appropriate
 construction, that issue can be remedied.
 \section{\label{Carter-Wegman-MAC}Carter-Wegman MAC}
 \label{sec-2-7-6}
 
-As we've already stated, the obvious problem with \hyperref[One-time MACs]{one-time-MACs} is
+As we've already stated, the obvious problem with \hyperref[one-time-MACs]{One-time MACs} is
 their limited practicality. Fortunately, it turns out that there is a
 construction, called a \gls{Carter-Wegman MAC}, that turns any secure
 one-time MAC into a secure many-time MAC while preserving most of the
@@ -3055,13 +3054,13 @@ CW((k_1, k_2), n, M) = F(k_1, n) \xor O(k_2, M)
 \]
 
 Keep in mind that while Carter-Wegman MACs take two distinct keys $k1$
-and $k2$, and that Carter-Wegman MACs are related to \hyperref[One-time MACs]{one-time-MACs}
+and $k2$, and that Carter-Wegman MACs are related to \hyperref[one-time-MACs]{One-time MACs}
 which also take two distinct keys, these keys are unrelated. The
 Carter-Wegman MAC's $k_2$ is the only input here to the fast one-time
 MAC $O$. If that fast one-time MAC is our earlier example that takes
 two keys, that $k_2$ would have to get split up into those two keys.
 
-You can tell how a \hyperref[Carter-Wegman MAC]{Carter-Wegman-MAC} exploits the benefits of both
+You can tell how a \hyperref[Carter-Wegman-MAC]{Carter-Wegman MAC} exploits the benefits of both
 kinds of MACs by considering the two terms of the equation separately.
 In $F(k_1, n)$, $F$ is just a regular pseudorandom function, such as a
 block cipher. It is quite slow by comparison to the one-time MAC.
@@ -3075,7 +3074,7 @@ some of the state of the art in MAC functions. The paper (\cite{umac})
 and RFC (\cite{rfc4418}) for an older, related MAC function called
 UMAC may also be good sources of extra background information, since
 they go into extensive details of the hows and whys of a practical
-\hyperref[Carter-Wegman MAC]{Carter-Wegman-MAC}.
+\hyperref[Carter-Wegman-MAC]{Carter-Wegman MAC}.
 \section{Authenticated encryption modes}
 \label{sec-2-7-7}
 
@@ -3137,7 +3136,7 @@ separately:
 \section{\label{OCB-mode}OCB mode}
 \label{sec-2-7-8}
 
-\hyperref[OCB mode]{OCB-mode} is an \gls{AEAD} mode of operation. It is one of the earliest
+\hyperref[OCB-mode]{OCB mode} is an \gls{AEAD} mode of operation. It is one of the earliest
 developed \glspl{AEAD mode}.
 
 \illustration{OCB/Encryption}[.7]
@@ -3159,36 +3158,36 @@ very fast: only requiring roughly one block cipher operation per
 encrypted or associate data block, as well as one additional block
 cipher operation for the final tag. The offsets ($\Delta_i$) are also
 extremely easy to compute. The checksum $x$ is just all of the
-plaintext blocks $p_i$ XOR'ed together. Finally, \hyperref[OCB mode]{OCB-mode} is easy to
+plaintext blocks $p_i$ XOR'ed together. Finally, \hyperref[OCB-mode]{OCB mode} is easy to
 compute in parallel; only the final authentication tag is dependent on
 all the preceding information.
 
-\hyperref[OCB mode]{OCB-mode} also comes with a built-in padding scheme: it behaves
+\hyperref[OCB-mode]{OCB mode} also comes with a built-in padding scheme: it behaves
 slightly differently when the plaintexts or authentication text is not
 exactly a multiple of the block size. This means that, unlike with
-\hyperref[PKCS\#5/PKCS\#7 padding]{PKCS-5/PKCS-7-padding}, there isn't an entire block of \enquote{wasted} padding
+\hyperref[PKCS-5/PKCS-7-padding]{PKCS\#5/PKCS\#7 padding}, there isn't an entire block of \enquote{wasted} padding
 if the plaintext happens to be a multiple of the block size.
 
-Despite having several interesting properties going for it, \hyperref[OCB mode]{OCB-mode}
+Despite having several interesting properties going for it, \hyperref[OCB-mode]{OCB mode}
 has not received as much attention as some of the alternatives; one of
 the main reasons being that it is patent encumbered. Even though a
 number of patent licenses are available\cite{ocb:license}, including a
 free-of-charge one for open source software, this does not appear to
-have significantly impacted how much \hyperref[OCB mode]{OCB-mode} is used in the field.
+have significantly impacted how much \hyperref[OCB-mode]{OCB mode} is used in the field.
 \section{\label{GCM-mode}GCM mode}
 \label{sec-2-7-9}
 
-\hyperref[GCM mode]{GCM-mode} is an \gls{AEAD mode} with an unfortunate case of RAS
+\hyperref[GCM-mode]{GCM mode} is an \gls{AEAD mode} with an unfortunate case of RAS
 syndrome (redundant acronym syndrome): GCM itself stands for \enquote{Galois
 Counter Mode}. It is formalized in a NIST Special
 Publication\cite{gcm} and roughly boils down to a combination of
-classical \hyperref[CTR mode]{CTR-mode} with a \gls{Carter-Wegman MAC}. That MAC can be
+classical \hyperref[CTR-mode]{CTR mode} with a \gls{Carter-Wegman MAC}. That MAC can be
 used by itself as well, which is called \gls{GMAC}.
 
 \subsection{Authentication}
 \label{sec-2-7-9-1}
 
-\hyperref[GCM mode]{GCM-mode} (and by extension GMAC)
+\hyperref[GCM-mode]{GCM mode} (and by extension GMAC)
 \chapter{Signature algorithms}
 \label{sec-2-8}
 \section{Description}
@@ -3291,7 +3290,7 @@ require a \gls{nonce}. A nonce just has to be unique: you can use it
 once, and then you can never use it again. It doesn't have to be
 secret. It doesn't even have to be unpredictable. A nonce can be
 implemented by a simple counter, or a monotonic clock. Many other
-algorithms, such as \hyperref[CBC mode]{CBC-mode}, use an initialization vector. It doesn't
+algorithms, such as \hyperref[CBC-mode]{CBC mode}, use an initialization vector. It doesn't
 have to be unique: it only has to be unpredictable. It also doesn't
 have to be secret: initialization vectors are typically tacked on to
 the ciphertext. DSA's requirements for the $k$ value are a combination
@@ -3537,10 +3536,10 @@ data with a smaller entropy density.
 
 The extraction phase just uses \hyperref[HMAC]{HMAC} with a salt:
 
-\begin{verbatim}
+\begin{minted}[]{python}
 def extract(salt, data):
     return hmac(salt, data)
-\end{verbatim}
+\end{minted}
 
 The salt value is optional. If the \gls{salt} is not specified, a
 string of zeroes equal to the length of the hash function's output is
@@ -3581,15 +3580,15 @@ previous output (starting with an empty string), an \enquote{info} parameter
 (by default also the empty string), and a counter byte that counts
 which block is currently being produced.
 
-\begin{verbatim}
+\begin{minted}[]{python}
 def expand(key, info=""):
     """Expands the key, with optional info.
 
     """
     output = ""
     for byte in map(chr, range(256)):
-	output = hmac(key, output + info + byte)
-	yield output
+        output = hmac(key, output + info + byte)
+        yield output
 
 def get_output(desired_length, key, info=""):
     """Collects output from the expansion step until enough
@@ -3598,16 +3597,16 @@ def get_output(desired_length, key, info=""):
     """
     outputs, current_length = [], 0
     for output in expand(key, info):
-	outputs.append(output)
-	current_length += len(output)
+        outputs.append(output)
+        current_length += len(output)
 
-	if current_length >= desired_length:
-	    break
+        if current_length >= desired_length:
+            break
     else:
-	raise RuntimeError("Desired length too long")
+        raise RuntimeError("Desired length too long")
 
     return "".join(outputs)[:desired_length]
-\end{verbatim}
+\end{minted}
 
 Like the salt in the extraction phase, the \enquote{info} parameter is
 entirely optional, but can actually greatly increase the security of
@@ -4079,17 +4078,17 @@ new element. Elements are produced until there are 624 of them.
 
 Here's the Python source code:
 
-\begin{verbatim}
+\begin{minted}[]{python}
 def initialize_state(seed):
     state = [seed]
 
     for i in xrange(1, 624):
-	prev = state[-1]
-	elem = 0x6c078965 * (prev ^ (prev >> 30)) + i
-	state.append(uint32(elem))
+        prev = state[-1]
+        elem = 0x6c078965 * (prev ^ (prev >> 30)) + i
+        state.append(uint32(elem))
 
     return state
-\end{verbatim}
+\end{minted}
 
 For those of you who haven't worked with Python or its bitwise
 operators:
@@ -4114,18 +4113,18 @@ and every time all 624 elements of the state have been used up.
 The Python source code for this function is fairly simple. Note that
 it modifies the state array in place, instead of returning a new one.
 
-\begin{verbatim}
+\begin{minted}[]{python}
 def regenerate(s):
     for i in xrange(624):
-	y = s[i] & 0x80000000
-	y += s[(i + 1) % 624] & 0x7fffffff
+        y = s[i] & 0x80000000
+        y += s[(i + 1) % 624] & 0x7fffffff
 
-	z = s[(i + 397) % 624]
-	s[i] = z ^ (y >> 1)
+        z = s[(i + 397) % 624]
+        s[i] = z ^ (y >> 1)
 
-	if y % 2:
-	    s[i] ^= 0x9908b0df
-\end{verbatim}
+        if y % 2:
+            s[i] ^= 0x9908b0df
+\end{minted}
 
 The \verb~%~ in an expression like \verb~s[(i + n) % 624]~ means that a next
 element of the state is looked at, wrapping around to the start of the
@@ -4137,7 +4136,7 @@ The tempering function is applied to the current element of the state
 before returning it as the produced random number. It's easier to just
 show the code instead of explaining how it works:
 
-\begin{verbatim}
+\begin{minted}[]{python}
 _TEMPER_MASK_1 = 0x9d2c5680
 _TEMPER_MASK_2 = 0xefc60000
 
@@ -4147,7 +4146,7 @@ def temper(y):
     y ^= uint32((y << 15) & _TEMPER_MASK_2)
     y ^= uint32(y >> 18)
     return y
-\end{verbatim}
+\end{minted}
 
 It may not be obvious, especially if you're not used to binary
 arithmetic, but this function is \emph{bijective} or \emph{one-to-one}: each 32
@@ -4171,7 +4170,7 @@ the cryptographic security of the Mersenne Twister in the next
 section. For those interested in the result, the untempering function
 looks like this:
 
-\begin{verbatim}
+\begin{minted}[]{python}
 def untemper(y):
     y ^= y >> 18
     y ^= ((y << 15) & _TEMPER_MASK_2)
@@ -4185,8 +4184,8 @@ def _undo_shift_2(y):
     t = y
 
     for _ in xrange(5):
-	t <<= 7
-	t = y ^ (t & _TEMPER_MASK_1)
+        t <<= 7
+        t = y ^ (t & _TEMPER_MASK_1)
 
     return t
 
@@ -4194,11 +4193,11 @@ def _undo_shift_1(y):
     t = y
 
     for _ in xrange(2):
-	t >>= 11
-	t ^= y
+        t >>= 11
+        t ^= y
 
     return t
-\end{verbatim}
+\end{minted}
 \subsection{Cryptographic security}
 \label{sec-2-10-6-5}
 
@@ -4465,11 +4464,11 @@ e.g. the \texttt{x=1\&y=2} in \texttt{http://example.test/path?x=1\&y=2}.}. Usua
 they can prefix their guess with something known, for example, if the
 CSRF token is:
 
-\begin{verbatim}
+\begin{minted}[]{html}
 <input type="hidden"
        name="csrf-token"
        value="TOKEN_VALUE_HERE">
-\end{verbatim}
+\end{minted}
 
 \ldots{} they can prefix the guess with the known part of that.
 
@@ -4750,7 +4749,7 @@ that isn't \hyperref[OTR]{OTR}-capable just displays some extra whitespace.
 \hyperref[OTR]{OTR} uses many of the primitives we've seen so far:
 
 \begin{itemize}
-\item Symmetric key encryption (\gls{AES} in \hyperref[CTR mode]{CTR-mode})
+\item Symmetric key encryption (\gls{AES} in \hyperref[CTR-mode]{CTR mode})
 \item Message authentication codes (\hyperref[HMAC]{HMAC} with SHA-1)
 \item Diffie-Hellman key exchange
 \end{itemize}
@@ -4783,10 +4782,9 @@ the principles of modular arithmetic using a clock.
 \caption{A clock, pointing to 2.}
 \end{figure}
 
-For simplicity's sake, our 12-hour clock only shows hours, not
-minutes or seconds. Unlike real clocks, the hour hand always shows an
-exact hour, such as 2 or 9, and is never halfway in between two
-hours.
+For simplicity's sake, our 12-hour clock only shows hours, not minutes
+or seconds. Unlike real clocks, the hour hand always shows an exact
+hour, such as 2 or 9, and is never halfway in between two hours.
 
 \section{Addition and subtraction\label{Modular-addition}\label{Modular-subtraction}}
 \label{sec-4-1-1}
