@@ -479,7 +479,7 @@ since the keys have to consist of truly random data for its security
 property to hold, key generation is fairly difficult and
 time-consuming without specialized hardware.
 
-One-time pads pose a trade off. It's an algorithm with a solid
+One-time pads pose a trade-off. It's an algorithm with a solid
 information-theoretic security guarantee, which you can not get from
 any other system. On the other hand, it also has extremely impractical
 key exchange requirements. However, as we'll see throughout this book,
