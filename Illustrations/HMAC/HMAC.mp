@@ -38,8 +38,8 @@ beginfig(1);
     drawarrow (2.25u, 3.5u) -- (3u, 3.5u);
 
     %labels
-    label.lft(btex $P_i$ etex, (u, 7.5u));
-    label.lft(btex $P_o$ etex, (u, 3.5u));
+    label.lft(btex $p_{inner}$ etex, (u, 7.5u));
+    label.lft(btex $p_{outer}$ etex, (u, 3.5u));
 
     label(btex $(=0$x$3636\dots)$ etex, (u-10pt, 7.5u-15pt));
     label(btex $(=0$x$5c5c\dots)$ etex, (u-10pt, 3.5u-15pt));
@@ -63,4 +63,3 @@ beginfig(1);
 endfig;
 
 end
-

@@ -2986,12 +2986,12 @@ with the key before each pass. Visually, HMAC looks like this:
 
 \illustration{HMAC/HMAC}[.4]
 
-The only surprising thing here perhaps are the two constants $p_i$
-(the inner padding, one hash function's block length worth of ~0x36~
-bytes) and $p_0$ (the outer padding, one block length worth of ~0x5x~
-bytes). These are necessary for the security proof of HMAC to work;
-their particular values aren't very important, as long as the two
-constants are different.
+The only surprising thing here perhaps are the two constants
+$p_{inner}$ (the inner padding, one hash function's block length worth
+of ~0x36~ bytes) and $p_outer$ (the outer padding, one block length
+worth of ~0x5x~ bytes). These are necessary for the security proof of
+HMAC to work; their particular values aren't very important, as long
+as the two constants are different.
 
 The two pads are XORed with the key before use. The result is either
 prepended to the original message (for the inner padding $p_i$) or the
