@@ -479,13 +479,15 @@ since the keys have to consist of truly random data for its security
 property to hold, key generation is fairly difficult and
 time-consuming without specialized hardware.
 
-One-time pads pose a trade off. It's an algorithm with a security
-guarantee, but it also has extremely impractical key exchange
-requirements. However, as we'll see throughout this book, secure
-symmetric encryption algorithms aren't the problem. Cryptographers
-have designed plenty of those, while practical key management remains
-one of the toughest challenges facing modern cryptography. One-time
-pads may solve a problem, but it's the wrong problem.
+One-time pads pose a trade off. It's an algorithm with a solid
+information-theoretic security guarantee, which you can not get from
+any other system. On the other hand, it also has extremely impractical
+key exchange requirements. However, as we'll see throughout this book,
+secure symmetric encryption algorithms aren't the pain point of modern
+cryptosystems. Cryptographers have designed plenty of those, while
+practical key management remains one of the toughest challenges facing
+modern cryptography. One-time pads may solve a problem, but it's the
+wrong problem.
 
 While they may have their uses, they're obviously not a panacea. We
 need something with manageable key sizes while maintaining secrecy. We
