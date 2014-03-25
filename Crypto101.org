@@ -399,10 +399,10 @@ P_i = C_i \xor K \qquad \text{for all }i
 Since we usually can't guess an entire message, this doesn't actually
 work. However, we might be able to guess parts of a message.
 
-If we guess a few plaintext bits correctly for /any/ of the messages,
-that would reveal the key bits at that position for /all/ of the
-messages, since $k = c_i \xor p_i$. Hence, all of the plaintext bits
-at that position are revealed: using that value for $k$, we can
+If we guess a few plaintext bits $p_i$ correctly for /any/ of the
+messages, that would reveal the key bits at that position for /all/ of
+the messages, since $k = c_i \xor p_i$. Hence, all of the plaintext
+bits at that position are revealed: using that value for $k$, we can
 compute the plaintext bits $p_i = c_i \xor k$ for all the other
 messages.
 
