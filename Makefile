@@ -1,10 +1,10 @@
-PBM_FILES := $(shell find Illustrations/ -type f -name '*.pbm')
+PBM_FILES := $(shell find Illustrations -type f -name '*.pbm')
 RENDERED_PBM_FILES = $(patsubst %.pbm,%.pdf,${PBM_FILES})
 
-SVG_FILES := $(shell find Illustrations/ -type f -name '*.svg')
+SVG_FILES := $(shell find Illustrations -type f -name '*.svg')
 RENDERED_SVG_FILES = $(patsubst %.svg,%.pdf,${SVG_FILES})
 
-MP_FILES := $(shell find Illustrations/ -type f -name '*.mp')
+MP_FILES := $(shell find Illustrations -type f -name '*.mp')
 RENDERED_MP_FILES = $(patsubst %.mp,%.pdf,${MP_FILES})
 
 .PHONY: all clean
