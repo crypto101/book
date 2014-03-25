@@ -680,8 +680,8 @@ last keying option, the middle decryption reverses the first
 encryption, so you really only get the effect of the last encryption.
 This is intended as a backwards compatibility mode for existing DES
 systems. If 3DES had been defined as $E(k_1, E(k_2, E(k_3, p)))$, it
-would've been impossible to use 3DES implementations for systems that
-required compatibility with DES.
+would have been impossible to use 3DES implementations for systems
+that required compatibility with DES.
 
 Some attacks on 3DES are known, reducing their effective security.
 While breaking 3DES with the first keying option is currently
