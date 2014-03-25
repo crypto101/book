@@ -606,10 +606,11 @@ permutations of the set of blocks of a cipher with a 128 bit block
 size is $(2^{128})!$. Just $2^{128}$ is large already (it takes 38
 digits to write it down), so $(2^{128})!$ is a mind-bogglingly huge
 number, impossible to comprehend. Common key sizes are only in the
-range of 128 to 256 bits, yielding $2^{128}$ to $2^{256}$
-possibilities. That means that only a tiny fraction of all possible
-permutations are possible. That's okay: that tiny fraction is still
-nowhere near small enough for an attacker to just try them all.
+range of 128 to 256 bits, so there are only between $2^{128}$ and
+$2^{256}$ possible permutations a cipher can perform. That's just a
+tiny fraction of all possible permutations of the block space, but
+hat's okay: that tiny fraction is still nowhere near small enough for
+an attacker to just try them all.
 
 Of course, a block cipher should be as easy to compute as possible,
 as long as it doesn't sacrifice any of the above properties.
