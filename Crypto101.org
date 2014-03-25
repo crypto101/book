@@ -469,14 +469,15 @@ security guarantee. It would appear, then, that cryptography is over:
 encryption is a solved problem, and we can all go home. Obviously,
 that's not the case.
 
-One-time pads are impractical: the key is at least as large as all
-information you'd like to transmit put together. Plus, you'd have to
-exchange those keys securely, ahead of time, with all people you'd
-like to communicate with. We'd like to communicate securely with
-everyone on the Internet, and that's an impossibly large number of
-people. Furthermore, since the keys have to consist of truly random
-data for its security property to hold, key generation is fairly
-difficult and time-consuming without specialized hardware.
+One-time pads are rarely used in because they are horribly
+impractical: the key is at least as large as all information you'd
+like to transmit, /put together/. Plus, you'd have to exchange those
+keys securely, ahead of time, with all people you'd like to
+communicate with. We'd like to communicate securely with everyone on
+the Internet, and that's a very large number of people. Furthermore,
+since the keys have to consist of truly random data for its security
+property to hold, key generation is fairly difficult and
+time-consuming without specialized hardware.
 
 One-time pads pose a trade off. It's an algorithm with a security
 guarantee, but it also has extremely impractical key exchange
