@@ -411,10 +411,10 @@ entire plaintext. Suppose we know that the plaintext is in English.
 There are some sequences that we know will occur very commonly, for
 example (the \verb*| | symbol denotes a space):
 
-- \verb*| the |, variants like \verb*|. The |
+- \verb*| the | and variants such as \verb*|. The |
 - \verb*| of | and variants
 - \verb*| to | and variants
-- \verb*| and |(less common at the start of a sentence)
+- \verb*| and | (no variants; only occurs in the middle of a sentence)
 - \verb*| a | and variants
 
 If we know more about the plaintext, we can make even better guesses.
