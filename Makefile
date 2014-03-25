@@ -24,7 +24,8 @@ Crypto101.tex: Crypto101.org
 	potrace -b pdf $<
 
 %.pdf: %.mp
-	mptopdf $<
+	cd $(dir $<) && mptopdf $(notdir $<)
+	mv $(addsuffix -mps.pdf,$(basename $<)) $(addsuffix .pdf,$(basename $<))
 
 clean:
 	git clean -fdx
