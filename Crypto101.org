@@ -408,7 +408,7 @@ messages.
 
 Guessing parts of the plaintext is a lot easier than guessing the
 entire plaintext. Suppose we know that the plaintext is in English.
-There's some sequences that we know will occur very commonly, for
+There are some sequences that we know will occur very commonly, for
 example (the \verb*| | symbol denotes a space):
 
 - \verb*| the |, variants like \verb*|. The |
@@ -3704,7 +3704,7 @@ Producing random numbers is a fairly intricate process. What's worse,
 is that like so many cryptographic systems gone wrong, that to the
 untrained eye, getting it wrong looks exactly like getting it right.
 
-There's three categories of random number generation that we'll
+There are three categories of random number generation that we'll
 consider separately:
 
  - True random number generators
