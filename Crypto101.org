@@ -558,7 +558,7 @@ Encryption would look like this:
 \permutationimg{Ek}
 #+END_LATEX
 
-The points $a, b, c\ldots$ are blocks. The arrows show which blocks
+The points $a, b, c \ldots h$ are blocks. The arrows show which blocks
 map to which blocks: that the block at the start of the arrow,
 encrypted using $E$ under key $k$, is mapped to the block at the end
 of the arrow. For example, $E(k, a) = b$.
