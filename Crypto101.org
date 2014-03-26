@@ -1105,7 +1105,7 @@ illustration), they just XOR the filler bytes (~ZZZ~ \ldots) with that
 target. Because two XOR operations with the same value cancel each
 other out, the two filler values (~ZZZ~ \ldots) will cancel out, and
 the attacker can expect to see \verb|;admin=1;| pop up in the next
-ciphertext block:
+plaintext block:
 
 #+BEGIN_LATEX
 \begin{eqnarray*}
