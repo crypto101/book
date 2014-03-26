@@ -1,13 +1,4 @@
-prologues := 3;
-if scantokens(mpversion) > 1.005:
-  outputtemplate :=
-else:
-  filenametemplate
-fi
-"%j.mps";
-
-input TEX;
-input boxes;
+input ../common;
 
 
 %%% Drawing scale
