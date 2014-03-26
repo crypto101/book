@@ -599,7 +599,7 @@ right one.
 
 Our toy illustration block cipher only has 3 bit blocks, or $2^3 = 8$
 possibilities. Real, modern block ciphers have much larger block
-sizes, such as 128 bits, or $2^{128}$ (approximately $10^{38}$)
+sizes, such as 128 bits, or $2^{128}$ (slightly more than $10^{38.5}$)
 possible blocks. Mathematics tells us that there are $n!$ (pronounced
 /n factorial/) different permutations of an $n$ element set. It's
 defined as the product of all of the numbers from 1 up to and
