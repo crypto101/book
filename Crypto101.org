@@ -1070,9 +1070,9 @@ in CBC decryption, ciphertext blocks are decrypted by the block
 cipher, and the result is XORed with the previous ciphertext block.
 But since we modified the previous ciphertext block by XORing it with
 $X$, the plaintext block $P_{i + 1}$ will also be XORed with $X$. As a
-result, the attacker completely controls that ciphertext block, since
-they can just flip the bits that aren't the value they want them to
-be.
+result, the attacker completely controls that plaintext block
+$P_{i + 1}$, since they can just flip the bits that aren't the value
+they want them to be.
 
 TODO: add previous illustration, but mark the path X takes to
 influence P prime {i + 1} in red or something
