@@ -693,7 +693,10 @@ encryption, so you really only get the effect of the last encryption.
 This is intended as a backwards compatibility mode for existing DES
 systems. If 3DES had been defined as $E(k_1, E(k_2, E(k_3, p)))$, it
 would have been impossible to use 3DES implementations for systems
-that required compatibility with DES.
+that required compatibility with DES. This is particularly important
+for hardware implementations, where it is not always possible to
+provide a secondary, regular "single DES" interface next to the
+primary 3DES interface.
 
 Some attacks on 3DES are known, reducing their effective security.
 While breaking 3DES with the first keying option is currently
