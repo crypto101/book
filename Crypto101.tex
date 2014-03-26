@@ -471,6 +471,8 @@ information-theoretic security guarantee, which you can not get from
 any other system. On the other hand, it also has extremely impractical
 key exchange requirements. However, as we'll see throughout this book,
 secure symmetric encryption algorithms aren't the pain point of modern
+%**HMM** This is the first place that "symmetric" is mentioned; the next time is in "Stream ciphers". I think that this term should be explained - it could be done very nicely with the diagram in section 4.3 "One-time pads": If one draws a vertical line through the picture at c_i, one sees that it is actually a symmetric picture!! This fundamental explanation of "symmetric" is certainly worth a picture and a paragraph.
+%**HMM** Unfortunately, no corresponding picture is present in chapter 8, "Public-key encryption": It would nicely fit there after the first paragraph; and it could refer back to the picutre in 4.3. with the symmetry axis placed in the middle for comparison.
 cryptosystems. Cryptographers have designed plenty of those, while
 practical key management remains one of the toughest challenges facing
 modern cryptography. One-time pads may solve a problem, but it's the
@@ -827,6 +829,7 @@ color channels of 8 bit depth, each pixel takes 24 bits to store.
 Since the block size of \hyperref[AES]{AES} is only 128 bits, that would equate to
 $5.\overline{3}$ pixels \footnote{The line over the $3$ in $5.\overline{3}$
 means it repeats, so the value is $5.333\ldots$.} per block,
+%**HMM** Have fractions gone out of fashion? It's simply $5{1\over 3}$ pixels per block, without a footnote. Or, for the purpose here even simpler: "a little over 5 pixels per block".
 significantly less than the larger block sizes in the example. But \hyperref[AES]{AES}
 is the workhorse of modern block ciphers---it can't be at fault,
 certainly not because of an insufficient block size.
@@ -868,6 +871,15 @@ not have access to the encryption key $k$ or the secret suffix $S$.
 The goal of the oracle is for those values to remain secret, but we'll
 see how an attacker can recover $S$ by inspecting the ciphertext $C$
 for many carefully chosen values of the prefix $A$.
+%**HMM** At this point, the reader is stunned: Fine, an oracle might do certain things, but does an attacker actually have an oracle at his disposition that does *exactly* what he needs? So some explanation is necessary here, like this scenario which I just invented:
+You might believe this is an artificial setup: After all, why would
+an attacker have such a fine oracle? However, in many cases such oracles
+are actually implemented by part of a software. For example, a program might
+contain a module that sends encrypted usage information to some web service;
+and by re-starting the program often enough, the attacker might be able to
+place a prefix of selected usages in front of whatever is encrypted later,
+and then inspect the output by a network sniffer.
+
 \subsection{Decrypting a block using the oracle}
 \label{sec-2-3-2-3}
 
@@ -916,8 +928,9 @@ would be:
 
 For a typical block size of 16 bytes (or 128 bits), brute forcing
 would mean trying $256^{16}$ combinations. That's a huge, 39-digit
+%**HMM** 256^16=(2^8)^16=2^128 - so this is exactly the number we had at the end of section 5.1, but there it was described as "it takes 38 digits to write it down". I don't believe a book that cannot even find out whether 2^128 has 38 or 39 digits ;-)
 number. It's so large that trying all of those combinations is
-considered impossible. This attack allows an attacker to do it in at
+considered impossible. The attack above, however, allows an attacker to do it in at
 most $256 \cdot 16 = 4096$ tries, a far more manageable number.
 \subsection{Conclusion}
 \label{sec-2-3-2-4}
@@ -966,6 +979,10 @@ also appear in many other algorithms. An initialization vector should
 be unpredictable; ideally, they will be cryptographically random. They
 do not have to be secret: IVs are typically just added to ciphertext
 messages in plaintext.
+%**HMM** People like me do not understand such things: How can something be unpredictable, if, at the same time, it can just be posted as plaintext to the whole world? That sounds like a contradiction in itself: Something that everyone can read is certainly not unpredictable. So, this merits some explanation, maybe:
+
+Please note that a publicly visible piece of information, like the IV above, can still be emph{unpredictable}: For each encryption result (e.g., ciphertext with added IV) we see, we can still be astonished what concrete value (of the IV) we will see.
+%**HMM** ... and is it then possible to explain what happens if the IV is predictable? E.g. by showing that in the boundary case, where the IV is a well-known constant, one can ... do what??? (I am still layman enough so that's I'd have to think very hard whether and how this might help an attacker ... :-( )
 
 The following diagram demonstrates encryption in \hyperref[CBC mode]{CBC-mode}:
 
@@ -989,7 +1006,8 @@ that attackers figured out how to exploit that property.
 An interesting attack on \gls{CBC mode} is called a bit flipping
 attack. Using a CBC bit flipping attack, attackers can modify
 ciphertexts encrypted in \hyperref[CBC mode]{CBC-mode} so that it will have a predictable
-effect on the plaintext.
+effect on the plaintext. This is not the standard attack one expects, namely that attackers want to find out the plaintext. However, an attack where a certain plaintext can be forced can be quite worthwhile. Just think about the possibility that you could sneak a password in some stream, or some program snippet in the input of an interpreter. A more conrete example will follow immediately after the description of the attack.
+
 
 Suppose we have a CBC encrypted ciphertext. This could be, for
 example, a cookie. We take a particular ciphertext block, and we flip
@@ -1018,15 +1036,17 @@ plaintext block is $P_i^{\prime}$.
 However, in the block \emph{after} that, the bits we flipped in the
 ciphertext will be flipped in the plaintext as well! This is because,
 in CBC decryption, ciphertext blocks are decrypted by the block
-cipher, and the result is XORed with the previous ciphertext block.
+cipher, and the \emph{result} is XORed with the previous ciphertext block.
 But since we modified the previous ciphertext block by XORing it with
 $X$, the plaintext block $P_{i + 1}$ will also be XORed with $X$. As a
 result, the attacker completely controls that ciphertext block, since
+%**HMM** ?????????? shouldn't that be: "the attacker completely controls that PLAINtext, since they ..."!!!!
 they can just flip the bits that aren't the value they want them to
 be.
 
 TODO: add previous illustration, but mark the path X takes to
 influence P prime \{i + 1\} in red or something
+%**HMM** No: The previous illustration and the text are anough of an explanation. 
 
 This may not sound like a huge deal at first. If you don't know the
 plaintext bytes of that next block, you have no idea which bits to
@@ -1046,8 +1066,10 @@ value for the user name you want at registration, so the attacker can
 just add a very long string of \verb~Z~ bytes to their user name. The
 server will happily encrypt such a cookie, giving the attacker an
 encrypted ciphertext that matches a plaintext with many such \verb~Z~ bytes in
-them. The plaintext getting modified will then probably be part of
-that sequence of \verb~Z~ bytes.
+them. 
+And now the attacker has his chance: By providing a bit-flipping vector that changes a sequence of \verb~Z~ bytes into some more useful text, that text can be made to show up in the decrypted plaintext, \emph{if} his vector overlaps the ciphertext of the \verb~Z~ sequence. But as the attacker inserted a \emph{lot} of \verb~Z~s, the probability of this is quite high. And as the 
+the plaintext getting modified will therefore probably be part of
+that sequence of \verb~Z~ bytes, the injection attacks has a good chance of success.
 
 An attacker may have some target bytes that he'd like to see in the
 decrypted plaintext, for example, \verb*|;admin=1;|. In order to
@@ -1057,6 +1079,7 @@ target. Because two XOR operations with the same value cancel each
 other out, the two filler values (\verb~ZZZ~ \ldots) will cancel out, and
 the attacker can expect to see \verb|;admin=1;| pop up in the next
 ciphertext block:
+*%%HMM** again, this should be PLAINtext block, shouldn't it???!!!
 
 \begin{eqnarray*}
 P^{\prime}_{i + 1} & = & P_{i + 1} \xor X \\
@@ -1074,6 +1097,10 @@ principle: encryption is not authentication! It's virtually never
 sufficient to simply encrypt a message. It \emph{may} prevent an attacker
 from reading it, but that's often not even necessary for the attacker
 to be able to modify it to say whatever they want it to.
+
+%**HMM** At this point I have a general wish: After an attack, give us an explicit short summary on what one can do against it: "Always authenticate", "stay away from this algorithm", "make sure you use a perfect cryptographic random generator". Otherwise, your readers (I, at least) start to sleep really bad after finishing such a chapter. Here, you actually give us this information - but, I feel, in a rather implicit way: "encryption is not authentication!" - clear. "It's virtually never sufficient to simply encrypt a message." - aha. But it does not say directly: "authenticate!" And, by the way, one should also safeguard against such plaintext-modification attacks on lower levels - e.g. prevent SQL injection; and it might be debatable that an interface exposing an "admin=1" parameter is such a good idea - rathe the admin privileges should be tied to (a few) certain users.
+
+
 \section{Padding}
 \label{sec-2-3-6}
 
@@ -4231,7 +4258,7 @@ states and future states produced by the state regeneration function.
 Again, this is not a weakness of Mersenne Twister. It's designed to be
 fast and have strong randomness properties. It is not designed to be
 unpredictable, the principal property of a cryptographically secure
-pseudorandom number generators.
+pseudorandom number generator.
 \part{Complete cryptosystems}
 \label{sec-3}
 \chapter{SSL and TLS}
