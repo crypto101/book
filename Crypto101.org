@@ -1098,7 +1098,7 @@ encrypted ciphertext that matches a plaintext with many such ~Z~ bytes in
 them. The plaintext getting modified will then probably be part of
 that sequence of ~Z~ bytes.
 
-An attacker may have some target bytes that he'd like to see in the
+An attacker may have some target bytes that they'd like to see in the
 decrypted plaintext, for example, \verb*|;admin=1;|. In order to
 figure out which bytes they should flip (so, the value of $X$ in the
 illustration), they just XOR the filler bytes (~ZZZ~ \ldots) with that
