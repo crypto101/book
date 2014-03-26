@@ -913,14 +913,7 @@ of the first encrypted block: $E_k(A \| s_0)$. In the illustration,
 this is block $C_{R1}$:
 
 #+BEGIN_LATEX
-\newcommand{\ecbencoracleimg}[1]{
-\begin{figure}[ht!]
-\centering
-\includegraphics[width=.60\linewidth]{./Illustrations/ECBEncryptionOracle/#1.pdf}
-\end{figure}
-}
-
-\ecbencoracleimg{RememberFirst}
+\illustration{ECBEncryptionOracle/RememberFirst}[1]
 #+END_LATEX
 
 Then, the attacker tries a full-size block, trying all possible values
@@ -929,7 +922,7 @@ know the guess is correct because the resulting ciphertext block will
 match the ciphertext block $C_{R1}$ they remembered earlier.
 
 #+BEGIN_LATEX
-\ecbencoracleimg{GuessFirst}
+\illustration{ECBEncryptionOracle/GuessFirst}[1]
 #+END_LATEX
 
 The attacker can repeat this for the penultimate byte. They submit a
@@ -939,7 +932,7 @@ first two bytes of the secret suffix, $s_0s_1$. The attacker remembers
 that block.
 
 #+BEGIN_LATEX
-\ecbencoracleimg{RememberSecond}
+\illustration{ECBEncryptionOracle/RememberSecond}[1]
 #+END_LATEX
 
 Since the attacker already knows $s_0$, they try $A \|
@@ -948,7 +941,7 @@ guess correctly, which, again, they'll know because the ciphertext
 blocks match:
 
 #+BEGIN_LATEX
-\ecbencoracleimg{GuessSecond}
+\illustration{ECBEncryptionOracle/GuessSecond}[1]
 #+END_LATEX
 
 The attacker can rinse and repeat, eventually decrypting an entire
