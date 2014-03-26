@@ -726,8 +726,6 @@ reign supreme on massive mainframes, it will probably continue to be
 used for many years to come, unless there are some large cryptanalytic
 breakthroughs that threaten the security of 3DES.
 
-TODO: Explain security levels? See also: explain entropy?
-
 *** Remaining problems
 Even with block ciphers, there are still some unsolved problems.
 
