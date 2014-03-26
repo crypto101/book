@@ -612,7 +612,7 @@ n! = 1 \cdot 2 \cdot 3 \cdot \ldots \cdot (n - 1) \cdot n
 Factorials grow incredibly quickly. For example, $5! = 120$, $10! =
 3628800$, and the rate continues to increase. The number of
 permutations of the set of blocks of a cipher with a 128 bit block
-size is $(2^{128})!$. Just $2^{128}$ is large already (it takes 38
+size is $(2^{128})!$. Just $2^{128}$ is large already (it takes 39
 digits to write it down), so $(2^{128})!$ is a mind-bogglingly huge
 number, impossible to comprehend. Common key sizes are only in the
 range of 128 to 256 bits, so there are only between $2^{128}$ and
