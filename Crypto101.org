@@ -1124,7 +1124,11 @@ This attack is another demonstration of an important cryptographic
 principle: encryption is not authentication! It's virtually never
 sufficient to simply encrypt a message. It /may/ prevent an attacker
 from reading it, but that's often not even necessary for the attacker
-to be able to modify it to say whatever they want it to.
+to be able to modify it to say whatever they want it to. This
+particular problem would be solved by also securely authenticating the
+message. We'll see how you can do that later in the book; for now,
+just remember that we're going to need authentication in order to
+produce secure cryptosystems.
 
 *** Padding
 
