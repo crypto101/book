@@ -1048,6 +1048,14 @@ attack. Using a CBC bit flipping attack, attackers can modify
 ciphertexts encrypted in CBC mode so that it will have a predictable
 effect on the plaintext.
 
+This may seem like a very strange definition of "attack" at first. The
+attacker will not even attempt to decrypt any messages, but they will
+just be flipping some bits in a plaintext. We will demonstrate that
+the attacker can turn the ability to flip some bits in the plaintext
+into the ability to have the plaintext say /whatever they want it to
+say/, and, of course, that that can lead to very serious problems in
+real systems.
+
 Suppose we have a CBC encrypted ciphertext. This could be, for
 example, a cookie. We take a particular ciphertext block, and we flip
 some bits in it. What happens to the plaintext?
