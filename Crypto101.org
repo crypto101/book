@@ -1046,9 +1046,61 @@ While CBC mode itself is not inherently insecure (unlike ECB mode),
 its particular use in TLS 1.0 was. This eventually led to the
 \gls{BEAST} attack, which we'll cover in more detail in the section on
 SSL/TLS. The short version is that instead of using unpredictable
-\glspl{initialization vector}, for example by choosing random ones,
-the previous ciphertext block was used. Unfortunately, it turns out
-that attackers figured out how to exploit that property.
+\glspl{initialization vector}, for example by choosing random IVs, the
+standard used the previous ciphertext block as the IV for the next
+message. Unfortunately, it turns out that attackers figured out how to
+exploit that property.
+
+*** <<<Attacks on CBC mode with predictable IVs>>>
+
+*** <<<Attacks on CBC mode with the key as the IVk>>>
+
+Many CBC systems set the key as the initialization vector. This seems
+like a good idea: you always need a shared secret key already anyway.
+Plus, the key is definitely unpredictable because it's secret: if it
+were predictable, the attacker could just predict the key directly and
+already have won. Conveniently, many block ciphers have block sizes
+that are the same length or less than the key size, so the key is
+big enough. Since the key is known ahead of time by both sender and
+recipient, they have to communicate one less block to each other,
+yielding a performance benefit.
+
+This setup is completely insecure. If Alice sends a message to Bob,
+Mallory, an active adversary that can intercept and modify the message
+can perform a man-in-the-middle chosen-ciphertext attack to recover
+the key.
+
+Alice turns her plaintext message $P$ into three blocks $P_1 P_2 P_3$
+and encrypts it in CBC mode with the secret key $k$ and also uses $k$
+as the IV. She gets a three block ciphertext $C = C_1 C_2 C_3$, which
+she sends to Bob.
+
+Before the message reaches Bob, Mallory intercepts it. She modifies
+the message to be $C^{\prime} = C_1 Z C_1$, where $Z$ is a block
+filled with null bytes (value zero).
+
+Bob decrypts $C^{\prime}$, and gets:
+
+#+BEGIN_LATEX
+\begin{align*}
+P^{\prime}_1 = D(k, C_1) \xor IV = D(k, C_1) \xor k = P_1 \\
+P^{\prime}_2 = D(k, Z) \xor C_1 = R & \text{(some random block)} \\
+P^{\prime}_2 = D(k, C_1) \xor Z = D(k, C_1) = P_1 \xor IV
+\end{align}
+#+END_LATEX
+
+Mallory recovers that decryption:
+
+#+BEGIN_LATEX
+\begin{align*}
+P^{\prime} & = P^{\prime}_1 P^{\prime}_2 P^{\prime}_3 \\
+           & = P_1 R (P_1 \xor IV)
+\end{align*}
+#+END_LATEX
+
+Now, she XORs the last and first recovered blocks, which is $(P_1 \xor
+IV) \xor P_1 = IV$. But, the IV is the key, so Mallory successfully
+recovered the key by modifying a single message.
 
 *** <<<CBC bit flipping attacks>>>
 
