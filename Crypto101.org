@@ -135,6 +135,7 @@ particular order):
  - TinnedTuna, for review work on the XOR section (and others)
  - dfc, for work on typography and alternative formats
  - jvasile, for work on typefaces and automated builds
+ - hmmueller, for many, many notes and suggestions
 
 .. as well as the huge number of people that contributed spelling,
 grammar and content improvements. Thank you!
