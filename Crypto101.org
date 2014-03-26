@@ -507,9 +507,9 @@ could break.
 
 *** Description
 A \gls{block cipher} is an algorithm that allows us to encrypt blocks
-of a fixed length. It provides an encryption function $E$, that takes
-a key $k$ and a plaintext block $P$, and produces a ciphertext block
-$C$:
+of a fixed length. It provides an encryption function $E$ that turns
+plaintext blocks $P$ into ciphertext blocks $C$, using a secret key
+$k$:
 
 #+BEGIN_LATEX
 \begin{equation}
