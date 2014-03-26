@@ -426,11 +426,16 @@ That only tells us which plaintext sequences are likely, giving us
 likely guesses. How do we tell if any of those guesses are correct? If
 our guess is correct, we know all the other plaintexts at that
 position as well, using the technique described earlier. We could
-simply look at those plaintexts and decide if they look correct. For
-example, if they also contain English text, we'd expect to see a lot
-of letters e, t, a, o, i, n. If we're seeing binary nonsense instead,
-we know that the guess was probably incorrect, or perhaps that message
-is actually binary data.
+simply look at those plaintexts and decide if they look correct.
+
+In practice, this process needs to be automated because there are so
+many possible guesses. Fortunately that's quite easy to do. For
+example, a very simple but effective method is to count how often
+different symbols occur in the guessed plaintexts: if the messages
+contain English text, we'd expect to see a lot of letters e, t, a, o,
+i, n. If we're seeing binary nonsense instead, we know that the guess
+was probably incorrect, or perhaps that message is actually binary
+data.
 
 These small, highly probable sequences are called "cribs" because
 they're the start of a larger decryption process. Suppose your crib,
