@@ -31,4 +31,5 @@ talking about an attacker, use "they", "them", et cetera instead of
 
 When talking about specific people, use the gender pronoun they
 prefer. Also use gendered pronouns when using placeholder names like
-Alice, Bob, Carol.
+Alice, Bob, Carol. Mallory could be of either gender, but she's a girl
+in Crypto 101.
