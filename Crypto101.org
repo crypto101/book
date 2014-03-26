@@ -904,6 +904,16 @@ The goal of the oracle is for those values to remain secret, but we'll
 see how an attacker can recover $S$ by inspecting the ciphertext $C$
 for many carefully chosen values of the prefix $A$.
 
+Assuming that an attacker would have access to such an oracle might
+seem like a very artificial scenario. It turns out that in practice, a
+lot of software can be tricked into behaving like one. Even if an
+attacker can't control the real software as precisely as they can
+query an oracle, the attacker generally isn't thwarted. Time is on
+their side: they only have to convince the software to give the answer
+they want /once/. Systems where part of the message is secret and part
+of the message can be influenced by the attacker are actually very
+common, and, unfortunately, so is ECB mode.
+
 **** Decrypting a block using the oracle
 
 The attacker starts by sending in a plaintext $A$ that's just one byte
