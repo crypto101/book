@@ -1027,7 +1027,11 @@ we pick an \gls{IV}: a random number that takes the place of the
 also appear in many other algorithms. An initialization vector should
 be unpredictable; ideally, they will be cryptographically random. They
 do not have to be secret: IVs are typically just added to ciphertext
-messages in plaintext.
+messages in plaintext. It may sound contradictory that something has
+to be unpredictable, but doesn't have to be secret; it's important to
+remember that an attacker must not be able to predict /ahead of time/
+what a given IV will be. We will illustrate this later with an attack
+on predictable CBC IVs.
 
 The following diagram demonstrates encryption in CBC mode:
 
