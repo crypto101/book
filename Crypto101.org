@@ -964,8 +964,9 @@ would be:
 For a typical block size of 16 bytes (or 128 bits), brute forcing
 would mean trying $256^{16}$ combinations. That's a huge, 39-digit
 number. It's so large that trying all of those combinations is
-considered impossible. This attack allows an attacker to do it in at
-most $256 \cdot 16 = 4096$ tries, a far more manageable number.
+considered impossible. An ECB encryption oracle allows an attacker to
+do it in at most $256 \cdot 16 = 4096$ tries, a far more manageable
+number.
 
 **** Conclusion
 
