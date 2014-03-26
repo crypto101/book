@@ -2931,7 +2931,7 @@ with the key before each pass. Visually, \hyperref[HMAC]{HMAC} looks like this:
 
 The only surprising thing here perhaps are the two constants $p_i$
 (the inner padding, one hash function's block length worth of \verb~0x36~
-bytes) and $p_0$ (the outer padding, one block length worth of \verb~0x5x~
+bytes) and $p_0$ (the outer padding, one block length worth of \verb~0x5c~
 bytes). These are necessary for the security proof of \hyperref[HMAC]{HMAC} to work;
 their particular values aren't very important, as long as the two
 constants are different.
@@ -4204,7 +4204,7 @@ Remember that for cryptographic security, it has to be impossible to
 predict future outputs or recover past outputs given present outputs.
 The Mersenne Twister doesn't have that property.
 
-It's clear that psuedorandom number generators, both those
+It's clear that pseudorandom number generators, both those
 cryptographically secure and those that aren't, are entirely defined
 by their internal state. After all, they are deterministic algorithms:
 they're just trying very hard to pretend not to be. Therefore, you
