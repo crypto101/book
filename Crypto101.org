@@ -590,14 +590,14 @@ arrows, for example under $k^{\prime}$:
 \permutationimg{Ekprime}
 #+END_LATEX
 
-Knowing a bunch of (input, output) pairs shouldn't give you any
-information about any other (input, output) pairs[fn::The attentive
-reader may have noticed that this breaks in the extremes: if you know
-all but one of the pairs, then you know the last one by exclusion.].
-As long as we're talking about a hypothetical perfect block cipher,
-there's no easier way to decrypt a block other than to "brute-force"
-the key: i.e. just try every single one of them until you find the
-right one.
+Knowing a bunch of (input, output) pairs for a given key shouldn't
+give you any information about any other (input, output) pairs under
+that key[fn::The attentive reader may have noticed that this breaks in
+the extremes: if you know all but one of the pairs, then you know the
+last one by exclusion.]. As long as we're talking about a hypothetical
+perfect block cipher, there's no easier way to decrypt a block other
+than to "brute-force" the key: i.e. just try every single one of them
+until you find the right one.
 
 Our toy illustration block cipher only has 3 bit blocks, or $2^3 = 8$
 possibilities. Real, modern block ciphers have much larger block
