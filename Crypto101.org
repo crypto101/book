@@ -4302,8 +4302,8 @@ states and future states produced by the state regeneration function.
 
 Again, this is not a weakness of Mersenne Twister. It's designed to be
 fast and have strong randomness properties. It is not designed to be
-unpredictable, the principal property of a cryptographically secure
-pseudorandom number generators.
+unpredictable, which is the defining property of a cryptographically
+secure pseudorandom number generator.
 
 * Complete cryptosystems
 ** SSL and TLS
