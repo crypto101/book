@@ -1138,8 +1138,9 @@ To mount this attack, an attacker only needs two things:
 
 \begin{enumerate}
 \item A target ciphertext to decrypt
-\item A \emph{padding oracle}: a function that takes ciphertexts and tells
-the attacker if the padding was correct
+\item A \emph{padding oracle}: a function that takes arbitrary ciphertexts and tells
+the attacker if the padding was correct (we will see later that such oracles are quite
+common!)
 \end{enumerate}
 
 In this chapter, we'll assume that \hyperref[PKCS\#5/PKCS\#7 padding]{PKCS-5/PKCS-7-padding} is being
@@ -1153,7 +1154,8 @@ The attacker fills a block with arbitrary bytes $R = r_1, r_2\ldots
 r_b$. They also pick a target block $C_i$ from the ciphertext that
 they'd like to decrypt. The attacker asks the padding oracle if $R \|
 C_i$ has valid padding. Statistically speaking, such a random
-plaintext block probably won't have valid padding: the odds are in the
+plaintext probably won't have valid padding: the odds are in the
+%**HMM** This is not a single block, but two R and C_i. Removing "block" solves the problem.
 half-a-percent ballpark. If by pure chance the message happens to
 already have valid padding, they can simply skip the next step.
 
@@ -1163,7 +1165,8 @@ already have valid padding, they can simply skip the next step.
 \end{figure}
 
 Next, the attacker tries to modify the message so that it does have
-valid padding. They can do that by playing with the last byte of the
+valid padding. They can do that by indirectly playing with the last byte of the
+%**HMM** Explaining is hard ;-). Let me, once try to explain what happens when an explanation can lead a reader (me, for example) only slightly astray - I think your explanations are VERY good; but I'd still like to make them a trifle better where I stumbled on first reading - ok? Here I go: There are, essentially, two strategies: One is to explain from the goal backwards: "We want to reach Z; to get this, we must do Y, which we can get by X." The other one from the beginning: "We do X; this gives us Y, which yields Z because of ...". I think a reader must understand always what the current "direction of explanation" is. Here, the explanation is "backwards": "The attacker wants to get valid padding; they do this by setting with the last byte etc." I did not understand this on first reading - I thought "playing" meant "directly playing" and wondered how they could do this. Only two sentences furtheron, I learned that "in order to ... the attacker modifes the ... ciphertext" - aha! The "indirectly" I inserted above hopefully leads the reader along that path right away.
 plaintext: eventually that byte will be \verb~01~, which is always valid
 padding. In order to modify the last byte of a plaintext block, the
 attacker modifies the last byte of the \emph{previous} ciphertext block.
@@ -1173,6 +1176,7 @@ is the last byte of $R$, $r_b$.
 
 One way to try all values for that last byte of $R$ is to XOR it with
 all values up to 256, since a byte has 256 possible values.
+%**HMM** Hu? The attacker has chosen R as arbitrary bytes anyway. So why would they XOR 1...256 with r_b? Rather, they will simply take 256 blocks R_0= r_1 r_2 ... 0, R=1r_1 r_2 ... 1, etc. up to R_255 r_1 r_2 ... 255 and try R_k || C_i against the oracle. No need for that XOR here.
 Eventually, the padding oracle will report that for some ciphertext
 block $R$, the decrypted plaintext of $R \| C_i$ has valid padding.
 \subsection{Discovering the padding length}
@@ -1198,12 +1202,18 @@ padding options not only require that byte to have some particular
 value, but also one or more other bytes. For an attacker to end up
 with a valid \verb~01~ padding, they just have to try every possible byte;
 for an attacker to end up with a valid \verb~02 02~ padding, they have to
-try every possible byte \emph{and} happen to have picked a block that has a
-\verb~02~ in the second-to-last position.
+%**HMM** Isn't the following more correct?
+try every possible byte \emph{and} happen to have picked a block that
+whose second-to-last byte, when XORed with $R_{b-1}$, happens to be \verb~02~.
 
 In order to successfully decrypt the message, we still need to figure
-out which one of those options is the actual value of the padding. To
-do that, we try to discover the length of the padding by modifying
+out which one of those options is the actual value of the padding. 
+%**HMM** I think the following would help some readers - we (the readers) are following your text with high concentration, but sometimes we lose track: I thought - "why not just look at P_i? there you can see that last ... oh well, the oracle does not give us P_i! Therefore we need the following roundabout way"
+If we had access to a more powerful oracle that would give us the results of
+our decryption attempts, we could simply read off that value as the last byte
+$p_b$ of the decrypted plaintext. However, our oracle is much more secretive.
+Therefore, we need a more roundabout way to elicit this information.
+To do that, we try to discover the length of the padding by modifying
 bytes starting at the left-hand side of $P_i$ until the padding
 becomes invalid again. As with everything else in this attack, we
 modify those bytes in $P_i$ by modifying the equivalent bytes in our
@@ -1216,13 +1226,15 @@ Let's illustrate this with an example. Suppose we've successfully
 found some block $R$ so that $R \| C_i$ has valid padding. Let's say
 that padding is \verb~03 03 03~. Normally, you wouldn't know this; the
 point of this procedure is to discover what that padding is. Suppose
-the block size is 8 bytes. So, we know that $P_i$ is currently:
+the block size is 8 bytes. So, $P_i$ is currently:
+%**HMM** "we" problem - "we"  the attacker do not know this, only "we" the reader.
 
 \begin{equation}
 p_0 p_1 p_2 p_3 p_4 p_5 \mathtt{03} \mathtt{03} \mathtt{03}
 \end{equation}
 
-Where $p_0$ \ldots are some bytes of the plaintext. Their actual value
+where $p_0 \ldots p_5$ are some bytes of the plaintext. Their actual value
+%**HMM**Formatting issue: "where ..." continues the sentence containing that starts with the p_0... formula. Therefore, the paragraph should not be indented. Moreover, "where" should start with a lowercase letter.
 doesn't matter: the only thing that matters is that they're not part
 of the padding. When we modify the first byte of $R$, we'll cause a
 change in the first byte of $P_i$, so that $p_0$ becomes some other
@@ -1234,7 +1246,7 @@ p^{\prime}_0 p_1 p_2 p_3 p_4 p_5 \mathtt{03} \mathtt{03} \mathtt{03}
 
 As you can see, this doesn't affect the validity of the padding. The
 same goes for $p_1$, $p_2$, $p_3$, $p_4$ and $p_5$. However, when we
-modify the byte after that (say, we turn that first \verb~03~ into a \verb~02~),
+modify the byte after that (say, we turn that first \verb~03~ into a \verb~02~ via modification of $R$),
 $P_i$ looks like this:
 
 \begin{equation}
@@ -1260,16 +1272,18 @@ understand the rest of the attack.)
 At this point, we've actually already successfully decrypted the last
 byte of the target block of ciphertext! (Actually, we've decrypted as
 many bytes as we have valid padding; we're just assuming the worst
-case scenario that that's only a single byte.) Since we know that the
+case scenario that that's only a single byte.) Why? Since we know that the
 last byte of the decrypted ciphertext block $C_i$ (we'll call that
 byte $D(C_i)[b]$), XORed with our iteratively found value $r_b$, is
+%**HMM** Couldn't we call it $P_i[b]$? No, because $P$ was used above as "some plaintext" (in the decryption) attempts, whereas $D(C_i)$ is /the/ (correct) plaintext. But from where does this complicated name come? Oh, it means "decrypt of C_i" - yes this was introduced a few chapters back, but I and many more readers have long forgotten about this and are now somewhat astonished about that complicated name for a simple byte. Ok, now that I have rambled along ... Could you explain this hard-to-read (and pronounce - therefore hard to remember) notation?
 \verb|01|:
 
 \[
 D(C_i)[b] \xor r_b = \mathtt{01}
 \]
 
-We can just move the XOR operation to the other side, and we get:
+we can just move the XOR operation to the other side, and we get:
+%**HMM** Again, the "we" continues a sentence (that started at "Since"), it must be lowercase, and the paragraph not indented.
 
 \[
 D(C_i)[b] = \mathtt{01} \xor r_b
@@ -1301,7 +1315,8 @@ D(C_i)[b] \xor r_b \xor \mathtt{01} \xor \mathtt{02} & = & \mathtt{01} \xor \mat
 \end{eqnarray*}
 
 The attacker uses that value for the last byte. Then, they try all
-possible values for the second-to-last byte (index $b - 1$).
+%**HMM** Which value? 02? D(C_i) etc.etc.?? I think they actually use $r_b \xor 01 xor 02$. If so, please spell this out here (otherwise, I did not understand the value - so it needs more explanation ...).
+possible values for the second-to-last byte.
 Eventually, one of them will cause the message to have valid padding.
 Since we modified the random block so that the final byte of the
 plaintext will be \verb|02|, the only byte in the second-to-last
@@ -1319,22 +1334,26 @@ attacker can read the entire message.
 This attack has proven to be very subtle and hard to fix. First of
 all, messages should be authenticated, as well as encrypted. That
 would cause modified messages to be rejected. However, many systems
-decrypted (and removed padding) before authenticating the message; so
-the information about the padding being valid already leaked.
+decrypt (and remove padding) emph{before} authenticating the message; so
+%**HMM** Why past tense?
+the information about the padding being valid leaks despite authentication.
 
 You might consider just getting rid of the \enquote{invalid padding} message;
 declaring the message invalid without specifying \emph{why} it was invalid.
-That turns out to only be a partial solution for systems that decrypt
+However, that turns out to only be a partial solution for systems that decrypt
 before authenticating. Those systems would typically reject messages
 with an invalid padding \emph{slightly faster} than messages with a valid
 padding. After all, they didn't have to do the authentication step: if
 the padding is invalid, the message can't possibly be valid.
+%**HMM** Is this what is called a "timing attack"? In that case, could you mention this term here?
 
 That discrepancy was commonly exploited as well. By measuring how long
 it takes the recipient to reject the message, the attacker can tell if
 the recipient performed the authentication step. That tells them if
 the padding was correct or not, providing the padding oracle to
 complete the attack.
+
+%**HMM** Too sleep a little better, could you reveal a little what one does do against these attacks? Even a sentence like "There are now implementations that will answer a decryption attempt in a time that is independent of the fact whether padding is correct or not, which make this sort of attacks useless."; and of course, a pointer to that later citation that says essentially "if you don't authenticate as the first step, you are doing it wrong" would be nice here!
 
 TODO: Remove TODO about Vaudenay's padding attack later, refer to this
 \section{Native stream ciphers}
