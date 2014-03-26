@@ -861,10 +861,9 @@ extreme block sizes. Furthermore, all but the smallest of these block
 sizes are unrealistically large. For an uncompressed bitmap with three
 color channels of 8 bit depth, each pixel takes 24 bits to store.
 Since the block size of AES is only 128 bits, that would equate to
-$5.\overline{3}$ pixels [fn::The line over the $3$ in $5.\overline{3}$
-means it repeats, so the value is $5.333\ldots$.] per block,
-significantly less than the larger block sizes in the example. But AES
-is the workhorse of modern block ciphers---it can't be at fault,
+$\frac{128}{24}$ or just over 5 pixels per block. That's significantly
+fewer pixels per block than the larger block sizes in the example. But
+AES is the workhorse of modern block ciphers---it can't be at fault,
 certainly not because of an insufficient block size.
 
 When we look at a picture of what would happen with an idealized
