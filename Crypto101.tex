@@ -1364,6 +1364,7 @@ operation, there are also \enquote{native} \glspl{stream cipher} algorithms
 that are designed from the ground up to be a stream cipher.
 
 The most common type of stream cipher is called a \emph{synchronous} stream
+%**HMM** What is "synchronous" here? Up to now, all algorithms we saw were, naively, "synchronous" (and not asynchronous, because there was never more than one "thread"). So "synchronous" seems to mean something different in this context. Could you explain that? And knowing the name for a "not synchronous" stream cipher would be helpful (is it "asynchronous", as one would expect?)
 cipher. These algorithms produce a long stream of pseudorandom bits
 from a secret symmetric key. This stream, called the keystream, is
 then XORed with the plaintext to produce the ciphertext. Decryption is
