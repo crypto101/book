@@ -1108,16 +1108,17 @@ the attacker can expect to see \verb|;admin=1;| pop up in the next
 plaintext block:
 
 #+BEGIN_LATEX
-\begin{eqnarray*}
-P^{\prime}_{i + 1} & = & P_{i + 1} \xor X \\
-& = & P_{i + 1}
+\begin{align*}
+P^{\prime}_{i + 1}
+& = P_{i + 1} \xor X \\
+& = P_{i + 1}
   \xor \mathtt{ZZZZZZZZZ}
   \xor \mathtt{;admin=1;} \\
-& = & \mathtt{ZZZZZZZZZ}
+& = \mathtt{ZZZZZZZZZ}
   \xor \mathtt{ZZZZZZZZZ}
   \xor \mathtt{;admin=1;} \\
-& = &  \mathtt{;admin=1;} \\
-\end{eqnarray*}
+& = \mathtt{;admin=1;} \\
+\end{align*}
 #+END_LATEX
 
 This attack is another demonstration of an important cryptographic
