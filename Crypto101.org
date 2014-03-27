@@ -146,11 +146,13 @@ grammar and content improvements. Thank you!
 Exclusive or, often called "XOR", is a Boolean[fn:: Uses only "true"
 and "false" as input and output values.] binary[fn:: Takes two
 parameters.] operator that is true when either the first input or the
-second input, but not both, are true. Another way to think of XOR is a
-programmable inverter: a Boolean binary operator where one input bit
-decides whether or not to invert the other input bit. "Inverting" bits
-is much more commonly called "flipping" bits, a term we'll use often
-throughout the book.
+second input, but not both, are true.
+
+Another way to think of XOR is as something called a "programmable
+inverter": one input bit decides whether to invert the other input
+bit, or to just pass it through unchanged. "Inverting" bits is
+colloquially called "flipping" bits, a term we'll use often throughout
+the book.
 
 [[./Illustrations/XOR/ProgrammableInverter.pdf]]
 
