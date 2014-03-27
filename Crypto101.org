@@ -1457,8 +1457,8 @@ p^{\prime}_0 p_1 p_2 p_3 p_4 p_5 \mathtt{03} \mathtt{03} \mathtt{03}
 
 As you can see, this doesn't affect the validity of the padding. The
 same goes for $p_1$, $p_2$, $p_3$, $p_4$ and $p_5$. However, when we
-modify the byte after that (say, we turn that first ~03~ into a ~02~),
-$P_i$ looks like this:
+modify the byte after that (for example, we turn that first ~03~ into
+~02~ by modifying $R$) $P_i$ looks like this:
 
 #+BEGIN_LATEX
 \begin{equation}
