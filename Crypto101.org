@@ -1136,28 +1136,48 @@ Before the message reaches Bob, Mallory intercepts it. She modifies
 the message to be $C^{\prime} = C_1 Z C_1$, where $Z$ is a block
 filled with null bytes (value zero).
 
-Bob decrypts $C^{\prime}$, and gets:
+Bob decrypts $C^{\prime}$, and gets the three plaintext
+blocks $P^{\prime}_1, P^{\prime}_2, P^{\prime}_3$:
 
 #+BEGIN_LATEX
 \begin{align*}
-P^{\prime}_1 = D(k, C_1) \xor IV = D(k, C_1) \xor k = P_1 \\
-P^{\prime}_2 = D(k, Z) \xor C_1 = R & \text{(some random block)} \\
-P^{\prime}_2 = D(k, C_1) \xor Z = D(k, C_1) = P_1 \xor IV
+P^{\prime}_1 & = D(k, C_1) \xor IV \\
+             & = D(k, C_1) \xor k \\
+             & = P_1
 \end{align*}
-#+END_LATEX
 
-Mallory recovers that decryption:
-
-#+BEGIN_LATEX
 \begin{align*}
-P^{\prime} & = P^{\prime}_1 P^{\prime}_2 P^{\prime}_3 \\
-           & = P_1 R (P_1 \xor IV)
+P^{\prime}_2 & = D(k, Z) \xor C_1 \\
+             & = R
+\end{align*}
+
+\begin{align*}
+P^{\prime}_3 & = D(k, C_1) \xor Z \\
+             & = D(k, C_1) \\
+             & = P_1 \xor IV
 \end{align*}
 #+END_LATEX
 
-Now, she XORs the last and first recovered blocks, which is $(P_1 \xor
-IV) \xor P_1 = IV$. But, the IV is the key, so Mallory successfully
-recovered the key by modifying a single message.
+$R$ is some random block. Its value doesn't matter.
+
+Under the chosen-ciphertext attack assumption, Mallory recovers that
+decryption. She is only interested in the first block ($P^{\prime}_1 =
+P_1$) and the third block ($P^{\prime}_3 = P_1 \xor IV$). By XORing
+those two together, she finds $(P_1 \xor IV) \xor P_1 = IV$. But, the
+IV is the key, so Mallory successfully recovered the key by modifying
+a single message.
+
+Lesson learned: don't use the key as an IV. Part of the fallacy in the
+introduction is that it assumed secret data could be used for the IV,
+because it only had to be unpredictable. That's not true: "secret" is
+just a different requirement from "not secret", not necessarily a
+/stronger/ one. It is not generally okay to use secret information
+where it isn't required, precisely because if it's not supposed to be
+secret, the algorithm may very well treat it as non-secret, as is the
+case here. There /are/ plenty of systems where it is okay to use a
+secret where it isn't required, and in some cases you might even get a
+stronger system as a result, but the point is that that isn't
+generally true, and depends on what you're doing.
 
 *** <<<CBC bit flipping attacks>>>
 
