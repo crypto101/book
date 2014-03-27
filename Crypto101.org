@@ -1381,10 +1381,12 @@ This works exactly like it did with CBC bit flipping attacks. That
 previous ciphertext block is the block $R$, so the byte being modified
 is the last byte of $R$, $r_b$.
 
-One way to try all values for that last byte of $R$ is to XOR it with
-all values up to 256, since a byte has 256 possible values.
-Eventually, the padding oracle will report that for some ciphertext
-block $R$, the decrypted plaintext of $R \| C_i$ has valid padding.
+The attacker tries all possible values for that last byte. There are
+several ways of doing that: modular addition, XORing it with all
+values up to 256, or even picking randomly; the only thing that
+matters is that the attacker tries all of them. Eventually, the
+padding oracle will report that for some ciphertext block $R$, the
+decrypted plaintext of $R \| C_i$ has valid padding.
 
 **** Discovering the padding length
 
