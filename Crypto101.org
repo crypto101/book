@@ -1437,10 +1437,10 @@ also tells you what their value is.
 
 Let's illustrate this with an example. Suppose we've successfully
 found some block $R$ so that the plaintext of $R \| C_i$ has valid
-padding. Let's say that padding is ~03 03 03~. Normally, you wouldn't
-know this; the point of this procedure is to discover what that
-padding is. Suppose the block size is 8 bytes. So, we know that $P_i$
-is currently:
+padding. Let's say that padding is ~03 03 03~. Normally, the attacker
+wouldn't know this; the point of this procedure is to discover what
+that padding is. Suppose the block size is 8 bytes. So, we (but not
+the attacker) know that $P_i$ is currently:
 
 #+BEGIN_LATEX
 \begin{equation}
