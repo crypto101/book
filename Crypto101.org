@@ -545,6 +545,13 @@ Or, in blocks:
 
 [[./Illustrations/BlockCipher/BlockCipher.pdf]]
 
+Block ciphers are an example of a \gls{symmetric-key encryption}
+scheme, also known as a \gls{secret-key encryption} scheme. This means
+that the same, secret key is used for both encryption and decryption.
+We will contrast this with \gls{public-key encryption} algorithms,
+which have a distinct key for encryption and decryption, later in the
+book.
+
 #+BEGIN_LATEX
 \newcommand{\permutationimg}[1] {
 \begin{figure}[ht!]
