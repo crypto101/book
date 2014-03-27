@@ -1530,7 +1530,12 @@ That turns out to only be a partial solution for systems that decrypt
 before authenticating. Those systems would typically reject messages
 with an invalid padding /slightly faster/ than messages with a valid
 padding. After all, they didn't have to do the authentication step: if
-the padding is invalid, the message can't possibly be valid.
+the padding is invalid, the message can't possibly be valid. An attack
+that leaks secret information through timing differences is called a
+/timing attack/, which is a special case of a /side-channel attack/:
+attacks on the practical implementation of a cryptosystem rather than
+its "perfect" abstract representation. We will talk about these kinds
+of attacks more later in the book.
 
 That discrepancy was commonly exploited as well. By measuring how long
 it takes the recipient to reject the message, the attacker can tell if
