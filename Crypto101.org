@@ -646,8 +646,6 @@ standardization process, the parameters were restricted to a block
 size of 128 bits and keys sizes of 128, 192 and 256 bits.
 \cite{fips:aes}
 
-REVIEW: Show how AES works internally?
-
 There are no practical attacks known against AES. While there have
 been some developments in the last few years, most of them involve
 related-key attacks \cite{cryptoeprint:2009:317}, some of them only on
