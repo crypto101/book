@@ -527,7 +527,8 @@ C = E(k, P)
 
 The plaintext and ciphertext blocks are sequences of bytes. They are
 always the same size as one another, and that size is fixed by the
-block cipher: it's called the block cipher's /block size/.
+block cipher: it's called the block cipher's /block size/. The set of
+all possible keys is called the \gls{keyspace}.
 
 Once we've encrypted plaintext blocks into ciphertext blocks, they
 later have to be decrypted again to recover the original plaintext
@@ -689,8 +690,7 @@ This scheme provides two improvements:
    attack directly through cryptanalysis.
  - By having the option of using many more total key bits, spread over
    the three keys, the set of all possible keys becomes much larger,
-   making brute-forcing impractical.[fn::The set of all keys is
-   commonly called the keyspace.]
+   making brute-forcing impractical.
 
 The three keys could all be chosen independently (yielding 168 key
 bits), or $k_3 = k_1$ (yielding 112 key bits), or $k_1 = k_2 = k_3$,
