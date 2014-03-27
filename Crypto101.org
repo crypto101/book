@@ -1114,13 +1114,13 @@ probably wouldn't be encrypted using the same key.
 
 Many CBC systems set the key as the initialization vector. This seems
 like a good idea: you always need a shared secret key already anyway.
-Plus, the key is definitely unpredictable because it's secret: if it
-were predictable, the attacker could just predict the key directly and
-already have won. Conveniently, many block ciphers have block sizes
-that are the same length or less than the key size, so the key is
-big enough. Since the key is known ahead of time by both sender and
-recipient, they have to communicate one less block to each other,
-yielding a performance benefit.
+It yields a nice performance benefit, because the sender and the
+receiver don't have to communicate the IV explicitly, they already
+know the key (and therefore the IV) ahead of time. Plus, the key is
+definitely unpredictable because it's secret: if it were predictable,
+the attacker could just predict the key directly and already have won.
+Conveniently, many block ciphers have block sizes that are the same
+length or less than the key size, so the key is big enough.
 
 This setup is completely insecure. If Alice sends a message to Bob,
 Mallory, an active adversary that can intercept and modify the message
