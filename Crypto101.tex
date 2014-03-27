@@ -1,4 +1,4 @@
-% Created 2014-03-26 Wed 10:34
+% Created 2014-03-27 Thu 10:55
 \documentclass[11pt,ebook,table,dvipsnames]{memoir}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -99,7 +99,7 @@ Of course, if I never hear about your issue, it's very hard for me to
 address\ldots{}
 
 The copy of this book that you are reading right now is based on the
-git commit with hash \texttt{89e90df}, also known as \texttt{v0.1.1-36-g89e90df}.
+git commit with hash \texttt{a857aa5}, also known as \texttt{v0.1.1-61-ga857aa5}.
 \chapter{Acknowledgments}
 \label{sec-1-3}
 
@@ -234,16 +234,18 @@ XOR may seem like an awfully simple, even trivial operator. Even so,
 there's an encryption scheme, called a one-time pad, which consists of
 just that single operator. It's called a one-time pad because it
 involves a sequence (the \enquote{pad}) of random bits, and the security of
-the scheme depends on only using that pad once. This scheme is unique
-not only in its simplicity, but also because it has the strongest
-possible security guarantee. If the bits are truly random (and
-therefore unpredictable by an attacker), and the pad is only used
-once, the attacker learns nothing about the plaintext when they see a
-ciphertext.\footnote{The attacker does learn that the message exists, and,
-in this simple scheme, the length of the message. While this typically
-isn't too important, there are situations where this might matter, and
-there are secure cryptosystems to both hide the existence and the
-length of a message.}
+the scheme depends on only using that pad once. The sequence is called
+a pad because it was originally a physical, paper pad.
+
+ This scheme is unique not only in its simplicity, but also because it
+has the strongest possible security guarantee. If the bits are truly
+random (and therefore unpredictable by an attacker), and the pad is
+only used once, the attacker learns nothing about the plaintext when
+they see a ciphertext.\footnote{The attacker does learn that the message
+exists, and, in this simple scheme, the length of the message. While
+this typically isn't too important, there are situations where this
+might matter, and there are secure cryptosystems to both hide the
+existence and the length of a message.}
 
 Suppose we can translate our plaintext into a sequence of bits. We
 also have the pad of random bits, shared between the sender and the
@@ -253,8 +255,8 @@ bitwise XOR of the two sequences of bits.
 \includegraphics[width=.9\linewidth]{./Illustrations/XOR/OTP.pdf}
 
 If an attacker sees the ciphertext, we can prove that they will learn
-zero information about the plaintext, which is why this scheme is
-considered \enquote{unbreakable.} The proof can be understood intuitively by
+zero information about the plaintext without the key. This property is
+called \emph{perfect security}. The proof can be understood intuitively by
 thinking of XOR as a programmable inverter, and then looking at a
 particular bit intercepted by Eve, the eavesdropper.
 
@@ -410,11 +412,16 @@ That only tells us which plaintext sequences are likely, giving us
 likely guesses. How do we tell if any of those guesses are correct? If
 our guess is correct, we know all the other plaintexts at that
 position as well, using the technique described earlier. We could
-simply look at those plaintexts and decide if they look correct. For
-example, if they also contain English text, we'd expect to see a lot
-of letters e, t, a, o, i, n. If we're seeing binary nonsense instead,
-we know that the guess was probably incorrect, or perhaps that message
-is actually binary data.
+simply look at those plaintexts and decide if they look correct.
+
+In practice, this process needs to be automated because there are so
+many possible guesses. Fortunately that's quite easy to do. For
+example, a very simple but effective method is to count how often
+different symbols occur in the guessed plaintexts: if the messages
+contain English text, we'd expect to see a lot of letters e, t, a, o,
+i, n. If we're seeing binary nonsense instead, we know that the guess
+was probably incorrect, or perhaps that message is actually binary
+data.
 
 These small, highly probable sequences are called \enquote{cribs} because
 they're the start of a larger decryption process. Suppose your crib,
@@ -556,18 +563,18 @@ arrows, for example under $k^{\prime}$:
 
 \permutationimg{Ekprime}
 
-Knowing a bunch of (input, output) pairs shouldn't give you any
-information about any other (input, output) pairs\footnote{The attentive
-reader may have noticed that this breaks in the extremes: if you know
-all but one of the pairs, then you know the last one by exclusion.}.
-As long as we're talking about a hypothetical perfect block cipher,
-there's no easier way to decrypt a block other than to \enquote{brute-force}
-the key: i.e. just try every single one of them until you find the
-right one.
+Knowing a bunch of (input, output) pairs for a given key shouldn't
+give you any information about any other (input, output) pairs under
+that key\footnote{The attentive reader may have noticed that this breaks in
+the extremes: if you know all but one of the pairs, then you know the
+last one by exclusion.}. As long as we're talking about a hypothetical
+perfect block cipher, there's no easier way to decrypt a block other
+than to \enquote{brute-force} the key: i.e. just try every single one of them
+until you find the right one.
 
 Our toy illustration block cipher only has 3 bit blocks, or $2^3 = 8$
 possibilities. Real, modern block ciphers have much larger block
-sizes, such as 128 bits, or $2^{128}$ (approximately $10^{38}$)
+sizes, such as 128 bits, or $2^{128}$ (slightly more than $10^{38.5}$)
 possible blocks. Mathematics tells us that there are $n!$ (pronounced
 \emph{n factorial}) different permutations of an $n$ element set. It's
 defined as the product of all of the numbers from 1 up to and
@@ -580,7 +587,7 @@ n! = 1 \cdot 2 \cdot 3 \cdot \ldots \cdot (n - 1) \cdot n
 Factorials grow incredibly quickly. For example, $5! = 120$, $10! =
 3628800$, and the rate continues to increase. The number of
 permutations of the set of blocks of a cipher with a 128 bit block
-size is $(2^{128})!$. Just $2^{128}$ is large already (it takes 38
+size is $(2^{128})!$. Just $2^{128}$ is large already (it takes 39
 digits to write it down), so $(2^{128})!$ is a mind-bogglingly huge
 number, impossible to comprehend. Common key sizes are only in the
 range of 128 to 256 bits, so there are only between $2^{128}$ and
@@ -659,7 +666,10 @@ encryption, so you really only get the effect of the last encryption.
 This is intended as a backwards compatibility mode for existing DES
 systems. If 3DES had been defined as $E(k_1, E(k_2, E(k_3, p)))$, it
 would have been impossible to use 3DES implementations for systems
-that required compatibility with DES.
+that required compatibility with DES. This is particularly important
+for hardware implementations, where it is not always possible to
+provide a secondary, regular \enquote{single DES} interface next to the
+primary 3DES interface.
 
 Some attacks on 3DES are known, reducing their effective security.
 While breaking 3DES with the first keying option is currently
@@ -693,8 +703,6 @@ technologically conservative industry where Fortran and Cobol still
 reign supreme on massive mainframes, it will probably continue to be
 used for many years to come, unless there are some large cryptanalytic
 breakthroughs that threaten the security of 3DES.
-
-TODO: Explain security levels? See also: explain entropy?
 \section{Remaining problems}
 \label{sec-2-2-4}
 Even with block ciphers, there are still some unsolved problems.
@@ -825,10 +833,9 @@ extreme block sizes. Furthermore, all but the smallest of these block
 sizes are unrealistically large. For an uncompressed bitmap with three
 color channels of 8 bit depth, each pixel takes 24 bits to store.
 Since the block size of \hyperref[AES]{AES} is only 128 bits, that would equate to
-$5.\overline{3}$ pixels \footnote{The line over the $3$ in $5.\overline{3}$
-means it repeats, so the value is $5.333\ldots$.} per block,
-significantly less than the larger block sizes in the example. But \hyperref[AES]{AES}
-is the workhorse of modern block ciphers---it can't be at fault,
+$\frac{128}{24}$ or just over 5 pixels per block. That's significantly
+fewer pixels per block than the larger block sizes in the example. But
+\hyperref[AES]{AES} is the workhorse of modern block ciphers---it can't be at fault,
 certainly not because of an insufficient block size.
 
 When we look at a picture of what would happen with an idealized
@@ -868,6 +875,16 @@ not have access to the encryption key $k$ or the secret suffix $S$.
 The goal of the oracle is for those values to remain secret, but we'll
 see how an attacker can recover $S$ by inspecting the ciphertext $C$
 for many carefully chosen values of the prefix $A$.
+
+Assuming that an attacker would have access to such an oracle might
+seem like a very artificial scenario. It turns out that in practice, a
+lot of software can be tricked into behaving like one. Even if an
+attacker can't control the real software as precisely as they can
+query an oracle, the attacker generally isn't thwarted. Time is on
+their side: they only have to convince the software to give the answer
+they want \emph{once}. Systems where part of the message is secret and part
+of the message can be influenced by the attacker are actually very
+common, and, unfortunately, so is ECB mode.
 \subsection{Decrypting a block using the oracle}
 \label{sec-2-3-2-3}
 
@@ -917,8 +934,9 @@ would be:
 For a typical block size of 16 bytes (or 128 bits), brute forcing
 would mean trying $256^{16}$ combinations. That's a huge, 39-digit
 number. It's so large that trying all of those combinations is
-considered impossible. This attack allows an attacker to do it in at
-most $256 \cdot 16 = 4096$ tries, a far more manageable number.
+considered impossible. An ECB encryption oracle allows an attacker to
+do it in at most $256 \cdot 16 = 4096$ tries, a far more manageable
+number.
 \subsection{Conclusion}
 \label{sec-2-3-2-4}
 
@@ -965,7 +983,11 @@ we pick an \gls{IV}: a random number that takes the place of the
 also appear in many other algorithms. An initialization vector should
 be unpredictable; ideally, they will be cryptographically random. They
 do not have to be secret: IVs are typically just added to ciphertext
-messages in plaintext.
+messages in plaintext. It may sound contradictory that something has
+to be unpredictable, but doesn't have to be secret; it's important to
+remember that an attacker must not be able to predict \emph{ahead of time}
+what a given IV will be. We will illustrate this later with an attack
+on predictable CBC IVs.
 
 The following diagram demonstrates encryption in \hyperref[CBC mode]{CBC-mode}:
 
@@ -980,16 +1002,125 @@ While \hyperref[CBC mode]{CBC-mode} itself is not inherently insecure (unlike EC
 its particular use in TLS 1.0 was. This eventually led to the
 \gls{BEAST} attack, which we'll cover in more detail in the section on
 SSL/TLS. The short version is that instead of using unpredictable
-\glspl{initialization vector}, for example by choosing random ones,
-the previous ciphertext block was used. Unfortunately, it turns out
-that attackers figured out how to exploit that property.
-\section{\label{CBC-bit-flipping-attacks}CBC bit flipping attacks}
+\glspl{initialization vector}, for example by choosing random IVs, the
+standard used the previous ciphertext block as the IV for the next
+message. Unfortunately, it turns out that attackers figured out how to
+exploit that property.
+\section{\label{Attacks-on-CBC-mode-with-predictable-IVs}Attacks on CBC mode with predictable IVs}
 \label{sec-2-3-5}
+
+Suppose there's a database that stores secret user information, like
+medical, payroll or even criminal records. In order to protect that
+information, the server that handles it encrypts it using a strong
+block cipher in \hyperref[CBC mode]{CBC-mode} with a fixed key. For now, we'll assume that
+that server is secure, and there's no way to get it to leak the key.
+
+Mallory gets a hold of all of the rows in the database. Perhaps she
+did it through a SQL injection attack, or maybe with a little social
+engineering.\footnote{Social engineering means tricking people into things
+they shouldn't be doing, like giving out secret keys, or performing
+certain operations. It's usually the most effective way to break
+otherwise secure cryptosystems.} Everything is supposed to remain
+secure: Mallory only has the ciphertexts, but she doesn't have the
+secret key.
+
+Mallory wants to figure out what Alice's record says. For simplicity's
+sake, let's say there's only one ciphertext block. That means Alice's
+ciphertext consists of an IV and one ciphertext block.
+
+Mallory can still try to use the application as a normal user, meaning
+that the application will encrypt some data of Mallory's choosing and
+write it to the database. Suppose that through a bug in the server,
+Mallory can predict the IV that will be used for her ciphertext.
+Perhaps the server always uses the same IV for the same person, or
+always uses an all-zero IV, or\ldots{}
+
+Mallory can construct her plaintext using Alice's IV $IV_A$ (which
+Mallory can see) and her own predicted IV $IV_M$. She makes a guess
+$G$ as to what Alice's data could be. She asks the server to encrypt:
+
+\[
+P_M = IV_M \xor IV_A \xor G
+\]
+
+The server dutifully encrypts that message using the predicted IV
+$IV_M$. It computes:
+
+\begin{align*}
+C_M & = E(k, IV_M \xor P_M) \\
+    & = E(k, IV_M \xor (IV_M \xor IV_A \xor G)) \\
+    & = E(k, IV_A \xor G)
+\end{align*}
+
+That ciphertext, C$_{\text{M}}$, is exactly the ciphertext block Alice would have
+had if her plaintext block was G. So, depending on what the data is,
+Mallory has figured out if Alice has a criminal record or not, or
+perhaps some kind of embarrassing disease, or some other issue that
+Alice really expected the server to keep secret.
+
+Lessons learned: don't let IVs be predictable. Also, don't roll your
+own cryptosystems. In a secure system, Alice and Mallory's records
+probably wouldn't be encrypted using the same key.
+\section{\label{Attacks-on-CBC-mode-with-the-key-as-the-IV}Attacks on CBC mode with the key as the IV}
+\label{sec-2-3-6}
+
+Many CBC systems set the key as the initialization vector. This seems
+like a good idea: you always need a shared secret key already anyway.
+Plus, the key is definitely unpredictable because it's secret: if it
+were predictable, the attacker could just predict the key directly and
+already have won. Conveniently, many block ciphers have block sizes
+that are the same length or less than the key size, so the key is
+big enough. Since the key is known ahead of time by both sender and
+recipient, they have to communicate one less block to each other,
+yielding a performance benefit.
+
+This setup is completely insecure. If Alice sends a message to Bob,
+Mallory, an active adversary that can intercept and modify the message
+can perform a man-in-the-middle chosen-ciphertext attack to recover
+the key.
+
+Alice turns her plaintext message $P$ into three blocks $P_1 P_2 P_3$
+and encrypts it in \hyperref[CBC mode]{CBC-mode} with the secret key $k$ and also uses $k$
+as the IV. She gets a three block ciphertext $C = C_1 C_2 C_3$, which
+she sends to Bob.
+
+Before the message reaches Bob, Mallory intercepts it. She modifies
+the message to be $C^{\prime} = C_1 Z C_1$, where $Z$ is a block
+filled with null bytes (value zero).
+
+Bob decrypts $C^{\prime}$, and gets:
+
+\begin{align*}
+P^{\prime}_1 = D(k, C_1) \xor IV = D(k, C_1) \xor k = P_1 \\
+P^{\prime}_2 = D(k, Z) \xor C_1 = R & \text{(some random block)} \\
+P^{\prime}_2 = D(k, C_1) \xor Z = D(k, C_1) = P_1 \xor IV
+\end{align*}
+
+Mallory recovers that decryption:
+
+\begin{align*}
+P^{\prime} & = P^{\prime}_1 P^{\prime}_2 P^{\prime}_3 \\
+           & = P_1 R (P_1 \xor IV)
+\end{align*}
+
+Now, she XORs the last and first recovered blocks, which is $(P_1 \xor
+IV) \xor P_1 = IV$. But, the IV is the key, so Mallory successfully
+recovered the key by modifying a single message.
+\section{\label{CBC-bit-flipping-attacks}CBC bit flipping attacks}
+\label{sec-2-3-7}
 
 An interesting attack on \gls{CBC mode} is called a bit flipping
 attack. Using a CBC bit flipping attack, attackers can modify
 ciphertexts encrypted in \hyperref[CBC mode]{CBC-mode} so that it will have a predictable
 effect on the plaintext.
+
+This may seem like a very strange definition of \enquote{attack} at first. The
+attacker will not even attempt to decrypt any messages, but they will
+just be flipping some bits in a plaintext. We will demonstrate that
+the attacker can turn the ability to flip some bits in the plaintext
+into the ability to have the plaintext say \emph{whatever they want it to
+say}, and, of course, that that can lead to very serious problems in
+real systems.
 
 Suppose we have a CBC encrypted ciphertext. This could be, for
 example, a cookie. We take a particular ciphertext block, and we flip
@@ -1021,9 +1152,9 @@ in CBC decryption, ciphertext blocks are decrypted by the block
 cipher, and the result is XORed with the previous ciphertext block.
 But since we modified the previous ciphertext block by XORing it with
 $X$, the plaintext block $P_{i + 1}$ will also be XORed with $X$. As a
-result, the attacker completely controls that ciphertext block, since
-they can just flip the bits that aren't the value they want them to
-be.
+result, the attacker completely controls that plaintext block
+$P_{i + 1}$, since they can just flip the bits that aren't the value
+they want them to be.
 
 TODO: add previous illustration, but mark the path X takes to
 influence P prime \{i + 1\} in red or something
@@ -1049,33 +1180,38 @@ encrypted ciphertext that matches a plaintext with many such \verb~Z~ bytes in
 them. The plaintext getting modified will then probably be part of
 that sequence of \verb~Z~ bytes.
 
-An attacker may have some target bytes that he'd like to see in the
+An attacker may have some target bytes that they'd like to see in the
 decrypted plaintext, for example, \verb*|;admin=1;|. In order to
 figure out which bytes they should flip (so, the value of $X$ in the
 illustration), they just XOR the filler bytes (\verb~ZZZ~ \ldots) with that
 target. Because two XOR operations with the same value cancel each
 other out, the two filler values (\verb~ZZZ~ \ldots) will cancel out, and
 the attacker can expect to see \verb|;admin=1;| pop up in the next
-ciphertext block:
+plaintext block:
 
-\begin{eqnarray*}
-P^{\prime}_{i + 1} & = & P_{i + 1} \xor X \\
-& = & P_{i + 1}
+\begin{align*}
+P^{\prime}_{i + 1}
+& = P_{i + 1} \xor X \\
+& = P_{i + 1}
   \xor \mathtt{ZZZZZZZZZ}
   \xor \mathtt{;admin=1;} \\
-& = & \mathtt{ZZZZZZZZZ}
+& = \mathtt{ZZZZZZZZZ}
   \xor \mathtt{ZZZZZZZZZ}
   \xor \mathtt{;admin=1;} \\
-& = &  \mathtt{;admin=1;} \\
-\end{eqnarray*}
+& = \mathtt{;admin=1;} \\
+\end{align*}
 
 This attack is another demonstration of an important cryptographic
 principle: encryption is not authentication! It's virtually never
 sufficient to simply encrypt a message. It \emph{may} prevent an attacker
 from reading it, but that's often not even necessary for the attacker
-to be able to modify it to say whatever they want it to.
+to be able to modify it to say whatever they want it to. This
+particular problem would be solved by also securely authenticating the
+message. We'll see how you can do that later in the book; for now,
+just remember that we're going to need authentication in order to
+produce secure cryptosystems.
 \section{Padding}
-\label{sec-2-3-6}
+\label{sec-2-3-8}
 
 So far, we've conveniently assumed that all messages just happened to
 fit exactly in our system of block ciphers, be it CBC or ECB. That
@@ -1085,7 +1221,7 @@ real messages can be of arbitrary length. We need some scheme to make
 them fit. That process is called padding.
 
 \subsection{Padding with zeroes (or some other pad byte)}
-\label{sec-2-3-6-1}
+\label{sec-2-3-8-1}
 
 One way to pad would be to simply append a particular byte value until
 the plaintext is of the appropriate length. To undo the padding, you
@@ -1093,7 +1229,7 @@ just remove those bytes. This scheme has an obvious flaw: you can't
 send messages that end in that particular byte value, or you will be
 unable to distinguish between padding and the actual message.
 \subsection{\label{PKCS-5/PKCS-7-padding}PKCS\#5/PKCS\#7 padding}
-\label{sec-2-3-6-2}
+\label{sec-2-3-8-2}
 
 A better, and much more popular scheme, is \hyperref[PKCS\#5/PKCS\#7 padding]{PKCS-5/PKCS-7-padding}.
 
@@ -1112,7 +1248,7 @@ and almost certainly conclude the message was improperly padded.
 
 This scheme is described in \cite{cms:padding}.
 \section{CBC padding attacks}
-\label{sec-2-3-7}
+\label{sec-2-3-9}
 
 We can refine \hyperref[CBC bit flipping attacks]{CBC-bit-flipping-attacks} to trick a recipient into
 decrypting arbitrary messages!
@@ -1147,7 +1283,7 @@ used, since that's the most popular option. The attack is general
 enough to work on other kinds of padding, with minor modifications.
 
 \subsection{Decrypting the first byte}
-\label{sec-2-3-7-1}
+\label{sec-2-3-9-1}
 
 The attacker fills a block with arbitrary bytes $R = r_1, r_2\ldots
 r_b$. They also pick a target block $C_i$ from the ciphertext that
@@ -1176,7 +1312,7 @@ all values up to 256, since a byte has 256 possible values.
 Eventually, the padding oracle will report that for some ciphertext
 block $R$, the decrypted plaintext of $R \| C_i$ has valid padding.
 \subsection{Discovering the padding length}
-\label{sec-2-3-7-2}
+\label{sec-2-3-9-2}
 
 The oracle has just told the attacker that for our chosen value of
 $R$, the plaintext of $R \| C_i$ has valid padding. Since we're
@@ -1255,7 +1391,7 @@ correctly, that just means that there are fewer remaining bytes you
 will have to guess manually. (This will become clear once you
 understand the rest of the attack.)
 \subsection{Decrypting one byte}
-\label{sec-2-3-7-3}
+\label{sec-2-3-9-3}
 
 At this point, we've actually already successfully decrypted the last
 byte of the target block of ciphertext! (Actually, we've decrypted as
@@ -1278,7 +1414,7 @@ D(C_i)[b] = \mathtt{01} \xor r_b
 The attacker has now tricked the receiver into decrypting the last
 byte of the block $C_i$.
 \subsection{Decrypting subsequent bytes}
-\label{sec-2-3-7-4}
+\label{sec-2-3-9-4}
 
 Next, the attacker tricks the receiver into decrypting the next byte.
 Remember the previous equation, where we reasoned that the last byte
@@ -1338,7 +1474,7 @@ complete the attack.
 
 TODO: Remove TODO about Vaudenay's padding attack later, refer to this
 \section{Native stream ciphers}
-\label{sec-2-3-8}
+\label{sec-2-3-10}
 
 In addition to block ciphers being used in a particular mode of
 operation, there are also \enquote{native} \glspl{stream cipher} algorithms
@@ -1367,7 +1503,7 @@ ciphers seem bulletproof.
 Fortunately, more recently, several new cipher algorithms provide new
 hope that we can get practical, secure and performant stream ciphers.
 \section{\label{RC4}RC4}
-\label{sec-2-3-9}
+\label{sec-2-3-11}
 
 By far the most common \gls{stream cipher} in common use on desktop
 and mobile devices is \hyperref[RC4]{RC4}.
@@ -1414,7 +1550,7 @@ the state array $S$, modifying it as it goes along.
 \end{itemize}
 
 \subsection{The key scheduling algorithm}
-\label{sec-2-3-9-1}
+\label{sec-2-3-11-1}
 
 The key scheduling algorithm starts with the \emph{identity permutation}.
 That means that each byte is mapped to itself.
@@ -1455,7 +1591,7 @@ def key_schedule(key):
     return s
 \end{minted}
 \subsection{The pseudorandom generator}
-\label{sec-2-3-9-2}
+\label{sec-2-3-11-2}
 
 The pseudorandom generator is responsible for producing pseudorandom
 bytes from the state $S$. For each index $i$, it computes $j = j +
@@ -1482,7 +1618,7 @@ def pseudorandom_generator(s):
 	yield s[k]
 \end{minted}
 \subsection{Attacks}
-\label{sec-2-3-9-3}
+\label{sec-2-3-11-3}
 
 There are many attacks on \hyperref[RC4]{RC4}-using cryptosystems where \hyperref[RC4]{RC4} isn't
 really the issue, but are caused by things like key reuse or failing
@@ -1619,7 +1755,7 @@ attacks on, say, web services. The attacks can be greatly improved
 with some extra information about the plaintext you're attempting to
 recover. For example, HTTP cookies are often base-64 or hex encoded.
 \section{\label{Salsa20}Salsa20}
-\label{sec-2-3-10}
+\label{sec-2-3-12}
 
 \hyperref[Salsa20]{Salsa20} is a newer \gls{stream cipher} designed by Dan Bernstein.
 Bernstein is well-known for writing a lot of open source (public
@@ -1678,7 +1814,7 @@ of a fixed-number of constant-time operations. The result is that
 every block is produced with exactly the same number of operations,
 regardless of what the key is.
 \section{Native stream ciphers versus modes of operation}
-\label{sec-2-3-11}
+\label{sec-2-3-13}
 
 Some texts only consider native \glspl{stream cipher} to be stream
 ciphers. This book emphasizes what the functionality of the algorithm
@@ -1693,7 +1829,7 @@ cipher. While there are also modes of operation (like OFB and CFB)
 that can produce self-synchronizing stream ciphers, these are far
 less common, and not discussed here.
 \section{\label{CTR-mode}CTR mode}
-\label{sec-2-3-12}
+\label{sec-2-3-14}
 
 \gls{CTR mode}, short for counter mode, is a \gls{mode of operation}
 that works by concatenating a \gls{nonce} (which stands for a \emph{n/umber
@@ -1737,7 +1873,7 @@ Another interesting property is that since none of the computations
 depend on any previous computations, both encryption and decryption
 are trivial to compute in parallel.
 \section{Stream cipher bit flipping attacks}
-\label{sec-2-3-13}
+\label{sec-2-3-15}
 
 Stream ciphers, such as native stream ciphers or a block cipher in
 \gls{CTR mode}, are also vulnerable to a bit flipping attack. It's
@@ -1760,13 +1896,13 @@ hand with encryption. If the message is properly authenticated, the
 recipient can simply reject the modified messages, and the attack is
 foiled.
 \section{Authenticating modes of operation}
-\label{sec-2-3-14}
+\label{sec-2-3-16}
 
 There are other modes of operation that provide authentication as
 well as encryption at the same time. Since we haven't discussed
 authentication at all yet, we'll handle these later.
 \section{Remaining problem}
-\label{sec-2-3-15}
+\label{sec-2-3-17}
 
 We now have tools that will encrypt large streams of data using a
 small key. However, we haven't actually discussed how we're going to
@@ -4230,8 +4366,8 @@ states and future states produced by the state regeneration function.
 
 Again, this is not a weakness of Mersenne Twister. It's designed to be
 fast and have strong randomness properties. It is not designed to be
-unpredictable, the principal property of a cryptographically secure
-pseudorandom number generators.
+unpredictable, which is the defining property of a cryptographically
+secure pseudorandom number generator.
 \part{Complete cryptosystems}
 \label{sec-3}
 \chapter{SSL and TLS}
