@@ -1543,7 +1543,11 @@ the recipient performed the authentication step. That tells them if
 the padding was correct or not, providing the padding oracle to
 complete the attack.
 
-TODO: Remove TODO about Vaudenay's padding attack later, refer to this
+The principal lesson learned here is, again, not to design your own
+cryptosystems. The main way to avoid this particular problem is by
+performing constant time authentication, and authenticating the
+ciphertext before decrypting it. We will talk more about this in a
+later chapter on message authentication.
 
 *** Native stream ciphers
 
