@@ -1448,11 +1448,11 @@ p_0 p_1 p_2 p_3 p_4 p_5 \mathtt{03} \mathtt{03} \mathtt{03}
 \end{equation}
 #+END_LATEX
 
-Where $p_0$ \ldots are some bytes of the plaintext. Their actual value
-doesn't matter: the only thing that matters is that they're not part
-of the padding. When we modify the first byte of $R$, we'll cause a
-change in the first byte of $P_i$, so that $p_0$ becomes some other
-byte $p^{\prime}_0$:
+In that equation, $p_0$ \ldots are some bytes of the plaintext. Their
+actual value doesn't matter: the only thing that matters is that
+they're not part of the padding. When we modify the first byte of $R$,
+we'll cause a change in the first byte of $P_i$, so that $p_0$ becomes
+some other byte $p^{\prime}_0$:
 
 #+BEGIN_LATEX
 \begin{equation}
