@@ -1368,11 +1368,12 @@ enough to work on other kinds of padding, with minor modifications.
 
 The attacker fills a block with arbitrary bytes $R = r_1, r_2\ldots
 r_b$. They also pick a target block $C_i$ from the ciphertext that
-they'd like to decrypt. The attacker asks the padding oracle if $R \|
-C_i$ has valid padding. Statistically speaking, such a random
-plaintext block probably won't have valid padding: the odds are in the
-half-a-percent ballpark. If by pure chance the message happens to
-already have valid padding, they can simply skip the next step.
+they'd like to decrypt. The attacker asks the padding oracle if the
+plaintext of $R \| C_i$ has valid padding. Statistically speaking,
+such a random plaintext probably won't have valid padding: the odds
+are in the half-a-percent ballpark. If by pure chance the message
+happens to already have valid padding, the attacker can simply skip
+the next step.
 
 #+BEGIN_LATEX
 \begin{figure}[ht!]
@@ -1432,10 +1433,11 @@ many padding bytes there are. Since we're using PKCS#5 padding, that
 also tells you what their value is.
 
 Let's illustrate this with an example. Suppose we've successfully
-found some block $R$ so that $R \| C_i$ has valid padding. Let's say
-that padding is ~03 03 03~. Normally, you wouldn't know this; the
-point of this procedure is to discover what that padding is. Suppose
-the block size is 8 bytes. So, we know that $P_i$ is currently:
+found some block $R$ so that the plaintext of $R \| C_i$ has valid
+padding. Let's say that padding is ~03 03 03~. Normally, you wouldn't
+know this; the point of this procedure is to discover what that
+padding is. Suppose the block size is 8 bytes. So, we know that $P_i$
+is currently:
 
 #+BEGIN_LATEX
 \begin{equation}
