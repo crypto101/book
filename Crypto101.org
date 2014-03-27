@@ -1487,13 +1487,13 @@ understand the rest of the attack.)
 
 **** Decrypting one byte
 
-At this point, we've actually already successfully decrypted the last
-byte of the target block of ciphertext! (Actually, we've decrypted as
-many bytes as we have valid padding; we're just assuming the worst
-case scenario that that's only a single byte.) Since we know that the
-last byte of the decrypted ciphertext block $C_i$ (we'll call that
-byte $D(C_i)[b]$), XORed with our iteratively found value $r_b$, is
-\verb|01|:
+At this point, the attacker has already successfully decrypted the
+last byte of the target block of ciphertext! (Actually, we've
+decrypted as many bytes as we have valid padding; we're just assuming
+the worst case scenario that that's only a single byte.) How? The
+attacker knows that the last byte of the decrypted ciphertext block
+$C_i$ (we'll call that byte $D(C_i)[b]$), XORed with the iteratively
+found value $r_b$, is \verb|01|:
 
 #+BEGIN_LATEX
 \[
@@ -1501,7 +1501,7 @@ D(C_i)[b] \xor r_b = \mathtt{01}
 \]
 #+END_LATEX
 
-We can just move the XOR operation to the other side, and we get:
+By moving the XOR operation to the other side, the attacker gets:
 
 #+BEGIN_LATEX
 \[
@@ -1509,8 +1509,8 @@ D(C_i)[b] = \mathtt{01} \xor r_b
 \]
 #+END_LATEX
 
-The attacker has now tricked the receiver into decrypting the last
-byte of the block $C_i$.
+The attacker has now tricked the receiver into revealing the value of
+the last byte of the block cipher decryption of $C_i$.
 
 **** Decrypting subsequent bytes
 
