@@ -1552,8 +1552,10 @@ attacker can read the entire message.
 This attack has proven to be very subtle and hard to fix. First of
 all, messages should be authenticated, as well as encrypted. That
 would cause modified messages to be rejected. However, many systems
-decrypted (and removed padding) before authenticating the message; so
-the information about the padding being valid already leaked.
+decrypt (and remove padding) before authenticating the message; so
+the information about the padding being valid or not has already
+leaked. We will discuss secure ways of authenticating messages later
+in the book.
 
 You might consider just getting rid of the "invalid padding" message;
 declaring the message invalid without specifying /why/ it was invalid.
