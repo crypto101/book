@@ -1383,13 +1383,13 @@ the next step.
 #+END_LATEX
 
 Next, the attacker tries to modify the message so that it does have
-valid padding. They can do that by playing with the last byte of the
-plaintext: eventually that byte will be ~01~, which is always valid
-padding. In order to modify the last byte of a plaintext block, the
-attacker modifies the last byte of the /previous/ ciphertext block.
-This works exactly like it did with CBC bit flipping attacks. That
-previous ciphertext block is the block $R$, so the byte being modified
-is the last byte of $R$, $r_b$.
+valid padding. They can do that by indirectly modifying the last byte
+of the plaintext: eventually that byte will be ~01~, which is always
+valid padding. In order to modify the last byte of a plaintext block,
+the attacker modifies the last byte of the /previous/ ciphertext
+block. This works exactly like it did with CBC bit flipping attacks.
+That previous ciphertext block is the block $R$, so the byte being
+modified is the last byte of $R$, $r_b$.
 
 The attacker tries all possible values for that last byte. There are
 several ways of doing that: modular addition, XORing it with all
