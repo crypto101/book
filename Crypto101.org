@@ -1587,7 +1587,9 @@ plaintext.
 
 [[./Illustrations/StreamCipher/Synchronous.pdf]]
 
-TODO: Explain parallel with one-time pads
+You can see how this construction looks quite similar to a one-time
+pad, except that the truly random one-time pad has been replaced by a
+pseudorandom stream cipher.
 
 Historically, native stream ciphers have had their issues. For
 example, the NESSIE competition, an international competition for new
