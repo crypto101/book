@@ -1086,7 +1086,7 @@ Bob decrypts $C^{\prime}$, and gets:
 P^{\prime}_1 = D(k, C_1) \xor IV = D(k, C_1) \xor k = P_1 \\
 P^{\prime}_2 = D(k, Z) \xor C_1 = R & \text{(some random block)} \\
 P^{\prime}_2 = D(k, C_1) \xor Z = D(k, C_1) = P_1 \xor IV
-\end{align}
+\end{align*}
 #+END_LATEX
 
 Mallory recovers that decryption:
