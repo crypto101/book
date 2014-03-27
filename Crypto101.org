@@ -1415,11 +1415,14 @@ only requires one byte to have a particular value. The attacker is
 modifying that byte to take /every/ possible value, so it is quite
 likely that they happened to stumble upon ~01~. All of the other valid
 padding options not only require that byte to have some particular
-value, but also one or more other bytes. For an attacker to end up
-with a valid ~01~ padding, they just have to try every possible byte;
-for an attacker to end up with a valid ~02 02~ padding, they have to
-try every possible byte /and/ happen to have picked a block that has a
-~02~ in the second-to-last position.
+value, but also one or more other bytes. For an attacker to be
+guaranteed a message with a valid ~01~ padding, they just have to try
+every possible byte. For an attacker to end up with a message with a
+valid ~02 02~ padding, they have to try every possible byte /and/
+happen to have picked a combination of $C$ and $R$ that causes the
+plaintext to have a ~02~ in that second-to-last position. (To
+rephrase: the second-to-last byte of the decryption of the ciphertext
+block, XORed with the second-to-last byte of $R$, is ~02~.)
 
 In order to successfully decrypt the message, we still need to figure
 out which one of those options is the actual value of the padding. To
