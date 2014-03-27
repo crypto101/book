@@ -1591,6 +1591,17 @@ You can see how this construction looks quite similar to a one-time
 pad, except that the truly random one-time pad has been replaced by a
 pseudorandom stream cipher.
 
+There are also /asynchronous/ or /self-synchronizing/ stream ciphers,
+where the previously produced ciphertext bits are used to produce the
+current keystream bit. This has the interesting consequence that a
+receiver can eventually recover if some ciphertext bits are dropped.
+This is generally not considered to be a desirable property anymore in
+modern cryptosystems, which instead prefer to send complete,
+authenticated messages. As a result, these stream ciphers are very
+rare, and we don't talk about them explicitly in this book. Whenever
+someone says "stream cipher", it's safe to assume they mean the
+synchronous kind.
+
 Historically, native stream ciphers have had their issues. For
 example, the NESSIE competition, an international competition for new
 cryptographic primitives, did not result in any new stream ciphers:
