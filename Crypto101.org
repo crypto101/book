@@ -754,10 +754,11 @@ address this problem in a later chapter with a [[Key exchange][key exchange prot
 
 ** Stream ciphers
 *** Description
-A stream cipher is a symmetric encryption algorithm that encrypts a
-stream of bits. Ideally, that stream could be as long as we'd like;
-real-world stream ciphers have limits, but they are normally
-sufficiently large that they don't pose a practical problem.
+
+A stream cipher is a \gls{symmetric-key encryption} algorithm that
+encrypts a stream of bits. Ideally, that stream could be as long as
+we'd like; real-world stream ciphers have limits, but they are
+normally sufficiently large that they don't pose a practical problem.
 
 *** A naive attempt with block ciphers<<ECB mode>>
 
