@@ -1053,7 +1053,65 @@ exploit that property.
 
 *** <<<Attacks on CBC mode with predictable IVs>>>
 
-*** <<<Attacks on CBC mode with the key as the IVk>>>
+Suppose there's a database that stores secret user information, like
+medical, payroll or even criminal records. In order to protect the
+secret user information, the server that handles it encrypts it using
+a strong block cipher in CBC mode with a fixed key. For now, we'll
+assume that that server is secure, and there's no way to get it to
+leak the key.
+
+Mallory gets a hold of all of the rows in the database. Perhaps she
+did it through a SQL injection attack, or maybe with a little social
+engineering. [fn::Social engineering means tricking people into things
+they shouldn't be doing, like giving out secret keys, or performing
+certain operations. It's usually the most effective way to break
+otherwise secure cryptosystems.] Everything is supposed to remain
+secure: Mallory only has the ciphertexts, but she doesn't have the
+secret key.
+
+Mallory wants to figure out what Alice's record says. Right now, all
+Mallory can see is Alice's ciphertext. If we assume there's only one
+ciphertext block for simplicity's sake, Alice's ciphertext consists of
+an IV and one ciphertext block.
+
+Mallory can still try to use the application as a normal user, meaning
+that the application will encrypt some data of Mallory's choosing and
+write it to the database. Suppose that through a bug in the server,
+Mallory can predict the IV that will be used for her ciphertext.
+Perhaps the server always uses the same IV for the same person, or
+always uses an all-zero IV, or...
+
+Mallory can construct her plaintext using Alice's IV $IV_A$ (which
+Mallory can see) and her own predicted IV $IV_M$. She makes a guess
+$G$ as to what Alice's data could be, like ~NO CRIMINAL RECORD~. She
+asks the server to encrypt:
+
+#+BEGIN_LATEX
+\[
+P_M = IV_M \xor IV_A \xor G
+\]
+#+END_LATEX
+
+The server dutifully encrypts that message using the predicted IV
+$IV_M$. It computes:
+
+#+BEGIN_LATEX
+\begin{align*}
+C_M & = E(k, IV_M \xor P_M) \\
+    & = E(k, IV_M \xor (IV_M \xor IV_A \xor \mathtt{NO CRIMINAL RECORD})) \\
+    & = E(k, IV_A \xor \mathtt{NO CRIMINAL RECORD})
+\end{align*}
+#+END_LATEX
+
+That ciphertext, C_M, is exactly the ciphertext block Alice would have
+had if her plaintext block was ~NO CRIMINAL RECORD~. So, if the blocks
+match, Mallory knows Alice has no criminal record; if they do, she
+knows she does, and can start using that against her...
+
+Lessons learned: don't roll your own cryptosystems. Don't let IVs be
+predictable. Authenticate your messages.
+
+*** <<<Attacks on CBC mode with the key as the IV>>>
 
 Many CBC systems set the key as the initialization vector. This seems
 like a good idea: you always need a shared secret key already anyway.
