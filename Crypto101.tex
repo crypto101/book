@@ -1816,6 +1816,7 @@ regardless of what the key is.
 \section{Native stream ciphers versus modes of operation}
 \label{sec-2-3-13}
 
+%**HMM** In section 6.8. (Native stream ciphers), you used "stream cipher" a few times, and I added - at least once - "native". I was not sure there whether the "native" wasn't implicit in "stream cipher" - but after reading the following paragraph, I'm very sure that you want to include some modes of operations into the general concept pf "stream cipher", together with native stream cipher. Therefore I'd argue that 6.8 should liberally use "native stream cipher" when it means exactly that.
 Some texts only consider native \glspl{stream cipher} to be stream
 ciphers. This book emphasizes what the functionality of the algorithm
 is. Since both block ciphers in a \gls{mode of operation} and a native
@@ -1824,8 +1825,12 @@ and the two can usually replace each other in a cryptosystem, we just
 call both of them stream ciphers and be done with it.
 
 We will further emphasize the tight link between the two with \texttt{CTR
-mode}, a mode of operation which produces a synchronous stream
+%**HMM** "Mode of operation" has taken on a life of its own in cryptography. In normal English, "mode" is always a "mode of something", and the something has to be specified. However, it seems that here, "mode of operation" is an accepted shortcut because it always is meant as "of a block cipher" - apparently there are no other things that can have modes of operation in cryptography. At this point (or some other?), I'd still add this implicit "of a block cipher", but parentheses could indicate that this is a term that is usually used without this extension.
+%**HMM** Here again, we get that term "synchronous" - we agreed it would explained somewhere earlier, didn't we?
+mode}, a mode of operation (of a block cipher) which produces a synchronous stream
 cipher. While there are also modes of operation (like OFB and CFB)
+%**HMM** To me, this now sounds as if the opposite of "synchronous" as "self-synchronizing"! If this is not so (as I gathered from our discussion), I'm am now more confused than before...
+%**HMM** Does self-synchronizing deserve an emph{}?
 that can produce self-synchronizing stream ciphers, these are far
 less common, and not discussed here.
 \section{\label{CTR-mode}CTR mode}
