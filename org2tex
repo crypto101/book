@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
-ORG_DIR=/Users/lvh/.emacs.d/elpa/org-20140317
+if [ -z $ORG_DIR ]
+then
+ORG_DIR=`find $HOME/.emacs.d/elpa -type d -depth 1 -regex ".*org-[0-9]*"`
+fi
+
 emacs -Q --batch \
       --eval "(add-to-list 'load-path \"$ORG_DIR\")" \
       --eval "(require 'org)" \

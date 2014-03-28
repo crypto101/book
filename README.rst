@@ -47,6 +47,18 @@ Emacs for Mac OS X, there's a decent chance that ``emacs`` in your
 shell environment will actually refer to the massively ancient version
 that came shipped with your OS.
 
+org-mode
+~~~~~~~~
+
+You will need a recent release of org-mode_. If you install it through
+ELPA_ (Emacs 24's default package repository when you do
+``list-packages`` and install things), it should be found
+automagically. You can override the location of your org-mode
+installation by setting the ``ORG_DIR`` environment variable.
+
+.. _org-mode: http://orgmode.org/
+.. _ELPA: http://www.emacswiki.org/emacs/ELPA
+
 LaTeX environment
 ~~~~~~~~~~~~~~~~~
 
