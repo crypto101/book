@@ -1776,18 +1776,19 @@ doesn't have a \enquote{20} after it; specific algorithms do have a number
 after them (ChaCha8, ChaCha12, ChaCha20), which refers to the
 number of rounds.
 
-This block cipher is among the state of the art of modern stream
+%**HMM** Referent trouble ("this" would reference Chacha or ChaCha8,... here)
+Salsa20 is among the state of the art of modern stream
 ciphers. As of time of writing, there are no publicly known attacks
-against \hyperref[Salsa20]{Salsa20}, ChaCha20, nor against the recommended reduced-round
+against \hyperref[Salsa20]{Salsa20}, ChaCha, nor against the recommended reduced-round
 variants, that break their practical security. It is also pretty fast.
 For long streams, it takes about 4 cycles per byte for the full-round
 version, about 3 cycles per byte for the 12-round version and about 2
 cycles per byte for the 8-round version, on modern Intel processors
 \cite{salsa20:speed} and modern AMD processors \cite{cryptopp:bench}.
 To put that into comparison, that's more than three times faster than
-\hyperref[RC4]{RC4} \footnote{The quoted benchmarks don't mention RC4 but MARC4, which
+\hyperref[RC4]{RC4}\footnote{The quoted benchmarks don't mention RC4 but MARC4, which
 stands for \enquote{modified alleged RC4}. The RC4 section explains why it's
-\enquote{alleged}, and modified means it throws away the first 256 bytes
+\enquote{alleged}, and \enquote{modified} means it throws away the first 256 bytes
 because of a weakness in RC4.}, approximately three times faster than
 \hyperref[AES]{AES}-CTR with a 128 bit key at 12.6 cycles per byte, and roughly in the
 ballpark of \hyperref[AES]{AES} \hyperref[GCM mode]{GCM-mode}\footnote{GCM mode is an authenticated encryption
