@@ -1505,7 +1505,7 @@ hope that we can get practical, secure and performant stream ciphers.
 \section{\label{RC4}RC4}
 \label{sec-2-3-11}
 
-By far the most common \gls{stream cipher} in common use on desktop
+By far the most common native \gls{stream cipher} in common use on desktop
 and mobile devices is \hyperref[RC4]{RC4}.
 
 \hyperref[RC4]{RC4} is sometimes also called ARCFOUR or ARC4, which stands for
@@ -1542,10 +1542,11 @@ it a permutation.
 \hyperref[RC4]{RC4} consists of two major components that work on these indexes $i, j$
 and the state array $S$:
 
+%**HMM** It took me a while to find out that key scheduling happens /before/ keystream generation; and that the "pseudorandom generator" does produce a keystream - both facts are never mentioned. I hope it's ok to rename the "pseudorandom generator" to "keystream generator" - the former says something about the form of its result, but the latter stresses its /purpose/. And now, instead of the truism "The pseudorandom generator which produces pseudorandom bytes ..." we get the more informative sentence below. If the renaming is not ok, I would argue that the change should be to "The pseudorandom generator which produces keystream bytes ...", thereby again coupling the result's property (being pseudorandom) with its purpose (being the keystream).
 \begin{itemize}
-\item The key scheduling algorithm, which produces an initial state array
+\item Step 1: The key scheduling algorithm, which produces an initial state array
 $S$ for a given key.
-\item The pseudorandom generator, which produces pseudorandom bytes from
+\item Step 2: The keystream generator, which produces pseudorandom bytes from
 the state array $S$, modifying it as it goes along.
 \end{itemize}
 
@@ -1557,7 +1558,8 @@ That means that each byte is mapped to itself.
 
 \includegraphics[width=.9\linewidth]{./Illustrations/RC4/IdentityPermutation.pdf}
 
-Then, the key is mixed in with the state. This is done by iterating
+%**HMM** "mixed in with"? Either "mixed into" (a little strange English, maybe, but conveys the fact that the state is changed), or "mixed with".
+Then, the key is mixed into the state. This is done by iterating
 over every element of the state. The $j$ index is found by adding the
 current value of $j$ (starting at 0) with the next byte of the key,
 and the current state element:
@@ -1590,11 +1592,12 @@ def key_schedule(key):
 
     return s
 \end{minted}
-\subsection{The pseudorandom generator}
+\subsection{The keystream generator}
 \label{sec-2-3-11-2}
 
-The pseudorandom generator is responsible for producing pseudorandom
-bytes from the state $S$. For each index $i$, it computes $j = j +
+The keystream generator is responsible for producing pseudorandom
+bytes from the state $S$ that are used as the keystream for 
+encrypting the plaintext. For each index $i$, it computes $j = j +
 S[i]$ ($j$ starts at 0). Then, $S[i]$ and $S[j]$ are swapped:
 
 \includegraphics[width=.9\linewidth]{./Illustrations/RC4/Swap.pdf}
@@ -1666,14 +1669,17 @@ keystream. They also showed that knowing even small parts of the key
 would allow attackers to make strong predictions about the state and
 outputs of the cipher.
 
-Most modern stream ciphers provide a way to combine a long-term key
+%**HMM** It is unclear to the reader whether the next paragraph still talks about the idea "that knowing even small parts ...", or whether this idea is concluded. Here, this is not so: Therefore, I first wanted to argue that one idea should be confined to one paragraph, and hence, there shouldn't be a paragraph break here. However, this would create a very long paragraph (also the "WEP, ..." paragraph would have to be moved into this one). I think the better solution is to make the reader aware that the idea is coninued, e.g. with this simple addition:
+In contrast to RC4, most modern stream ciphers provide a way to combine a long-term key
+%**HMM** "nonce" gets an explanation in section 6.12. ("n/umber used /once") that should be moved here, as this is the first mention of this term.
 with a \gls{nonce}, to produce multiple different keystreams from the
 same long-term key. \hyperref[RC4]{RC4}, by itself, doesn't do that. The most common
-approach was also the simplest concatenate the long-term key $k$ and
-the nonce $n$: $k \| n$, taking advantage of RC4's flexible key length
-requirements. This scheme meant attackers knew some bits of the key,
+approach to add this feature was also the simplest: concatenate the long-term key $k$ and
+the nonce $n$: $k \| n$ to create the input key for RC4, taking advantage of RC4's flexible key length
+requirements. However, this scheme meant attackers could guess easily some bits of the complete key,
+%**HMM** Namely??? the leading zeros of the nonce if the nonce wasn't truncated to the first 1 bit? Or by assuming that a nonce was typically a small number that "counts" the messages sent? Or something else? And we have to distinguish clearly between the "long-term key" and the "complete key". You do this by using "long-term key" and "key" ... I'd, in this short paragraph, use "complete key" to be definitely clear which key ist meant.
 allowing them to slowly recover the long-term key from a large amount
-of messages (around $2^{24}$ to $2^{26}$).
+of messages (around $2^{24}$ to $2^{26}$, i.e., some tens of millions).
 
 WEP, a standard for protecting wireless networks that was popular at
 the time, was heavily affected by this attack, since it used this
@@ -1754,6 +1760,10 @@ on the cipher itself, and haven't been fully optimized for practical
 attacks on, say, web services. The attacks can be greatly improved
 with some extra information about the plaintext you're attempting to
 recover. For example, HTTP cookies are often base-64 or hex encoded.
+%**HMM** And now? Again, I sleep bad. Wouldn't the following be an acceptable remedy for this:
+The only solution to RC4's weaknesses is to not use it. Nicely enough,
+new and better native stream ciphers have been developed. We will see
+one in the next section.
 \section{\label{Salsa20}Salsa20}
 \label{sec-2-3-12}
 
