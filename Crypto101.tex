@@ -1882,12 +1882,13 @@ flips several bits in the ciphertext, and that causes some bits to be
 flipped in the plaintext.
 
 This attack is actually much simpler to perform on stream ciphers than
-it is on \gls{CBC mode}. First of all, the bits flipped affect the
-exact same bit in the ciphertext, not a bit in the following block. It
+it is on \gls{CBC mode}. First of all, a flipped bit affects the
+same bit in the ciphertext, not a bit in the following block. Second, it
 only affects that bit; in the \hyperref[CBC bit flipping attacks]{CBC-bit-flipping-attacks}, the plaintext
 of the modified block is scrambled. Since the attacker is modifying a
 sequence of bytes and not a sequence of blocks, they're not limited to
 a block size.
+%**HMM** What does th last sentence mean? I have a vague idea that one can handle more than one block at the same time (because of the "straight flipping dependency"), but this sentence does not really explain it and leaves me confused.
 
 TODO illustrate
 
