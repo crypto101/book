@@ -2335,7 +2335,7 @@ Bob, and once with Bob, where the attacker pretends to be Alice.
 Such attacks are called "man-in-the-middle attacks," for obvious reasons.
 Given that the network infrastructure which we use to send messages
 is run by many different operators, it is virtually impossible to
-defend oneself against such a "man in the middle".
+exclude that such a "man in the middle" is present in some message exchange.
 
 [[./Illustrations/DiffieHellman/MITM.pdf]]
 
