@@ -2016,19 +2016,22 @@ encryption and decryption are very easy to compute in parallel.
 
 *** Stream cipher bit flipping attacks
 
-Stream ciphers, such as native stream ciphers or a block cipher in
-\gls{CTR mode}, are also vulnerable to a bit flipping attack. It's
-similar to CBC bit flipping attacks in the sense that an attacker
-flips several bits in the ciphertext, and that causes some bits to be
-flipped in the plaintext.
+Synchronous stream ciphers, such as native stream ciphers or a block
+cipher in \gls{CTR mode}, are also vulnerable to a bit flipping
+attack. It's similar to CBC bit flipping attacks in the sense that an
+attacker flips several bits in the ciphertext, and that causes some
+bits to be flipped in the plaintext.
 
 This attack is actually much simpler to perform on stream ciphers than
-it is on \gls{CBC mode}. First of all, the bits flipped affect the
-exact same bit in the ciphertext, not a bit in the following block. It
-only affects that bit; in the CBC bit flipping attacks, the plaintext
-of the modified block is scrambled. Since the attacker is modifying a
-sequence of bytes and not a sequence of blocks, they're not limited to
-a block size.
+it is on \gls{CBC mode}. First of all, a flipped bit in the ciphertext
+results in the same bit being flipped in the plaintext, not the
+corresponding bit in the following block. Additionally, it only
+affects that bit; in CBC bit flipping attacks, the plaintext of the
+modified block is scrambled. Finally, since the attacker is modifying
+a sequence of bytes and not a sequence of blocks, the attacks are not
+limited by the specific block size. In CBC bit flipping attacks, for
+example, an attacker can adjust a single block, but can't adjust the
+adjacent block.
 
 TODO illustrate
 
