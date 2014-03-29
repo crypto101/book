@@ -2144,10 +2144,11 @@ shared secret.
 #+END_LATEX
 
 To start the protocol, Alice and Bob have to agree on a base color.
-They can communicate that across the network: it's okay if Eve hears.
-Typically, this base color is a fixed part of the protocol; Alice and
-Bob don't need to communicate it. After this step, Alice, Bob and Eve
-all have the same information: the base color.
+They can communicate that across the network: it's okay if Eve
+intercepts the message and finds out what the color is. Typically,
+this base color is a fixed part of the protocol; Alice and Bob don't
+need to communicate it. After this step, Alice, Bob and Eve all have
+the same information: the base color.
 
 #+BEGIN_LATEX
 \dhknows{Alice}{Base}
@@ -2173,13 +2174,13 @@ color itself. Everyone, including Eve, knows the base color.
 \dhknows{Eve}{Base}
 #+END_LATEX
 
-They then send both of their mixed colors over the network. Eve sees
-both mixed colors: but she can't figure out what either of Alice and
-Bob's /secret/ colors are. Even though she knows the base, she can't
-"un-mix" the colors sent over the network. [fn::While this might seem
-like an easy operation with black-and-white approximations of color
-mixing, keep in mind that this is just a failure of the illustration:
-our assumption was that this was hard.]
+Then, Alice and Bob both send of their mixed colors over the network.
+Eve sees both mixed colors, but she can't figure out what either of
+Alice and Bob's /secret/ colors are. Even though she knows the base,
+she can't "un-mix" the colors sent over the network. [fn::While this
+might seem like an easy operation with black-and-white approximations
+of color mixing, keep in mind that this is just a failure of the
+illustration: our assumption was that this was hard.]
 
 #+BEGIN_LATEX
 \dhsendmixedsecret{Alice}{Bob}
@@ -2197,8 +2198,8 @@ Eve knows the base color and both mixed colors.
 #+END_LATEX
 
 Once Alice and Bob receive each other's mixed color, they add their
-own secret color to it. Since the order of the computation doesn't
-matter, they'll both end up with the same secret.
+own secret color to it. Since the order of the mixing doesn't matter,
+they'll both end up with the same secret.
 
 #+BEGIN_LATEX
 \dhmix{Alice}{BobMixedSecret}{AliceSecret}{SharedSecret}
@@ -2330,10 +2331,10 @@ their security levels are sufficiently close to give you an idea.]:
 Using Diffie-Hellman, we can agree on shared secrets across an
 insecure Internet, safe from eavesdroppers. However, while an attacker
 may not be able to simply get the secret from eavesdropping, an active
-attacker can still break the system. If an attacker (Mallory) is in
-between Alice and Bob, they can still perform the Diffie-Hellman
-protocol twice: once with Alice, where the attacker pretends to be
-Bob, and once with Bob, where the attacker pretends to be Alice.
+attacker can still break the system. If such an attacker, usually
+called Mallory, is in between Alice and Bob, she can still perform the
+Diffie-Hellman protocol twice: once with Alice, where Mallory pretends
+to be Bob, and once with Bob, where Mallory pretends to be Alice.
 
 [[./Illustrations/DiffieHellman/MITM.pdf]]
 
@@ -2345,8 +2346,11 @@ any way they choose.
 
 To make matters worse, even if one of the two participants was somehow
 aware that this was going on, they would have no way to get the other
-party to believe them. After all: the attacker is the one with the
-shared secrets that check out, not the intended participant.
+party to believe them. After all: Mallory performed the successful
+Diffie-Hellman exchange with the unwitting victim, she has all the
+correct shared secrets. Bob, on the other hand, just has some secrets
+shared with Mallory, but he has no way to prove that to Alice. As far
+as Alice knows, Bob just chose a few random numbers.
 
 While Diffie-Hellman successfully produced a shared secret between
 sender and receiver, there's clearly some pieces of the puzzle still
