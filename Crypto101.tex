@@ -1,4 +1,4 @@
-% Created 2014-03-27 Thu 10:55
+% Created 2014-03-28 Fri 12:01
 \documentclass[11pt,ebook,table,dvipsnames]{memoir}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -99,7 +99,7 @@ Of course, if I never hear about your issue, it's very hard for me to
 address\ldots{}
 
 The copy of this book that you are reading right now is based on the
-git commit with hash \texttt{a857aa5}, also known as \texttt{v0.1.1-61-ga857aa5}.
+git commit with hash \texttt{23d4f9b}, also known as \texttt{v0.1.1-85-g23d4f9b}.
 \chapter{Acknowledgments}
 \label{sec-1-3}
 
@@ -140,11 +140,13 @@ grammar and content improvements. Thank you!
 Exclusive or, often called \enquote{XOR}, is a Boolean\footnote{Uses only \enquote{true}
 and \enquote{false} as input and output values.} binary\footnote{Takes two
 parameters.} operator that is true when either the first input or the
-second input, but not both, are true. Another way to think of XOR is a
-programmable inverter: a Boolean binary operator where one input bit
-decides whether or not to invert the other input bit. \enquote{Inverting} bits
-is much more commonly called \enquote{flipping} bits, a term we'll use often
-throughout the book.
+second input, but not both, are true.
+
+Another way to think of XOR is as something called a \enquote{programmable
+inverter}: one input bit decides whether to invert the other input
+bit, or to just pass it through unchanged. \enquote{Inverting} bits is
+colloquially called \enquote{flipping} bits, a term we'll use often throughout
+the book.
 
 \includegraphics[width=.9\linewidth]{./Illustrations/XOR/ProgrammableInverter.pdf}
 
@@ -510,7 +512,8 @@ C = E(k, P)
 
 The plaintext and ciphertext blocks are sequences of bytes. They are
 always the same size as one another, and that size is fixed by the
-block cipher: it's called the block cipher's \emph{block size}.
+block cipher: it's called the block cipher's \emph{block size}. The set of
+all possible keys is called the \gls{keyspace}.
 
 Once we've encrypted plaintext blocks into ciphertext blocks, they
 later have to be decrypted again to recover the original plaintext
@@ -525,6 +528,13 @@ P = D(k, C)
 Or, in blocks:
 
 \includegraphics[width=.9\linewidth]{./Illustrations/BlockCipher/BlockCipher.pdf}
+
+Block ciphers are an example of a \gls{symmetric-key encryption}
+scheme, also known as a \gls{secret-key encryption} scheme. This means
+that the same, secret key is used for both encryption and decryption.
+We will contrast this with \gls{public-key encryption} algorithms,
+which have a distinct key for encryption and decryption, later in the
+book.
 
 \newcommand{\permutationimg}[1] {
 \begin{figure}[ht!]
@@ -611,8 +621,6 @@ standardization process, the parameters were restricted to a block
 size of 128 bits and keys sizes of 128, 192 and 256 bits.
 \cite{fips:aes}
 
-REVIEW: Show how \hyperref[AES]{AES} works internally?
-
 There are no practical attacks known against \hyperref[AES]{AES}. While there have
 been some developments in the last few years, most of them involve
 related-key attacks \cite{cryptoeprint:2009:317}, some of them only on
@@ -654,8 +662,7 @@ This scheme provides two improvements:
 attack directly through cryptanalysis.
 \item By having the option of using many more total key bits, spread over
 the three keys, the set of all possible keys becomes much larger,
-making brute-forcing impractical.\footnote{The set of all keys is
-   commonly called the keyspace.}
+making brute-forcing impractical.
 \end{itemize}
 
 The three keys could all be chosen independently (yielding 168 key
@@ -721,10 +728,11 @@ address this problem in a later chapter with a \hyperref[sec-2-4]{key exchange p
 \label{sec-2-3}
 \section{Description}
 \label{sec-2-3-1}
-A stream cipher is a symmetric encryption algorithm that encrypts a
-stream of bits. Ideally, that stream could be as long as we'd like;
-real-world stream ciphers have limits, but they are normally
-sufficiently large that they don't pose a practical problem.
+
+A stream cipher is a \gls{symmetric-key encryption} algorithm that
+encrypts a stream of bits. Ideally, that stream could be as long as
+we'd like; real-world stream ciphers have limits, but they are
+normally sufficiently large that they don't pose a practical problem.
 \section{A naive attempt with block ciphers\label{ECB-mode}}
 \label{sec-2-3-2}
 
@@ -989,7 +997,7 @@ remember that an attacker must not be able to predict \emph{ahead of time}
 what a given IV will be. We will illustrate this later with an attack
 on predictable CBC IVs.
 
-The following diagram demonstrates encryption in \hyperref[CBC mode]{CBC-mode}:
+The following diagram demonstrates encryption in \hyperref[CBC-mode]{CBC mode}:
 
 \includegraphics[width=.9\linewidth]{./Illustrations/CBC/Encryption.pdf}
 
@@ -998,7 +1006,7 @@ decryption mode instead of encryption mode:
 
 \includegraphics[width=.9\linewidth]{./Illustrations/CBC/Decryption.pdf}
 
-While \hyperref[CBC mode]{CBC-mode} itself is not inherently insecure (unlike ECB mode),
+While \hyperref[CBC-mode]{CBC mode} itself is not inherently insecure (unlike ECB mode),
 its particular use in TLS 1.0 was. This eventually led to the
 \gls{BEAST} attack, which we'll cover in more detail in the section on
 SSL/TLS. The short version is that instead of using unpredictable
@@ -1012,7 +1020,7 @@ exploit that property.
 Suppose there's a database that stores secret user information, like
 medical, payroll or even criminal records. In order to protect that
 information, the server that handles it encrypts it using a strong
-block cipher in \hyperref[CBC mode]{CBC-mode} with a fixed key. For now, we'll assume that
+block cipher in \hyperref[CBC-mode]{CBC mode} with a fixed key. For now, we'll assume that
 that server is secure, and there's no way to get it to leak the key.
 
 Mallory gets a hold of all of the rows in the database. Perhaps she
@@ -1066,13 +1074,13 @@ probably wouldn't be encrypted using the same key.
 
 Many CBC systems set the key as the initialization vector. This seems
 like a good idea: you always need a shared secret key already anyway.
-Plus, the key is definitely unpredictable because it's secret: if it
-were predictable, the attacker could just predict the key directly and
-already have won. Conveniently, many block ciphers have block sizes
-that are the same length or less than the key size, so the key is
-big enough. Since the key is known ahead of time by both sender and
-recipient, they have to communicate one less block to each other,
-yielding a performance benefit.
+It yields a nice performance benefit, because the sender and the
+receiver don't have to communicate the IV explicitly, they already
+know the key (and therefore the IV) ahead of time. Plus, the key is
+definitely unpredictable because it's secret: if it were predictable,
+the attacker could just predict the key directly and already have won.
+Conveniently, many block ciphers have block sizes that are the same
+length or less than the key size, so the key is big enough.
 
 This setup is completely insecure. If Alice sends a message to Bob,
 Mallory, an active adversary that can intercept and modify the message
@@ -1080,7 +1088,7 @@ can perform a man-in-the-middle chosen-ciphertext attack to recover
 the key.
 
 Alice turns her plaintext message $P$ into three blocks $P_1 P_2 P_3$
-and encrypts it in \hyperref[CBC mode]{CBC-mode} with the secret key $k$ and also uses $k$
+and encrypts it in \hyperref[CBC-mode]{CBC mode} with the secret key $k$ and also uses $k$
 as the IV. She gets a three block ciphertext $C = C_1 C_2 C_3$, which
 she sends to Bob.
 
@@ -1088,30 +1096,52 @@ Before the message reaches Bob, Mallory intercepts it. She modifies
 the message to be $C^{\prime} = C_1 Z C_1$, where $Z$ is a block
 filled with null bytes (value zero).
 
-Bob decrypts $C^{\prime}$, and gets:
+Bob decrypts $C^{\prime}$, and gets the three plaintext
+blocks $P^{\prime}_1, P^{\prime}_2, P^{\prime}_3$:
 
 \begin{align*}
-P^{\prime}_1 = D(k, C_1) \xor IV = D(k, C_1) \xor k = P_1 \\
-P^{\prime}_2 = D(k, Z) \xor C_1 = R & \text{(some random block)} \\
-P^{\prime}_2 = D(k, C_1) \xor Z = D(k, C_1) = P_1 \xor IV
+P^{\prime}_1 & = D(k, C_1) \xor IV \\
+             & = D(k, C_1) \xor k \\
+             & = P_1
 \end{align*}
-
-Mallory recovers that decryption:
 
 \begin{align*}
-P^{\prime} & = P^{\prime}_1 P^{\prime}_2 P^{\prime}_3 \\
-           & = P_1 R (P_1 \xor IV)
+P^{\prime}_2 & = D(k, Z) \xor C_1 \\
+             & = R
 \end{align*}
 
-Now, she XORs the last and first recovered blocks, which is $(P_1 \xor
-IV) \xor P_1 = IV$. But, the IV is the key, so Mallory successfully
-recovered the key by modifying a single message.
+\begin{align*}
+P^{\prime}_3 & = D(k, C_1) \xor Z \\
+             & = D(k, C_1) \\
+             & = P_1 \xor IV
+\end{align*}
+
+$R$ is some random block. Its value doesn't matter.
+
+Under the chosen-ciphertext attack assumption, Mallory recovers that
+decryption. She is only interested in the first block ($P^{\prime}_1 =
+P_1$) and the third block ($P^{\prime}_3 = P_1 \xor IV$). By XORing
+those two together, she finds $(P_1 \xor IV) \xor P_1 = IV$. But, the
+IV is the key, so Mallory successfully recovered the key by modifying
+a single message.
+
+Lesson learned: don't use the key as an IV. Part of the fallacy in the
+introduction is that it assumed secret data could be used for the IV,
+because it only had to be unpredictable. That's not true: \enquote{secret} is
+just a different requirement from \enquote{not secret}, not necessarily a
+\emph{stronger} one. It is not generally okay to use secret information
+where it isn't required, precisely because if it's not supposed to be
+secret, the algorithm may very well treat it as non-secret, as is the
+case here. There \emph{are} plenty of systems where it is okay to use a
+secret where it isn't required, and in some cases you might even get a
+stronger system as a result, but the point is that that isn't
+generally true, and depends on what you're doing.
 \section{\label{CBC-bit-flipping-attacks}CBC bit flipping attacks}
 \label{sec-2-3-7}
 
 An interesting attack on \gls{CBC mode} is called a bit flipping
 attack. Using a CBC bit flipping attack, attackers can modify
-ciphertexts encrypted in \hyperref[CBC mode]{CBC-mode} so that it will have a predictable
+ciphertexts encrypted in \hyperref[CBC-mode]{CBC mode} so that it will have a predictable
 effect on the plaintext.
 
 This may seem like a very strange definition of \enquote{attack} at first. The
@@ -1231,7 +1261,7 @@ unable to distinguish between padding and the actual message.
 \subsection{\label{PKCS-5/PKCS-7-padding}PKCS\#5/PKCS\#7 padding}
 \label{sec-2-3-8-2}
 
-A better, and much more popular scheme, is \hyperref[PKCS\#5/PKCS\#7 padding]{PKCS-5/PKCS-7-padding}.
+A better, and much more popular scheme, is \hyperref[PKCS-5/PKCS-7-padding]{PKCS\#5/PKCS\#7 padding}.
 
 PKCS\#5, PKCS\#7 and later CMS padding are all more or less the same
 idea\footnote{Technically, PKCS\#5 padding is only defined for 8 byte block
@@ -1250,7 +1280,7 @@ This scheme is described in \cite{cms:padding}.
 \section{CBC padding attacks}
 \label{sec-2-3-9}
 
-We can refine \hyperref[CBC bit flipping attacks]{CBC-bit-flipping-attacks} to trick a recipient into
+We can refine \hyperref[CBC-bit-flipping-attacks]{CBC bit flipping attacks} to trick a recipient into
 decrypting arbitrary messages!
 
 As we've just discussed, \gls{CBC mode} requires padding the message
@@ -1278,7 +1308,16 @@ To mount this attack, an attacker only needs two things:
 the attacker if the padding was correct
 \end{enumerate}
 
-In this chapter, we'll assume that \hyperref[PKCS\#5/PKCS\#7 padding]{PKCS-5/PKCS-7-padding} is being
+As with the ECB encryption oracle, the availability a padding oracle
+may sound like a very unrealistic assumption. The massive impact of
+this attack proves otherwise. For a long time, most systems did not
+even attempt to hide if the padding was valid or not. This attack
+remained dangerous for a long time after it was originally discovered,
+because it turns out that in many systems it is extremely difficult to
+actually hide if padding is valid or not. We will go into this problem
+in more detail both in this chapter and in later chapters.
+
+In this chapter, we'll assume that \hyperref[PKCS-5/PKCS-7-padding]{PKCS\#5/PKCS\#7 padding} is being
 used, since that's the most popular option. The attack is general
 enough to work on other kinds of padding, with minor modifications.
 
@@ -1287,11 +1326,12 @@ enough to work on other kinds of padding, with minor modifications.
 
 The attacker fills a block with arbitrary bytes $R = r_1, r_2\ldots
 r_b$. They also pick a target block $C_i$ from the ciphertext that
-they'd like to decrypt. The attacker asks the padding oracle if $R \|
-C_i$ has valid padding. Statistically speaking, such a random
-plaintext block probably won't have valid padding: the odds are in the
-half-a-percent ballpark. If by pure chance the message happens to
-already have valid padding, they can simply skip the next step.
+they'd like to decrypt. The attacker asks the padding oracle if the
+plaintext of $R \| C_i$ has valid padding. Statistically speaking,
+such a random plaintext probably won't have valid padding: the odds
+are in the half-a-percent ballpark. If by pure chance the message
+happens to already have valid padding, the attacker can simply skip
+the next step.
 
 \begin{figure}[ht!]
 \centering
@@ -1299,18 +1339,20 @@ already have valid padding, they can simply skip the next step.
 \end{figure}
 
 Next, the attacker tries to modify the message so that it does have
-valid padding. They can do that by playing with the last byte of the
-plaintext: eventually that byte will be \verb~01~, which is always valid
-padding. In order to modify the last byte of a plaintext block, the
-attacker modifies the last byte of the \emph{previous} ciphertext block.
-This works exactly like it did with \hyperref[CBC bit flipping attacks]{CBC-bit-flipping-attacks}. That
-previous ciphertext block is the block $R$, so the byte being modified
-is the last byte of $R$, $r_b$.
+valid padding. They can do that by indirectly modifying the last byte
+of the plaintext: eventually that byte will be \verb~01~, which is always
+valid padding. In order to modify the last byte of a plaintext block,
+the attacker modifies the last byte of the \emph{previous} ciphertext
+block. This works exactly like it did with \hyperref[CBC-bit-flipping-attacks]{CBC bit flipping attacks}.
+That previous ciphertext block is the block $R$, so the byte being
+modified is the last byte of $R$, $r_b$.
 
-One way to try all values for that last byte of $R$ is to XOR it with
-all values up to 256, since a byte has 256 possible values.
-Eventually, the padding oracle will report that for some ciphertext
-block $R$, the decrypted plaintext of $R \| C_i$ has valid padding.
+The attacker tries all possible values for that last byte. There are
+several ways of doing that: modular addition, XORing it with all
+values up to 256, or even picking randomly; the only thing that
+matters is that the attacker tries all of them. Eventually, the
+padding oracle will report that for some ciphertext block $R$, the
+decrypted plaintext of $R \| C_i$ has valid padding.
 \subsection{Discovering the padding length}
 \label{sec-2-3-9-2}
 
@@ -1331,11 +1373,14 @@ only requires one byte to have a particular value. The attacker is
 modifying that byte to take \emph{every} possible value, so it is quite
 likely that they happened to stumble upon \verb~01~. All of the other valid
 padding options not only require that byte to have some particular
-value, but also one or more other bytes. For an attacker to end up
-with a valid \verb~01~ padding, they just have to try every possible byte;
-for an attacker to end up with a valid \verb~02 02~ padding, they have to
-try every possible byte \emph{and} happen to have picked a block that has a
-\verb~02~ in the second-to-last position.
+value, but also one or more other bytes. For an attacker to be
+guaranteed a message with a valid \verb~01~ padding, they just have to try
+every possible byte. For an attacker to end up with a message with a
+valid \verb~02 02~ padding, they have to try every possible byte \emph{and}
+happen to have picked a combination of $C$ and $R$ that causes the
+plaintext to have a \verb~02~ in that second-to-last position. (To
+rephrase: the second-to-last byte of the decryption of the ciphertext
+block, XORed with the second-to-last byte of $R$, is \verb~02~.)
 
 In order to successfully decrypt the message, we still need to figure
 out which one of those options is the actual value of the padding. To
@@ -1349,20 +1394,21 @@ many padding bytes there are. Since we're using PKCS\#5 padding, that
 also tells you what their value is.
 
 Let's illustrate this with an example. Suppose we've successfully
-found some block $R$ so that $R \| C_i$ has valid padding. Let's say
-that padding is \verb~03 03 03~. Normally, you wouldn't know this; the
-point of this procedure is to discover what that padding is. Suppose
-the block size is 8 bytes. So, we know that $P_i$ is currently:
+found some block $R$ so that the plaintext of $R \| C_i$ has valid
+padding. Let's say that padding is \verb~03 03 03~. Normally, the attacker
+wouldn't know this; the point of this procedure is to discover what
+that padding is. Suppose the block size is 8 bytes. So, we (but not
+the attacker) know that $P_i$ is currently:
 
 \begin{equation}
 p_0 p_1 p_2 p_3 p_4 p_5 \mathtt{03} \mathtt{03} \mathtt{03}
 \end{equation}
 
-Where $p_0$ \ldots are some bytes of the plaintext. Their actual value
-doesn't matter: the only thing that matters is that they're not part
-of the padding. When we modify the first byte of $R$, we'll cause a
-change in the first byte of $P_i$, so that $p_0$ becomes some other
-byte $p^{\prime}_0$:
+In that equation, $p_0$ \ldots are some bytes of the plaintext. Their
+actual value doesn't matter: the only thing that matters is that
+they're not part of the padding. When we modify the first byte of $R$,
+we'll cause a change in the first byte of $P_i$, so that $p_0$ becomes
+some other byte $p^{\prime}_0$:
 
 \begin{equation}
 p^{\prime}_0 p_1 p_2 p_3 p_4 p_5 \mathtt{03} \mathtt{03} \mathtt{03}
@@ -1370,8 +1416,8 @@ p^{\prime}_0 p_1 p_2 p_3 p_4 p_5 \mathtt{03} \mathtt{03} \mathtt{03}
 
 As you can see, this doesn't affect the validity of the padding. The
 same goes for $p_1$, $p_2$, $p_3$, $p_4$ and $p_5$. However, when we
-modify the byte after that (say, we turn that first \verb~03~ into a \verb~02~),
-$P_i$ looks like this:
+modify the byte after that (for example, we turn that first \verb~03~ into
+\verb~02~ by modifying $R$) $P_i$ looks like this:
 
 \begin{equation}
 p^{\prime}_0 p^{\prime}_1 p^{\prime}_2 p^{\prime}_3 p^{\prime}_4 p^{\prime}_5 \mathtt{02} \mathtt{03} \mathtt{03}
@@ -1393,26 +1439,26 @@ understand the rest of the attack.)
 \subsection{Decrypting one byte}
 \label{sec-2-3-9-3}
 
-At this point, we've actually already successfully decrypted the last
-byte of the target block of ciphertext! (Actually, we've decrypted as
-many bytes as we have valid padding; we're just assuming the worst
-case scenario that that's only a single byte.) Since we know that the
-last byte of the decrypted ciphertext block $C_i$ (we'll call that
-byte $D(C_i)[b]$), XORed with our iteratively found value $r_b$, is
-\verb|01|:
+At this point, the attacker has already successfully decrypted the
+last byte of the target block of ciphertext! (Actually, we've
+decrypted as many bytes as we have valid padding; we're just assuming
+the worst case scenario that that's only a single byte.) How? The
+attacker knows that the last byte of the decrypted ciphertext block
+$C_i$ (we'll call that byte $D(C_i)[b]$), XORed with the iteratively
+found value $r_b$, is \verb|01|:
 
 \[
 D(C_i)[b] \xor r_b = \mathtt{01}
 \]
 
-We can just move the XOR operation to the other side, and we get:
+By moving the XOR operation to the other side, the attacker gets:
 
 \[
 D(C_i)[b] = \mathtt{01} \xor r_b
 \]
 
-The attacker has now tricked the receiver into decrypting the last
-byte of the block $C_i$.
+The attacker has now tricked the receiver into revealing the value of
+the last byte of the block cipher decryption of $C_i$.
 \subsection{Decrypting subsequent bytes}
 \label{sec-2-3-9-4}
 
@@ -1455,8 +1501,10 @@ attacker can read the entire message.
 This attack has proven to be very subtle and hard to fix. First of
 all, messages should be authenticated, as well as encrypted. That
 would cause modified messages to be rejected. However, many systems
-decrypted (and removed padding) before authenticating the message; so
-the information about the padding being valid already leaked.
+decrypt (and remove padding) before authenticating the message; so
+the information about the padding being valid or not has already
+leaked. We will discuss secure ways of authenticating messages later
+in the book.
 
 You might consider just getting rid of the \enquote{invalid padding} message;
 declaring the message invalid without specifying \emph{why} it was invalid.
@@ -1464,7 +1512,12 @@ That turns out to only be a partial solution for systems that decrypt
 before authenticating. Those systems would typically reject messages
 with an invalid padding \emph{slightly faster} than messages with a valid
 padding. After all, they didn't have to do the authentication step: if
-the padding is invalid, the message can't possibly be valid.
+the padding is invalid, the message can't possibly be valid. An attack
+that leaks secret information through timing differences is called a
+\emph{timing attack}, which is a special case of a \emph{side-channel attack}:
+attacks on the practical implementation of a cryptosystem rather than
+its \enquote{perfect} abstract representation. We will talk about these kinds
+of attacks more later in the book.
 
 That discrepancy was commonly exploited as well. By measuring how long
 it takes the recipient to reject the message, the attacker can tell if
@@ -1472,7 +1525,11 @@ the recipient performed the authentication step. That tells them if
 the padding was correct or not, providing the padding oracle to
 complete the attack.
 
-TODO: Remove TODO about Vaudenay's padding attack later, refer to this
+The principal lesson learned here is, again, not to design your own
+cryptosystems. The main way to avoid this particular problem is by
+performing constant time authentication, and authenticating the
+ciphertext before decrypting it. We will talk more about this in a
+later chapter on message authentication.
 \section{Native stream ciphers}
 \label{sec-2-3-10}
 
@@ -1490,7 +1547,20 @@ plaintext.
 
 \includegraphics[width=.9\linewidth]{./Illustrations/StreamCipher/Synchronous.pdf}
 
-TODO: Explain parallel with one-time pads
+You can see how this construction looks quite similar to a one-time
+pad, except that the truly random one-time pad has been replaced by a
+pseudorandom stream cipher.
+
+There are also \emph{asynchronous} or \emph{self-synchronizing} stream ciphers,
+where the previously produced ciphertext bits are used to produce the
+current keystream bit. This has the interesting consequence that a
+receiver can eventually recover if some ciphertext bits are dropped.
+This is generally not considered to be a desirable property anymore in
+modern cryptosystems, which instead prefer to send complete,
+authenticated messages. As a result, these stream ciphers are very
+rare, and we don't talk about them explicitly in this book. Whenever
+someone says \enquote{stream cipher}, it's safe to assume they mean the
+synchronous kind.
 
 Historically, native stream ciphers have had their issues. For
 example, the NESSIE competition, an international competition for new
@@ -1522,7 +1592,7 @@ modes of operation and padding. Clocking in at around 13.9 cycles per
 byte, it's comparable to \hyperref[AES]{AES}-128 in CTR (12.6 cycles per byte) or CBC
 (16.0 cycles per byte) modes. \hyperref[AES]{AES} came out a few years after \hyperref[RC4]{RC4}; when
 \hyperref[RC4]{RC4} was designed, the state of the art was 3DES, which was
-excruciatingly slow by comparison (134.5 cycles per byte in \hyperref[CTR mode]{CTR-mode}).
+excruciatingly slow by comparison (134.5 cycles per byte in \hyperref[CTR-mode]{CTR mode}).
 \cite{cryptopp:bench}
 
 This algorithm is, unfortunately, quite broken. To better understand
@@ -1788,7 +1858,7 @@ stands for \enquote{modified alleged RC4}. The RC4 section explains why it's
 \enquote{alleged}, and modified means it throws away the first 256 bytes
 because of a weakness in RC4.}, approximately three times faster than
 \hyperref[AES]{AES}-CTR with a 128 bit key at 12.6 cycles per byte, and roughly in the
-ballpark of \hyperref[AES]{AES} \hyperref[GCM mode]{GCM-mode}\footnote{GCM mode is an authenticated encryption
+ballpark of \hyperref[AES]{AES} \hyperref[GCM-mode]{GCM mode}\footnote{GCM mode is an authenticated encryption
 mode, which we will see in more detail in a later chapter.} with
 specialized hardware instructions.
 
@@ -1854,7 +1924,7 @@ decryption is the same thing: in both cases you produce the keystream,
 and you XOR either the plaintext or the ciphertext with it in order to
 get the other one.
 
-For \hyperref[CTR mode]{CTR-mode} to be secure, it is critical that \glspl{nonce} aren't
+For \hyperref[CTR-mode]{CTR mode} to be secure, it is critical that \glspl{nonce} aren't
 reused. If they are, the entire keystream will be repeated, allowing
 an attacker to mount multi-time pad attacks.
 
@@ -1864,7 +1934,7 @@ able to predict a CTR \gls{nonce} doesn't really matter: without the
 secret key, he has no idea what the output of the block cipher (the
 sequence in the keystream) would be.
 
-Like \texttt{Salsa20}, \hyperref[CTR mode]{CTR-mode} has the interesting property that you can jump
+Like \texttt{Salsa20}, \hyperref[CTR-mode]{CTR mode} has the interesting property that you can jump
 to any point in the keystream easily: just increment the counter to
 that point. \hyperref[keystream-jump]{The Salsa20 paragraph on this topic} explains why that
 might be useful.
@@ -1877,14 +1947,14 @@ are trivial to compute in parallel.
 
 Stream ciphers, such as native stream ciphers or a block cipher in
 \gls{CTR mode}, are also vulnerable to a bit flipping attack. It's
-similar to \hyperref[CBC bit flipping attacks]{CBC-bit-flipping-attacks} in the sense that an attacker
+similar to \hyperref[CBC-bit-flipping-attacks]{CBC bit flipping attacks} in the sense that an attacker
 flips several bits in the ciphertext, and that causes some bits to be
 flipped in the plaintext.
 
 This attack is actually much simpler to perform on stream ciphers than
 it is on \gls{CBC mode}. First of all, the bits flipped affect the
 exact same bit in the ciphertext, not a bit in the following block. It
-only affects that bit; in the \hyperref[CBC bit flipping attacks]{CBC-bit-flipping-attacks}, the plaintext
+only affects that bit; in the \hyperref[CBC-bit-flipping-attacks]{CBC bit flipping attacks}, the plaintext
 of the modified block is scrambled. Since the attacker is modifying a
 sequence of bytes and not a sequence of blocks, they're not limited to
 a block size.
@@ -3081,7 +3151,7 @@ cycles off the MAC computation time.
 
 So far, we've always assumed that MAC functions can be used with a
 single key to produce secure MACs for a very large number of messages.
-By contrast, \hyperref[One-time MACs]{one-time-MACs} are MAC functions that can only securely be
+By contrast, \hyperref[one-time-MACs]{One-time MACs} are MAC functions that can only securely be
 used once with a single key. That might sound like a silly idea, since
 we've already talked about regular secure MACs. An algorithm that only
 works once just seems objectively worse. However, they have several big
@@ -3096,7 +3166,7 @@ content of the tag.
 multiple-use MAC, removing the principal problem.
 \end{itemize}
 
-A typical simple example of such \hyperref[One-time MACs]{one-time-MACs} consists of a simple
+A typical simple example of such \hyperref[one-time-MACs]{One-time MACs} consists of a simple
 multiplication and addition modulo some large prime $p$. In this case,
 the secret key consists of two truly random numbers $a$ and $b$, both
 between 1 and $p$.
@@ -3166,13 +3236,13 @@ b &= t_1 - m_1 \cdot a \pmod p
 
 As you can see, as with one-time pads, re-using the key even once
 leads to a complete failure of the cryptosystem to preserve privacy or
-integrity, as the case may be. As a result, \hyperref[One-time MACs]{one-time-MACs} are a bit
+integrity, as the case may be. As a result, \hyperref[one-time-MACs]{One-time MACs} are a bit
 dangerous to use directly; but we'll see that with the appropriate
 construction, that issue can be remedied.
 \section{\label{Carter-Wegman-MAC}Carter-Wegman MAC}
 \label{sec-2-7-6}
 
-As we've already stated, the obvious problem with \hyperref[One-time MACs]{one-time-MACs} is
+As we've already stated, the obvious problem with \hyperref[one-time-MACs]{One-time MACs} is
 their limited practicality. Fortunately, it turns out that there is a
 construction, called a \gls{Carter-Wegman MAC}, that turns any secure
 one-time MAC into a secure many-time MAC while preserving most of the
@@ -3188,13 +3258,13 @@ CW((k_1, k_2), n, M) = F(k_1, n) \xor O(k_2, M)
 \]
 
 Keep in mind that while Carter-Wegman MACs take two distinct keys $k1$
-and $k2$, and that Carter-Wegman MACs are related to \hyperref[One-time MACs]{one-time-MACs}
+and $k2$, and that Carter-Wegman MACs are related to \hyperref[one-time-MACs]{One-time MACs}
 which also take two distinct keys, these keys are unrelated. The
 Carter-Wegman MAC's $k_2$ is the only input here to the fast one-time
 MAC $O$. If that fast one-time MAC is our earlier example that takes
 two keys, that $k_2$ would have to get split up into those two keys.
 
-You can tell how a \hyperref[Carter-Wegman MAC]{Carter-Wegman-MAC} exploits the benefits of both
+You can tell how a \hyperref[Carter-Wegman-MAC]{Carter-Wegman MAC} exploits the benefits of both
 kinds of MACs by considering the two terms of the equation separately.
 In $F(k_1, n)$, $F$ is just a regular pseudorandom function, such as a
 block cipher. It is quite slow by comparison to the one-time MAC.
@@ -3208,7 +3278,7 @@ some of the state of the art in MAC functions. The paper (\cite{umac})
 and RFC (\cite{rfc4418}) for an older, related MAC function called
 UMAC may also be good sources of extra background information, since
 they go into extensive details of the hows and whys of a practical
-\hyperref[Carter-Wegman MAC]{Carter-Wegman-MAC}.
+\hyperref[Carter-Wegman-MAC]{Carter-Wegman MAC}.
 \section{Authenticated encryption modes}
 \label{sec-2-7-7}
 
@@ -3270,7 +3340,7 @@ separately:
 \section{\label{OCB-mode}OCB mode}
 \label{sec-2-7-8}
 
-\hyperref[OCB mode]{OCB-mode} is an \gls{AEAD} mode of operation. It is one of the earliest
+\hyperref[OCB-mode]{OCB mode} is an \gls{AEAD} mode of operation. It is one of the earliest
 developed \glspl{AEAD mode}.
 
 \illustration{OCB/Encryption}[.7]
@@ -3292,36 +3362,36 @@ very fast: only requiring roughly one block cipher operation per
 encrypted or associate data block, as well as one additional block
 cipher operation for the final tag. The offsets ($\Delta_i$) are also
 extremely easy to compute. The checksum $x$ is just all of the
-plaintext blocks $p_i$ XOR'ed together. Finally, \hyperref[OCB mode]{OCB-mode} is easy to
+plaintext blocks $p_i$ XOR'ed together. Finally, \hyperref[OCB-mode]{OCB mode} is easy to
 compute in parallel; only the final authentication tag is dependent on
 all the preceding information.
 
-\hyperref[OCB mode]{OCB-mode} also comes with a built-in padding scheme: it behaves
+\hyperref[OCB-mode]{OCB mode} also comes with a built-in padding scheme: it behaves
 slightly differently when the plaintexts or authentication text is not
 exactly a multiple of the block size. This means that, unlike with
-\hyperref[PKCS\#5/PKCS\#7 padding]{PKCS-5/PKCS-7-padding}, there isn't an entire block of \enquote{wasted} padding
+\hyperref[PKCS-5/PKCS-7-padding]{PKCS\#5/PKCS\#7 padding}, there isn't an entire block of \enquote{wasted} padding
 if the plaintext happens to be a multiple of the block size.
 
-Despite having several interesting properties going for it, \hyperref[OCB mode]{OCB-mode}
+Despite having several interesting properties going for it, \hyperref[OCB-mode]{OCB mode}
 has not received as much attention as some of the alternatives; one of
 the main reasons being that it is patent encumbered. Even though a
 number of patent licenses are available\cite{ocb:license}, including a
 free-of-charge one for open source software, this does not appear to
-have significantly impacted how much \hyperref[OCB mode]{OCB-mode} is used in the field.
+have significantly impacted how much \hyperref[OCB-mode]{OCB mode} is used in the field.
 \section{\label{GCM-mode}GCM mode}
 \label{sec-2-7-9}
 
-\hyperref[GCM mode]{GCM-mode} is an \gls{AEAD mode} with an unfortunate case of RAS
+\hyperref[GCM-mode]{GCM mode} is an \gls{AEAD mode} with an unfortunate case of RAS
 syndrome (redundant acronym syndrome): GCM itself stands for \enquote{Galois
 Counter Mode}. It is formalized in a NIST Special
 Publication\cite{gcm} and roughly boils down to a combination of
-classical \hyperref[CTR mode]{CTR-mode} with a \gls{Carter-Wegman MAC}. That MAC can be
+classical \hyperref[CTR-mode]{CTR mode} with a \gls{Carter-Wegman MAC}. That MAC can be
 used by itself as well, which is called \gls{GMAC}.
 
 \subsection{Authentication}
 \label{sec-2-7-9-1}
 
-\hyperref[GCM mode]{GCM-mode} (and by extension GMAC)
+\hyperref[GCM-mode]{GCM mode} (and by extension GMAC)
 \chapter{Signature algorithms}
 \label{sec-2-8}
 \section{Description}
@@ -3424,7 +3494,7 @@ require a \gls{nonce}. A nonce just has to be unique: you can use it
 once, and then you can never use it again. It doesn't have to be
 secret. It doesn't even have to be unpredictable. A nonce can be
 implemented by a simple counter, or a monotonic clock. Many other
-algorithms, such as \hyperref[CBC mode]{CBC-mode}, use an initialization vector. It doesn't
+algorithms, such as \hyperref[CBC-mode]{CBC mode}, use an initialization vector. It doesn't
 have to be unique: it only has to be unpredictable. It also doesn't
 have to be secret: initialization vectors are typically tacked on to
 the ciphertext. DSA's requirements for the $k$ value are a combination
@@ -4883,7 +4953,7 @@ that isn't \hyperref[OTR]{OTR}-capable just displays some extra whitespace.
 \hyperref[OTR]{OTR} uses many of the primitives we've seen so far:
 
 \begin{itemize}
-\item Symmetric key encryption (\gls{AES} in \hyperref[CTR mode]{CTR-mode})
+\item Symmetric key encryption (\gls{AES} in \hyperref[CTR-mode]{CTR mode})
 \item Message authentication codes (\hyperref[HMAC]{HMAC} with SHA-1)
 \item Diffie-Hellman key exchange
 \end{itemize}
