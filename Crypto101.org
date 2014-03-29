@@ -2700,8 +2700,9 @@ Suppose you have a service where people log in using a username and a
 password. You'd have to store the password somewhere, so that next
 time the user logs in, you can verify the password they supplied.
 
-Storing the password directly has several issues. Besides an obvious
-timing attack in the string comparison, if the password database were
+Storing the password directly has several issues. 
+If the password database were
+# **HMM** For us (still newbies in crypto), that timing attack is everything but obvious. I think it's better to leave out this problem here altogether - see also issu #148.
 to be compromised, an attacker would be able to just go ahead and read
 all of the passwords. Since many users re-use passwords, that's a
 catastrophic failure. Most user databases also contain their e-mail
@@ -2759,6 +2760,7 @@ password would result in the same hash everywhere.
 
 This problem was generally solved by using \glspl{salt}. By mixing
 (appending or prepending) the password with some random value before
+# *HMM** or XORing? Of course, that's a bad idea, as the length of the salt is then truncated to the length of the password. Pointing out this problem might be worth a footnote - I assure you, some people think this to be a good idea, because "XORing scrambles so much more than contatenation, doesn't it?".
 hashing it, you could produce completely different hash values out of
 the same hash function. It effectively turns a hash function into a
 whole family of related hash functions, with virtually identical
@@ -2766,11 +2768,11 @@ security and performance properties, except with completely different
 output values.
 
 The salt value is stored next to the password hash in the database.
-When the user authenticates using the password, you just compute the
-salt with the password, hash it, and compare it against the stored
+When the user authenticates using the password, you just combine the
+salt with the password, hash it, and compare the result against the stored
 hash.
 
-If you pick a random value that's large enough (say, $2^{160}$),
+If you pick a random value as salt that's large enough (say, $2^{160}$, i.e., 32 bytes),
 you've completely defeated ahead-of-time attacks like rainbow tables.
 In order to successfully mount a rainbow table attack, an attacker
 would have to have a separate table for each of those salt values.
