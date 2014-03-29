@@ -1132,7 +1132,8 @@ length or less than the key size, so the key is big enough.
 
 This setup is completely insecure. If Alice sends a message to Bob,
 Mallory, an active adversary that can intercept and modify the message
-can perform a man-in-the-middle chosen-ciphertext attack to recover
+can perform a so-called man-in-the-middle chosen-ciphertext attack to recover
+# **HMM** That's the first time in the book that "man-in-the-middle ... attack" occurs: Being a very common term /and/ an important concept, I think it deserves an explanation. However, this might not be the right place, because here we are in a section that many readers might skip ("just a detail on CBC attacks"). A better place would be in the DH chapter with Mallory being that "active attacker".
 the key.
 
 Alice turns her plaintext message $P$ into three blocks $P_1 P_2 P_3$
@@ -2330,6 +2331,11 @@ attacker can still break the system. If an attacker (Mallory) is in
 between Alice and Bob, they can still perform the Diffie-Hellman
 protocol twice: once with Alice, where the attacker pretends to be
 Bob, and once with Bob, where the attacker pretends to be Alice.
+# **HMM** Here is that place where an explanation of "man-in-the-middle" attack would nicely fit in:
+Such attacks are called "man-in-the-middle attacks," for obvious reasons.
+Given that the network infrastructure which we use to send messages
+is run by many different operators, it is virtually impossible to
+defend oneself against such a "man in the middle".
 
 [[./Illustrations/DiffieHellman/MITM.pdf]]
 
@@ -2599,22 +2605,25 @@ authentication. That means that while we can encrypt and decrypt
 messages, we cannot verify that the message is what the sender
 actually sent.
 
-While unauthenticated encryption may provide secrecy, we've already
+While unauthenticated encryption may provide secrecy, we have already
 seen that without authentication an active attacker can generally
+# **HMM** ...e.g. in the man in the middle attack we saw in the DH chapter.
 modify valid encrypted messages successfully, despite the fact that
 they don't necessarily know the corresponding plaintext. Accepting
 these messages can often lead to secret information being leaked, so
+# **HMM** Explain, please?! 
 that not even the secrecy property is satisfied.
 
 As a result it has become evident that we need ways to authenticate as
 well as encrypt our secret communications. This is done by adding
-extra information to the message, that only the sender could have
+extra information to the message that only the sender could have
 computed. Just like encryption, authentication comes in both
-private-key (symmetric) and public-key forms. Symmetric authentication
+private-key (symmetric) and public-key (asymmetric) forms. Symmetric authentication
+# **HMM** "asymmetric" is introduced too casually here (its only previous mention was as part of the name OAEP). Also, that "symmetric" is the opposite of "asymmetric" deserves at least one sentence (of course, it's obvious - but a book like this is about explaining also things that are obvious - at least, this gives us readers sometimes the feeling that we are still abreast with what's going on ;) )
 schemes are typically called message authentication codes. Public-key
 authentication is typically called a signature.
 
-First, we will introduce a new cryptographic primitive: hash
+But before we deal with authentication, we first introduce a new cryptographic primitive: hash
 functions. These can be used to produce both signature schemes as well
 as message authentication schemes. Unfortunately, they are also very
 often abused to produce entirely insecure systems.
