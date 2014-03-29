@@ -2030,16 +2030,17 @@ There are other modes of operation that provide authentication as
 well as encryption at the same time. Since we haven't discussed
 authentication at all yet, we'll handle these later.
 
-*** Remaining problem
+*** Remaining problems
 
 We now have tools that will encrypt large streams of data using a
 small key. However, we haven't actually discussed how we're going to
 agree on that key. As noted in a previous chapter, to communicate
 between $n$ people, we need $n^2$ key exchanges. While the key to be
 exchanged is a lot smaller now, the fundamental problem of the
-impossibly large number of key exchanges hasn't been solved yet. Next,
-we'll look at key exchange protocols, protocols that allow us to
-agree on a secret key over an insecure medium.
+impossibly large number of key exchanges hasn't been solved yet. We
+will tackle that problem in the next section, where we'll look at key
+exchange protocols: protocols that allow us to agree on a secret key
+over an insecure medium.
 
 Additionally, we've seen that encryption isn't enough to provide
 security: without authentication, it's easy for attackers to modify
