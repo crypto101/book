@@ -1639,8 +1639,8 @@ hope that we can get practical, secure and performant stream ciphers.
 
 *** <<<RC4>>>
 
-By far the most common \gls{stream cipher} in common use on desktop
-and mobile devices is RC4.
+By far the most common native \gls{stream cipher} in common use on
+desktop and mobile devices is RC4.
 
 RC4 is sometimes also called ARCFOUR or ARC4, which stands for
 /alleged/ RC4. While its source code has been leaked and its
@@ -1676,10 +1676,12 @@ it a permutation.
 RC4 consists of two major components that work on two indexes $i, j$
 and the state array $S$:
 
-- The key scheduling algorithm, which produces an initial state array
-  $S$ for a given key.
-- The pseudorandom generator, which produces pseudorandom bytes from
-  the state array $S$, modifying it as it goes along.
+1. The key scheduling algorithm, which produces an initial state array
+   $S$ for a given key.
+2. The pseudorandom generator, which produces they actual keystream
+   bytes from the state array $S$ produced by the key scheduling
+   algorithm. The pseudorandom generator itself also modifies the
+   state array as produces keystream bytes.
 
 **** The key scheduling algorithm
 
@@ -1688,8 +1690,8 @@ That means that each byte is mapped to itself.
 
 [[./Illustrations/RC4/IdentityPermutation.pdf]]
 
-Then, the key is mixed in with the state. This is done by iterating
-over every element of the state. The $j$ index is found by adding the
+Then, the key is mixed into the state. This is done by iterating over
+every element of the state. The $j$ index is found by adding the
 current value of $j$ (starting at 0) with the next byte of the key,
 and the current state element:
 
@@ -1725,8 +1727,10 @@ Or, in Python:
 **** The pseudorandom generator
 
 The pseudorandom generator is responsible for producing pseudorandom
-bytes from the state $S$. For each index $i$, it computes $j = j +
-S[i]$ ($j$ starts at 0). Then, $S[i]$ and $S[j]$ are swapped:
+bytes from the state $S$. These bytes form the keystream, and are
+XORed with the plaintext to produce the ciphertext. For each index
+$i$, it computes $j = j + S[i]$ ($j$ starts at 0). Then, $S[i]$ and
+$S[j]$ are swapped:
 
 [[./Illustrations/RC4/Swap.pdf]]
 
@@ -1795,14 +1799,16 @@ keystream. They also showed that knowing even small parts of the key
 would allow attackers to make strong predictions about the state and
 outputs of the cipher.
 
-Most modern stream ciphers provide a way to combine a long-term key
-with a \gls{nonce}, to produce multiple different keystreams from the
-same long-term key. RC4, by itself, doesn't do that. The most common
-approach was also the simplest: concatenate the long-term key $k$ and
-the nonce $n$: $k \| n$, taking advantage of RC4's flexible key length
-requirements. This scheme meant attackers knew some bits of the key,
-allowing them to slowly recover the long-term key from a large amount
-of messages (around $2^{24}$ to $2^{26}$).
+Unlike RC4, most modern stream ciphers provide a way to combine a
+long-term key with a \gls{nonce} (a number used once), to produce
+multiple different keystreams from the same long-term key. RC4, by
+itself, doesn't do that. The most common approach was also the
+simplest: concatenate the long-term key $k$ with the nonce $n$: $k \|
+n$, taking advantage of RC4's flexible key length requirements. This
+scheme meant attackers could recover parts of the combined key,
+eventually allowing them to slowly recover the long-term key from a
+large amount of messages (around $2^{24}$ to $2^{26}$, or tens of
+millions of messages).
 
 WEP, a standard for protecting wireless networks that was popular at
 the time, was heavily affected by this attack, since it used this
@@ -1879,6 +1885,14 @@ on the cipher itself, and haven't been fully optimized for practical
 attacks on, say, web services. The attacks can be greatly improved
 with some extra information about the plaintext you're attempting to
 recover. For example, HTTP cookies are often base-64 or hex encoded.
+
+There's no way around it: we need to stop using RC4. Fortunately,
+we've also developed many secure alternatives. The continuing
+advances in cryptanalysis of RC4 helped contribute to a sense of
+urgency regarding the improvement of commonly available cryptographic
+primitives. Throughout 2013 in particular, this lead to large
+improvements in, for example, browser cryptography. (We will discuss
+browser cryptography, notably SSL/TLS, in a later chapter.)
 
 *** <<<Salsa20>>>
 
@@ -1960,12 +1974,11 @@ less common, and not discussed here.
 *** <<<CTR mode>>>
 
 \gls{CTR mode}, short for counter mode, is a \gls{mode of operation}
-that works by concatenating a \gls{nonce} (which stands for a /n/umber
-used /once/) and a counter. The counter is incremented with each
-block, and padded with zeroes so that the whole is as long as the
-block size. The resulting concatenated string is run through a block
-cipher. The outputs of the block cipher are then used as the
-keystream.
+that works by concatenating a \gls{nonce} with a counter. The counter
+is incremented with each block, and padded with zeroes so that the
+whole is as long as the block size. The resulting concatenated string
+is run through a block cipher. The outputs of the block cipher are
+then used as the keystream.
 
 [[./Illustrations/CTR/CTR.pdf]]
 
