@@ -2670,6 +2670,7 @@ called /collision resistance/. Because collision resistance is a
 stronger form of second pre-image resistance, they're sometimes also
 called weak and strong collision resistance.
 
+# **HMM** The avalanche effect explanation says "changing even a single bit will ... (change much more)". In the "real world" (as opposed to mathematics) this seems to imply that changing more bits will certainly change even more. To guard against this fallacy, here is a suggestion for an additional paragraph. I first wanted to put it immediately after the "first property" paragraph, but to really explain how all works together, it needs the third property - so I'd like to see it (or something like it) at this place.
 The avalanche effect does /not/ mean that /every/ change will affect
 many bits. Indeed, as there are certainly different messages that hash
 to the same digest (see the footnote on the previous page), there are
