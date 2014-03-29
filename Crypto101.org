@@ -1662,7 +1662,7 @@ excruciatingly slow by comparison (134.5 cycles per byte in CTR mode).
 RC4 is, unfortunately, quite broken. To better understand just how
 broken, we'll take a look at how RC4 works. The description requires
 understanding modular addition; if you aren't familiar with it, you
-may want to review [[Modular%20addition][the appendix section on modular addition]].
+may want to review [[Modular addition][the appendix on modular addition]].
 
 Everything in RC4 revolves around a state array and two indexes into
 that array. The array consists of 256 bytes forming a /permutation/:
