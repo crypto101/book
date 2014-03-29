@@ -1884,38 +1884,41 @@ recover. For example, HTTP cookies are often base-64 or hex encoded.
 
 Salsa20 is a newer \gls{stream cipher} designed by Dan Bernstein.
 Bernstein is well-known for writing a lot of open source (public
-domain) software, a lot of which is either directly security related
-or built with computer security very much in mind.
+domain) software, most of which is either directly security related or
+built with information security very much in mind.
 
 There are two minor variants of Salsa20, called Salsa20/12 and
 Salsa20/8, which are simply the same algorithm except with 12 and 8
 rounds[fn::Rounds are repetitions of an internal function. Typically a
-number of rounds are required to make a algorithm effective work;
+number of rounds are required to make an algorithm work effectively;
 attacks often start on reduced-round versions of an algorithm.]
 respectively, down from the original 20. ChaCha is another, orthogonal
 tweak of the Salsa20 cipher, which tries to increase the amount of
 diffusion per round while maintaining or improving performance. ChaCha
 doesn't have a "20" after it; specific algorithms do have a number
-after them (ChaCha8, ChaCha12, ChaCha20), but that refers to the
-number of rounds.
+after them (ChaCha8, ChaCha12, ChaCha20), which refers to the number
+of rounds.
 
-This block cipher is among the state of the art of modern stream
-ciphers. As of time of writing, there are no publicly known attacks
-against Salsa20, ChaCha20, nor against the recommended reduced-round
-variants, that break their practical security. It is also pretty fast.
-For long streams, it takes about 4 cycles per byte for the full-round
-version, about 3 cycles per byte for the 12-round version and about 2
-cycles per byte for the 8-round version, on modern Intel processors
+Salsa20 and ChaCha are among the state of the art of modern stream
+ciphers. There are currently no publicly known attacks against
+Salsa20, ChaCha, nor against any of their recommended reduced-round
+variants, that break their practical security.
+
+Both cipher families are also pretty fast. For long streams, Salsa20
+takes about 4 cycles per byte for the full-round version, about 3
+cycles per byte for the 12-round version and about 2 cycles per byte
+for the 8-round version, on modern Intel processors
 \cite{salsa20:speed} and modern AMD processors \cite{cryptopp:bench}.
-To put that into comparison, that's more than three times faster than
-RC4 [fn::The quoted bencmarks don't mention RC4 but MARC4, which
-stands for "modified alleged RC4". The RC4 section explains why it's
-"alleged", and modified means it throws away the first 256 bytes
-because of a weakness in RC4.], approximately three times faster than
-AES-CTR with a 128 bit key at 12.6 cycles per byte, and roughly in the
-ballpark of AES GCM mode[fn::GCM mode is an authenticated encryption
-mode, which we will see in more detail in a later chapter.] with
-specialized hardware instructions.
+ChaCha is (on most platforms) slightly faster still. To put that into
+comparison, that's more than three times faster than RC4[fn::The
+quoted bencmarks don't mention RC4 but MARC4, which stands for
+"modified alleged RC4". The RC4 section explains why it's "alleged",
+and "modified" means it throws away the first 256 bytes because of a
+weakness in RC4.], approximately three times faster than AES-CTR with
+a 128 bit key at 12.6 cycles per byte, and roughly in the ballpark of
+AES GCM mode[fn::GCM mode is an authenticated encryption mode, which
+we will see in more detail in a later chapter.] with specialized
+hardware instructions.
 
 <<keystream jump>>
 Salsa20 has a two particularly interesting properties. Firstly, It's
@@ -1968,9 +1971,9 @@ keystream.
 
 This illustration shows a single input block $N \| 00 \ldots \| i$,
 consisting of nonce $N$, current counter value $i$ and padding, being
-ran though block cipher $E$ using key $k$ to produce keystream block
-$S_i$, which is then XORed with the plaintext block $P_i$ to produce
-ciphertext block $C_i$.
+encrypted by the block cipher $E$ using key $k$ to produce keystream
+block $S_i$, which is then XORed with the plaintext block $P_i$ to
+produce ciphertext block $C_i$.
 
 Obviously, to decrypt, you do the exact same thing again, since XORing
 a bit with the same value twice always produces the original bit: $p_i
@@ -1994,9 +1997,9 @@ to any point in the keystream easily: just increment the counter to
 that point. [[keystream jump][The Salsa20 paragraph on this topic]] explains why that
 might be useful.
 
-Another interesting property is that since none of the computations
-depend on any previous computations, both encryption and decryption
-are trivial to compute in parallel.
+Another interesting property is that since any keystream block can be
+computed completely separately from any other keystream block, both
+encryption and decryption are very easy to compute in parallel.
 
 *** Stream cipher bit flipping attacks
 
