@@ -2215,10 +2215,12 @@ sender intended to send.
 So far, we have only done \gls{secret-key encryption}. Suppose, that
 you could have a cryptosystem that didn't involve a single secret key,
 but instead had a key pair: one public key, which you freely
-distribute, and a private one, which you keep to yourself. This is
-called \gls{public-key encryption}. People can encrypt information to
+distribute, and a private one, which you keep to yourself.
+People can encrypt information to
 you by using your public key. The information is then impossible to
-decipher without your private key.
+decipher without your private key. This is called \gls{public-key encryption}. 
+%**HMM** The sentence "This is called public-key encryption" must, IMHO, be the last of the paragraph. First, because the introduction and use of the keys shouldn't be torn from each other with that in-between sentence. But second, because it's wrong otherwise: Just /having/ a public, freely distributed key and a private one is not public-key encryption: You might e.g. use the public one to encrypt and decrypt messages, and don't do anything with the private one - not a sensible thing, but possible. Using the keys in the way outlined (public key for encryption, private for decryption) /defines/ public-key encryption - so this must be before the "This" of "This is called ..."
+%**HMM** ...mhm... if you want to include also authentication with public/private keys, the above is not true. But then the original formulation would still be misleading, because it would still go on to say not as an example, but as an explanation that introduces only encryption (not authentication) as relevant to the term "public-key encryption". So I still stand by my suggestion above (to put the "This is ..." sentence at the end of the paragraph.
 
 For a long time, people thought this was impossible. However, starting
 in the 1970s, such algorithms started appearing. The first publicly
