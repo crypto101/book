@@ -1584,7 +1584,7 @@ implementation is now well-known, \hyperref[RSA]{RSA} Security, where \hyperref[
 and who still hold the trademark on the name, has never acknowledged
 that it is the real algorithm.
 
-It quickly came popular because it's very simple and very fast. It's
+It quickly became popular because it's very simple and very fast. It's
 not just extremely simple to implement, it's also extremely simple to
 apply. Being a synchronous stream cipher, there's little that can go
 wrong; with a block cipher, you'd have to worry about things like
@@ -1595,7 +1595,8 @@ byte, it's comparable to \hyperref[AES]{AES}-128 in CTR (12.6 cycles per byte) o
 excruciatingly slow by comparison (134.5 cycles per byte in \hyperref[CTR-mode]{CTR mode}).
 \cite{cryptopp:bench}
 
-This algorithm is, unfortunately, quite broken. To better understand
+%**HMM** "This" refers to the "nearest mathching referent" in the previous sentence. In this case, this would be 3DES! I'll that a "referent trouble" in future comments ... "The algorithm" is quite general - but we are in the RC4 section, so it is clear which algorithm is meant. Alternative: "The RC4 algorithm ..."
+The algorithm is, unfortunately, quite broken. To better understand
 just how broken, we'll take a look at how \hyperref[RC4]{RC4} works. The description
 requires understanding modular addition; if you aren't familiar with
 it, you may want to review \texttt{the appendix section on modular addition}.
@@ -1609,7 +1610,8 @@ know that it's a permutation because $S$ starts as one, and all
 operations that modify $S$ always swap values, which obviously keeps
 it a permutation.
 
-\hyperref[RC4]{RC4} consists of two major components that work on these indexes $i, j$
+%**HMM** Referent trouble
+\hyperref[RC4]{RC4} consists of two major components that work on the indexes $i, j$
 and the state array $S$:
 
 \begin{itemize}
@@ -1713,7 +1715,7 @@ Throughout the history of \hyperref[RC4]{RC4}, people have found many such biase
 the mid-nineties, Andrew Roos noticed two such flaws:
 
 \begin{itemize}
-\item The first three bytes of the key is correlated with the first byte
+\item The first three bytes of the key are correlated with the first byte
 of the keystream.
 \item The first few bytes of the state are related to the key with a
 simple (linear) relation.
@@ -1739,7 +1741,7 @@ outputs of the cipher.
 Most modern stream ciphers provide a way to combine a long-term key
 with a \gls{nonce}, to produce multiple different keystreams from the
 same long-term key. \hyperref[RC4]{RC4}, by itself, doesn't do that. The most common
-approach was also the simplest concatenate the long-term key $k$ and
+approach was also the simplest: concatenate the long-term key $k$ and
 the nonce $n$: $k \| n$, taking advantage of RC4's flexible key length
 requirements. This scheme meant attackers knew some bits of the key,
 allowing them to slowly recover the long-term key from a large amount
@@ -1829,33 +1831,35 @@ recover. For example, HTTP cookies are often base-64 or hex encoded.
 
 \hyperref[Salsa20]{Salsa20} is a newer \gls{stream cipher} designed by Dan Bernstein.
 Bernstein is well-known for writing a lot of open source (public
-domain) software, a lot of which is either directly security related
-or built with computer security very much in mind.
+domain) software, much of which is either directly security related
+or built with computer security in mind.
 
 There are two minor variants of \hyperref[Salsa20]{Salsa20}, called \hyperref[Salsa20]{Salsa20}/12 and
 \hyperref[Salsa20]{Salsa20}/8, which are simply the same algorithm except with 12 and 8
 rounds\footnote{Rounds are repetitions of an internal function. Typically a
-number of rounds are required to make a algorithm effective work;
+number of rounds are required to make an algorithm work effectively;
 attacks often start on reduced-round versions of an algorithm.}
 respectively, down from the original 20. ChaCha is another, orthogonal
 tweak of the \hyperref[Salsa20]{Salsa20} cipher, which tries to increase the amount of
 diffusion per round while maintaining or improving performance. ChaCha
 doesn't have a \enquote{20} after it; specific algorithms do have a number
-after them (ChaCha8, ChaCha12, ChaCha20), but that refers to the
+after them (ChaCha8, ChaCha12, ChaCha20), which refers to the
 number of rounds.
 
-This block cipher is among the state of the art of modern stream
+%**HMM** Referent trouble ("this" would reference Chacha or ChaCha8,... here)
+Salsa20 is among the state of the art of modern stream
+%**HMM** I find "As of time of writing" queer - however, I must accept that is used quite often. I would prefer the more standard (I think) "At the time of writing".
 ciphers. As of time of writing, there are no publicly known attacks
-against \hyperref[Salsa20]{Salsa20}, ChaCha20, nor against the recommended reduced-round
+against \hyperref[Salsa20]{Salsa20}, ChaCha, nor against the recommended reduced-round
 variants, that break their practical security. It is also pretty fast.
 For long streams, it takes about 4 cycles per byte for the full-round
 version, about 3 cycles per byte for the 12-round version and about 2
 cycles per byte for the 8-round version, on modern Intel processors
 \cite{salsa20:speed} and modern AMD processors \cite{cryptopp:bench}.
 To put that into comparison, that's more than three times faster than
-\hyperref[RC4]{RC4} \footnote{The quoted bencmarks don't mention RC4 but MARC4, which
+\hyperref[RC4]{RC4}\footnote{The quoted benchmarks don't mention RC4 but MARC4, which
 stands for \enquote{modified alleged RC4}. The RC4 section explains why it's
-\enquote{alleged}, and modified means it throws away the first 256 bytes
+\enquote{alleged}, and \enquote{modified} means it throws away the first 256 bytes
 because of a weakness in RC4.}, approximately three times faster than
 \hyperref[AES]{AES}-CTR with a 128 bit key at 12.6 cycles per byte, and roughly in the
 ballpark of \hyperref[AES]{AES} \hyperref[GCM-mode]{GCM mode}\footnote{GCM mode is an authenticated encryption
@@ -1913,7 +1917,7 @@ keystream.
 
 This illustration shows a single input block $N \| 00 \ldots \| i$,
 consisting of nonce $N$, current counter value $i$ and padding, being
-ran though block cipher $E$ using key $k$ to produce keystream block
+run through block cipher $E$ using key $k$ to produce keystream block
 $S_i$, which is then XORed with the plaintext block $P_i$ to produce
 ciphertext block $C_i$.
 
@@ -1941,7 +1945,8 @@ might be useful.
 
 Another interesting property is that since none of the computations
 depend on any previous computations, both encryption and decryption
-are trivial to compute in parallel.
+%**HMM** Please, no "mathematicians' trivials" ...
+can be done in parallel.
 \section{Stream cipher bit flipping attacks}
 \label{sec-2-3-15}
 
@@ -1971,7 +1976,7 @@ foiled.
 There are other modes of operation that provide authentication as
 well as encryption at the same time. Since we haven't discussed
 authentication at all yet, we'll handle these later.
-\section{Remaining problem}
+\section{Remaining problems}
 \label{sec-2-3-17}
 
 We now have tools that will encrypt large streams of data using a
@@ -1979,9 +1984,9 @@ small key. However, we haven't actually discussed how we're going to
 agree on that key. As noted in a previous chapter, to communicate
 between $n$ people, we need $n^2$ key exchanges. While the key to be
 exchanged is a lot smaller now, the fundamental problem of the
-impossibly large number of key exchanges hasn't been solved yet. Next,
-we'll look at key exchange protocols, protocols that allow us to
-agree on a secret key over an insecure medium.
+impossibly large number of key exchanges hasn't been solved yet. 
+But solutions for this are at hand: We'll look at key exchange protocols, 
+protocols that allow us to agree on a secret key over an insecure medium.
 
 Additionally, we've seen that encryption isn't enough to provide
 security: without authentication, it's easy for attackers to modify
@@ -2085,7 +2090,7 @@ shared secret.
 }
 
 To start the protocol, Alice and Bob have to agree on a base color.
-They can communicate that across the network: it's okay if Eve hears.
+They can communicate that across the network: it's okay if Eve listens to this communication.
 Typically, this base color is a fixed part of the protocol; Alice and
 Bob don't need to communicate it. After this step, Alice, Bob and Eve
 all have the same information: the base color.
@@ -2108,7 +2113,7 @@ color itself. Everyone, including Eve, knows the base color.
 \dhknows{Bob}{Base,BobSecret,BobMixedSecret}
 \dhknows{Eve}{Base}
 
-They then send both of their mixed colors over the network. Eve sees
+Alice as well as Bob then send both of their mixed colors over the network. Eve sees
 both mixed colors: but she can't figure out what either of Alice and
 Bob's \emph{secret} colors are. Even though she knows the base, she can't
 \enquote{un-mix} the colors sent over the network. \footnote{While this might seem
@@ -2128,7 +2133,8 @@ Eve knows the base color and both mixed colors.
 \dhknows{Eve}{Base,AliceMixedSecret,BobMixedSecret}
 
 Once Alice and Bob receive each other's mixed color, they add their
-own secret color to it. Since the order of the computation doesn't
+%**HMM** No "computation" here at this point of time - it's just mixing colors.
+own secret color to it. Since the order of the mixing doesn't
 matter, they'll both end up with the same secret.
 
 \dhmix{Alice}{BobMixedSecret}{AliceSecret}{SharedSecret}
@@ -2254,7 +2260,8 @@ Using Diffie-Hellman, we can agree on shared secrets across an
 insecure Internet, safe from eavesdroppers. However, while an attacker
 may not be able to simply get the secret from eavesdropping, an active
 attacker can still break the system. If an attacker (Mallory) is in
-between Alice and Bob, they can still perform the Diffie-Hellman
+%**HMM** "they" is too risky here - it can reference "Alice and Bob".
+between Alice and Bob, Mallory can still perform the Diffie-Hellman
 protocol twice: once with Alice, where the attacker pretends to be
 Bob, and once with Bob, where the attacker pretends to be Alice.
 
@@ -2269,7 +2276,8 @@ any way they choose.
 To make matters worse, even if one of the two participants was somehow
 aware that this was going on, they would have no way to get the other
 party to believe them. After all: the attacker is the one with the
-shared secrets that check out, not the intended participant.
+%**HMM** "check out" is here, IMHO, meant in a colloquial sense that can be confusing.
+shared secrets that work, not the intended participant.
 
 While Diffie-Hellman successfully produced a shared secret between
 sender and receiver, there's clearly some pieces of the puzzle still
@@ -2393,7 +2401,7 @@ compute the private exponent $d$, and then you've won.
 
 Fortunately, we don't have an algorithm that can factor such large
 numbers in reasonable time. Unfortunately, we also haven't proven it
-doesn't exist. Even more unfortunate, is that we have a theoretical
+doesn't exist. Even more unfortunate is that we have a theoretical
 algorithm, called Shor's algorithm, that \emph{would} be able to factor
 such a number in reasonable time, on a quantum computer. Right now,
 quantum computers are far from practical, but it does appear that if
@@ -2402,7 +2410,7 @@ someone in the future manages to build one that's sufficiently large,
 \subsection{Implementation pitfalls}
 \label{sec-2-5-3-3}
 
-While right now there are no known practical complete breaks against
+Right now there are no known practical complete breaks against
 \hyperref[RSA]{RSA}. That's not to say that systems employing \hyperref[RSA]{RSA} aren't routinely
 broken. Like with most broken cryptosystems, there's plenty of cases
 where sound components, improperly applied, result in a useless
@@ -2531,7 +2539,7 @@ that not even the secrecy property is satisfied.
 
 As a result it has become evident that we need ways to authenticate as
 well as encrypt our secret communications. This is done by adding
-extra information to the message, that only the sender could have
+extra information to the message that only the sender could have
 computed. Just like encryption, authentication comes in both
 private-key (symmetric) and public-key forms. Symmetric authentication
 schemes are typically called message authentication codes. Public-key
@@ -2550,7 +2558,7 @@ Hash functions are functions that take an input of indeterminate
 length and produce a fixed-length value, also known as a \enquote{digest}.
 
 Simple hash functions have many applications. Hash tables, a common
-data structure, rely on them. The really only guarantee one thing: for
+data structure, rely on them. They really only guarantee one thing: for
 two identical inputs, they'll produce an identical output.
 Importantly, there's no guarantee that two identical outputs imply
 that the inputs were the same\footnote{That would be impossible: there's
@@ -2572,7 +2580,8 @@ be impossibly hard to:
 The first property implies that cryptographic hash functions will
 exhibit something known as the \enquote{avalanche effect}. Changing even a
 single bit in the input will produce an avalanche of changes through
-the entire digest: each bit of the ciphertext will have a 50\% chance
+%**HMM** There is no "ciphertext" at the end of a hash function, only a "result" or a "digest" (maybe on some level, "ciphertext" is anything that comes out of something cryptographic that can't be read easily - but this is a stretch of the wording at least for us readers; and anyway, you consistently use the word "digest" in this section except for this one place.
+the entire digest: each bit will have a 50\% chance
 of flipping.
 
 The second property, which states that it should be difficult to find
