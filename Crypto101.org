@@ -1648,7 +1648,7 @@ implementation is now well-known, RSA Security, where RC4 originated
 and who still hold the trademark on the name, has never acknowledged
 that it is the real algorithm.
 
-It quickly came popular because it's very simple and very fast. It's
+It quickly became popular because it's very simple and very fast. It's
 not just extremely simple to implement, it's also extremely simple to
 apply. Being a synchronous stream cipher, there's little that can go
 wrong; with a block cipher, you'd have to worry about things like
@@ -1659,10 +1659,10 @@ RC4 was designed, the state of the art was 3DES, which was
 excruciatingly slow by comparison (134.5 cycles per byte in CTR mode).
 \cite{cryptopp:bench}
 
-This algorithm is, unfortunately, quite broken. To better understand
-just how broken, we'll take a look at how RC4 works. The description
-requires understanding modular addition; if you aren't familiar with
-it, you may want to review [[Modular%20addition][the appendix section on modular addition]].
+RC4 is, unfortunately, quite broken. To better understand just how
+broken, we'll take a look at how RC4 works. The description requires
+understanding modular addition; if you aren't familiar with it, you
+may want to review [[Modular%20addition][the appendix section on modular addition]].
 
 Everything in RC4 revolves around a state array and two indexes into
 that array. The array consists of 256 bytes forming a /permutation/:
@@ -1673,7 +1673,7 @@ know that it's a permutation because $S$ starts as one, and all
 operations that modify $S$ always swap values, which obviously keeps
 it a permutation.
 
-RC4 consists of two major components that work on these indexes $i, j$
+RC4 consists of two major components that work on two indexes $i, j$
 and the state array $S$:
 
 - The key scheduling algorithm, which produces an initial state array
@@ -1773,7 +1773,7 @@ that's a flaw of the stream cipher.
 Throughout the history of RC4, people have found many such biases. In
 the mid-nineties, Andrew Roos noticed two such flaws:
 
-- The first three bytes of the key is correlated with the first byte
+- The first three bytes of the key are correlated with the first byte
   of the keystream.
 - The first few bytes of the state are related to the key with a
   simple (linear) relation.
@@ -1798,7 +1798,7 @@ outputs of the cipher.
 Most modern stream ciphers provide a way to combine a long-term key
 with a \gls{nonce}, to produce multiple different keystreams from the
 same long-term key. RC4, by itself, doesn't do that. The most common
-approach was also the simplest concatenate the long-term key $k$ and
+approach was also the simplest: concatenate the long-term key $k$ and
 the nonce $n$: $k \| n$, taking advantage of RC4's flexible key length
 requirements. This scheme meant attackers knew some bits of the key,
 allowing them to slowly recover the long-term key from a large amount
