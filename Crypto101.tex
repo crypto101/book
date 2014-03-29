@@ -2260,6 +2260,9 @@ At face value, it seems that the existence of
 key encryption for everything, avoiding all the added complexity
 of having to do key agreement for our symmetric algorithms.
 
+%**HMM** A nice example where your mind raced ahead of what you wrote (happens to you sometimes - I'll point out all such issues :-) ): "We could use PKE for everything. By far the most important reason for this is performance." This sounds as if /because of performance, we should use PKE everything." Of course, it's the other way round. Therefore, the following paragraph should start with:
+But this does not work in practice.
+%**HMM** And now the "this" refers to "it does not work", instead of "we should use PKE".
 By far the most important reason for this is performance. Compared to
 our speedy stream ciphers (native or otherwise), public-key encryption
 mechanisms are extremely slow. A single 2048-bit \hyperref[RSA]{RSA} encryption takes
@@ -2267,8 +2270,8 @@ mechanisms are extremely slow. A single 2048-bit \hyperref[RSA]{RSA} encryption 
 \cite{cryptopp:bench} To put this into comparison, symmetric key
 algorithms work in order of magnitude 10 or so cycles per byte in
 either direction. In order to encrypt or decrypt 2048 bytes, that
-means approximately 20 kilocycles. The state of the art in secure
-symmetric ciphers is even faster: \hyperref[AES]{AES}-GCM with hardware acceleration
+means approximately 20 kilocycles, which is about 500 times faster. The state of the art in secure
+symmetric ciphers is even better: \hyperref[AES]{AES}-GCM with hardware acceleration
 or \hyperref[Salsa20]{Salsa20}/ChaCha20 only need about 2 to 4 cycles per byte, making the
 difference even larger.
 
