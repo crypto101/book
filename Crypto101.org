@@ -2616,7 +2616,7 @@ that not even the secrecy property is satisfied.
 
 As a result it has become evident that we need ways to authenticate as
 well as encrypt our secret communications. This is done by adding
-extra information to the message, that only the sender could have
+extra information to the message that only the sender could have
 computed. Just like encryption, authentication comes in both
 private-key (symmetric) and public-key forms. Symmetric authentication
 schemes are typically called message authentication codes. Public-key
@@ -2634,13 +2634,13 @@ Hash functions are functions that take an input of indeterminate
 length and produce a fixed-length value, also known as a "digest".
 
 Simple hash functions have many applications. Hash tables, a common
-data structure, rely on them. The really only guarantee one thing: for
-two identical inputs, they'll produce an identical output.
-Importantly, there's no guarantee that two identical outputs imply
-that the inputs were the same[fn::That would be impossible: there's
-only a finite amount of digests, since they're fixed size, but there's
-an infinite amount of inputs.]. A good hash function is also quick to
-compute.
+data structure, rely on them. These simple hash functions really only
+guarantee one thing: for two identical inputs, they'll produce an
+identical output. Importantly, there's no guarantee that two identical
+outputs imply that the inputs were the same[fn::That would be
+impossible: there's only a finite amount of digests, since they're
+fixed size, but there's an infinite amount of inputs.]. A good hash
+function is also quick to compute.
 
 Since this is a book on cryptography, we're particularly interested
 in /cryptographic/ hash functions. Those are hash functions with much
@@ -2654,8 +2654,8 @@ be impossibly hard to:
 The first property implies that cryptographic hash functions will
 exhibit something known as the "avalanche effect". Changing even a
 single bit in the input will produce an avalanche of changes through
-the entire digest: each bit of the ciphertext will have a 50% chance
-of flipping.
+the entire digest: each bit of the digest will have a 50% chance of
+flipping.
 
 The second property, which states that it should be difficult to find
 a message $m$ that has a given hash value $h$, is called /pre-image
