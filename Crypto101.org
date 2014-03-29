@@ -1630,8 +1630,8 @@ Historically, native stream ciphers have had their issues. For
 example, the NESSIE competition, an international competition for new
 cryptographic primitives, did not result in any new stream ciphers:
 all of the participants were broken before the competition ended. RC4,
-one of the most popular stream ciphers, has had serious known issues
-for years. By comparison, some of the constructions using block
+one of the most popular native stream ciphers, has had serious known
+issues for years. By comparison, some of the constructions using block
 ciphers seem bulletproof.
 
 Fortunately, more recently, several new cipher algorithms provide new
