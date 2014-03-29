@@ -2476,21 +2476,21 @@ compute the private exponent $d$, and then you've won.
 
 Fortunately, we don't have an algorithm that can factor such large
 numbers in reasonable time. Unfortunately, we also haven't proven it
-doesn't exist. Even more unfortunate, is that we have a theoretical
+doesn't exist. Even more unfortunate is that there is a theoretical
 algorithm, called Shor's algorithm, that /would/ be able to factor
-such a number in reasonable time, on a quantum computer. Right now,
+such a number in reasonable time on a quantum computer. Right now,
 quantum computers are far from practical, but it does appear that if
 someone in the future manages to build one that's sufficiently large,
 RSA becomes ineffective.
 
 **** Implementation pitfalls
 
-While right now there are no known practical complete breaks against
-RSA. That's not to say that systems employing RSA aren't routinely
-broken. Like with most broken cryptosystems, there's plenty of cases
-where sound components, improperly applied, result in a useless
-system. For a more complete overview of the things that can go wrong
-with RSA implementations, please refer to \cite{boneh:twentyyears} and
+Right now there are no known practical complete breaks against RSA.
+That's not to say that systems employing RSA aren't routinely broken.
+Like with most broken cryptosystems, there's plenty of cases where
+sound components, improperly applied, result in a useless system. For
+a more complete overview of the things that can go wrong with RSA
+implementations, please refer to \cite{boneh:twentyyears} and
 \cite{anderson:mindingyourpsandqs}. In this book, we'll just highlight
 a few interesting ones.
 
