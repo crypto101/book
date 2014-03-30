@@ -2782,7 +2782,10 @@ everyone was using one of a handful of hash functions. The same
 password would result in the same hash everywhere.
 
 This problem was generally solved by using \glspl{salt}. By mixing
-(appending or prepending) the password with some random value before
+(appending or prepending[fn::While you could also do this with XOR,
+it's needlessly more error-prone, and doesn't provide better results.
+Unless you zero-pad both the password and the salt, you might be
+truncating either one.]) the password with some random value before
 hashing it, you could produce completely different hash values out of
 the same hash function. It effectively turns a hash function into a
 whole family of related hash functions, with virtually identical
@@ -2790,32 +2793,37 @@ security and performance properties, except with completely different
 output values.
 
 The salt value is stored next to the password hash in the database.
-When the user authenticates using the password, you just compute the
+When the user authenticates using the password, you just combine the
 salt with the password, hash it, and compare it against the stored
 hash.
 
-If you pick a random value that's large enough (say, $2^{160}$),
-you've completely defeated ahead-of-time attacks like rainbow tables.
-In order to successfully mount a rainbow table attack, an attacker
-would have to have a separate table for each of those salt values.
-Since even a single table was usually quite large, storing a large
-amount of them would be impossible. Even if an attacker would be able
-to store all that data, he'd still have to compute it. Computing a
-single table took a decent amount of time; computing $2^{160}$ of them
-is impossible.
+If you pick a sufficiently large (say, 160 bits/32 bytes),
+cryptographically random salt, you've completely defeated
+ahead-of-time attacks like rainbow tables. In order to successfully
+mount a rainbow table attack, an attacker would have to have a
+separate table for each of those salt values. Since even a single
+table was usually quite large, storing a large amount of them would be
+impossible. Even if an attacker would be able to store all that data,
+they'd still have to compute it first. Computing a single table takes
+a decent amount of time; computing $2^{160}$ different tables is
+impossible.
 
-Many systems used a single salt for all users. While that prevented a
-rainbow table attack, it still allowed attackers to attack all
-passwords at once. Marginally more advanced (but still fundamentally
-broken) systems used a different salt for each user, which meant
-attackers could only attack one password at a time.
+Many systems used a single salt for all users. While that prevented an
+ahead-of-time rainbow table attack, it still allowed attackers to
+attack all passwords at once they knew the value of the salt. An
+attacker would simply compute a single rainbow table for that salt,
+and compare the results with the hashed passwords from the database.
+While this would have been prevented by using a different salt for
+each user, systems that use a cryptographic hash with a per-user salt
+are still considered fundamentally broken today; they are just
+/harder/ to crack, but not at all secure.
 
 Perhaps the biggest problem with salts is that many programmers were
 suddenly convinced they were doing the right thing. They'd heard of
-broken password storage schemes, and they "knew" how to do it
-properly, so they ignored all talk about how a password database could
-be compromised. They weren't the ones storing passwords in plaintext,
-or forgetting to salt their hashes, or re-using salts for different
+broken password storage schemes, and they knew what to do instead, so
+they ignored all talk about how a password database could be
+compromised. They weren't the ones storing passwords in plaintext, or
+forgetting to salt their hashes, or re-using salts for different
 users. It was all of those other people that didn't know what they
 were doing that had those problems. Unfortunately, that's not true.
 Perhaps that's why broken password storage schemes are still the norm.
@@ -2834,8 +2842,17 @@ against an attacker that actually knows the salt.
 
 **** So where do we go from here?
 
-In order to protect passwords, you don't need a hash function, but a
-[[key derivation function][key derivation function]]. We'll deal with those in a following chapter.
+In order to protect passwords, you need a (low-entropy) [[key derivation function][key derivation
+function]]. We'll discuss them in more detail in a future chapter.
+
+While key derivation functions can be built using cryptographic hash
+functions, they have very different performance properties. This is a
+common pattern: while cryptographic hash functions are incredibly
+important primitives for building secure tools (such as key derivation
+functions or message authentication algorithms), they are routinely
+abused /as/ those tools themselves. In the rest of this chapter, we
+will see other examples of how cryptographic hash functions can be
+used and abused.
 
 *** Length extension attacks
 
