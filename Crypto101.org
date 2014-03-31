@@ -115,7 +115,7 @@ git commit with hash call_gitcommit(), also known as call_gitdesc().
 
 ** Acknowledgments
 
-This book is would not have been possible without the support and
+This book would not have been possible without the support and
 contributions of many people, even before the first public release.
 Some people reviewed the text, some people provided technical review,
 and some people helped with the original talk. In no particular order:
