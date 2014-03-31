@@ -2481,6 +2481,12 @@ M \equiv C^d \pmod{N}
 \]
 #+END_LATEX
 
+The security of RSA relies on that decryption operation being
+impossible without knowing the secret exponent $d$, and that that
+secret exponent $d$ is very hard (practically impossible) to compute
+from the public key $(N, e)$. We'll see approaches for breaking RSA in
+the next section.
+
 **** Breaking RSA
 
 Like many cryptosystems, RSA relies on the presumed difficulty of a
@@ -2495,9 +2501,9 @@ C \equiv M^e \pmod{N}
 #+END_LATEX
 
 The easiest way we know how to do that is to factor $N$ back into $p
-\cdot q$. Given $p$ and $q$, you could just repeat the process that
-the legitimate owner of the key does during key generation in order to
-compute the private exponent $d$, and then you've won.
+\cdot q$. Given $p$ and $q$, the attacker can just repeat the process
+that the legitimate owner of the key does during key generation in
+order to compute the private exponent $d$.
 
 Fortunately, we don't have an algorithm that can factor such large
 numbers in reasonable time. Unfortunately, we also haven't proven it
@@ -2508,9 +2514,15 @@ quantum computers are far from practical, but it does appear that if
 someone in the future manages to build one that's sufficiently large,
 RSA becomes ineffective.
 
+In this section, we have only considered a private key recovery attack
+that attacks the purely abstract mathematical RSA problem by factoring
+the modulus. In the next section, we will see all sorts of realistic
+attacks on RSA that rely on flaws in the /implementation/, rather than
+the mathematical problem stated above.
+
 **** Implementation pitfalls
 
-Right now there are no known practical complete breaks against RSA.
+Right now, there are no known practical complete breaks against RSA.
 That's not to say that systems employing RSA aren't routinely broken.
 Like with most broken cryptosystems, there's plenty of cases where
 sound components, improperly applied, result in a useless system. For
@@ -2531,17 +2543,17 @@ things after it?] is a provisioning system written in Python. In the
 author's opinion, it has one major flaw. It has a module named
 =crypto=.
 
-Instead of reusing existing complete cryptosystems[fn::For a variety
-of reasons, which, even if they were sensible, are secondary to the
-tenet of not implementing your own cryptography.], it implements its
+Instead of reusing existing complete cryptosystems, it implements its
 own, using RSA and AES provided by a third party package.
 
-For a long time, Salt used a public exponent of 1, which meant the
-encryption phase didn't actually do anything. While this issue has
-now been fixed, this only goes to show once again that you probably
-shouldn't implement your own cryptography.
-
-
+For a long time, Salt used a public exponent ($e$) of 1, which meant
+the encryption phase didn't actually do anything: $P^e \equiv P^1
+\equiv P \pmod N$. This meant that the resulting ciphertext was in
+fact just the plaintext. While this issue has now been fixed, this
+only goes to show that you probably shouldn't implement your own
+cryptography. Salt currently also supports SSH as a transport, but the
+aforementioned DIY RSA/AES system remains, and is at time of writing
+still the recommended and the default transport.
 
 **** <<<OAEP>>>
 
@@ -2554,11 +2566,11 @@ this:
 
 The thing that eventually gets encrypted is $X \| Y$, which is $n$
 bits long, where $n$ is the number of bits of $N$, the RSA modulus. It
-takes a random block $R$ that's $k$ bits long, a constant specified by
-the standard. The message is first padded with zeroes to be $n - k$
-bits long. If you look at the above "ladder", everything on the left
-half is $n - k$ bits long, and everything on the right half is $k$
-bits long. The random block $R$ and zero-padded message $M \|
+takes a random block $R$ that's $k$ bits long, where $k$ is a constant
+specified by the standard. The message is first padded with zeroes to
+be $n - k$ bits long. If you look at the above "ladder", everything on
+the left half is $n - k$ bits long, and everything on the right half
+is $k$ bits long. The random block $R$ and zero-padded message $M \|
 000\ldots$ are combined using two "trapdoor" functions, $G$ and $H$. A
 trapdoor function is a function that's very easy to compute in one
 direction and very hard to reverse. In practice, these are
@@ -2574,7 +2586,7 @@ ciphertext.
 
 To see how decryption works, we reverse all the steps. The recipient
 gets $X \| Y$ when decrypting the message. They know $k$, since it is a
-fixed parameter of the protocol. so they can split up $X \| Y$ into
+fixed parameter of the protocol, so they can split up $X \| Y$ into
 $X$ (the first $n$ bits) and $Y$ (the first $n - k$ bits).
 
 In the previous diagram, the directions are for padding being applied.
