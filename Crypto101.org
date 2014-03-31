@@ -2886,7 +2886,8 @@ In many systems, the attacker can actually make fairly educated
 guesses about the length of $M_1$, though. As an example, consider
 the common (broken) example of a secret-prefix authentication code.
 People send messages $M_i$, authenticated using $A_i = H(S \| M_i)$,
-where $S$ is a shared secret.
+where $S$ is a shared secret. We'll see (and break) this MAC algorithm
+in a future section.
 
 It's very easy for the recipient to compute the same function, and
 verify the code is correct. Any change to the message $M_i$ will
