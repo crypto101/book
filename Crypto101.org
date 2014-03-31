@@ -3187,14 +3187,13 @@ the middle. Hopefully it convinces you that there is in fact a pretty
 good chance that an attacker can produce messages with valid tags that
 say something entirely different from what you intended.
 
-Prefix MACs, i.e., the construction $H(k \| m)$ for a MAC, 
-is actually secure in current (SHA-3-era) hash
-functions, such as Keccak and BLAKE(2). The specifications for these
-algorithms even recommend it as a secure and fast MAC. They use
-various techniques to foil length extension attacks: for example,
-BLAKE keeps track of the number of bits that have been hashed so far,
-while BLAKE2 has a finalization flag that marks a specific block as
-the last.
+The prefix-MAC construction is actually secure with many current
+(SHA-3-era) hash functions, such as Keccak and BLAKE(2). The
+specifications for these hash functions even recommend it as a secure
+and fast MAC. They use various techniques to foil length extension
+attacks: for example, BLAKE keeps track of the number of bits that
+have been hashed so far, while BLAKE2 has a finalization flag that
+marks a specific block as the last.
 
 **** Variants
 
@@ -3306,8 +3305,8 @@ important properties about the keys $a, b$:
 
 **** Re-using $a$ and $b$
 
-We'll illustrate that our example MAC is insecure if it is used to authenticate
-two messages $m_1, m_2$ with the same key $(a, b)$:
+We'll illustrate that our example MAC is insecure if it is used to
+authenticate two messages $m_1, m_2$ with the same key $(a, b)$:
 
 #+BEGIN_LATEX
   \begin{align*}
@@ -3514,17 +3513,16 @@ authentication code. It consists of three parts:
 
 Signature algorithms can be built using encryption algorithms. Using
 the private key, we produce a value based on the message, usually
-using a cryptographic hash function. Anyone can then use the public key to
-retrieve that value, compute what the value should be from the
+using a cryptographic hash function. Anyone can then use the public
+key to retrieve that value, compute what the value should be from the
 message, and compare the two to verify. The obvious difference between
-this and \gls{public-key encryption} is that the private key is used
-to produce the signature and the public one to retrieve the original,
-which is the opposite of how encryption and decryption work.
-# **HMM** encryption and decryption are not "usual(ly)" in contrast to signing, I'd say.
+this and \gls{public-key encryption} is that in signing, the private
+key is used to produce the message (in this case the signature) and
+the public key is used to interpret it, which is the opposite of how
+encryption and decryption work.
 
 The above explanation glosses over many important details. We'll
 discuss real schemes in more detail below.
-
 
 *** RSA-based signatures
 **** PKCS#1 v1.5
