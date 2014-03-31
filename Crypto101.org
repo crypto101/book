@@ -2689,7 +2689,8 @@ databases such as Cassandra.
 *** Remaining issues
 
 We've already illustrated that hash functions, by themselves, can't
-authenticate messages. Also, we've illustrated that hash functions
+authenticate messages, because everyone can compute them.
+Also, we've illustrated that hash functions
 can't be used to secure passwords. We'll tackle both of these
 problems in the following chapters.
 
