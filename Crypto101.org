@@ -3555,10 +3555,9 @@ of the message $m$:
 
 #+BEGIN_LATEX
 \[
-r = g^k \pmod q
+r = (g^k \pmod p) \pmod q
 \]
 #+END_LATEX
-# **HMM** I can only compare this with Wikipedia - there, it says that r = (g^k \pmod p) \pmod q
 
 #+BEGIN_LATEX
 \[
