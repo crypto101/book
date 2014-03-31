@@ -4071,11 +4071,8 @@ attacker perceives" is necessary in a good definition!
 TODO: explain synchronous stream ciphers as CSPRNGs
 
 # **HMM** I'd suggest that the level-2 headers follow the three items in introduction - therefore I changed some header levels from here on.
-*** Cryptographically secure pseudorandom number generators
 
-# **HMM** Explain why Cryptographically secure pseudorandom number generators are different from "normal" ones; probably it suffices to point to the section on the Mersenne Twister.
-
-**** Yarrow
+*** Yarrow
 
 The Yarrow algorithm is a cryptographically secure pseudorandom number
 generator.
@@ -4087,12 +4084,12 @@ Mac OS X. On both of these operating systems, it's used to implement
 \verb|/dev/random|. Unlike on Linux, \verb|/dev/urandom| is just an
 alias for \verb|/dev/random|.
 
-**** Blum Blum Shub
+*** Blum Blum Shub
 
 TODO: explain this, and why it's good (provable), but why we don't use
 it (slow)
 
-**** =Dual_EC_DRBG=
+*** =Dual_EC_DRBG=
 
 =Dual_EC_DRBG= is a NIST standard for a cryptographically secure
 pseudorandom bit generator. It sparked a large amount of controversy:
@@ -4110,7 +4107,7 @@ fueling the suspicions further. This lead to an official
 recommendation from the standards body to stop using the standard,
 which was previously unheard of under such circumstances.
 
-***** Background
+**** Background
 
 For a long time, the official standards produced by NIST lacked good,
 modern cryptographically secure pseudorandom number generators. It had
@@ -4171,7 +4168,7 @@ Cryptographers later did the homework that NIST should have
 provided in the specification\cite{ecdrbg1}\cite{ecdrbg2}. Those
 analyses quickly highlighted a few issues.
 
-***** A quick overview of the algorithm
+**** A quick overview of the algorithm
 
 The algorithm consists of two parts:
 
@@ -4226,7 +4223,7 @@ as the new state $s$.
   \]
 #+END_LATEX
 
-***** Issues and question marks
+**** Issues and question marks
 
 First of all, $\phi$ is extremely simple: it just takes the
 $x$-coordinate of the curve point, and discards the $y$ coordinate.
@@ -4351,20 +4348,20 @@ There are two suggested ways of fixing this particular algorithm:
   there's only few values $d$ can have, the attacker can just perform
   the above attack for all values of $d$.
 
-***** Aftermath
+**** Aftermath
 
 TODO: Talk about RSA guy's comments + snowden leaks
 
-*** A standard pseudorandom number generator: Mersenne Twister
+*** Mersenne Twister
 
 Mersenne Twister is a very common pseudorandom number generator. It
 has many nice properties, such as high performance, a huge
 period[fn::The period of a pseudorandom number generator is how many
 random numbers it produces before the entire sequence repeats.] of
-$2^{19937} - 1 \approx 4 \cdot 10^{6001}$, and it passes all but the most demanding randomness
-tests. Despite all of these, it is /not/ cryptographically secure. To
-demonstrate this, we'll take a look at how the algorithm works.
-Fortunately, it's not very complex.
+$2^{19937} - 1 \approx 4 \cdot 10^{6001}$, and it passes all but the
+most demanding randomness tests. Despite all of these, it is /not/
+cryptographically secure. To demonstrate this, we'll take a look at
+how the algorithm works. Fortunately, it's not very complex.
 
 **** Internal structure
 
