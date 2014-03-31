@@ -4903,8 +4903,8 @@ seems like a trivial notational hack now, but the difference will
 become apparent once we start applying tricks for doing more complex
 modular computations, like multiplication and exponentiation.
 
-In the general case, we call two numbers are equivalent modulo some 
-modulus if dividing them by the modulus leaves the same remainder.
+In the general case, we call two numbers /equivalent modulo some 
+modulus/ if dividing them by the modulus leaves the same remainder.
 You can check this out with the examples above: $10 + 4 = 14$ leaves
 a remainder of 2 when divided by 12, and so does 2. For negative
 numbers, the remainder is always assumed to be the positive one,
