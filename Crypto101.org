@@ -2392,10 +2392,11 @@ sender intended to send.
 So far, we have only done \gls{secret-key encryption}. Suppose, that
 you could have a cryptosystem that didn't involve a single secret key,
 but instead had a key pair: one public key, which you freely
-distribute, and a private one, which you keep to yourself. This is
-called \gls{public-key encryption}. People can encrypt information to
-you by using your public key. The information is then impossible to
-decipher without your private key.
+distribute, and a private one, which you keep to yourself.
+
+People can encrypt information intended for you by using your public
+key. The information is then impossible to decipher without your
+private key. This is called \gls{public-key encryption}.
 
 For a long time, people thought this was impossible. However, starting
 in the 1970s, such algorithms started appearing. The first publicly
