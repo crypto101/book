@@ -3539,8 +3539,11 @@ TODO: intro (see #50)
 
 **** Parameter generation
 
-TODO: explain parameter generation and "per user keys" (see #51)
-# **HMM** ..., says Wikipedia - that's where the x and y come from which I didn't finde defined in the following formulas.
+TODO: explain parameter generation (see #51)
+
+**** Key generation
+
+TODO: explain key generation (#159)
 
 **** Signing a message
 
