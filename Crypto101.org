@@ -2193,7 +2193,7 @@ color itself. Everyone, including Eve, knows the base color.
 Then, Alice and Bob both send of their mixed colors over the network.
 Eve sees both mixed colors, but she can't figure out what either of
 Alice and Bob's /secret/ colors are. Even though she knows the base,
-she can't "un-mix" the colors sent over the network. [fn::While this
+she can't "un-mix" the colors sent over the network.[fn::While this
 might seem like an easy operation with black-and-white approximations
 of color mixing, keep in mind that this is just a failure of the
 illustration: our assumption was that this was hard.]
@@ -2222,12 +2222,17 @@ they'll both end up with the same secret.
 \dhmix{Bob}{AliceMixedSecret}{BobSecret}{SharedSecret}
 #+END_LATEX
 
-Eve can't perform that computation. She could using either secret,
-since she has both the mixed secrets, but she has neither.
+Eve can't perform that computation. She could finish the computation
+with either Alice or Bob's secret color, since she has both mixed
+colors, but she has neither of those secret colors. She can also try
+to mix the two mixed colors, which would have both Alice and Bob's
+secret colors mixed into them, but that would have the base color in
+it twice, resulting in a different color than the shared secret color
+that Alice and Bob computed, which only has the base color in it once.
 
 *** Diffie-Hellman with discrete logarithms
 
-This section describes a practical implementation of the abstract
+This section describes a practical implementation of the
 Diffie-Hellman algorithm, based on the discrete logarithm problem. It
 is intended to provide some mathematical background, and requires
 modular arithmetic to understand. If you are unfamiliar with modular
@@ -2293,7 +2298,7 @@ picks smooth values to produce weak secrets?
 
 *** Diffie-Hellman with elliptic curves
 
-This section describes a practical implementation of the abstract
+This section describes a practical implementation of the
 Diffie-Hellman algorithm, based on the elliptic curve discrete
 logarithm problem. It is intended to provide some mathematical
 background, and requires a (very basic) understanding of the
@@ -2306,22 +2311,25 @@ that the required key size is much, much smaller than the variant
 based on the discrete log problem. This is because the fastest
 algorithms for breaking the discrete log problem have a larger
 asymptotic complexity than their elliptic curve variants. For example,
-one of the fastest algorithms for attacking discrete log
-Diffie-Hellman, the function field sieve, has complexity:
+the number field sieve for discrete logarithms, a state of the art
+algorithm for for attacking discrete logarithm-based Diffie-Hellman,
+has time complexity:
 
 #+BEGIN_LATEX
   \[
-  O\left(\exp\left(\left(\frac{64}{9} \log n\right)^{\frac{1}{3}} (\log \log n)^{\frac{2}{3}}\right)\right)
+  L\left[1/3,\sqrt[3]{64/9}\right]
   \]
 #+END_LATEX
 
-On the other hand, the fastest algorithms that could be used to break
-the elliptic curve discrete log problem all have complexity:
+Which is more than polynomial (but less than exponential) in the
+number of digits. On the other hand, the fastest algorithms that could
+be used to break the elliptic curve discrete log problem all have
+complexity:
 
 #+BEGIN_LATEX
-\[
-O(\sqrt{n})
-\]
+  \[
+  L\left[1, 1/2\right] = O(\sqrt{n})
+  \]
 #+END_LATEX
 
 Relatively speaking, that means that it's much harder to solve the
@@ -2329,18 +2337,19 @@ elliptic curve problem than it is to solve the regular discrete log
 problem, using state of the art algorithms for both. The flip side of
 that is that for equivalent security levels, the elliptic curve
 algorithm needs much smaller key
-sizes\cite{rsa:keysizes}\cite{nist:keymanagement}[fn::These figures are
-actually for the RSA problem versus the equivalent EC problem, but
-their security levels are sufficiently close to give you an idea.]:
+sizes\cite{rsa:keysizes}\cite{nist:keymanagement}[fn::These figures
+are actually for the RSA problem versus the equivalent elliptic curve
+problem, but their security levels are sufficiently close to give you
+an idea.]:
 
-| Security level in bits | Discrete log key bits | ECC key bits |
-|------------------------+-----------------------+--------------|
-|                     56 |                   512 |          112 |
-|                     80 |                  1024 |          160 |
-|                    112 |                  2048 |          224 |
-|                    128 |                  3072 |          256 |
-|                    256 |                 15360 |          512 |
-|                        |                       |              |
+| Security level in bits | Discrete log key bits | Elliptic curve key bits |
+|------------------------+-----------------------+-------------------------|
+|                     56 |                   512 |                     112 |
+|                     80 |                  1024 |                     160 |
+|                    112 |                  2048 |                     224 |
+|                    128 |                  3072 |                     256 |
+|                    256 |                 15360 |                     512 |
+|                        |                       |                         |
 
 *** Remaining problems
 
