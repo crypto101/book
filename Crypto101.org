@@ -2481,6 +2481,11 @@ M \equiv C^d \pmod{N}
 \]
 #+END_LATEX
 
+On the other hand, someone who does not know $d$ cannot decrypt the 
+message. But, and that's the whole point, it is /virtually impossible
+to compute $d$ from $N$ and $e$ alone/. That's the reason why RSA was
+such a breakthrough in encryption.
+
 **** Breaking RSA
 
 Like many cryptosystems, RSA relies on the presumed difficulty of a
@@ -2532,12 +2537,14 @@ author's opinion, it has one major flaw. It has a module named
 =crypto=.
 
 Instead of reusing existing complete cryptosystems[fn::For a variety
+# **HMM** This footnote is not a sentence ("For a variety of reasons, which ... are secondary") and is horrible to parse (two nested dependent phrases, a present participle, "tenet" being a head-scratching word for many of us ... I don't understand what you want to tell us, and have the gut feeling that it's not worth the whole footnote, at least at this place?? Or, simply said, this footnote is too complex.
 of reasons, which, even if they were sensible, are secondary to the
 tenet of not implementing your own cryptography.], it implements its
 own, using RSA and AES provided by a third party package.
 
 For a long time, Salt used a public exponent of 1, which meant the
-encryption phase didn't actually do anything. While this issue has
+encryption phase didn't actually do anything: $M^1 = M$, of course,
+so the "encrypted" message was actually the plaintext. While this issue has
 now been fixed, this only goes to show once again that you probably
 shouldn't implement your own cryptography.
 
@@ -2554,7 +2561,8 @@ this:
 
 The thing that eventually gets encrypted is $X \| Y$, which is $n$
 bits long, where $n$ is the number of bits of $N$, the RSA modulus. It
-takes a random block $R$ that's $k$ bits long, a constant specified by
+takes a random block $R$ that's $k$ bits long, where $k$ is a constant specified by
+# **HMM** The relative clause "a constant ..." can also be tied to $R$, which would be wrong.
 the standard. The message is first padded with zeroes to be $n - k$
 bits long. If you look at the above "ladder", everything on the left
 half is $n - k$ bits long, and everything on the right half is $k$
@@ -2574,7 +2582,7 @@ ciphertext.
 
 To see how decryption works, we reverse all the steps. The recipient
 gets $X \| Y$ when decrypting the message. They know $k$, since it is a
-fixed parameter of the protocol. so they can split up $X \| Y$ into
+fixed parameter of the protocol, so they can split up $X \| Y$ into
 $X$ (the first $n$ bits) and $Y$ (the first $n - k$ bits).
 
 In the previous diagram, the directions are for padding being applied.
