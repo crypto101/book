@@ -3266,7 +3266,7 @@ retrieve that value, compute what the value should be from the
 message, and compare the two to verify. The obvious difference between
 this and \gls{public-key encryption} is that the private key is used
 to produce the signature and the public one to retrieve the original,
-which is the opposite of how it encryption and decryption work.
+which is the opposite of how encryption and decryption work.
 # **HMM** encryption and decryption are not "usual(ly)" in contrast to signing, I'd say.
 
 The above explanation glosses over many important details. We'll
