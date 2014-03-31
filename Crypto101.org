@@ -2422,11 +2422,14 @@ of public-key algorithms:
 
 *** Why not use public-key encryption for everything?
 
-At face value, it seems that the existence of
-\gls{public-key encryption} algorithms obsoletes all our previous
-\gls{secret-key encryption} algorithms. We could just use public
-key encryption for everything, avoiding all the added complexity
-of having to do key agreement for our symmetric algorithms.
+At face value, it seems that \gls{public-key encryption} algorithms
+obsolete all our previous \gls{secret-key encryption} algorithms. We
+could just use public key encryption for everything, avoiding all the
+added complexity of having to do key agreement for our symmetric
+algorithms. However, when we look at practical cryptosystems, we see
+that they're almost always /hybrid/ cryptosystems: while public-key
+algorithms play a very important role, the bulk of the encryption and
+authentication work is done by secret-key algorithms.
 
 By far the most important reason for this is performance. Compared to
 our speedy stream ciphers (native or otherwise), public-key encryption
@@ -2435,10 +2438,11 @@ mechanisms are extremely slow. A single 2048-bit RSA encryption takes
 \cite{cryptopp:bench} To put this into comparison, symmetric key
 algorithms work in order of magnitude 10 or so cycles per byte in
 either direction. In order to encrypt or decrypt 2048 bytes, that
-means approximately 20 kilocycles. The state of the art in secure
-symmetric ciphers is even faster: AES-GCM with hardware acceleration
-or Salsa20/ChaCha20 only need about 2 to 4 cycles per byte, making the
-difference even larger.
+means approximately 20 kilocycles, which is about 500 times faster
+than the asymmetric version. The state of the art in secure symmetric
+ciphers is even faster: AES-GCM with hardware acceleration or
+Salsa20/ChaCha20 only need about 2 to 4 cycles per byte, further
+widening the performance gap.
 
 There are a few other problems with most practical cryptosystems. For
 example, RSA can't encrypt anything larger than its modulus, which is
