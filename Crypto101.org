@@ -3039,15 +3039,18 @@ and instead use the less ambiguous "plaintext" and "ciphertext".
 
 There are three common ways to combine a ciphertext with a MAC.
 
-1. Authenticate and encrypt. You authenticate the plaintext, encrypt
-   the plaintext, and concatenate the two. This is how SSH does it. In
-   symbols: $E(K_{C}, P) \| MAC(K_{M}, P)$.
-2. Authenticate, then encrypt. You take the plaintext, concatenate the
-   MAC of the plaintext, and encrypt the whole. This is how TLS does
-   it (usually): $E(K_C, P \| MAC(K_M, P))$.
+1. Authenticate and encrypt. You authenticate and encrypt the
+   plaintext separately. This is how SSH does it. In symbols: $C =
+   E(K_C, P)$, $t = MAC(K_M, P)$, and you send both ciphertext $C$ and
+   tag $t$.
+2. Authenticate, then encrypt. You authenticate the plaintext and then
+   encrypt the combination of the plaintext and the authentication
+   tag. This is how TLS usually does it. In symbols: $t = MAC(K_M,
+   P)$, $C = E(K_C, P \| t)$, and you only send $C$. (You don't need
+   to send $t$, because it's already an encrypted part of $C$.)
 3. Encrypt, then authenticate. You encrypt the plaintext, compute the
-   MAC of that ciphertext, and concatenate the two. This is how IPSec
-   does it: $E(K_C, P) \| MAC(K_M, E(K_C, P))$.
+   MAC of that ciphertext. This is how IPSec does it. In symbols: $C =
+   E(K_C, P)$, $t = MAC(K_M, C)$, and you send both $C$ and $t$.
 
 These were studied in depth in the landmark paper
 \cite{krawczyk:order}. Out of all of these, encrypt-then-authenticate
