@@ -2857,7 +2857,7 @@ used and abused.
 *** Length extension attacks
 
 In many hash functions, particularly the previous generations, the
-internal state kept by the hash function was used as the digest value.
+internal state kept by the hash function is used as the digest value.
 In some poorly engineered systems, that causes a critical flaw: if an
 attacker knows $H(M_1)$, it's very simple to compute $H(M_1 \| M_2)$,
 without actually knowing the value of $M_1$. Since you know $H(M_1)$,
