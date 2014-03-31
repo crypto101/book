@@ -3014,7 +3014,7 @@ Of course, this scheme is actually totally broken. Computing those
 hashes is something everyone can do. You're even relying on that fact
 for your user to be able to verify their download. That also means
 that an attacker that modified any of the downloads can just compute
-the hash again for the modified download, and save that value. A user
+the hash again for the modified download and save that value. A user
 downloading the modified file will compute its hash and compare it
 against the modified hash, and conclude that the download worked. The
 scheme provided no help whatsoever against an attacker modifying the
@@ -3036,17 +3036,17 @@ make it to the recipient. Since we're explictly talking about
 authenticating encryption, now, we'll stop using the word "message"
 and instead use the less ambiguous "plaintext" and "ciphertext".
 
-There's three common ways to combine a ciphertext with a MAC.
+There are three common ways to combine a ciphertext with a MAC.
 
 1. Authenticate and encrypt. You authenticate the plaintext, encrypt
    the plaintext, and concatenate the two. This is how SSH does it. In
    symbols: $E(K_{C}, P) \| MAC(K_{M}, P)$.
 2. Authenticate, then encrypt. You take the plaintext, concatenate the
    MAC of the plaintext, and encrypt the whole. This is how TLS does
-   it (usually). $E(K_C, P \| MAC(K_M, P))$.
+   it (usually): $E(K_C, P \| MAC(K_M, P))$.
 3. Encrypt, then authenticate. You encrypt the plaintext, compute the
    MAC of that ciphertext, and concatenate the two. This is how IPSec
-   does it. $E(K_C, P) \| MAC(K_M, E(K_C, P))$.
+   does it: $E(K_C, P) \| MAC(K_M, E(K_C, P))$.
 
 These were studied in depth in the landmark paper
 \cite{krawczyk:order}. Out of all of these, encrypt-then-authenticate
@@ -3126,7 +3126,7 @@ for most (cryptographically secure!) hash functions $H$, including
 SHA-2.
 
 As we saw in the chapter on hash functions, many hash functions such
-as MD5, SHA-0, SHA-1, SHA-2... all pad the message with a predictable
+as MD5, SHA-0, SHA-1, SHA-2 all pad the message with a predictable
 padding before producing the output digest. The output digest is the
 same thing as the internal state of the hash function. That's a
 problem: the attacker can use those properties to forge messages.
@@ -3137,7 +3137,7 @@ where $k$ is the secret key, $m$ is the message, and $p$ is that
 predictable padding. Now, the attacker gets the hash function to
 consume some new bytes: the attacker's chosen message $m^{\prime}$.
 The internal state of the hash function is now what you get when you
-feed it $k \| m \| p \| m^{\prime}$. The attacker tells the hash
+feed it $k \| m \| p \| m^{\prime}$. Then, the attacker tells the hash
 function to produce a digest. Again, the hash function appends a
 padding, so we're now at $k \| m \| p \| m^{\prime} \| p^{\prime}$.
 The attacker outputs that digest as the tag. That is /exactly/ the
@@ -3158,7 +3158,7 @@ problem. We may have proven that the MAC is insecure by our
 definition, but the only signatures the attacker can successfully
 forge are for modifications of messages that we sent and signed;
 specifically, the message we sent, followed by some binary junk,
-followed by something the attacker chooses. It turns out that for many
+followed by something the attacker chooses. However, it turns out that for many
 systems, this is plenty to result in real breaks. Consider the
 following Python code that parses a sequence of key-value pairs that
 look like ~k1=v1&k2=v2&...~:[fn::I realize there are briefer ways to
@@ -3180,14 +3180,15 @@ key (previous values in the dictionary are overwritten), an attacker
 can effectively control the parsed data entirely.
 
 If you're thinking that that code has many issues; sure, it does. For
-example, it doesn't handle escaping correctly. But even if it did;
+example, it doesn't handle escaping correctly. But even if it did,
 that wouldn't really fix the length extension attack problem. Most
 parsing functions will perfectly happily live with that binary junk in
 the middle. Hopefully it convinces you that there is in fact a pretty
 good chance that an attacker can produce messages with valid tags that
 say something entirely different from what you intended.
 
-This construction is actually secure in current (SHA-3-era) hash
+Prefix MACs, i.e., the construction $H(k \| m)$ for a MAC, 
+is actually secure in current (SHA-3-era) hash
 functions, such as Keccak and BLAKE(2). The specifications for these
 algorithms even recommend it as a secure and fast MAC. They use
 various techniques to foil length extension attacks: for example,
@@ -3240,14 +3241,14 @@ with the key before each pass. Visually, HMAC looks like this:
 
 The only surprising thing here perhaps are the two constants
 $p_{inner}$ (the inner padding, one hash function's block length worth
-of ~0x36~ bytes) and $p_outer$ (the outer padding, one block length
+of ~0x36~ bytes) and $p_{outer}$ (the outer padding, one block length
 worth of ~0x5x~ bytes). These are necessary for the security proof of
 HMAC to work; their particular values aren't very important, as long
 as the two constants are different.
 
 The two pads are XORed with the key before use. The result is either
-prepended to the original message (for the inner padding $p_i$) or the
-intermediate hash output (for the outer padding $p_o$). Because
+prepended to the original message (for the inner padding $p_{inner}$) or the
+intermediate hash output (for the outer padding $p_{outer}$). Because
 they're prepended, they can be computed ahead of time, shaving a few
 cycles off the MAC computation time.
 
@@ -3305,7 +3306,7 @@ important properties about the keys $a, b$:
 
 **** Re-using $a$ and $b$
 
-We'll illustrate that our example MAC is insecure if used to authenticate
+We'll illustrate that our example MAC is insecure if it is used to authenticate
 two messages $m_1, m_2$ with the same key $(a, b)$:
 
 #+BEGIN_LATEX
@@ -3455,7 +3456,7 @@ developed \glspl{AEAD mode}.
 
 As you can see, most of this scheme looks quite similar to [[ECB%20mode][ECB mode]].
 The name \gls{OCB} is quite similar to electronic codebook, as well.
-OCB does not share the security issues ECB mode has, of course; there
+OCB does not share the security issues ECB mode has, however, as there
 are several important differences, such as the offsets $\Delta_i$
 introduced in each individual block encryption. Additionally, there is
 an authentication tag $t$, built from $x$, a simple checksum over the
@@ -3513,12 +3514,13 @@ authentication code. It consists of three parts:
 
 Signature algorithms can be built using encryption algorithms. Using
 the private key, we produce a value based on the message, usually
-using a cryptographic hash function. Anyone can use the private key to
+using a cryptographic hash function. Anyone can then use the public key to
 retrieve that value, compute what the value should be from the
 message, and compare the two to verify. The obvious difference between
 this and \gls{public-key encryption} is that the private key is used
 to produce the signature and the public one to retrieve the original,
-which is the opposite of how it usually works.
+which is the opposite of how encryption and decryption work.
+# **HMM** encryption and decryption are not "usual(ly)" in contrast to signing, I'd say.
 
 The above explanation glosses over many important details. We'll
 discuss real schemes in more detail below.
@@ -3539,7 +3541,8 @@ TODO: intro (see #50)
 
 **** Parameter generation
 
-TODO: explain parameter generation (see #51)
+TODO: explain parameter generation and "per user keys" (see #51)
+# **HMM** ..., says Wikipedia - that's where the x and y come from which I didn't finde defined in the following formulas.
 
 **** Signing a message
 
@@ -3554,6 +3557,7 @@ of the message $m$:
 r = g^k \pmod q
 \]
 #+END_LATEX
+# **HMM** I can only compare this with Wikipedia - there, it says that r = (g^k \pmod p) \pmod q
 
 #+BEGIN_LATEX
 \[
@@ -3638,8 +3642,8 @@ s_2 = k^{-1} (H(m_2) + xr_2) \pmod q
 \]
 #+END_LATEX
 
-The attacker can simplify this further: $r_1$ and $r_2$ are equal.
-Following the definition:
+The attacker can simplify this further: $r_1$ and $r_2$ must be equal,
+following the definition:
 
 #+BEGIN_LATEX
 \[
@@ -3663,7 +3667,7 @@ s_1 - s_2 & = & k^{-1} (H(m_1) + xr) - k^{-1} (H(m_2) + xr) \pmod q \\
 \end{eqnarray*}
 #+END_LATEX
 
-Giving us the simple, direct solution for $k$:
+This gives us the simple, direct solution for $k$:
 
 #+BEGIN_LATEX
 \[
@@ -3794,8 +3798,8 @@ attacker could simply enumerate all possible values of the shared
 secret, since there are few possibilities, and then compute the key
 derivation function for all of them. As we've seen in that previous
 section on password storage, this is how most modern attacks on
-password stores work. Using an appropriate key derivation function,
-such as scrypt, would prevent these attacks. In this chapter, we'll
+password stores work. Using an appropriate key derivation function
+would prevent these attacks. In this chapter, we'll
 see scrypt, as well as other key derivation functions in this
 category.
 
@@ -3879,7 +3883,7 @@ entropy. There are also no provisions for making this phase
 computationally intensive. \cite{rfc5869}
 
 In some cases, it is possible to skip the extraction phase, if the
-shared secret already has all the right properties. For example, if it
+shared secret already has all the right properties, for example, if it
 is a pseudorandom string of sufficient length, and with sufficient
 entropy. However, sometimes this should not be done at all, for
 example when dealing with a Diffie-Hellman shared secret. The RFC goes
@@ -3934,7 +3938,7 @@ being used. Like the salt, it will cause the key derivation function
 to produce different values in different contexts, further increasing
 its security. For example, the info parameter may contain information
 about the user being dealt with, the part of the protocol the KDF is
-being executed for... \cite{rfc5869}
+being executed for or the like. \cite{rfc5869}
 
 ** Random number generators
 
@@ -3952,9 +3956,10 @@ assumed that they're available and waved our hands vigorously around
 those parts. In this chapter, we'll go more in depth about the
 importance and mechanics of random numbers in cryptographic systems.
 
-Producing random numbers is a fairly intricate process. What's worse,
-is that like so many cryptographic systems gone wrong, that to the
+Producing random numbers is a fairly intricate process. What's worse
+is that, like so many cryptographic systems gone wrong, to the
 untrained eye, getting it wrong looks exactly like getting it right.
+# **HMM** That was a syntactically "abusive" sentence - only after I put the commas right, I found that there was one "that" too much :)
 
 There are three categories of random number generation that we'll
 consider separately:
@@ -4065,7 +4070,12 @@ attacker perceives" is necessary in a good definition!
 
 TODO: explain synchronous stream ciphers as CSPRNGs
 
-*** Yarrow
+# **HMM** I'd suggest that the level-2 headers follow the three items in introduction - therefore I changed some header levels from here on.
+*** Cryptographically secure pseudorandom number generators
+
+# **HMM** Explain why Cryptographically secure pseudorandom number generators are different from "normal" ones; probably it suffices to point to the section on the Mersenne Twister.
+
+**** Yarrow
 
 The Yarrow algorithm is a cryptographically secure pseudorandom number
 generator.
@@ -4077,12 +4087,12 @@ Mac OS X. On both of these operating systems, it's used to implement
 \verb|/dev/random|. Unlike on Linux, \verb|/dev/urandom| is just an
 alias for \verb|/dev/random|.
 
-*** Blum Blum Shub
+**** Blum Blum Shub
 
 TODO: explain this, and why it's good (provable), but why we don't use
 it (slow)
 
-*** =Dual_EC_DRBG=
+**** =Dual_EC_DRBG=
 
 =Dual_EC_DRBG= is a NIST standard for a cryptographically secure
 pseudorandom bit generator. It sparked a large amount of controversy:
@@ -4100,7 +4110,7 @@ fueling the suspicions further. This lead to an official
 recommendation from the standards body to stop using the standard,
 which was previously unheard of under such circumstances.
 
-**** Background
+***** Background
 
 For a long time, the official standards produced by NIST lacked good,
 modern cryptographically secure pseudorandom number generators. It had
@@ -4144,7 +4154,7 @@ and has stood the test of time quite well since then. \gls{DES} came
 out two years later, and is now considered completely broken. MD4 and
 MD5 came out over a decade later, and are completely broken as well.
 
-The problem is though, that the standard didn't actually provide the
+The problem is, though, that the standard didn't actually provide the
 security proof. The standard specifies the generator but then merely
 suggests that it would be at least as hard as solving the elliptic
 curve discrete log problem. Blum Blum Shub, by contrast, has a proof
@@ -4157,11 +4167,11 @@ you'd use a pseudorandom number generator as slow as ~Dual_EC_DRBG~
 unless you had proof that you were getting something in return for the
 performance hit.
 
-Cryptographers then later did the homework that NIST should have
+Cryptographers later did the homework that NIST should have
 provided in the specification\cite{ecdrbg1}\cite{ecdrbg2}. Those
 analyses quickly highlighted a few issues.
 
-**** A quick overview of the algorithm
+***** A quick overview of the algorithm
 
 The algorithm consists of two parts:
 
@@ -4216,7 +4226,7 @@ as the new state $s$.
   \]
 #+END_LATEX
 
-**** Issues and question marks
+***** Issues and question marks
 
 First of all, $\phi$ is extremely simple: it just takes the
 $x$-coordinate of the curve point, and discards the $y$ coordinate.
@@ -4341,17 +4351,17 @@ There are two suggested ways of fixing this particular algorithm:
   there's only few values $d$ can have, the attacker can just perform
   the above attack for all values of $d$.
 
-**** Aftermath
+***** Aftermath
 
 TODO: Talk about RSA guy's comments + snowden leaks
 
-*** Mersenne Twister
+*** A standard pseudorandom number generator: Mersenne Twister
 
 Mersenne Twister is a very common pseudorandom number generator. It
 has many nice properties, such as high performance, a huge
 period[fn::The period of a pseudorandom number generator is how many
 random numbers it produces before the entire sequence repeats.] of
-$2^{19937} - 1$, and it passes all but the most demanding randomness
+$2^{19937} - 1 \approx 4 \cdot 10^{6001}$, and it passes all but the most demanding randomness
 tests. Despite all of these, it is /not/ cryptographically secure. To
 demonstrate this, we'll take a look at how the algorithm works.
 Fortunately, it's not very complex.
