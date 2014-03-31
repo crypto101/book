@@ -122,7 +122,7 @@ and some people helped with the original talk. In no particular order:
 
  - My wife, Ewa
  - Brian Warner
- - Oskar Zabik
+ - Oskar Żabik
  - Ian Cordasco
  - Zooko Wilcox-O'Hearn
  - Nathan Nguyen (@nathanhere)
@@ -5028,7 +5028,7 @@ a^{\phi(n) - 1} \equiv a^{-1} \pmod n
 #+END_LATEX
 
 That gives us a direct formula for computing $a^{-1}$. Unfortunately,
-thi is still generally less interesting than using the extended
+this is still generally less interesting than using the extended
 Euclidean algorithm, for two reasons:
 
 1. It requires computing the totient function, which is generally more
