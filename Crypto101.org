@@ -5134,7 +5134,6 @@ you can write the former in terms of the latter:
 3^{128} \bmod {19} = (3^{64} \bmod {19})^2 \pmod {19}
 \]
 #+END_LATEX
-# **HMM** Again: \equiv, as "prescribed"; or go with = even when there is (mod p) at the end?
 
 Let's compute all the powers of 3 we need. For sake of brevity, we
 won't write these out entirely, but remember that all tricks we've
