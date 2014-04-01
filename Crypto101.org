@@ -3488,15 +3488,18 @@ developed \glspl{AEAD mode}.
 
 \illustration{OCB/Encryption}[.7]
 
-As you can see, most of this scheme looks quite similar to [[ECB%20mode][ECB mode]].
+As you can see, most of this scheme looks quite similar to [[ECB mode][ECB mode]].
 The name \gls{OCB} is quite similar to electronic codebook, as well.
 OCB does not share the security issues ECB mode has, however, as there
 are several important differences, such as the offsets $\Delta_i$
-introduced in each individual block encryption. Additionally, there is
-an authentication tag $t$, built from $x$, a simple checksum over the
-plaintext as well as $t_a$, which authenticates the \gls{AEAD}
-associated data. That associated data tag $t_a$ is computed as
-follows:
+introduced in each individual block encryption.
+
+Being an AEAD mode, OCB mode provides a cryptographically secure
+authentication tag $t$, which is built from $X$, a very simple (not
+cryptographically secure by itself) checksum of the plaintext. There
+is also another, separate tag $t_a$, which authenticates the
+\gls{AEAD} associated data. That associated data tag $t_a$ is computed
+as follows:
 
 \illustration{OCB/Auth}[.5]
 
