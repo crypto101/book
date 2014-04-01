@@ -40,9 +40,8 @@ beginfig(1);
     drawarrow (2.5u, 2.5u) -- (2.5u, 1.25u) -- (2u + .25u * .5, .25u * .5 *sqrt(3)) dashed withdots scaled .5;
 
     drawarrow (2u, -.25u) -- (2u, -.75u);
-    label.bot(btex $t_Q$ etex, (2u, -.75u));
+    label.bot(btex $t_a$ etex, (2u, -.75u));
 
 endfig;
 
 end
-

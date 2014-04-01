@@ -3507,8 +3507,8 @@ This design has a number of interesting properties. For example, it is
 very fast: only requiring roughly one block cipher operation per
 encrypted or associate data block, as well as one additional block
 cipher operation for the final tag. The offsets ($\Delta_i$) are also
-extremely easy to compute. The checksum $x$ is just all of the
-plaintext blocks $p_i$ XOR'ed together. Finally, OCB mode is easy to
+extremely easy to compute. The checksum block $X$ is just all of the
+plaintext blocks $P_i$ XOR'ed together. Finally, OCB mode is easy to
 compute in parallel; only the final authentication tag is dependent on
 all the preceding information.
 

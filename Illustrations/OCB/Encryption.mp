@@ -40,7 +40,7 @@ beginfig(1);
 
     label.top(btex $X$ etex, (6u, 6u));
     label.lft(btex $\Delta_X$ etex, (5u, 5u));
-    label.lft(btex $t_Q$ etex, (5u, 1u));
+    label.lft(btex $t_a$ etex, (5u, 1u));
     label.bot(btex $t$ etex, (6u, 0));
 
     label(btex $\dots$ etex, (1.5u, 6u));
@@ -49,4 +49,3 @@ beginfig(1);
 endfig;
 
 end
-
