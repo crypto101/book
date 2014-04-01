@@ -3188,15 +3188,16 @@ together.
 
 This attack might sound a little academic, and far from a practical
 problem. We may have proven that the MAC is insecure by our
-definition, but the only signatures the attacker can successfully
-forge are for modifications of messages that we sent and signed;
-specifically, the message we sent, followed by some binary junk,
-followed by something the attacker chooses. However, it turns out that
-for many systems, this is plenty to result in real breaks. Consider
-the following Python code that parses a sequence of key-value pairs
-that look like ~k1=v1&k2=v2&...~:[fn::I realize there are briefer ways
-to write that function. I am trying to make it comprehensible to most
-programmers; not pleasing to advanced Pythonistas.]
+definition, but the only tags the attacker can successfully forge are
+for very limited modifications of real messages. Specifically, the
+attacker can only forge tags for a message that consists of a message
+we sent, followed by some binary junk, followed by something the
+attacker chooses. However, it turns out that for many systems, this is
+plenty to result in real breaks. Consider the following Python code
+that parses a sequence of key-value pairs that look like
+~k1=v1&k2=v2&...~:[fn::I realize there are briefer ways to write that
+function. I am trying to make it comprehensible to most programmers;
+not pleasing to advanced Pythonistas.]
 
 #+BEGIN_SRC python
   def parse(s):
