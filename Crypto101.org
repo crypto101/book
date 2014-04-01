@@ -3583,7 +3583,7 @@ TODO: explain key generation (#159)
 In order to sign a message, the signer picks a random $k$ between 0
 and $q$. Picking that $k$ turns out to be a fairly sensitive and
 involved process; but we'll go into more detail on that later. With
-$k$ chosen, They then compute the two parts of the signature $r, s$
+$k$ chosen, they then compute the two parts of the signature $r, s$
 of the message $m$:
 
 #+BEGIN_LATEX
