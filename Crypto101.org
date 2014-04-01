@@ -3704,7 +3704,7 @@ This gives us the simple, direct solution for $k$:
 
 #+BEGIN_LATEX
 \[
-k = \frac{H(m_1) - H(m_2)}{s_1 - s_2} \pmod q
+k = \left(H(m_1) - H(m_2)\right) \left(s_1 - s_2\right)^{-1} \pmod q
 \]
 #+END_LATEX
 
