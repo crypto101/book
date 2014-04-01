@@ -3403,12 +3403,17 @@ cipher, to protect that one-time tag:
   \]
 #+END_LATEX
 
-Keep in mind that while Carter-Wegman MACs take two distinct keys $k1$
-and $k2$, and that Carter-Wegman MACs are related to one-time MACs
-which also take two distinct keys, these keys are unrelated. The
+As the nonce's encryption is totally unpredictable, this will, in the
+eyes of an attacker, randomly flip the bits of the result of the
+one-time MAC. Therefore, no algebra whatsoever can exploit the
+re-use of $k_2$.
+
+Keep in mind that while Carter-Wegman MACs take two distinct keys $k_1$
+and $k_2$, and that Carter-Wegman MACs are related to one-time MACs
+which also take two distinct keys $a$ and $b$, these keys are unrelated. The
 Carter-Wegman MAC's $k_2$ is the only input here to the fast one-time
 MAC $O$. If that fast one-time MAC is our earlier example that takes
-two keys, that $k_2$ would have to get split up into those two keys.
+two keys $a$ and $b$, that $k_2$ would have to get split up into those two keys.
 
 You can tell how a Carter-Wegman MAC exploits the benefits of both
 kinds of MACs by considering the two terms of the equation separately.
