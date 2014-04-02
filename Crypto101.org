@@ -5139,17 +5139,17 @@ the principles of modular arithmetic using a clock.
 \end{figure}
 #+END_LATEX
 
-For simplicity's sake, our 12-hour clock only shows hours, not minutes
-or seconds. Unlike real clocks, the hour hand always shows an exact
+For simplicity's sake, our demonstration 12-hour clock only shows hours, not minutes
+or seconds. And also unlike real clocks, the hour hand always shows an exact
 hour, such as 2 or 9, and is never halfway in between two hours.
 
 *** Addition and subtraction<<Modular addition>><<Modular subtraction>>
 
-It obviously makes sense to add hours to our clock: if it's 2 o'clock
+It obviously makes sense to add hours on our clock: if it's 2 o'clock
 now, and you'd like to know what time it is five hours from now, you
 can add 5, and end up with 7, as you can see in figure
 \ref{fig:Clock2Plus5} on page \pageref{fig:Clock2Plus5}.
-
+ 
 #+BEGIN_LATEX
 \begin{figure}[ht!]
 \centering
@@ -5160,7 +5160,7 @@ can add 5, and end up with 7, as you can see in figure
 #+END_LATEX
 
 Similarly, we can subtract times. If it's 10 o'clock now, and you'd
-like to know what time it was two hours ago, you subtract two and end
+like to know what time it was two hours ago, you subtract 2 and end
 up with 8.
 
 #+BEGIN_LATEX
@@ -5192,8 +5192,8 @@ modulus, in this case, is 12. We can write the above equations as:
 In these equations, the $\bmod$ is an operator, giving the remainder
 after division. When we are dealing with modular arithmetic, where all
 operations are affected by the modulus instead of a simple single
-operation, we'll write $\negthickspace\pmod{12}$ at the end of the
-equation:
+operation, we'll instead write $\negthickspace\pmod{12}$ at the end of the
+equation and use an $\equiv$ sign instead of an equals sign ($=$):
 
 #+BEGIN_LATEX
 \[
@@ -5209,6 +5209,14 @@ and "two minus five is equivalent to nine, modulo twelve". That might
 seems like a trivial notational hack now, but the difference will
 become apparent once we start applying tricks for doing more complex
 modular computations, like multiplication and exponentiation.
+
+In general, we call two numbers /equivalent modulo some 
+modulus/ if dividing them by the modulus leaves the same remainder.
+You can check this out with the examples above: $10 + 4 = 14$ leaves
+a remainder of 2 when divided by 12, and so does 2. For negative
+numbers, the remainder is always assumed to be the positive one,
+therefore $2 - 5 = -3$ leaves a remainder of $+9$, as the next lower
+multiple of 12 is $-12$, which is 9 below $-3$.
 
 *** Prime numbers
 
@@ -5242,6 +5250,16 @@ three times, and three in it twice:
 #+END_LATEX
 
 The factorization of any prime number is just that prime number itself.
+As a side note, it may be worth mentioning that 1 is not supposed to be
+a prime number, even though it is only divisible by 1 and itself (1 again).
+The reason is that by this convention, the factorization of any number
+is unique. Otherwise, 4 could be factored not only as 
+$2 \cdot 2$, but also as $2 \cdot 2 \cdot 1$, $2 \cdot 2 \cdot 1 \cdot 1$, 
+etc. The uniqueness of factorization helps in some important proofs in
+number theory.
+
+Also, as a fun fact, 0 is /not/ a prime number, as it is divisible
+by many numbers---in fact, by all numbers except 0.
 
 Two numbers are called coprime when their greatest common divisor is
 1, or, to put it in another way, they don't share any prime factors.
@@ -5270,7 +5288,8 @@ Division is defined as the inverse of multiplication. So, $a \cdot b
 \equiv c \pmod m$, then $\frac{c}{b} \equiv a \pmod m$.
 
 For example, $5 \cdot 6 \equiv 2 \pmod 7$; so: $\frac{2}{6} \equiv 5
-\pmod 7$.
+\pmod 7$. This is because $5 \cdot 6 = 30$, which leaves a remainder of
+2 when divided by 7; so does 2, of course. 
 
 Usually, instead of using division directly, we'll multiply using
 something called a modular inverse. The modular inverse of $a$ is a
@@ -5300,10 +5319,13 @@ a^{\phi(n)} \equiv 1 \pmod n
 \]
 #+END_LATEX
 
-In that equation, $\phi$ is Euler's totient function, which counts the
-amount of numbers that are coprime to its argument.
+In that equation, $\phi$ is Euler's "totient function", which counts the
+amount of numbers that are coprime to its argument. As an example,
+the totient of 10 is 4, as 1, 3, 7, and 9 do not have common prime factors
+with 10.
 
-Multiplying both sides by $a^{-1}$, $a$'s multiplicative inverse, we
+Here is how the totient is used to find $a^{-1}$.
+Multiplying both sides of Euler's theorem by $a^{-1}$, we
 get:
 
 #+BEGIN_LATEX
@@ -5313,7 +5335,7 @@ a^{\phi(n) - 1} \equiv a^{-1} \pmod n
 #+END_LATEX
 
 That gives us a direct formula for computing $a^{-1}$. Unfortunately,
-it's still generally less interesting than using the extended
+this is still generally less interesting than using the extended
 Euclidean algorithm, for two reasons:
 
 1. It requires computing the totient function, which is generally more
@@ -5322,15 +5344,17 @@ Euclidean algorithm, for two reasons:
 2. Modular exponentiation is computationally expensive.
 
 One exception to that rule is for prime moduli. Since a prime is
-coprime to every other number, and , since there are $p - 1$ numbers
+coprime to every other number, and since there are $p - 1$ numbers
 smaller than $p$, $\phi(p) = p - 1$. So, for a prime modulus, the
-modular inverse of $a$ is:
+modular inverse of $a$ is simply:
 
 #+BEGIN_LATEX
 \[
-a^{\phi(n) - 1} \equiv a^{-1} \pmod n
+a^{-1} \equiv a^{\phi(p) - 1} \equiv a^{p - 2} \pmod p
 \]
 #+END_LATEX
+
+How this is done efficiently is explained in the next section.
 
 *** Exponentiation
 
