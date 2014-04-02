@@ -3403,17 +3403,21 @@ cipher, to protect that one-time tag:
   \]
 #+END_LATEX
 
-As the nonce's encryption is totally unpredictable, this will, in the
-eyes of an attacker, randomly flip the bits of the result of the
-one-time MAC. Therefore, no algebra whatsoever can exploit the
-re-use of $k_2$.
+As long as $F$ is a secure pseudorandom function, the nonce's
+encryption is totally unpredictable. In the eyes of an attacker, that
+means the XOR operation will randomly flip the bits of the one-time
+MAC tag $O(k_2, M)$. Because this masks the real value of the one-time
+MAC tag, the attacker can not perform the algebraic tricks we saw for
+one-time MACs recovering the key when it is used more than once.
 
-Keep in mind that while Carter-Wegman MACs take two distinct keys $k_1$
-and $k_2$, and that Carter-Wegman MACs are related to one-time MACs
-which also take two distinct keys $a$ and $b$, these keys are unrelated. The
-Carter-Wegman MAC's $k_2$ is the only input here to the fast one-time
-MAC $O$. If that fast one-time MAC is our earlier example that takes
-two keys $a$ and $b$, that $k_2$ would have to get split up into those two keys.
+Keep in mind that while Carter-Wegman MACs take two distinct keys
+$k_1$ and $k_2$, and that Carter-Wegman MACs are related to one-time
+MACs, some of which also take two distinct keys $a$ and $b$, they are
+not the same two keys. The Carter-Wegman MAC's $k_2$ is the only key
+passed to the fast one-time MAC $O$. If that fast one-time MAC is our
+earlier example that takes two keys $a$ and $b$, that $k_2$ would have
+to get split up into those two keys. The Carter-Wegman MAC key would
+then be $(k_1, k_2) = (k_1, (a, b))$.
 
 You can tell how a Carter-Wegman MAC exploits the benefits of both
 kinds of MACs by considering the two terms of the equation separately.
