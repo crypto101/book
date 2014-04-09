@@ -1925,7 +1925,7 @@ for the 8-round version, on modern Intel processors
 \cite{salsa20:speed} and modern AMD processors \cite{cryptopp:bench}.
 ChaCha is (on most platforms) slightly faster still. To put that into
 comparison, that's more than three times faster than RC4[fn::The
-quoted bencmarks don't mention RC4 but MARC4, which stands for
+quoted benchmarks don't mention RC4 but MARC4, which stands for
 "modified alleged RC4". The RC4 section explains why it's "alleged",
 and "modified" means it throws away the first 256 bytes because of a
 weakness in RC4.], approximately three times faster than AES-CTR with
@@ -3061,7 +3061,7 @@ attacker can do. Only someone who has the secret keys can do that.
 
 As we've mentioned before, unauthenticated encryption is bad. That's
 why we introduced MACs. Of course, for a MAC to be useful, it has to
-make it to the recipient. Since we're explictly talking about
+make it to the recipient. Since we're explicitly talking about
 authenticating encryption, now, we'll stop using the word "message"
 and instead use the less ambiguous "plaintext" and "ciphertext".
 
@@ -4577,7 +4577,7 @@ Remember that for cryptographic security, it has to be impossible to
 predict future outputs or recover past outputs given present outputs.
 The Mersenne Twister doesn't have that property.
 
-It's clear that psuedorandom number generators, both those
+It's clear that pseudorandom number generators, both those
 cryptographically secure and those that aren't, are entirely defined
 by their internal state. After all, they are deterministic algorithms:
 they're just trying very hard to pretend not to be. Therefore, you
