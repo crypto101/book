@@ -54,7 +54,7 @@ numeric sketch_amount; sketch_amount := 3bp;
 %D \type{expr} ... \type{text} trick is copied from the definition of 
 %D \type{drawarrow}
 def sketchdraw expr p =
-    do_sketchdraw(p if (path p): randomized sketch_amount fi)
+  do_sketchdraw(p if (path p): randomized sketch_amount fi)
 enddef;
 
 def do_sketchdraw(expr p) text t =
@@ -70,7 +70,7 @@ def do_sketchfill(expr p) text t =
     normalfill p t ;
 enddef ;
 
-%endinput;
+endinput;
 
 % Modified example from
 % http://tex.loria.fr/prod-graph/zoonekynd/metapost/metapost.html

@@ -1,11 +1,6 @@
-prologues := 3;
-if scantokens(mpversion) > 1.005:
-  outputtemplate :=
-else:
-  filenametemplate
-fi
-"%j.mps";
-
+input ../mp-sketch;
+input ../crfuncs;
+input TEX;
 
 % define two pens for every illustration -- bookpen for lines & boxes,
 % bookdotpen for circuit-style connector dots
@@ -18,12 +13,12 @@ bookdotpen := (pencircle scaled 5pt);
 linecap := butt;
 linejoin := rounded;
 
-input ../mp-sketch;
-input ../crfuncs;
-input TEX;
-
-% set to 0 to disable the hand-drawn feeling
+% set to 0 to disable the hand-drawn feeling ...
 sketch_amount := 2.25pt;
 
 pickup bookpen;
+% ... or comment out the line beneath.
 sketchypaths;
+
+
+outputformat := "eps";
