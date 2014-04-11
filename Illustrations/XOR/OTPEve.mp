@@ -7,6 +7,7 @@ u := 1cm;
 
 
 beginfig(1);
+    pickup bookpen;
     numeric r;
     numeric d;
     4r = u;
@@ -24,9 +25,9 @@ beginfig(1);
     drawarrow (u, d + r) -- (u, r);
     drawarrow (3u, d + r) -- (3u, r);
 
-    pickup pencircle scaled .5r;
+    pickup bookdotpen;
     drawdot 1/2[z1, z2];
-    pickup defaultpen;
+    pickup bookpen;
 
     z3 = 1/2[z1, z2] shifted (0, -u);
     drawarrow 1/2[z1, z2] -- z3;

@@ -6,6 +6,7 @@ numeric u;
 u := 1cm;
 
 beginfig(1);
+    pickup bookpen;
     %blocks
     draw unitsquare xscaled 3u yscaled u;
     draw unitsquare xscaled 5u yscaled u shifted (5.25u, 0);

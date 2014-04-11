@@ -6,6 +6,7 @@ numeric u;
 u := 1cm;
 
 beginfig(1);
+    pickup bookpen;
     % symbols and boxes
     oplus(1.5u, 2u, .5u);
     oplus(4.5u, 2u, .5u);
@@ -13,11 +14,11 @@ beginfig(1);
     draw unitsquare scaled u shifted ( u, 4u);
     draw unitsquare scaled u shifted (4u, 4u);
 
-    pickup pencircle scaled 4pt;
+    pickup bookdotpen;
 
     drawdot (1.5u, 5.5u);
 
-    pickup defaultpen;
+    pickup bookpen;
 
     % wiring
     %  key input

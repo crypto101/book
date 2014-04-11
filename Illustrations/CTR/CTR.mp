@@ -6,6 +6,7 @@ numeric u;
 u := 1cm;
 
 beginfig(1);
+    pickup bookpen;
     % symbols and boxes
     oplus(3u, 0, .5u);
 

@@ -6,6 +6,7 @@ numeric u;
 u := 1cm;
 
 beginfig(1);
+    pickup bookpen;
     draw unitsquare scaled u shifted (u, -.5u);
     draw unitsquare scaled u shifted (3u, -.5u);
 

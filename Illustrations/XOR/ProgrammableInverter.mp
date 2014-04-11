@@ -7,6 +7,7 @@ u := 1cm;
 
 %%% IEC-style inverter
 beginfig(1);
+    pickup bookpen;
     draw origin -- (u, 0);
     draw unitsquare xscaled u yscaled 2u shifted(u, -u);
     label.bot(btex $1$ etex, (1.5u, u));
@@ -22,6 +23,7 @@ endfig;
 
 %%% traditional inverter
 beginfig(2);
+    pickup bookpen;
     numeric a;
     numeric h;
 
