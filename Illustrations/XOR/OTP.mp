@@ -7,6 +7,7 @@ u := 1cm;
 
 
 beginfig(1);
+    pickup bookpen;
     numeric r;
     numeric d;
     4r = u;

@@ -6,6 +6,7 @@ numeric u;
 u := 1cm;
 
 beginfig(1);
+    pickup bookpen;
     %vertical chain
     draw unitsquare scaled u shifted (3u, 7u);
     draw unitsquare scaled u shifted (3u, 5u);

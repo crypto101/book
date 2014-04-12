@@ -6,6 +6,7 @@ numeric u;
 u := 1cm;
 
 beginfig(1);
+    pickup bookpen;
     %S
     draw unitsquare xscaled 2u yscaled u shifted (0, 3.5u);
     draw unitsquare scaled u shifted (3u, 3.5u);
@@ -29,7 +30,7 @@ beginfig(1);
     label.bot(btex $254$ etex, (7.5u, 3.5u));
     label.bot(btex $255$ etex, (8.5u, 3.5u));
 
-    pickup pencircle scaled 4pt;
+    pickup bookdotpen;
     drawdot (3.5u, 4u);
     drawdot (5.5u, 4u);
 endfig;

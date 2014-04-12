@@ -6,6 +6,7 @@ numeric u;
 u := 1cm;
 
 beginfig(1);
+    pickup bookpen;
     draw unitsquare scaled u shifted (1u, 1.5u);
     draw unitsquare scaled u shifted (5u, 1.5u);
 
@@ -36,7 +37,7 @@ beginfig(1);
     label(btex $C$ etex, (1.5u, 2u));
     label(btex $C$ etex, (5.5u, 2u));
 
-    pickup pencircle scaled 4pt;
+    pickup bookdotpen;
 
     drawdot z1;
 endfig;

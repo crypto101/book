@@ -6,6 +6,7 @@ numeric u;
 u := 1cm;
 
 beginfig(1);
+    pickup bookpen;
     % first lr
     drawarrow origin -- origin shifted (.75u, 0);
     label.lft(btex $P_i$ etex, origin);
