@@ -77,9 +77,9 @@ obvious that that approach is doing more harm than good. We can no
 longer afford to keep the two worlds strictly separate. We must join
 them into one world where all programmers are educated in the basic
 underpinnings of information security, so that they can work together
-together with information security professionals to produce more
-secure software systems for everyone. That does not make people such
-as penetration testers and security researchers obsolete or less
+with information security professionals to produce more secure
+software systems for everyone. That does not make people such as
+penetration testers and security researchers obsolete or less
 valuable; quite the opposite, in fact. By sensitizing all programmers
 to security concerns, the need for professional security audits will
 become more apparent, not less.
