@@ -16,7 +16,7 @@
 %D
 %D \starttyping
 %D    input mp-sketch;
-%D    
+%D
 %D    beginfig(1)
 %D      sketchypaths; % Make draw and fill sketchy
 %D      ...
@@ -50,8 +50,8 @@ fi
 %D drawing
 numeric sketch_amount; sketch_amount := 3bp;
 
-%D The macro \type{sketchdraw} randomized the path before drawing it. The 
-%D \type{expr} ... \type{text} trick is copied from the definition of 
+%D The macro \type{sketchdraw} randomized the path before drawing it. The
+%D \type{expr} ... \type{text} trick is copied from the definition of
 %D \type{drawarrow}
 def sketchdraw expr p =
   do_sketchdraw(p if (path p): randomized sketch_amount fi)
