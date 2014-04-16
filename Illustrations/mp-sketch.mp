@@ -48,7 +48,7 @@ fi
 
 %D The variable \type{sketch_amount} determines the amount of randomness in the
 %D drawing
-numeric sketch_amount; sketch_amount := 3bp;
+numeric sketch_amount; sketch_amount := 2bp;
 
 %D The macro \type{sketchdraw} randomized the path before drawing it. The
 %D \type{expr} ... \type{text} trick is copied from the definition of
