@@ -916,8 +916,10 @@ You can see why the concept of an oracle is important here: the
 attacker would not be able to compute $C$ themselves, since they do
 not have access to the encryption key $k$ or the secret suffix $S$.
 The goal of the oracle is for those values to remain secret, but we'll
-see how an attacker can recover $S$ by inspecting the ciphertext $C$
-for many carefully chosen values of the prefix $A$.
+see how an attacker will be able to recover the secret suffix $S$ (but
+not the key $k$) anyway. The attacker does this by inspecting the
+ciphertext $C$ for many carefully chosen values of the attacker-chosen
+prefix $A$.
 
 Assuming that an attacker would have access to such an oracle might
 seem like a very artificial scenario. It turns out that in practice, a
