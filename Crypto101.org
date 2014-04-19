@@ -910,6 +910,8 @@ C = ECB(E_k, A \| S)
 \]
 #+END_LATEX
 
+The attacker's goal is to decrypt the secret suffix $S$.
+
 You can see why the concept of an oracle is important here: the
 attacker would not be able to compute $C$ themselves, since they do
 not have access to the encryption key $k$ or the secret suffix $S$.
