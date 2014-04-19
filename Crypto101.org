@@ -973,12 +973,12 @@ blocks match:
 \illustration{ECBEncryptionOracle/GuessSecond}
 #+END_LATEX
 
-The attacker can rinse and repeat, eventually decrypting an entire
-block. This allows them to brute-force a block in $p \cdot b$
+The attacker can then rinse and repeat, eventually decrypting an
+entire block. This allows them to brute-force a block in $p \cdot b$
 attempts, where $p$ is the number of possible values for each byte
 (so, for 8-bit bytes, that's $2^8 = 256$) and $b$ is the block size.
-Normally, they'd have to try all of the possible combinations, which
-would be:
+This is much better than a regular brute-force attack, where an
+attacker has to try all of the possible blocks, which would be:
 
 #+BEGIN_LATEX
 \[
