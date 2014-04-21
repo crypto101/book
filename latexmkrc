@@ -1,5 +1,5 @@
-$latex = 'xelatex --shell-escape';
-$pdflatex = 'xelatex --shell-escape';
+$latex = 'lualatex --shell-escape';
+$pdflatex = 'lualatex --shell-escape';
 
 add_cus_dep('glo', 'gls', 0, 'run_makeglossaries');
 add_cus_dep('acn', 'acr', 0, 'run_makeglossaries');
