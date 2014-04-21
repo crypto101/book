@@ -14,7 +14,7 @@ linecap := butt;
 linejoin := rounded;
 
 % set to 0 to disable the hand-drawn feeling ...
-sketch_amount := 2.25pt;
+sketch_amount := 1.8pt;
 
 pickup bookpen;
 % ... or comment out the line beneath.
