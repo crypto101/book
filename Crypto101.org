@@ -2550,12 +2550,10 @@ Salt[fn::So, there's Salt the provisioning system, salts the things
 used in broken password stores, NaCl pronounced "salt" the
 cryptography library, and NaCl which runs native code in some
 browsers, and probably a bunch I'm forgetting. Can we stop naming
-things after it?] is a provisioning system written in Python. In the
-author's opinion, it has one major flaw. It has a module named
-=crypto=.
-
-Instead of reusing existing complete cryptosystems, it implements its
-own, using RSA and AES provided by a third party package.
+things after it?] is a provisioning system written in Python. It has
+one major flaw: it has a module named =crypt=. Instead of reusing
+existing complete cryptosystems, it implements its own, using RSA and
+AES provided by a third party package.
 
 For a long time, Salt used a public exponent ($e$) of 1, which meant
 the encryption phase didn't actually do anything: $P^e \equiv P^1
