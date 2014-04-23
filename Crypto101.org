@@ -1398,10 +1398,7 @@ happens to already have valid padding, the attacker can simply skip
 the next step.
 
 #+BEGIN_LATEX
-\begin{figure}[ht!]
-\centering
-\includegraphics[width=.8\linewidth]{./Illustrations/CBC/PaddingAttack.pdf}
-\end{figure}
+\illustration{CBC/PaddingAttack}[.6]
 #+END_LATEX
 
 Next, the attacker tries to modify the message so that it does have
