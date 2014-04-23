@@ -268,7 +268,9 @@ also have the pad of random bits, shared between the sender and the
 (one or more) recipients. We can compute the ciphertext by taking the
 bitwise XOR of the two sequences of bits.
 
-[[./Illustrations/XOR/OTP.pdf]]
+#+BEGIN_LATEX
+\illustration{XOR/OTP}
+#+END_LATEX
 
 If an attacker sees the ciphertext, we can prove that they will learn
 zero information about the plaintext without the key. This property is
@@ -276,7 +278,9 @@ called /perfect security/. The proof can be understood intuitively by
 thinking of XOR as a programmable inverter, and then looking at a
 particular bit intercepted by Eve, the eavesdropper.
 
-[[./Illustrations/XOR/OTPEve.pdf]]
+#+BEGIN_LATEX
+\illustration{XOR/OTPEve}
+#+END_LATEX
 
 Let's say Eve sees that a particular ciphertext bit $c_i$ is 1. She
 has no idea if the matching plaintext bit $p_i$ was 0 or 1, because
@@ -550,7 +554,9 @@ P = D(k, C)
 
 Or, in blocks:
 
-[[./Illustrations/BlockCipher/BlockCipher.pdf]]
+#+BEGIN_LATEX
+\illustration{BlockCipher/BlockCipher}
+#+END_LATEX
 
 Block ciphers are an example of a \gls{symmetric-key encryption}
 scheme, also known as a \gls{secret-key encryption} scheme. This means
