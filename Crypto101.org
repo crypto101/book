@@ -155,7 +155,7 @@ colloquially called "flipping" bits, a term we'll use often throughout
 the book.
 
 #+BEGIN_LATEX
-\illustration{XOR/ProgrammableInverter}
+\illustration{XOR/ProgrammableInverter}[0.4]
 #+END_LATEX
 
 In mathematics and cryptography papers, exclusive or is generally
@@ -163,7 +163,7 @@ represented by a cross in a circle: $\xor$. We'll use the same
 notation in this book:
 
 #+BEGIN_LATEX
-\illustration{XOR/XOR}
+\illustration{XOR/XOR}[0.4]
 #+END_LATEX
 
 The inputs and output here are named as if we're using XOR as an
