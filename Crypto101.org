@@ -1655,8 +1655,8 @@ desktop and mobile devices is RC4.
 
 RC4 is sometimes also called ARCFOUR or ARC4, which stands for
 /alleged/ RC4. While its source code has been leaked and its
-implementation is now well-known, RSA Security, where RC4 originated
-and who still hold the trademark on the name, has never acknowledged
+implementation is now well-known, RSA Security (the company that
+authored RC4 and still holds the RC4 trademark) has never acknowledged
 that it is the real algorithm.
 
 It quickly became popular because it's very simple and very fast. It's
@@ -1822,10 +1822,11 @@ large amount of messages (around $2^{24}$ to $2^{26}$, or tens of
 millions of messages).
 
 WEP, a standard for protecting wireless networks that was popular at
-the time, was heavily affected by this attack, since it used this
+the time, was heavily affected by this attack, because it used this
 simplistic nonce combination scheme. A scheme where the long-term key
-and the nonce are combined using a cryptographic hash function
-wouldn't have this weakness; TLS and other standards were therefore
+and the nonce had been securely combined (for example using a key
+derivation function or a cryptographic hash function) wouldn't have
+had this weakness. Many other standards including TLS were therefore
 not affected.
 
 Again, attacks only get better. Andreas Klein showed more extensive
@@ -1836,13 +1837,15 @@ messages to make the attack practical. This was applied against WEP
 with great effect.
 
 In 2013, a team of researchers at Royal Holloway in London produced a
-combination of devastating practical attacks. \cite{rhul:rc4} They
-demonstrated two attacks.
+combination of two independent practical attacks. \cite{rhul:rc4}
+These attacks proved to be very damning for RC4: while RC4's
+weaknesses had been known for a long time, they finally drove the
+point home for everyone that it really shouldn't be used anymore.
 
 The first attack is based on single-byte biases in the first 256 bytes
 of the keystream. By performing statistical analysis on the keystreams
 produced by a large number of keys, they were able to analyze the
-already well-known biases in the early keystream bytes of RC4 in very
+already well-known biases in the early keystream bytes of RC4 in much
 greater detail.
 
 TODO: illustrate: http://www.isg.rhul.ac.uk/tls/RC4_keystream_dist_2_45.txt
