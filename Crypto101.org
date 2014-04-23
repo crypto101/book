@@ -154,13 +154,17 @@ bit, or to just pass it through unchanged. "Inverting" bits is
 colloquially called "flipping" bits, a term we'll use often throughout
 the book.
 
-[[./Illustrations/XOR/ProgrammableInverter.pdf]]
+#+BEGIN_LATEX
+\illustration{XOR/ProgrammableInverter}
+#+END_LATEX
 
 In mathematics and cryptography papers, exclusive or is generally
 represented by a cross in a circle: $\xor$. We'll use the same
 notation in this book:
 
-[[./Illustrations/XOR/XOR.pdf]]
+#+BEGIN_LATEX
+\illustration{XOR/XOR}
+#+END_LATEX
 
 The inputs and output here are named as if we're using XOR as an
 encryption operation. On the left, we have the plaintext bit $p_i$.
