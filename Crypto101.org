@@ -1637,13 +1637,13 @@ rare, and we don't talk about them explicitly in this book. Whenever
 someone says "stream cipher", it's safe to assume they mean the
 synchronous kind.
 
-Historically, native stream ciphers have had their issues. For
-example, the NESSIE competition, an international competition for new
-cryptographic primitives, did not result in any new stream ciphers:
-all of the participants were broken before the competition ended. RC4,
-one of the most popular native stream ciphers, has had serious known
-issues for years. By comparison, some of the constructions using block
-ciphers seem bulletproof.
+Historically, native stream ciphers have had their issues. tNESSIE, an
+international competition for new cryptographic primitives, for
+example, did not result in any new stream ciphers, because all of the
+participants were broken before the competition ended. RC4, one of the
+most popular native stream ciphers, has had serious known issues for
+years. By comparison, some of the constructions using block ciphers
+seem bulletproof.
 
 Fortunately, more recently, several new cipher algorithms provide new
 hope that we can get practical, secure and performant stream ciphers.
