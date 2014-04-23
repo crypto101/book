@@ -27,3 +27,5 @@ Illustrations/*/*.pdf
 *.mps
 *.mpx
 *.mpo
+# Illustrations that start as PDF
+!Illustrations/CC/CC-BY-NC.pdf
