@@ -1776,9 +1776,10 @@ Intuitively, we can understand how an ideal stream cipher would
 produce a stream of random bits. After all, if that's what it did,
 we'd end up in a situation quite similar to that of a one-time pad.
 
-[[./Illustrations/XOR/OTP.pdf]]
-
-[[./Illustrations/StreamCipher/Synchronous.pdf]]
+#+BEGIN_LATEX
+\illustration{XOR/OTP}[.4][A one-time pad scheme.]
+\illustration{StreamCipher/Synchronous}[.8][A synchronous stream cipher scheme. Note similarity to the one-time pad scheme.]
+#+END_LATEX
 
 The stream cipher is ideal if the best way we have to attack it is to
 try all of the keys, a process called brute-forcing the key. If
