@@ -33,6 +33,7 @@ beginfig(1);
 
 		if s=0:
 			label(TEX("rotate $" & decimal(y) & "$"), origin) scaled .8 shifted (-1.5u, y*(-u));
+			label(btex $\leftarrow$ etex, origin) xscaled 3 shifted (-1.5u, y*(-u)-.25u);
    		fi
 	endfor
     endfor
