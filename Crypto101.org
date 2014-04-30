@@ -2612,7 +2612,9 @@ the art in RSA padding. It was introduced by Mihir Bellare and Phillip
 Rogaway in 1995. \cite{bellarerogaway:oaep}. Its structure looks like
 this:
 
-[[./Illustrations/OAEP/Diagram.pdf]]
+#+BEGIN_LATEX
+\illustration{OAEP/Diagram}[0.5]
+#+END_LATEX
 
 The thing that eventually gets encrypted is $X \| Y$, which is $n$
 bits long, where $n$ is the number of bits of $N$, the RSA modulus. It
