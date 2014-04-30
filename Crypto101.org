@@ -673,6 +673,36 @@ wouldn't be vulnerable to a related key attack, no system in the real
 world should ever end up with such related keys. If it does, things
 have gone so completely wrong that all further bets are off.
 
+**** A closer look at Rijndael
+
+AES consists of several independent steps.
+
+TODO: Actually explain how AES works :)
+
+***** SubBytes
+
+#+BEGIN_LATEX
+\illustration{AES/SubBytes}
+#+END_LATEX
+
+***** ShiftRows
+
+#+BEGIN_LATEX
+\illustration{AES/ShiftRows}
+#+END_LATEX
+
+***** MixColumns
+
+#+BEGIN_LATEX
+\illustration{AES/MixColumns}
+#+END_LATEX
+
+***** AddRoundKey
+
+#+BEGIN_LATEX
+\illustration{AES/AddRoundKey}
+#+END_LATEX
+
 *** DES and 3DES
 
 The \gls{DES} is one of the oldest block ciphers that saw widespread
