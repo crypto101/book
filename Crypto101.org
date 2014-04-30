@@ -5416,8 +5416,6 @@ a^n = \underbrace{a \cdot a \cdot \ldots \cdot a}_{n \text{ times}}
 \]
 #+END_LATEX
 
-**** Performing modular exponentiation
-
 As with multiplication, it's possible to compute modular
 exponentiation by performing regular exponentiation, and then taking
 the modulus at the end. However, this is very inefficient,
@@ -5450,14 +5448,16 @@ is 1024. So:
 \end{align*}
 #+END_LATEX
 
+*** Exponentiation by squaring
+
 A particularly efficient way to do it on computers is splitting the
-exponent up into a sum of powers of two. This is called binary
-exponentiation, or exponentiation by squaring. Suppose we want to
-compute $3^{209} \pmod {19}$. First, we split up 209 into a sum of
+exponent up into a sum of powers of two. This is called exponentiation
+by squaring, or sometimes also binary exponentiation. Suppose we want
+to compute $3^{209} \pmod {19}$. First, we split up 209 into a sum of
 powers of two. This is process is essentially just writing 209 down in
-binary: which would be 0b11010001. That's very practical if the
-computation is being performed by a computer, because that's often how
-the computer had the number stored in the first place.
+binary: ~0b11010001~. That's very practical if the computation is
+being performed by a computer, because that's typically how the
+computer had the number stored in the first place.
 
 #+BEGIN_LATEX
 \[
@@ -5526,9 +5526,221 @@ exponentiation functions. For example, in Python, ~pow(e, x, m)~
 performs efficient modular exponentiation. However, the expression
 ~(e ** x) % m~ will still use the inefficient method.
 
-**** Timing-invariant computation using a Montgomery ladder
+*** Montgomery ladder exponentiation
 
-TODO: explain
+As we mentioned before, the exponentiation by squaring algorithm is
+simple and fast, but the time it takes to complete depends on the
+value of the exponent. That's bad, because the exponent is usually a
+secret value, such as a Diffie-Hellman secret or the RSA decryption
+exponent $d$.
+
+The Montgomery ladder is an algorithm that resolves this by
+guaranteeing the same number of operations irrespective of the
+particular value of the exponent. It was originally applied for
+efficient scalar multiplications over elliptic curves, but the
+mathematics works for many other systems. [fn::Specifically, it works
+for any abelian group.]
+
+**** Deriving the ladder
+
+In this subsection, we'll see how you can discover this algorithm.
+This requires a decent bit of math; if you're not really interested in
+how you get to a Montgomery ladder and just want to see how it works,
+feel free to skip this.
+
+Like with exponentiation by squaring, we start by looking at the
+binary expansion of the exponent $k$. Generally, any $k$ can be
+written as a sum ($\sum$) of some powers of two ($2^i$). If $2^j$
+appears in the binary expansion, we'll say that $k_j = 1$; if it
+doesn't, we'll say that $k_j = 0$. That gives us:
+
+#+BEGIN_LATEX
+\[
+k = \sum_{i=0}^{t-1} 2^i k_i
+\]
+#+END_LATEX
+
+That definition might look scary, but all you're really doing here is
+defining $k_i$ as bit of $k$ at position $i$. The sum goes over all
+the bits: if $k$ is $t$ bits long, and we start indexing at 0, the
+index of the highest bit is $t - 1$, and the index of the lowest bit
+is 0. For example, the binary expansion of the number 6 is ~0b110~.
+That number is three bits long, so $t = 3$. So:
+
+#+BEGIN_LATEX
+\begin{align*}
+6 &= \sum_{i = 0}^{t - 1} 2^i k_i \\
+  &= \sum_{i = 0}^{2} 2^i k_i \\
+  &= k_2 \cdot 2^2 + k_1 \cdot 2^1 + k_0 \cdot 2^0 \\
+  &= 1 \cdot 2^2 + 1 \cdot 2^1 + 0 \cdot 2^0
+\end{align*}
+#+END_LATEX
+
+So, $(k_2, k_1, k_0) = (1, 1, 0)$.
+
+The next few steps don't make a lot of sense until you see them come
+together at the end, so bear with me and check that the math works
+out. We'll define a related sum, $L_j$:
+
+#+BEGIN_LATEX
+\[
+L_j = \sum_{i = j}^{t - 1} 2^{i - j} k_i
+\]
+#+END_LATEX
+
+For example, $L_1$ (still with $k = 6$) becomes:
+
+#+BEGIN_LATEX
+\begin{align*}
+L_1 & = \sum_{i = 1}^{2} 2^{i - 1} k_i \\
+    & = \underbrace{2^1 \cdot k_2}_{i = 2} + \underbrace{2^0 \cdot k_1}_{i = 1} \\
+    & = 2 \cdot 1 + 1 \cdot 1 \\
+    & = 3
+\end{align*}
+#+END_LATEX
+
+Essentially, $L_j$ is just $k$ shifted to the right by $j$ bits.
+Shifting to the right by one bit is the same thing as flooring
+division by two, just like right-shifting by a decimal digit is the
+same thing as flooring division by 10. For example: 73, shifted one
+decimal digit to the right is 7; 0b101 (5) shifted one binary digit
+(bit) to the right is 0b10 (2). Analogously, shifting left is the
+inverse operation, and is equivalent to /multiplying/ by two.
+
+Next, we'll perform a little arithmetical hocus pocus. First of all:
+
+#+BEGIN_LATEX
+  \[
+  L_j = 2 \cdot L_{j + 1} + k_j
+  \]
+#+END_LATEX
+
+While you can verify this arithmetically, the easiest way to check
+this is to think of it in terms of right and left shifts. If you shift
+$k$ to the right by $j$ positions, that
+
+#+BEGIN_LATEX
+\begin{align*}
+k                               & = \mathtt{0b110010111} \\
+L_j               = L_2         & = \mathtt{0b1100101} \\
+L_{j + 1}         = L_3         & = \mathtt{0b110010} \\
+2 \cdot L_{j + 1} = 2 \cdot L_3 & = \mathtt{0b1100100}
+\end{align*}
+#+END_LATEX
+
+You can visually verify that $L_3$ is indeed $L_2$, shifted one to the
+left (which is the same thing as multiplying by two), plus that one
+bit $k_j$ that "fell off" when shifting right. $k_j$ is the last bit
+of $L_j$; in this case it happens to be 1, but it could equally well
+have been 0.
+
+We define another very simple function $H_j$:
+
+#+BEGIN_LATEX
+  \[
+  H_j = L_j + 1 \iff L_j = H_j - 1
+  \]
+#+END_LATEX
+
+Starting from our previous result:
+
+#+BEGIN_LATEX
+  \begin{align*}
+  L_j & = 2 \cdot L_{j + 1} + k_j \\
+      & \Downarrow (L_{j + 1} = H_{j+1} - 1) \\
+  L_j & = H_{j + 1} + k_j + H_{j + 1} - 1 \\
+      & \Downarrow (L_{j + 1} = H_{j+1} - 1) \\
+  L_j & = 2 \cdot H_{j + 1} + k_j - 2
+  \end{align*}
+#+END_LATEX
+
+We can combine these to produce an inductive way to compute $L_j$ and
+$H_j$:
+
+#+BEGIN_LATEX
+\[
+L_j = \begin{cases}
+2 L_{j + 1}           & \mbox{if } k_j = 0 \\
+L_{j + 1} + H_{j + 1} & \mbox{if } k_j = 1
+\end{cases}
+\]
+#+END_LATEX
+
+#+BEGIN_LATEX
+\[
+H_j = \begin{cases}
+L_{j + 1} + H_{j + 1} & \mbox{if } k_j = 0 \\
+2 L_{j + 1} & \mbox{if } k_j = 1
+\end{cases}
+\]
+#+END_LATEX
+
+Remember that we're doing this to compute $g^k$. Let's write the
+exponentiation out:
+
+#+BEGIN_LATEX
+\[
+g^{L_j} = \begin{cases}
+g^{2 L_{j + 1}} = \left(g^{L_{j + 1}}\right)^2 & \mbox{if } k_j = 0 \\
+g^{L_{j + 1} + H_{j + 1}} = g^{L_{j + 1}} \cdot g^{H_{j+1}} & \mbox{if } k_j = 1
+\end{cases}
+\]
+#+END_LATEX
+
+#+BEGIN_LATEX
+\[
+g^{H_j} = \begin{cases}
+g^{L_{j + 1} + H_{j + 1}} = g^{L_{j + 1}} \cdot g^{H_{j+1}} & \mbox{if } k_j = 0 \\
+g^{2 H_{j + 1}} = \left(g^{H_{j + 1}}\right)^2 & \mbox{if } k_j = 1
+\end{cases}
+\]
+#+END_LATEX
+
+Remember that $L_j$ is $k$ right-shifted by $j$ bits, so $L_0$ is $k$
+shifted right by 0 bits, or just $k$ itself. That means $g^k$, the
+number we're trying to compute, is the same thing as g^{L_0}$. By
+starting at $g^{L_{t - 1}}$ ($g$ raised to the power of the leftmost
+bit of $k$) and iteratively making our way down to $g^{L_0} = g^k$, we
+have an elegant inductive method for computing $g^k$ based on two
+simple recursive rules.
+
+The important part about this algorithm is the constant number of
+operations. If $k_j = 0$, computing $g^{L_j}$ involves one squaring
+and $g^{H_j}$ involves one multiplication; if $k_j = 1$, it's the
+other way around. No matter what any of any of the bits of $k$ is, you
+need one squaring operation and one multiplication per bit.
+
+**** Implementing the Montgomery ladder in Python
+
+The Python implementation of this algorithm, applied to modular
+exponentiation, is surprisingly terse:
+
+#+BEGIN_SRC python
+  def montgomery(x, exponent, modulus):
+      x1, x2 = x, x ** 2
+      for bit in bits(exponent):
+          if bit == 0:
+              x2 = x1 * x2
+              x1 = x1 ** 2
+          else:
+              x1 = x1 * x2
+              x2 = x2 ** 2
+          x1, x2 = x1 % modulus, x2 % modulus
+      return x1
+
+#+END_SRC
+
+This code block doesn't show the definition of ~bits~: it produces the
+binary expansion of its argument. Python doesn't provide that by
+default; ~bin~ is close, but that produces a string: ~bin(100)~
+evaluates to ~0b1100100~.
+
+The important thing to note here is that no matter what the particular
+value of the exponent is, there is one squaring, one multiplication,
+and one modulus being computed per bit. Keep in mind that that doesn't
+necessarily make the entire algorithm take constant time, because the
+individual squaring and multiplication operations are not necessarily
+constant time.
 
 *** Discrete logarithm
 
