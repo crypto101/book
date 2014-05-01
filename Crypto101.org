@@ -4014,11 +4014,11 @@ The extraction phase just uses HMAC with a salt:
 The salt value is optional. If the \gls{salt} is not specified, a
 string of zeroes equal to the length of the hash function's output is
 used. While the salt is technically optional, the designers stress its
-importance, because it makes the independent uses of the KDF (for
-example, in different applications, or with different users) produce
-independent results. Even a fairly low-entropy salt can already
-contribute significantly to the security of the KDF. \cite{rfc5869}
-\cite{hkdf}
+importance, because it makes the independent uses of the key
+derivation function (for example, in different applications, or with
+different users) produce independent results. Even a fairly
+low-entropy salt can already contribute significantly to the security
+of the key derivation function. \cite{rfc5869} \cite{hkdf}
 
 The extraction phase explains why HKDF is not suitable for deriving
 keys from passwords. While the extraction phase is very good at
@@ -4085,8 +4085,8 @@ application-specific context in which the key derivation function is
 being used. Like the salt, it will cause the key derivation function
 to produce different values in different contexts, further increasing
 its security. For example, the info parameter may contain information
-about the user being dealt with, the part of the protocol the KDF is
-being executed for or the like. \cite{rfc5869}
+about the user being dealt with, the part of the protocol the key
+derivation function is being executed for or the like. \cite{rfc5869}
 
 ** Random number generators
 
