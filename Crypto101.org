@@ -4020,12 +4020,18 @@ HKDF is based on \gls{HMAC}. Like HMAC, it is a generic construction
 that uses hash functions, and can be built using any cryptographically
 secure hash function you want.
 
+**** A closer look at HKDF
+
+#+BEGIN_LATEX
+\advanced
+#+END_LATEX
+
 HKDF consists of two phases. In the first phase, called the
 /extraction phase/, a fixed-length key is extracted from the input
 entropy. In the second phase, called the /expansion phase/, that key
 is used to produce a number of pseudorandom keys.
 
-**** The extraction phase
+***** The extraction phase
 
 The extraction phase is responsible for extracting a small amount of
 data with a high entropy content from a potentially large amount of
@@ -4066,7 +4072,7 @@ example when dealing with a Diffie-Hellman shared secret. The RFC goes
 into slightly more detail on the topic of whether or not to skip this
 step; but it is generally inadvisable. \cite{rfc5869}
 
-**** The expansion phase
+***** The expansion phase
 
 In the expansion phase, the random data extracted from the inputs in
 the extraction phase is expanded into as much data as is required.
