@@ -3207,15 +3207,15 @@ TODO: Explain Vaudenay CBC attack \cite{vaudenay:cbcpadding}
 
 **** Authenticate-and-encrypt
 
-Authenticate-and-encrypt has obvious problems. For example, since the
-plaintext is authenticated, and that MAC is part of the transmitted
-message, an attacker will be able to recognize two identical messages
-sent independently using the same MAC key are in fact the same,
-essentially leading to a similar problem to what we saw with
-\gls{ECB mode}.
+Authenticate-and-encrypt has some serious problems. Since the tag
+authenticates the plaintext and that tag is part of the transmitted
+message, an attacker will be able to recognize two plaintext messages
+are the same because their tags will also be the same. This
+essentially leads to the same problem we saw with \gls{ECB mode},
+where an attacker can identify identical blocks. That's a serious
+problem, even if they can't decrypt those blocks.
 
 TODO: Explain how this works in SSH (see Moxie's Doom article)
-
 
 *** A naive attempt with hash functions
 
