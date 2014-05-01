@@ -648,15 +648,21 @@ as long as it doesn't sacrifice any of the above properties.
 
 *** <<<AES>>>
 
-The most common block cipher in current use is \gls{AES}, the Advanced
-Encryption Standard. Prior to being chosen as the Advanced Encryption
-Standard, the algorithm was known as Rijndael. Rijndael defined a
+In late 1997, the NIST announced their plans to replace the old
+Data Encryption by the new Advanced Encryption Standard, or \gls{AES}
+for short. Unlike with DES, the standardization and design of AES was
+open and featured an, amongst cryptographers, well-received competition
+that also included conferences where algorithms were presented, broken,
+and voted upon.
+
+In the end, an algorithm called Rijndael, developed by 2 belgian
+cryptographers, was selected to become AES. Rijndael defined a
 family of block ciphers, with block sizes and key sizes that could be
 any multiple of 32 bits between 128 bits and 256 bits.
 \cite{daemen:aes} When Rijndael became AES through the \gls{FIPS}
 standardization process, the parameters were restricted to a block
 size of 128 bits and keys sizes of 128, 192 and 256 bits.
-\cite{fips:aes}
+\cite{fips:aes}. Today, AES is the most commonly used block cipher.
 
 There are no practical attacks known against AES. While there have
 been some developments in the last few years, most of them involve
@@ -675,11 +681,23 @@ have gone so completely wrong that all further bets are off.
 
 **** A closer look at Rijndael
 
-AES consists of several independent steps.
+
+Unlike several other block ciphers, including the predecessor DES,
+AES is not using a \gls{Feistel network}, but is based on a
+Substitution-Permutation network (SPN), where each building block
+has only one particular role. This, however, also means that each
+function has to be invertible, i.e. bijective.
 
 TODO: Actually explain how AES works :)
 
 ***** SubBytes
+
+SubBytes is the S-box of AES, being $8\times 8$ bits in size. It works
+by taking the multiplicative inverse over the Galois Field, and then
+applying an affine transformation so that there's no value $x$ with
+either $x\oplus S(x)=0$ nor $x\oplus S(x)=\texttt{0xff}$. The affine
+transformation is thus removing easy-to-exploit differentials, which
+was an issue with the fifth S-box in the DES.
 
 #+BEGIN_LATEX
 \illustration{AES/SubBytes}
@@ -687,17 +705,30 @@ TODO: Actually explain how AES works :)
 
 ***** ShiftRows
 
+After having applied the above SubBytes step to each single of the
+$16$ bytes of a given block, AES then shifts the rows in the
+$4\times 4$ array by a certain amount:
+
 #+BEGIN_LATEX
 \illustration{AES/ShiftRows}
 #+END_LATEX
 
 ***** MixColumns
 
+MixColumns takes a column of the state, multiplies it with a fixed
+polynomial, and replaces the column with the result.
+
+ShiftRows and MixColumns together are the important pieces to distribute
+changes across the entire state as quickly as possible.
+
 #+BEGIN_LATEX
 \illustration{AES/MixColumns}
 #+END_LATEX
 
 ***** AddRoundKey
+
+As the name implies, AddRoundKey xors bytes from the key schedule to the
+bytes of the state.
 
 #+BEGIN_LATEX
 \illustration{AES/AddRoundKey}
