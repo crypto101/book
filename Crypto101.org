@@ -3104,8 +3104,11 @@ that explicitly allow for authenticated (but not encrypted)
 information to be sent along with the authenticated ciphertext.
 
 Often, when you just want to talk about the authenticity and integrity
-of a particular plaintext message, it may be more practical to use a
-/signing algorithm/, which we'll talk about in a later chapter.
+of a particular message, it may be more practical to use a /signature
+algorithm/, which we'll talk about in a later chapter. For now, all
+you need to know is that the term "signature" is normally reserved for
+asymmetric algorithms, whereas this chapter deals with symmetric
+algorithms.
 
 **** Secure MACs
 
@@ -3150,12 +3153,12 @@ against the modified hash, and conclude that the download worked. The
 scheme provided no help whatsoever against an attacker modifying the
 download, either as stored, or in transit.
 
-In order to do this securely, you would either apply signing
+In order to do this securely, you would either apply a signature
 algorithms to the binaries directly, or by signing the digests, as
 long as the hash function used to produce the digest is secure against
 second-preimage attacks. The important difference is that producing a
 signature (using either a pre-shared key with your users, or,
-preferably, a public-key signing algorithm) is /not/ something that an
+preferably, a public-key signature algorithm) is /not/ something that an
 attacker can do. Only someone who has the secret keys can do that.
 
 *** Combining MAC and message
