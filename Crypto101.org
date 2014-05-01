@@ -4118,9 +4118,9 @@ The generation of random numbers is too important to be left to chance.
 *** Introduction
 
 Many cryptographic systems require random numbers. So far, we've just
-assumed that they're available and waved our hands vigorously around
-those parts. In this chapter, we'll go more in depth about the
-importance and mechanics of random numbers in cryptographic systems.
+assumed that they're available. In this chapter, we'll go more in
+depth about the importance and mechanics of random numbers in
+cryptographic systems.
 
 Producing random numbers is a fairly intricate process. Like with so
 many other things in cryptography, it's quite easy to get it
@@ -4236,7 +4236,43 @@ attacker perceives" is necessary in a good definition
 
 TODO: explain synchronous stream ciphers as CSPRNGs
 
+*** Cryptographically secure pseudorandom generators
+
+While we'll see several examples of cryptographically secure
+pseudorandom generators in the next few chapters, keep in mind that
+they are all just algorithms that /could/ be used. As an application
+developer, you should /never/ be making a choice between one of them.
+
+Instead, in the few cases you really want to pick a random number
+manually, you should /always/ use the cryptographically secure random
+number generator provided by your operating system: ~/dev/urandom~ on
+*NIX (Linux, BSDs, and OS X), or ~CryptGenRandom~ on Windows. Python
+provides handy interfaces to these in the form of ~os.urandom~ and
+~random.SystemRandom~.
+
+While they can be implemented securely, try to avoid using userspace
+cryptographically secure random number generators such as the one in
+OpenSSL. There are far more things that can go wrong with them,
+usually involving their internal state: either they remain
+uninitialized, poorly initialized, or end up re-using the same state
+in different locations. In all of these cases, the resulting
+cryptosystem is completely and utterly broken.
+
+TODO: talk about the FUD in the Linux man page for urandom
+
+#+BEGIN_LATEX
+  \DeclareDocumentCommand{\csprngwarning}{
+    \advanced[Since this is a specific cryptographically secure
+      pseudorandom number generator algorithm, you don't actually need to
+      know how it works to write good software. Just use ~urandom~.]
+  }
+#+END_LATEX
+
 *** Yarrow
+
+#+BEGIN_LATEX
+\csprngwarning
+#+END_LATEX
 
 The Yarrow algorithm is a cryptographically secure pseudorandom number
 generator.
@@ -4250,10 +4286,18 @@ alias for \verb|/dev/random|.
 
 *** Blum Blum Shub
 
+#+BEGIN_LATEX
+\csprngwarning
+#+END_LATEX
+
 TODO: explain this, and why it's good (provable), but why we don't use
 it (slow)
 
 *** =Dual_EC_DRBG=
+
+#+BEGIN_LATEX
+\csprngwarning
+#+END_LATEX
 
 =Dual_EC_DRBG= is a NIST standard for a cryptographically secure
 pseudorandom bit generator. It sparked a large amount of controversy:
@@ -4499,7 +4543,7 @@ cryptographically secure pseudorandom number generators: having a
 broken one essentially means that all cryptosystems that use this
 generator are completely and utterly defeated.
 
-There are two suggested ways of fixing this particular algorithm:
+There are two ways one might try to fix this particular algorithm:
 
 - Make the $\theta$ function more complex to invert, rather than just
   discarding 16 bits. This makes it harder to find candidate points,
@@ -4512,6 +4556,11 @@ There are two suggested ways of fixing this particular algorithm:
   there's only few values $d$ can have, the attacker can just perform
   the above attack for all values of $d$.
 
+Both of these are really just band-aid solutions; it would be a much
+better idea to just use a different algorithm altogether. These
+suggestions don't resolve the issue that it's slow, exotic, and now a
+retracted standard.
+
 **** Aftermath
 
 TODO: Talk about RSA guy's comments + snowden leaks
@@ -4523,9 +4572,10 @@ has many nice properties, such as high performance, a huge
 period[fn::The period of a pseudorandom number generator is how many
 random numbers it produces before the entire sequence repeats.] of
 $2^{19937} - 1 \approx 4 \cdot 10^{6001}$, and it passes all but the
-most demanding randomness tests. Despite all of these, it is /not/
-cryptographically secure. To demonstrate this, we'll take a look at
-how the algorithm works. Fortunately, it's not very complex.
+most demanding randomness tests. Despite all of these wonderful
+properties, it is /not/ cryptographically secure. To demonstrate this,
+we'll take a look at how the algorithm works. Fortunately, it's not
+very complex.
 
 **** Internal structure
 
