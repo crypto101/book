@@ -4716,14 +4716,14 @@ young to remember, Netscape is a company that used to make browsers.]
 for securing traffic on the Web. The standard is now superseded by TLS
 (Transport Layer Security), a standard publicized in RFCs by the IETF.
 The term SSL is still commonly used, even when the speaker actually
-means a TLS connection. From now on, this book wil only use the term
+means a TLS connection. From now on, this book will only use the term
 TLS, unless we really mean the old SSL standard.
 
 Its first and foremost goal\cite{tls12} is to transport bytes
-securely, over the Internet or any other insecure medium. It's hybrid
+securely, over the Internet or any other insecure medium. It's a hybrid
 cryptosystem: it uses both symmetric and asymmetric algorithms in
 unison. For example, signature algorithms can be used to authenticate
-peers, and public key algorithms be used to negotiate shared secrets
+peers, and public key algorithms can be used to negotiate shared secrets
 and authenticate certificates.
 
 On the symmetric side, stream ciphers (both native and using modes of
@@ -4737,7 +4737,7 @@ contributing to and examining the standard[fn:: In case I haven't
 driven this point home yet: it only goes to show that designing
 cryptosystems is hard, and you probably shouldn't do it yourself.]. As
 far as we know, the current versions of TLS are secure, or at least
-can be configured securely.
+can be configured to be secure.
 
 *** Handshakes
 
@@ -4771,7 +4771,7 @@ my bank, and not just someone pretending to be my bank? Why should I
 trust this particular certificate? As we've seen when we discussed
 these algorithms, anyone can generate as many key pairs as they'd
 like. There's nothing stopping someone from generating a key pair
-pretending to be your bank
+pretending to be your bank.
 
 When someone actually tries to use a certificate to impersonate a
 bank, real browsers don't believe you. They notify the user that the
@@ -4999,10 +4999,10 @@ communicating with an HSTS-enabled website:
 - If there is an issue setting up a TLS connection, the website will
   not be accessible, instead of simply displaying a warning.
 
-Essentially, HSTS is away for websites to communicate that they only
+Essentially, HSTS is a way for websites to communicate that they only
 support secure transports. This helps protect the users against all
 sorts of attacks including both passive eavesdroppers (that were
-hoping to see some credentials accidentally sent in plaintext, and
+hoping to see some credentials accidentally sent in plaintext), and
 active man-in-the-middle attacks such as SSL stripping.
 
 HSTS also defends against mistakes on the part of the web server. For
@@ -5016,7 +5016,7 @@ tool in a very big toolbox of stuff that we have to try and make TLS
 more secure. HSTS only helps to ensure that TLS is actually used; it
 does absolutely nothing to prevent attacks against TLS itself.
 
-HSTS can suffer from a chicken-or-the-egg problem. If a browser has
+HSTS can suffer from a chicken-or-egg problem. If a browser has
 never visited a particular HSTS-enabled website before, it's possible
 that the browser doesn't know that that website is HSTS-enabled yet.
 Therefore, the browser may still attempt a regular HTTP connection,
@@ -5043,11 +5043,11 @@ services in their Chrome browser.
 *** Secure configurations
 
 In this section, we are only talking about configuration options such
-as which ciphers, TLS/SSL versions, et cetera. We're specifically
+as which ciphers to use, TLS/SSL versions, etc. We're specifically
 /not/ talking about TLS configurations in the sense of trust models,
-key management, et cetera.
+key management, etc.
 
-There are several issues with securely configuring TLS securely:
+There are several issues with configuring TLS securely:
 
 1. Often, the defaults are unsafe, and people are unaware that they
    should be changed.
@@ -5068,7 +5068,7 @@ practically exploited; it was already fixed in TLSv1.1 in 2006, years
 before the BEAST paper being published. However, TLSv1.1 had not seen
 wide adoption.
 
-Therefore, good advice necessarily changes over time, and it's
+Good advice necessarily changes over time, and it's
 impossible to do so in a persistent medium such as a book. Instead,
 you should look at continuously updated third party sources such as
 [[https://www.ssllabs.com/][Qualys SSL Labs]]. They provide tests for both SSL clients and servers,
