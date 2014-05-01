@@ -1902,10 +1902,10 @@ Adi Shamir and Itsik Mantin showed that the second byte produced by
 the cipher is /twice/ as likely to be zero as it should be. Other
 researchers showed similar biases in the first few bytes of the
 keystream. This sparked further research by Mantin, Shamir and
-Fluhrer\cite{fms:rc4}, showing large biases in the first bytes of the
-keystream. They also showed that knowing even small parts of the key
-would allow attackers to make strong predictions about the state and
-outputs of the cipher.
+Fluhrer, showing large biases in the first bytes of the keystream.
+\cite{fms:rc4} They also showed that knowing even small parts of the
+key would allow attackers to make strong predictions about the state
+and outputs of the cipher.
 
 Unlike RC4, most modern stream ciphers provide a way to combine a
 long-term key with a \gls{nonce} (a number used once), to produce
