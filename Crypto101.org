@@ -3426,10 +3426,15 @@ message-specific polynomial $P$:
   \]
 #+END_LATEX
 
+Although this looks like a lot of computation, this polynomial can be 
+easily evaluated by Horner's method, i.e., by iteratively computing the
+sum from the right. When one evaluates the modulo operator in each step,
+the numbers will remain conveniently small.
+
 In many ways, a one-time MAC is to authentication what a one-time pad
 is to encryption. The security argument is similar: because an
 attacker learns no information about the key or the message, because
-they are being mixed irreversibly. This demonstrates that the MAC is
+they are being mixed irreversibly only once. This demonstrates that the MAC is
 secure against attackers trying to produce existential forgeries, even
 when that attacker has infinite computational power.
 
@@ -3452,7 +3457,8 @@ authenticate two messages $m_1, m_2$ with the same key $(a, b)$:
 #+END_LATEX
 
 An attacker can reconstruct $a, b$ with some simple arithmetic,
-starting by subtracting the two equations:
+starting by subtracting the two equations (for the modular
+inverse, see the appendix on modular arithmetic):
 
 #+BEGIN_LATEX
   \begin{align*}
@@ -3468,8 +3474,7 @@ starting by subtracting the two equations:
   \end{align*}
 #+END_LATEX
 
-The attacker has a direct way of computing $a$, allowing them to plug
-it into either the equation for $t_1$ or $t_2$ to get $b$:
+Plugging $a$ into either the equation for $t_1$ or $t_2$ gets $b$:
 
 #+BEGIN_LATEX
   \begin{align*}
