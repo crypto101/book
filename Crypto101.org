@@ -1756,6 +1756,12 @@ RC4 was designed, the state of the art was 3DES, which was
 excruciatingly slow by comparison (134.5 cycles per byte in CTR mode).
 \cite{cryptopp:bench}
 
+**** An in-depth look at RC4
+
+#+BEGIN_LATEX
+\advanced[On the other hand, RC4 is incredibly simple, and it may be worth skimming this section.]
+#+END_LATEX
+
 RC4 is, unfortunately, quite broken. To better understand just how
 broken, we'll take a look at how RC4 works. The description requires
 understanding modular addition; if you aren't familiar with it, you
@@ -1851,6 +1857,10 @@ We can express this in Python:
 #+END_SRC
 
 **** Attacks
+
+#+BEGIN_LATEX
+\advanced[The section on the attacks on RC4 is a good deal more complicated than RC4 itself, so you may want to skip this even if you've read this far.]
+#+END_LATEX
 
 There are many attacks on RC4-using cryptosystems where RC4 isn't
 really the issue, but are caused by things like key reuse or failing
