@@ -4590,11 +4590,17 @@ period[fn::The period of a pseudorandom number generator is how many
 random numbers it produces before the entire sequence repeats.] of
 $2^{19937} - 1 \approx 4 \cdot 10^{6001}$, and it passes all but the
 most demanding randomness tests. Despite all of these wonderful
-properties, it is /not/ cryptographically secure. To demonstrate this,
+properties, it is /not/ cryptographically secure.
+
+**** An in-depth look at the Mersenne Twister
+
+#+BEGIN_LATEX
+\advanced
+#+END_LATEX
+
+To demonstrate why Mersenne Twister isn't cryptographically secure,
 we'll take a look at how the algorithm works. Fortunately, it's not
 very complex.
-
-**** Internal structure
 
 The standard Mersenne Twister algorithm operates on an internal state
 array $S$ consisting of 624 unsigned 32-bit integers, and an index $i$
