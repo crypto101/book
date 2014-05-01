@@ -2091,7 +2091,9 @@ whole is as long as the block size. The resulting concatenated string
 is run through a block cipher. The outputs of the block cipher are
 then used as the keystream.
 
-[[./Illustrations/CTR/CTR.pdf]]
+#+BEGIN_LATEX
+\illustration{CTR/CTR}[.8][CTR mode: a single nonce $N$ with a zero-padded counter $i$ is encrypted by the block cipher to produce a keystream block; this block is XORed with the plaintext block $P_i$ to produce the ciphertext block $C_i$.]
+#+END_LATEX
 
 This illustration shows a single input block $N \| 00 \ldots \| i$,
 consisting of nonce $N$, current counter value $i$ and padding, being
