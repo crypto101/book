@@ -2116,7 +2116,7 @@ able to predict a CTR \gls{nonce} doesn't really matter: without the
 secret key, he has no idea what the output of the block cipher (the
 sequence in the keystream) would be.
 
-Like [[Salsa20]], CTR mode has the interesting property that you can jump
+Like Salsa20, CTR mode has the interesting property that you can jump
 to any point in the keystream easily: just increment the counter to
 that point. [[keystream jump][The Salsa20 paragraph on this topic]] explains why that
 might be useful.
