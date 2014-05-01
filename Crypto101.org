@@ -3194,16 +3194,16 @@ There are three common ways to combine a ciphertext with a MAC.
    MAC of that ciphertext. This is how IPSec does it. In symbols: $C =
    E(K_C, P)$, $t = MAC(K_M, C)$, and you send both $C$ and $t$.
 
-These were studied in depth in the landmark paper
-\cite{krawczyk:order}. Out of all of these, encrypt-then-authenticate
+These were studied in depth in the landmark paper.
+\cite{krawczyk:order} Out of all of these, encrypt-then-authenticate
 is unequivocally the best option. It's so unequivocally the best
 option that Moxie Marlinspike, a well-respected information security
 researcher, has a principle called "The Cryptographic Doom Principle"
 for any system that does /not/ follow this pattern \cite{moxie:doom}.
 (More accurately, Moxie claims that any system that does anything
-before checking the MAC is doomed. Both the first and the second
-options require you to decrypt something before you can verify the
-authentication.)
+before checking the MAC is doomed. Both authenticate-and-encrypt and
+authenticate-then-encrypt require you to decrypt something before you
+can verify the authentication.)
 
 **** Authenticate-then-encrypt
 
