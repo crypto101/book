@@ -3665,9 +3665,10 @@ if the plaintext happens to be a multiple of the block size.
 Despite having several interesting properties going for it, OCB mode
 has not received as much attention as some of the alternatives; one of
 the main reasons being that it is patent encumbered. Even though a
-number of patent licenses are available\cite{ocb:license}, including a
-free-of-charge one for open source software, this does not appear to
-have significantly impacted how much OCB mode is used in the field.
+number of patent licenses are available, including a free-of-charge
+one for open source software, this does not appear to have
+significantly impacted how much OCB mode is used in the field.
+\cite{ocb:license}
 
 *** <<<GCM mode>>>
 
