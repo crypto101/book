@@ -4284,7 +4284,7 @@ Mac OS X. On both of these operating systems, it's used to implement
 \verb|/dev/random|. Unlike on Linux, \verb|/dev/urandom| is just an
 alias for \verb|/dev/random|.
 
-*** Blum Blum Shub
+*** <<<Blum Blum Shub>>>
 
 #+BEGIN_LATEX
 \csprngwarning
@@ -4347,7 +4347,7 @@ encryption.
 
 That said, the choice didn't come entirely out of the blue. A choice
 for a cryptographically secure pseudorandom number generator with a
-strong number-theoretical basis isn't unheard of: [[Blum Blum Shub]] is a
+strong number-theoretical basis isn't unheard of: Blum Blum Shub is a
 perfect example. Those generators are typically much slower than the
 alternatives. ~Dual_EC_DRBG~, for example, is three orders of
 magnitude slower than its peers presented in the same standard. The
