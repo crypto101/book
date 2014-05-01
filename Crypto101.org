@@ -649,14 +649,26 @@ as long as it doesn't sacrifice any of the above properties.
 *** <<<AES>>>
 
 The most common block cipher in current use is \gls{AES}, the Advanced
-Encryption Standard. Prior to being chosen as the Advanced Encryption
-Standard, the algorithm was known as Rijndael. Rijndael defined a
-family of block ciphers, with block sizes and key sizes that could be
-any multiple of 32 bits between 128 bits and 256 bits.
-\cite{daemen:aes} When Rijndael became AES through the \gls{FIPS}
-standardization process, the parameters were restricted to a block
-size of 128 bits and keys sizes of 128, 192 and 256 bits.
-\cite{fips:aes}
+Encryption Standard.
+
+Contrary to its predecessor DES (which we'll look at in more detail in
+the next chapter), AES was selected through a public, peer-reviewed
+competition following an open call for proposals. This competition
+involved several rounds where all of the contestants where presented,
+subject to extensive cryptanalysis, and voted upon. The AES process
+was well-received among cryptographers, and similar processes are
+generally considered to be the preferred way to select cryptographic
+standards.
+
+Prior to being chosen as the Advanced Encryption Standard, the
+algorithm was known as Rijndael, a name derived from the two last
+names of the Belgian cryptographers that designed it: Vincent Rijmen
+and Joan Daemen. The Rijndael algorithm defined a family of block
+ciphers, with block sizes and key sizes that could be any multiple of
+32 bits between 128 bits and 256 bits. \cite{daemen:aes} When Rijndael
+became AES through the \gls{FIPS} standardization process, the
+parameters were restricted to a block size of 128 bits and keys sizes
+of 128, 192 and 256 bits. \cite{fips:aes}
 
 There are no practical attacks known against AES. While there have
 been some developments in the last few years, most of them involve
@@ -675,11 +687,27 @@ have gone so completely wrong that all further bets are off.
 
 **** A closer look at Rijndael
 
-AES consists of several independent steps.
+AES consists of several independent steps. At a high level, AES is a
+\gls{substitution-permutation network}.
 
-TODO: Actually explain how AES works :)
+***** Key schedule
+
+TODO: explain (#197)
 
 ***** SubBytes
+
+SubBytes is the S-box (substitution box) in AES. It is $8 \times 8$
+bits in size.
+
+It works by taking the multiplicative inverse over the Galois field,
+and then applying an affine transformation so that there are no values
+$x$ so that $x \xor S(x) = 0$ or $x \xor S(x)=\texttt{0xff}$. To
+rephrase: there are no values of $x$ that the substitution box maps to
+$x$ itself, or $x$ with all bits flipped. This makes the cipher
+resistant to differential attacks, unlike the earlier DES algorithm,
+whose fifth S-box caused serious security problems. [[fn::In its
+defense, differential attacks were not publicly known back when DES
+was designed.]]
 
 #+BEGIN_LATEX
 \illustration{AES/SubBytes}
@@ -687,11 +715,20 @@ TODO: Actually explain how AES works :)
 
 ***** ShiftRows
 
+After having applied the SubBytes step to the 16 bytes of the block,
+AES shifts the rows in the $4 \times 4$ array:
+
 #+BEGIN_LATEX
 \illustration{AES/ShiftRows}
 #+END_LATEX
 
 ***** MixColumns
+
+MixColumns multiplies each column of the state with a fixed
+polynomial.
+
+ShiftRows and MixColumns are represent the diffusion properties of
+AES.
 
 #+BEGIN_LATEX
 \illustration{AES/MixColumns}
@@ -699,11 +736,14 @@ TODO: Actually explain how AES works :)
 
 ***** AddRoundKey
 
+As the name implies, the AddRoundKey step adds the bytes from the
+round key produced by the key schedule to the state of the cipher.
+
 #+BEGIN_LATEX
 \illustration{AES/AddRoundKey}
 #+END_LATEX
 
-*** DES and 3DES
+*** <<<DES>>> and <<<3DES>>>
 
 The \gls{DES} is one of the oldest block ciphers that saw widespread
 use. It was published as an official \gls{FIPS} standard in 1977. It
