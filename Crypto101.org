@@ -4701,7 +4701,7 @@ worst case scenario we could still brute-force it. Suppose we just try
 every single 32 bit integer, and remember the result in a table. Then,
 when we get a result, we look it up in the table, and find the
 original. That table would have to be at least $2^{32} \cdot 32$ bits
-in length, or about 17.18 GB; big, but not impossibly so.
+in length, or a good 17 gigabytes; big, but not impossibly so.
 
 Fortunately, there's a much simpler method to compute the inverse of
 the temper function. We'll see why that's interesting when we evaluate
