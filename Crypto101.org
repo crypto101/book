@@ -5658,42 +5658,42 @@ We can combine these to produce an inductive way to compute $L_j$ and
 $H_j$:
 
 #+BEGIN_LATEX
-\[
-L_j = \begin{cases}
-2 L_{j + 1}           & \mbox{if } k_j = 0 \\
-L_{j + 1} + H_{j + 1} & \mbox{if } k_j = 1
-\end{cases}
-\]
+  \[
+  L_j = \begin{cases}
+  2 L_{j + 1}           & \mbox{if } k_j = 0, \\
+  L_{j + 1} + H_{j + 1} & \mbox{if } k_j = 1.
+  \end{cases}
+  \]
 #+END_LATEX
 
 #+BEGIN_LATEX
-\[
-H_j = \begin{cases}
-L_{j + 1} + H_{j + 1} & \mbox{if } k_j = 0 \\
-2 L_{j + 1} & \mbox{if } k_j = 1
-\end{cases}
-\]
+  \[
+  H_j = \begin{cases}
+  L_{j + 1} + H_{j + 1} & \mbox{if } k_j = 0, \\
+  2 L_{j + 1} & \mbox{if } k_j = 1.
+  \end{cases}
+  \]
 #+END_LATEX
 
 Remember that we're doing this to compute $g^k$. Let's write the
 exponentiation out:
 
 #+BEGIN_LATEX
-\[
-g^{L_j} = \begin{cases}
-g^{2 L_{j + 1}} = \left(g^{L_{j + 1}}\right)^2 & \mbox{if } k_j = 0 \\
-g^{L_{j + 1} + H_{j + 1}} = g^{L_{j + 1}} \cdot g^{H_{j+1}} & \mbox{if } k_j = 1
-\end{cases}
-\]
+  \[
+  g^{L_j} = \begin{cases}
+  g^{2 L_{j + 1}} = \left(g^{L_{j + 1}}\right)^2 & \mbox{if } k_j = 0, \\
+  g^{L_{j + 1} + H_{j + 1}} = g^{L_{j + 1}} \cdot g^{H_{j+1}} & \mbox{if } k_j = 1.
+  \end{cases}
+  \]
 #+END_LATEX
 
 #+BEGIN_LATEX
-\[
-g^{H_j} = \begin{cases}
-g^{L_{j + 1} + H_{j + 1}} = g^{L_{j + 1}} \cdot g^{H_{j+1}} & \mbox{if } k_j = 0 \\
-g^{2 H_{j + 1}} = \left(g^{H_{j + 1}}\right)^2 & \mbox{if } k_j = 1
-\end{cases}
-\]
+  \[
+  g^{H_j} = \begin{cases}
+  g^{L_{j + 1} + H_{j + 1}} = g^{L_{j + 1}} \cdot g^{H_{j+1}} & \mbox{if } k_j = 0, \\
+  g^{2 H_{j + 1}} = \left(g^{H_{j + 1}}\right)^2 & \mbox{if } k_j = 1.
+  \end{cases}
+  \]
 #+END_LATEX
 
 Remember that $L_j$ is $k$ right-shifted by $j$ bits, so $L_0$ is $k$
