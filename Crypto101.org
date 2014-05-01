@@ -2076,11 +2076,11 @@ stream cipher take a secret key and can be used to encrypt a stream,
 and the two can usually replace each other in a cryptosystem, we just
 call both of them stream ciphers and be done with it.
 
-We will further emphasize the tight link between the two with [[CTR
-mode]], a mode of operation which produces a synchronous stream
-cipher. While there are also modes of operation (like OFB and CFB)
-that can produce self-synchronizing stream ciphers, these are far
-less common, and not discussed here.
+We will further emphasize the tight link between the two with CTR
+mode, a mode of operation which produces a synchronous stream cipher.
+While there are also modes of operation (like OFB and CFB) that can
+produce self-synchronizing stream ciphers, these are far less common,
+and not discussed here.
 
 *** <<<CTR mode>>>
 
