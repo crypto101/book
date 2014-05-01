@@ -1874,7 +1874,7 @@ we'd end up in a situation quite similar to that of a one-time pad.
 
 #+BEGIN_LATEX
 \illustration{XOR/OTP}[.4][A one-time pad scheme.]
-\illustration{StreamCipher/Synchronous}[.8][A synchronous stream cipher scheme. Note similarity to the one-time pad scheme.]
+\illustration{StreamCipher/Synchronous}[.8][A synchronous stream cipher scheme. Note similarity to the one-time pad scheme. The critical difference is that while the one-time pad $k_i$ is truly random, the keystream $K_i$ is only pseudorandom.]
 #+END_LATEX
 
 The stream cipher is ideal if the best way we have to attack it is to
