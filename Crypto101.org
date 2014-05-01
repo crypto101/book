@@ -3210,8 +3210,8 @@ can verify the authentication.)
 **** Authenticate-then-encrypt
 
 Authenticate-then-encrypt is a poor choice, but it's a subtle poor
-choice. It's still provably secure\cite{krawczyk:order}, but only
-under certain conditions.
+choice. It can still be provably secure, but only under certain
+conditions. \cite{krawczyk:order}
 
 At first sight, this scheme appears to work. Sure, you have to
 decrypt before you can do anything, but to many cryptographers,
