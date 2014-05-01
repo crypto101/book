@@ -699,6 +699,10 @@ have gone so completely wrong that all further bets are off.
 
 **** A closer look at Rijndael
 
+#+BEGIN_LATEX
+\advanced
+#+END_LATEX
+
 AES consists of several independent steps. At a high level, AES is a
 \gls{substitution-permutation network}.
 
