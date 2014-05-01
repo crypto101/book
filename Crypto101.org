@@ -4810,16 +4810,16 @@ The term SSL is still commonly used, even when the speaker actually
 means a TLS connection. From now on, this book will only use the term
 TLS, unless we really mean the old SSL standard.
 
-Its first and foremost goal\cite{tls12} is to transport bytes
-securely, over the Internet or any other insecure medium. It's a hybrid
+Its first and foremost goal is to transport bytes securely, over the
+Internet or any other insecure medium. \cite{tls12} It's a hybrid
 cryptosystem: it uses both symmetric and asymmetric algorithms in
-unison. For example, signature algorithms can be used to authenticate
-peers, and public key algorithms can be used to negotiate shared secrets
-and authenticate certificates.
-
-On the symmetric side, stream ciphers (both native and using modes of
-operation) are used to encrypt the actual data being transmitted, and
-MACs are used to authenticate that data.
+unison. For example, asymmetric algorithms such as signature
+algorithms can be used to authenticate peers, while public key
+encryption algorithms or Diffie-Hellman exchanges can be used to
+negotiate shared secrets and authenticate certificates. On the
+symmetric side, stream ciphers (both native ones and block ciphers in
+a mode of operation) are used to encrypt the actual data being
+transmitted, and MAC algorithms are used to authenticate that data.
 
 TLS is the world's most common cryptosystem, and hence probably also
 the most studied. Over the years, many flaws have been discovered in
