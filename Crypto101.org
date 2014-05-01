@@ -88,6 +88,18 @@ This book hopes to be a bridge: to teach everyday programmers from any
 field or specialization to understand just enough cryptography to do
 their jobs, or maybe just satisfy their appetite.
 
+** Advanced sections
+
+This book is intended as a practical guide to cryptography for
+programmers. Some sections go into more depth than they need to in
+order to achieve that goal. They're in the book anyway, just in case
+you're curious; but I generally recommend skipping these sections.
+They'll be marked like this:
+
+#+BEGIN_LATEX
+\advanced
+#+END_LATEX
+
 ** Development
 
 The entire Crypto 101 project is publicly developed on Github under the

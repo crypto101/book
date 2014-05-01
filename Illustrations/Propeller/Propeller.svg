@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg548"
+   height="377.26587"
+   width="497.22202"
+   version="1.1"
+   inkscape:version="0.48.2 r9819"
+   sodipodi:docname="Propeller.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="640"
+     inkscape:window-height="480"
+     id="namedview25"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="0.472"
+     inkscape:cx="248.07945"
+     inkscape:cy="192.09023"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg548" />
+  <defs
+     id="defs550">
+    <filter
+       id="filter3232"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         id="feGaussianBlur3234"
+         stdDeviation="1.8045012" />
+    </filter>
+    <filter
+       id="filter3308"
+       y="-0.098525003"
+       width="1.2614"
+       x="-0.13071001"
+       height="1.197"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         id="feGaussianBlur3310"
+         stdDeviation="4.7896562" />
+    </filter>
+    <filter
+       id="filter3344"
+       y="-0.17763001"
+       width="1.0456001"
+       x="-0.022823"
+       height="1.3552999"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         id="feGaussianBlur3346"
+         stdDeviation="1.9290742" />
+    </filter>
+    <filter
+       id="filter3452"
+       y="-0.10691"
+       width="1.665"
+       x="-0.33248001"
+       height="1.2138"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         id="feGaussianBlur3454"
+         stdDeviation="1.6633963" />
+    </filter>
+    <filter
+       id="filter3504"
+       y="-0.42555001"
+       width="1.0474"
+       x="-0.023724999"
+       height="1.8511"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         id="feGaussianBlur3506"
+         stdDeviation="2.0981111" />
+    </filter>
+  </defs>
+  <path
+     id="path597"
+     d="m 57.299446,319.38563 c 0,0 51.270004,-264.280003 185.620004,-267.810003 152.91,4.41 209.48,252.790003 212.13,267.810003 -60.11,47.73 -262.52,90.16 -397.750004,0 z"
+     inkscape:connector-curvature="0"
+     style="fill:#006cc1;fill-rule:evenodd;stroke:#000000;stroke-width:10;stroke-linejoin:round" />
+  <path
+     id="path598"
+     d="m 162.47945,361.81563 c -10.01,-164.4 66.59,-304.940003 78.67,-310.250003 16.79,2.66 124.63,205.070003 108.72,310.250003 -45.97,10.6 -134.35,15.91 -187.39,0 z"
+     inkscape:connector-curvature="0"
+     style="fill:#ffac00;fill-rule:evenodd;stroke:#000000;stroke-width:10;stroke-linejoin:round" />
+  <path
+     id="path599"
+     d="m 5.0148456,38.745627 c -1.7677,19.45 154.8100044,32.27 211.3800044,24.32 16.79,-7.08 30.94,-10.61 48.61,-0.89 68.95,15.91 230.7,8.84 227.16,-16.79 -17.68,-22.984 -162.63,-20.332 -231.58,-7.07 -8.84,5.3 -23.86,9.72 -44.19,-2.65 -14.14,-9.728 -205.350004,-17.861 -211.3800044,3.08 z"
+     inkscape:connector-curvature="0"
+     style="fill:#ffed00;fill-rule:evenodd;stroke:#000000;stroke-width:10;stroke-linejoin:round" />
+  <path
+     id="path600"
+     d="m 226.11945,42.735627 c -1.77,9.72 25.63,11.49 35.36,3.53 5.3,-52.148 -30.94,-56.567 -35.36,-3.53 z"
+     inkscape:connector-curvature="0"
+     style="fill:#ac00ff;fill-rule:evenodd;stroke:#000000;stroke-width:10;stroke-linejoin:round" />
+  <path
+     id="path601"
+     d="M 61.719446,315.85563 C 90.887446,183.26563 158.94945,86.045627 188.11945,74.555627 43.159446,233.64563 155.40945,386.56563 61.719446,315.85563 z"
+     inkscape:connector-curvature="0"
+     style="fill:#ffffff;fill-opacity:0.5;fill-rule:evenodd;filter:url(#filter3232)" />
+  <path
+     id="path602"
+     d="m 242.02945,10.027627 c -7.95,8.839 -15.02,36.238 -9.72,35.358 20.33,9.72 2.65,-18.564 9.72,-35.358 z"
+     inkscape:connector-curvature="0"
+     style="fill:#ffffff;fill-opacity:0.49803999;fill-rule:evenodd;filter:url(#filter3452)" />
+  <path
+     id="path603"
+     d="m 359.58945,353.85563 c 50.38,-40.66 63.64,-98.99 60.99,-116.67 7.95,13.26 36.24,72.48 23.86,82.2 -15.02,9.72 -35.35,22.1 -84.85,34.47 z"
+     inkscape:connector-curvature="0"
+     style="fill-opacity:0.25;fill-rule:evenodd;filter:url(#filter3308)" />
+  <path
+     id="path604"
+     d="m 269.42945,42.735627 c -5.3,-4.42 178.55,-21.217 212.13,1.76 -51.26,-11.487 -152.02,-7.07 -212.13,-1.76 z"
+     inkscape:connector-curvature="0"
+     style="fill-opacity:0.30038003;fill-rule:evenodd;filter:url(#filter3504)" />
+  <path
+     id="path605"
+     d="m 11.052446,35.365627 c -15.0260004,7.07 136.410004,37.42 201.810004,21.51 -84.85,-4.42 -124.910004,3.23 -201.810004,-21.51 z"
+     inkscape:connector-curvature="0"
+     style="fill:#ffffff;fill-opacity:0.77185998;fill-rule:evenodd;filter:url(#filter3344)" />
+  <metadata
+     id="metadata23">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/publicdomain/" />
+        <dc:publisher>
+          <cc:Agent
+             rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title>Propeller hat</dc:title>
+        <dc:date>2009-03-09T13:26:48</dc:date>
+        <dc:description>Propeller cap</dc:description>
+        <dc:source>http://openclipart.org/detail/21986/propeller-hat-by-nicubunu</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>nicubunu</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>cartoon</rdf:li>
+            <rdf:li>clip art</rdf:li>
+            <rdf:li>clipart</rdf:li>
+            <rdf:li>geek</rdf:li>
+            <rdf:li>hat</rdf:li>
+            <rdf:li>image</rdf:li>
+            <rdf:li>media</rdf:li>
+            <rdf:li>play</rdf:li>
+            <rdf:li>playing</rdf:li>
+            <rdf:li>png</rdf:li>
+            <rdf:li>propeller</rdf:li>
+            <rdf:li>public domain</rdf:li>
+            <rdf:li>svg</rdf:li>
+            <rdf:li>toy</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/publicdomain/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>

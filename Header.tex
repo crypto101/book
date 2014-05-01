@@ -8,6 +8,16 @@
 \usepackage{setspace}
 \usepackage{csquotes}
 
+% Colors, links, syntax highlighting
+\usepackage[dvipsnames,table]{xcolor}
+\hypersetup{colorlinks, linkcolor=Sepia, citecolor=Periwinkle}
+\usepackage{minted}
+\usepackage[acronym,toc]{glossaries}
+\include{Glossary}
+\makeglossaries
+\usepackage{makeidx}
+\makeindex
+
 % Localization
 \usepackage{polyglossia}
 \setdefaultlanguage{english}
@@ -26,6 +36,8 @@
 \usepackage{subcaption}
 \usepackage{array}
 \usepackage{calc}
+\usepackage{framed}
+\usepackage{wrapfig}
 \newcolumntype{C}[1]{>{\centering\arraybackslash$}p{#1}<{$}}
 \usepackage[export]{adjustbox}
 
@@ -44,15 +56,24 @@
   \end{figure}
 }
 
-% Colors, links, syntax highlighting
-\usepackage[dvipsnames,table]{xcolor}
-\hypersetup{colorlinks, linkcolor=Sepia, citecolor=Periwinkle}
-\usepackage{minted}
-\usepackage[acronym,toc]{glossaries}
-\include{Glossary}
-\makeglossaries
-\usepackage{makeidx}
-\makeindex
+% Special subsection commands
+\definecolor{shadecolor}{HTML}{AABAD1}
+\DeclareDocumentCommand{\advanced}{
+   o     % extra caption, optional
+  }{
+  \begin{shaded}
+      \begin{wrapfigure}{l}{.2\linewidth}
+          \vspace{-8pt}
+          \includegraphics[width=\linewidth]{./Illustrations/Propeller/Propeller.pdf}
+      \end{wrapfigure}
+
+      \noindent This is an optional, in-depth section. It almost
+      certainly won't help you write better software, so feel free to
+      skip it. It is only here to satisfy your inner geek's curiosity.
+
+      \IfValueTF{#1}{\caption{#1}}{}
+  \end{shaded}
+}
 
 % Chapter markup
 \usepackage{tikz, blindtext}
