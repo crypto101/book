@@ -5718,7 +5718,8 @@ exponentiation, is surprisingly terse:
 #+BEGIN_SRC python
   def montgomery(x, exponent, modulus):
       x1, x2 = x, x ** 2
-      for bit in bits(exponent):
+      high_bit, *remaining_bits = bits(exponent)
+      for bit in remaining_bits:
           if bit == 0:
               x2 = x1 * x2
               x1 = x1 ** 2
@@ -5733,7 +5734,9 @@ exponentiation, is surprisingly terse:
 This code block doesn't show the definition of ~bits~: it produces the
 binary expansion of its argument. Python doesn't provide that by
 default; ~bin~ is close, but that produces a string: ~bin(100)~
-evaluates to ~0b1100100~.
+evaluates to ~0b1100100~. The ~a, *b = bits(...)~ construct assigns
+the first item in ~bits(...)~ to ~a~, and all remaining bits to ~b~,
+effectively just skipping the first bit.
 
 The important thing to note here is that no matter what the particular
 value of the exponent is, there is one squaring, one multiplication,
