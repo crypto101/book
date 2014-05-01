@@ -5597,10 +5597,9 @@ for any abelian group.]
 
 **** Deriving the ladder
 
-In this subsection, we'll see how you can discover this algorithm.
-This requires a decent bit of math; if you're not really interested in
-how you get to a Montgomery ladder and just want to see how it works,
-feel free to skip this.
+#+BEGIN_LATEX
+  \advanced[This section involves a good deal of arithmetic tricks. You might want to get out some paper and pencil to follow along.]
+#+END_LATEX
 
 Like with exponentiation by squaring, we start by looking at the
 binary expansion of the exponent $k$. Generally, any $k$ can be
