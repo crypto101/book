@@ -4104,10 +4104,10 @@ assumed that they're available and waved our hands vigorously around
 those parts. In this chapter, we'll go more in depth about the
 importance and mechanics of random numbers in cryptographic systems.
 
-Producing random numbers is a fairly intricate process. What's worse
-is that, like so many cryptographic systems gone wrong, to the
-untrained eye, getting it wrong looks exactly like getting it right.
-# **HMM** That was a syntactically "abusive" sentence - only after I put the commas right, I found that there was one "that" too much :)
+Producing random numbers is a fairly intricate process. Like with so
+many other things in cryptography, it's quite easy to get it
+completely wrong but have everything /look/ completely fine to the
+untrained eye.
 
 There are three categories of random number generation that we'll
 consider separately:
@@ -4213,12 +4213,10 @@ can produce high-quality random numbers. For most practical
 applications, thermal noise numbers are quite high quality and
 relatively unbiased.
 
-TODO: we've never actually explained the word entropy! "resistance an
-attacker perceives" is necessary in a good definition!
+TODO: we've never actually explained the word entropy; "resistance an
+attacker perceives" is necessary in a good definition
 
 TODO: explain synchronous stream ciphers as CSPRNGs
-
-# **HMM** I'd suggest that the level-2 headers follow the three items in introduction - therefore I changed some header levels from here on.
 
 *** Yarrow
 
