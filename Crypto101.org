@@ -3624,7 +3624,7 @@ separately:
 *** <<<OCB mode>>>
 
 #+BEGIN_LATEX
-\advanced[Usually, you will want to use a much more high level cryptosystem, such as PGP, NaCl or TLS.]
+\advanced[Usually, you will want to use a much more high level cryptosystem, such as OpenPGP, NaCl or TLS.]
 #+END_LATEX
 
 OCB mode is an \gls{AEAD} mode of operation. It is one of the earliest
@@ -3672,7 +3672,7 @@ have significantly impacted how much OCB mode is used in the field.
 *** <<<GCM mode>>>
 
 #+BEGIN_LATEX
-\advanced[Usually, you will want to use a much more high level cryptosystem, such as PGP, NaCl or TLS.]
+\advanced[Usually, you will want to use a much more high level cryptosystem, such as OpenPGP, NaCl or TLS.]
 #+END_LATEX
 
 GCM mode is an \gls{AEAD mode} with an unfortunate case of RAS
