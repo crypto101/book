@@ -3353,13 +3353,13 @@ next few sections. There are no good reasons not to use them.
 
 *** <<<HMAC>>>
 
-HMAC is a standard to produce a MAC with a cryptographic hash function
-as a parameter. It was introduced in 1996 in a paper by Bellare,
-Canetti and Krawczyk. Many protocols at the time implemented their own
-attempt at message authentication using hash functions. Most of these
-attempts failed. The goal of that paper specifically was to produce a
-provably secure MAC that didn't require anything beyond a secret key
-and a hash function.
+\gls{HMAC} is a standard to produce a MAC with a cryptographic hash
+function as a parameter. It was introduced in 1996 in a paper by
+Bellare, Canetti and Krawczyk. Many protocols at the time implemented
+their own attempt at message authentication using hash functions. Most
+of these attempts failed. The goal of that paper specifically was to
+produce a provably secure MAC that didn't require anything beyond a
+secret key and a hash function.
 
 One of the nice features of HMAC is that it has a fairly strong
 security proof. As long as the underlying hash function is a
@@ -4006,8 +4006,8 @@ solutions did not have the extra provisions HKDF does, such as
 in this section); and that's only in the best case scenario where the
 KDF wasn't fundamentally broken to begin with.
 
-HKDF is based on HMAC. Like HMAC, it is a generic construction that
-uses hash functions, and can be built using any cryptographically
+HKDF is based on \gls{HMAC}. Like HMAC, it is a generic construction
+that uses hash functions, and can be built using any cryptographically
 secure hash function you want.
 
 HKDF consists of two phases. In the first phase, called the
@@ -4021,7 +4021,7 @@ The extraction phase is responsible for extracting a small amount of
 data with a high entropy content from a potentially large amount of
 data with a smaller entropy density.
 
-The extraction phase just uses HMAC with a salt:
+The extraction phase just uses \gls{HMAC} with a salt:
 
 #+BEGIN_SRC python
   def extract(salt, data):
@@ -4328,7 +4328,7 @@ pseudorandom number generators. This document specified a number of
 algorithms, based on different cryptographic primitives:
 
 1. Cryptographic hash functions
-2. HMAC
+2. \gls{HMAC}
 3. Block ciphers
 4. Elliptic curves
 
@@ -4338,12 +4338,12 @@ expected to be state-of-the-art, while still staying conservative.
 Elliptic curves had been considered before in an academic context, but
 that was a far cry from being suggested as a standard for common use.
 
-There is a second reason elliptic curves seem strange. HMAC and block
-ciphers are obviously symmetric algorithms. Hash functions have their
-applications in asymmetric algorithms such as digital signatures, but
-aren't themselves asymmetric. Elliptic curves, on the other hand, are
-exclusively used for asymmetric algorithms: signatures, key exchange,
-encryption.
+There is a second reason elliptic curves seem strange. \gls{HMAC} and
+block ciphers are obviously symmetric algorithms. Hash functions have
+their applications in asymmetric algorithms such as digital
+signatures, but aren't themselves asymmetric. Elliptic curves, on the
+other hand, are exclusively used for asymmetric algorithms:
+signatures, key exchange, encryption.
 
 That said, the choice didn't come entirely out of the blue. A choice
 for a cryptographically secure pseudorandom number generator with a
@@ -4354,10 +4354,11 @@ magnitude slower than its peers presented in the same standard. The
 idea is that the extra confidence inspired by the stronger
 mathematical guarantees is worth the performance penalty. For example,
 we're fairly confident that factoring numbers is hard, but we're a lot
-less sure about our hash functions and ciphers. RSA came out in 1977
-and has stood the test of time quite well since then. \gls{DES} came
-out two years later, and is now considered completely broken. MD4 and
-MD5 came out over a decade later, and are completely broken as well.
+less sure about our hash functions and ciphers. \gls{RSA} came out in
+1977 and has stood the test of time quite well since then. \gls{DES}
+came out two years later, and is now considered completely broken. MD4
+and MD5 came out over a decade later, and are completely broken as
+well.
 
 The problem is, though, that the standard didn't actually provide the
 security proof. The standard specifies the generator but then merely
@@ -4898,8 +4899,8 @@ even sign these client certificates to authenticate them.
 
 Historically, the most common way to agree on the pre-master secret is
 for the client to select a random number and encrypt it, typically
-using RSA. This has a few nice properties. For example, it means the
-server can make due with less entropy: since the random bits are
+using \gls{RSA}. This has a few nice properties. For example, it means
+the server can make due with less entropy: since the random bits are
 handed to the server by the client, the server doesn't need to produce
 any cryptographically random bits. It also makes the handshake
 slightly faster, since there's no need for back-and-forth
@@ -5291,7 +5292,7 @@ TODO: Explain (https://otr.cypherpunks.ca/Protocol-v3-4.0.0.html), #33
 ** Modular arithmetic<<Modular arithmetic>>
 
 Modular arithmetic is used for many public key cryptosystems,
-including \gls{public-key encryption} algorithms like RSA and
+including \gls{public-key encryption} algorithms like \gls{RSA} and
 \gls{key exchange} protocols like Diffie-Hellman.
 
 Modular arithmetic is something most people actually already
@@ -5636,12 +5637,12 @@ Filling these back in to our old equation:
 
 This trick is particularly interesting when the exponent is a very
 large number. That is the case in many cryptographic applications. For
-example, in RSA decryption, the exponent is the private key $d$, which
-is usually more than a thousand bits long. Keep in mind that this
-method will still leak timing information, so it's only suitable for
-offline computation. Modular exponentiation can also be computed using
-a technique called a Montgomery ladder, which we'll see in the next
-section.
+example, in \gls{RSA} decryption, the exponent is the private key $d$,
+which is usually more than a thousand bits long. Keep in mind that
+this method will still leak timing information, so it's only suitable
+for offline computation. Modular exponentiation can also be computed
+using a technique called a Montgomery ladder, which we'll see in the
+next section.
 
 Many programming languages provide access to specific modular
 exponentiation functions. For example, in Python, ~pow(e, x, m)~
@@ -5653,8 +5654,8 @@ performs efficient modular exponentiation. However, the expression
 As we mentioned before, the exponentiation by squaring algorithm is
 simple and fast, but the time it takes to complete depends on the
 value of the exponent. That's bad, because the exponent is usually a
-secret value, such as a Diffie-Hellman secret or the RSA decryption
-exponent $d$.
+secret value, such as a Diffie-Hellman secret or the private exponent
+$d$ in \gls{RSA}.
 
 The Montgomery ladder is an algorithm that resolves this by
 guaranteeing the same number of operations irrespective of the
