@@ -3623,6 +3623,10 @@ separately:
 
 *** <<<OCB mode>>>
 
+#+BEGIN_LATEX
+\advanced[Usually, you will want to use a much more high level cryptosystem, such as PGP, NaCl or TLS.]
+#+END_LATEX
+
 OCB mode is an \gls{AEAD} mode of operation. It is one of the earliest
 developed \glspl{AEAD mode}.
 
@@ -3667,8 +3671,12 @@ have significantly impacted how much OCB mode is used in the field.
 
 *** <<<GCM mode>>>
 
+#+BEGIN_LATEX
+\advanced[Usually, you will want to use a much more high level cryptosystem, such as PGP, NaCl or TLS.]
+#+END_LATEX
+
 GCM mode is an \gls{AEAD mode} with an unfortunate case of RAS
-syndrome (redundant acronym syndrome): GCM itself stands for "Galois
+(redundant acronym syndrome) syndrome: GCM itself stands for "Galois
 Counter Mode". It is formalized in a NIST Special
 Publication\cite{gcm} and roughly boils down to a combination of
 classical CTR mode with a \gls{Carter-Wegman MAC}. That MAC can be
