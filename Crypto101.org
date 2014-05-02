@@ -5694,10 +5694,8 @@ The Montgomery ladder is an algorithm that resolves this by
 guaranteeing the same number of operations irrespective of the
 particular value of the exponent. It was originally applied for
 efficient scalar multiplications over elliptic curves, but the
-mathematics works for many other systems. [fn::Specifically, it works
-for any abelian group.]
-
-TODO: cite Joye et al
+mathematics works for many other systems: specifically, for any
+abelian group. \cite{montgomerypowerladder}
 
 **** Deriving the ladder
 
