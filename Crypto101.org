@@ -5061,7 +5061,7 @@ Once they have that first byte, they go on to the next one, and so
 forth, until they discover the entire secret.
 
 This attack is particularly interesting for a number of reasons. Not
-only is it a completely new *class* of attack, widely applicable to
+only is it a completely new /class/ of attack, widely applicable to
 many cryptosystems, but compressing the plaintext prior to encryption
 was actively recommended by existing cryptographic literature. It
 doesn't require any particularly advanced tools: you only need to
