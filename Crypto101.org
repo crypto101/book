@@ -3202,11 +3202,10 @@ out of all of these, encrypt-then-authenticate is unequivocally the
 best option. It's so emphatically the best option that Moxie
 Marlinspike, a well-respected information security researcher, has a
 principle called "The Cryptographic Doom Principle" for any system
-that does /not/ follow this pattern \cite{moxie:doom}. (More
-accurately, Moxie claims that any system that does anything before
-checking the MAC is doomed. Both authenticate-and-encrypt and
-authenticate-then-encrypt require you to decrypt something before you
-can verify the authentication.)
+that does /not/ follow this pattern \cite{moxie:doom}. Moxie claims
+that any system that does anything before checking the MAC is doomed.
+Both authenticate-and-encrypt and authenticate-then-encrypt require
+you to decrypt something before you can verify the authentication.
 
 **** Authenticate-then-encrypt
 
