@@ -5003,7 +5003,7 @@ distinct categories:
 Unfortunately, SSL/TLS has had many successful attacks in both
 categories. This section is particularly about the latter.
 
-**** <<<CRIME>>> and BREACH
+**** <<<CRIME>>> and <<<BREACH>>>
 
 CRIME[fn::Compression Ratio Info-leak Made Easy] is an attack by the
 authors of BEAST. It's an innovative side channel attack that relies
