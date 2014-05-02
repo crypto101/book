@@ -5044,8 +5044,9 @@ requests. The attacker needs some way to inject their guess of the
 secret so that their guess occurs in the plaintext, such as the query
 parameters[fn::The key-value pairs in a URL after the question mark,
 e.g. the =x=1&y=2= in =http://example.test/path?x=1&y=2=.]. Usually,
-they can prefix their guess with something known, for example, if the
-CSRF token is:
+they can prefix their guess with something known. Suppose they're
+trying to intercept a authentication token being supplied in the body
+of the web page:
 
 #+BEGIN_SRC html
 <input type="hidden"
