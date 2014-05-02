@@ -5084,7 +5084,7 @@ CSS) and that only operate using an API, say, JSON over REST, are
 particularly easy to immunize against this attack. Just disable
 compression on the channel that actually contains secrets. It makes
 things slower, of course, but at least the majority of data can still
-be served over a CDN.
+be served over a \gls{CDN}.
 
 *** HSTS
 
