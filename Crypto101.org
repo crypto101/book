@@ -2800,8 +2800,13 @@ fixed size, but there's an infinite amount of inputs.]. A good hash
 function is also quick to compute.
 
 Since this is a book on cryptography, we're particularly interested
-in /cryptographic/ hash functions. Those are hash functions with much
-stronger properties. For a cryptographic hash function, we want it to
+# **HMM** I think that the use of crypto hash functions should be mad explicitly here. Otherwise, the chapter goes about like this: We are told their properties; we are told various sorts (MD5, ...); we are told where NOT to use them (Password storage); we are told about length extension attacks - but we still have not been told what they are for! (except in the "Remaining problems" section of the previous chapter - but I think this is not good enough. As a suggestion, I copied the sentence from there more or less verbatim and surrounded it with a few connecting phrases.
+in /cryptographic/ hash functions. These hash functions can be used
+to produce both signature schemes as well as message authentication
+schemes, which we already found to be necessary even when using
+perfect encryption schemes. To do their job properly,
+cryptographic hash functions have much stronger properties than
+standard hash functions. For a cryptographic hash function, we want it to
 be impossibly hard to:
 
 1. modify a message without changing the hash.
@@ -2829,6 +2834,16 @@ two messages $m, m^{\prime}$ that have the same hash value. This is
 called /collision resistance/. Because collision resistance is a
 stronger form of second pre-image resistance, they're sometimes also
 called weak and strong collision resistance.
+
+# **HMM** The avalanche effect explanation says "changing even a single bit will ... (change much more)". In the "real world" (as opposed to mathematics) this seems to imply that changing more bits will certainly change even more. To guard against this fallacy, here is a suggestion for an additional paragraph. I first wanted to put it immediately after the "first property" paragraph, but to really explain how all works together, it needs the third property - so I'd like to see it (or something like it) at this place.
+The avalanche effect does /not/ mean that /every/ change will affect
+many bits. Indeed, as there are certainly different messages that hash
+to the same digest (see the footnote on the previous page), there are
+obviously changes that will not affect even a /single bit/ of the
+digest. But the third property guarantees that it's virtually
+impossible to find such a "change"; and the first property
+guarantees that a small change like adding or removing a few words 
+never yields equal or almost equal digests.
 
 TODO: Maybe link to
 http://www.cs.ucdavis.edu/~rogaway/papers/relates.pdf for further reading
