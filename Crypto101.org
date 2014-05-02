@@ -3218,6 +3218,16 @@ decrypt before you can do anything, but to many cryptographers,
 including the designers of TLS, this did not appear to pose a
 problem.
 
+In fact, prior to rigorous comparative study of different composition
+mechanisms, many preferred this setup. In a critique of IPSec,
+Schneier and Ferguson, two veteran cryptographers, considered IPSec's
+use of encrypt-then-authenticate was a flaw, preferring TLS's
+authenticate-then-encrypt. \cite{schneier:ipsec} While they may have
+had a plausible (albeit mostly heuristic) argument for the time, this
+criticism is completely superseded by the /provable/ security of
+encrypt-then-authenticate schemes. \cite{krawczyk:order}
+\cite{bellare:maccomposition}
+
 TODO: Explain Vaudenay CBC attack \cite{vaudenay:cbcpadding}
 
 **** Authenticate-and-encrypt
