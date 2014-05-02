@@ -5054,7 +5054,15 @@ of the web page:
        value="TOKEN_VALUE_HERE">
 #+END_SRC
 
-... they can prefix the guess with the known part of that.
+... they can prefix the guess with the known part of that. In this
+case, it's a \gls{CSRF} token; a random token selected by the server
+and given to the client. This token is intended to prevent malicious
+third party websites from using the ambient authority present in the
+browser (such as session cookies) to make authenticated requests.
+Without a CSRF token, a third party website might just make a request
+to the vulnerable website; the web browser will provide the stored
+cookie, and the vulnerable website will mistake that for an
+authenticated request.
 
 Then, they make a bunch of guesses, byte per byte. When one of their
 guesses is correct, the ciphertext will be just a little shorter.
