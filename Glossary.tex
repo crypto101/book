@@ -4,6 +4,7 @@
 \newacronym{CBC}{CBC}{cipher block chaining}
 \newacronym{CDN}{CDN}{content distribution network}
 \newacronym{CSPRNG}{CSPRNG}{cryptographically secure pseudorandom number generator}
+\newacronym{CSRF}{CSRF}{\gls{cross-site request forgery}}
 \newacronym{DES}{DES}{Data Encryption Standard}
 \newacronym{FIPS}{FIPS}{Federal Information Processing Standards}
 \newacronym{GCM}{GCM}{Galois Counter Mode}
@@ -138,3 +139,9 @@
   protocol that intends to mimic the properties of a real-live private
   conversation. Piggy-backs onto existing instant messaging
   protocols}}
+\newglossaryentry{cross-site request forgery}{
+  name=cross-site request forgery, description={Kind of attack where a
+  malicious website tricks the browser into making requests to another
+  website. Can be prevented by properly authenticating requests
+  instead of relying on ambient authority such as session cookies}
+}
