@@ -2830,6 +2830,13 @@ called /collision resistance/. Because collision resistance is a
 stronger form of second pre-image resistance, they're sometimes also
 called weak and strong collision resistance.
 
+These concepts are often named from the point of view of an attack,
+rather than the resistance to an attack. For example, you'll often
+hear about a <<<collision attack>>>, which is an attack that attempts
+to generate a hash collision, or a <<<second pre-image attack>>>,
+which attempts to find a second pre-image that hashes to the same
+value as a given pre-image, et cetera.
+
 TODO: Maybe link to
 http://www.cs.ucdavis.edu/~rogaway/papers/relates.pdf for further reading
 
