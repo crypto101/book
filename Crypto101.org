@@ -4986,10 +4986,6 @@ discrete log problem more efficiently than thought possible, combined
 with many data centers filled with number-crunching computers, it's
 possible that they'll break the key exchange itself.
 
-*** Session resumption
-
-TODO: explain session resumption
-
 *** Attacks
 
 As with most attacks, attacks on TLS can usually be grouped into two
