@@ -4144,9 +4144,13 @@ which block is currently being produced.
           if current_length >= desired_length:
               break
       else:
+          # This block is executed when the for loop *isn't* broken out
+          # of by the ``break`` statement, which happens when we run out
+          # of ``expand`` outputs.
           raise RuntimeError("Desired length too long")
 
       return "".join(outputs)[:desired_length]
+
 #+END_SRC
 
 Like the salt in the extraction phase, the "info" parameter is
