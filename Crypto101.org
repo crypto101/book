@@ -4249,11 +4249,11 @@ across the resistor).
 
 #+BEGIN_LATEX
 \[
-i = \sqrt{\frac{4 k_B T \Delta f}{R}}
+i = \sqrt{\frac{4 k_B T \Delta_f}{R}}
 \]
 
 \[
-v = 4 k_B T \Delta f R
+v = \sqrt{4 k_B T R \Delta_f }
 \]
 #+END_LATEX
 
