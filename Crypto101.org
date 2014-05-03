@@ -5118,7 +5118,7 @@ compression on the channel that actually contains secrets. It makes
 things slower, of course, but at least the majority of data can still
 be served over a \gls{CDN}.
 
-*** HSTS
+*** <<<HSTS>>>
 
 \Gls{HSTS} is a way for web servers to communicate that what they're
 saying should only ever be transferred over a secure transport. In
