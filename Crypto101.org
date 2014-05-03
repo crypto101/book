@@ -5085,8 +5085,8 @@ BREACH, there's a number of possible options:
 
  * Don't allow the user to inject arbitrary data into the request.
  * Don't put secrets in the response bodies.
- * Regenerate secrets such as \gls{CSRF tokens liberally, for example,
-   each request.
+ * Regenerate secrets such as \gls{CSRF} tokens liberally, for
+   example, each request.
 
 It's a bad idea to simply unconditionally turn off HTTP compression.
 While it does successfully stop the attack, HTTP compression is a
