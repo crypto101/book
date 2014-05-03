@@ -5060,10 +5060,24 @@ to the vulnerable website; the web browser will provide the stored
 cookie, and the vulnerable website will mistake that for an
 authenticated request.
 
-Then, they make a bunch of guesses, byte per byte. When one of their
-guesses is correct, the ciphertext will be just a little shorter.
-Once they have that first byte, they go on to the next one, and so
-forth, until they discover the entire secret.
+The attacker makes guesses at the value of the token, starting with
+the first byte, and moving on one byte at a time.[fn:: They may be
+able to move more quickly than just one byte at a time, but this is
+the simplest way to reason about.] When they guess a byte correctly,
+the ciphertext will be just a little shorter: the compression
+algorithm will notice that it's seen this pattern before, and be able
+to compress the plaintext before encrypting. The plaintext, and hence
+the compressed ciphertext, will therefore be smaller. They can do this
+directly when the connection is using a stream cipher or a similar
+construction such as CTR mode, since they produce ciphertexts that are
+exactly as long as the plaintexts. If the connection is using a
+block-oriented mode such as CBC mode, the difference might get lost in
+the block padding. The attacker can solve that by simply controlling
+the prefix so that the difference in ciphertext size will be an entire
+block.
+
+Once they've guessed one byte correctly, they can move on to the next
+byte, until they recover the entire token.
 
 This attack is particularly interesting for a number of reasons. Not
 only is it a completely new /class/ of attack, widely applicable to
