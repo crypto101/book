@@ -2999,15 +2999,22 @@ Perhaps that's why broken password storage schemes are still the norm.
 
 **** Modern attacks on weak password systems
 
-To a modern attack, salts quite simply don't matter. Modern attacks
-take advantage of the fact that the hash function being used is easy
-to compute. Using faster hardware, in particular video cards, we can
+To a modern attack, salts quite simply don't help. Modern attacks take
+advantage of the fact that the hash function being used is easy to
+compute. Using faster hardware, in particular video cards, we can
 simply enumerate all of the passwords, regardless of salt.
 
 TODO: more concrete performance numbers about GPUs
 
 Salts may make precomputed attacks impossible, but they do very little
-against an attacker that actually knows the salt.
+against an attacker that actually knows the salt. One approach you
+might be inclined to take is to attempt to hide the salt from the
+attacker. This typically isn't very useful: if an attacker can manage
+to access the database, attempts to hide the salt are unlikely to be
+successful. Like many ineffective home-grown crypto schemes, this only
+protects against an incredibly improbable event. It would be much more
+useful to just use a good password store to begin with, than trying to
+fix a broken one.
 
 **** So where do we go from here?
 
