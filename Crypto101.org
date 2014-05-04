@@ -2804,15 +2804,22 @@ Simple hash functions have many applications. Hash tables, a common
 data structure, rely on them. These simple hash functions really only
 guarantee one thing: for two identical inputs, they'll produce an
 identical output. Importantly, there's no guarantee that two identical
-outputs imply that the inputs were the same[fn::That would be
-impossible: there's only a finite amount of digests, since they're
-fixed size, but there's an infinite amount of inputs.]. A good hash
-function is also quick to compute.
+outputs imply that the inputs were the same. That would be impossible:
+there's only a finite amount of digests, since they're fixed size, but
+there's an infinite amount of inputs. A good hash function is also
+quick to compute.
 
 Since this is a book on cryptography, we're particularly interested
-in /cryptographic/ hash functions. Those are hash functions with much
-stronger properties. For a cryptographic hash function, we want it to
-be impossibly hard to:
+in /cryptographic/ hash functions. Cryptographic hash functions can be
+used to build secure (symmetric) message authentication algorithms,
+(asymmetric) signature algorithms, and various other tools such as
+random number generators. We'll see some of these systems in detail in
+future chapters.
+
+Cryptographic hash functions have much stronger properties than
+regular hash function, such as one that you might find in a hash
+table. For a cryptographic hash function, we want it to be impossibly
+hard to:
 
 1. modify a message without changing the hash.
 2. generate a message that has a given hash.
@@ -2821,8 +2828,12 @@ be impossibly hard to:
 The first property implies that cryptographic hash functions will
 exhibit something known as the "avalanche effect". Changing even a
 single bit in the input will produce an avalanche of changes through
-the entire digest: each bit of the digest will have a 50% chance of
-flipping.
+the entire digest: each bit of the digest will have approximately 50%
+chance of flipping. That doesn't mean that every change /will/ cause
+approximately half of the bits to flip, but the cryptographic hash
+function does guarantee that the odds of that happening are extremely
+large. More importantly it is impossibly hard to find such collisions
+or near-collisions.
 
 The second property, which states that it should be difficult to find
 a message $m$ that has a given hash value $h$, is called /pre-image
