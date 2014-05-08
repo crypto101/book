@@ -2,6 +2,8 @@
 if [ -z $ORG_DIR ]
 then
 ORG_DIR=`find $HOME/.emacs.d/elpa -type d -depth 1 -regex ".*org-[0-9]*"`
+
+set -e
 fi
 
 emacs -Q --batch \
