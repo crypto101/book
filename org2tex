@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
-if [ -z $ORG_DIR ]
-then
-ORG_DIR=`find $HOME/.emacs.d/elpa -type d -depth 1 -regex ".*org-[0-9]*"`
 
 set -e
+
+if [[ -z "${ORG_DIR}" ]]; then
+    ORG_DIR="$(find $HOME/.emacs.d/elpa -maxdepth 1 -type d -regex ".*org-[0-9]*")"
+    # -maxdepth *is* a GNUism, but it's been ported everywhere by now.
 fi
 
 emacs -Q --batch \
