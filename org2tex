@@ -7,9 +7,13 @@ if [[ -z "${ORG_DIR}" ]]; then
     # -maxdepth *is* a GNUism, but it's been ported everywhere by now.
 fi
 
-emacs -Q --batch \
-      --eval "(add-to-list 'load-path \"$ORG_DIR\")" \
-      --eval "(require 'org)" \
-      --eval "(setq org-latex-listings 'minted)" \
-      --eval "(setq org-confirm-babel-evaluate nil)" \
-      --visit=$1 --funcall org-latex-export-to-latex
+if [[ -d "$ORG_DIR" ]]; then
+    emacs -Q --batch \
+        --eval "(add-to-list 'load-path \"$ORG_DIR\")" \
+        --eval "(require 'org)" \
+        --eval "(setq org-latex-listings 'minted)" \
+        --eval "(setq org-confirm-babel-evaluate nil)" \
+        --visit="$1" --funcall org-latex-export-to-latex
+else
+    echo "No org-mode directory found."
+fi
