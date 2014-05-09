@@ -27,7 +27,7 @@
 #+LANGUAGE: en
 #+OPTIONS: H:5 ':t
 #+LATEX_CLASS: per-file-class
-#+LATEX_CLASS_OPTIONS: [11pt,ebook,table,dvipsnames]
+#+LATEX_CLASS_OPTIONS: [11pt,ebook,table,dvipsnames,oneside]
 #+LATEX_HEADER: \input{Header}
 
 #+BEGIN_LATEX
