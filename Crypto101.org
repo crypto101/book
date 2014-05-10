@@ -22,6 +22,9 @@
                  (opening-single-quote :utf-8 "‘" :html "&lsquo;" :latex "\\enquote*{" :texinfo "`")
                  (closing-single-quote :utf-8 "’" :html "&rsquo;" :latex "}" :texinfo "'")
                  (apostrophe :utf-8 "’" :html "&rsquo;")))
+
+  (delete '("AUTO" "inputenc" t) org-latex-default-packages-alist)
+
 #+END_SRC
 
 #+LANGUAGE: en
