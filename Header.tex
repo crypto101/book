@@ -7,9 +7,11 @@
 \usepackage{microtype}
 \usepackage{setspace}
 \usepackage{csquotes}
+\usepackage{ulem}
 
 % Colors, links, syntax highlighting
 \usepackage[dvipsnames,table]{xcolor}
+\usepackage{hyperref}
 \hypersetup{
     pdftitle={Crypto 101},
     pdfauthor={Laurens Van Houtven (lvh)},
@@ -29,21 +31,25 @@
 \setdefaultlanguage{english}
 
 % Mathematical symbols
-\usepackage{savesym}
-\savesymbol{iint}
-\savesymbol{iiint}
+%% \usepackage{savesym}
+%% \savesymbol{iint}
+%% \savesymbol{iiint}
 \usepackage{amsmath}
+\usepackage{amssymb}
 \newcommand\xor{\oplus}
 
 % Advanced command definitions
 \usepackage{xparse}
 
 % Figures and subfigures
+\usepackage{float}
+\usepackage{rotating}
 \usepackage{subcaption}
 \usepackage{array}
 \usepackage{calc}
 \usepackage{framed}
 \usepackage{wrapfig}
+\usepackage{longtable}
 \newcolumntype{C}[1]{>{\centering\arraybackslash$}p{#1}<{$}}
 \usepackage[export]{adjustbox}
 
