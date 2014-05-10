@@ -6,15 +6,15 @@
   (require 'cl) ; the find function is in the common lisp library
   (unless (find "per-file-class" org-latex-classes :key 'car :test 'equal)
     (add-to-list 'org-latex-classes
-             '("per-file-class"
-                "\\documentclass{memoir}"
-                ("\\part{%s}" . "\\part{%s}")
-                ("\\chapter{%s}" . "\\chapter*{%s}")
-                ("\\section{%s}" . "\\section*{%s}")
-                ("\\subsection{%s}" . "\\subsection*{%s}")
-                ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
+                 '("per-file-class"
+                   "\\documentclass{memoir}"
+                   ("\\part{%s}" . "\\part{%s}")
+                   ("\\chapter{%s}" . "\\chapter*{%s}")
+                   ("\\section{%s}" . "\\section*{%s}")
+                   ("\\subsection{%s}" . "\\subsection*{%s}")
+                   ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                   ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                   ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
   (add-to-list 'org-export-smart-quotes-alist
                '("en"
                  (opening-double-quote :utf-8 "“" :html "&ldquo;" :latex "\\enquote{" :texinfo "``")
