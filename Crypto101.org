@@ -583,49 +583,54 @@ We will contrast this with \gls{public-key encryption} algorithms,
 which have a distinct key for encryption and decryption, later in the
 book.
 
-#+BEGIN_LATEX
-\newcommand{\permutationimg}[1] {
-\begin{figure}[ht!]
-  \centering
-  \includegraphics[width=.3\linewidth]{./Illustrations/BlockCipher/Set#1.pdf}
-
-  \includegraphics[width=.2\linewidth]{./Illustrations/BlockCipher/Arrow#1.pdf}
-\end{figure}
-}
-#+END_LATEX
-
 A block cipher is a /keyed permutation/. It's a /permutation/, because
 the block cipher maps every possible block to some other block. It's
 also a /keyed/ permutation, because the key determines exactly which
 blocks map to which.
 
 We'll illustrate this by looking at a block cipher with a
-impractically tiny 3-bit block size, so $2^3 = 8$ possible blocks.
-Encryption would look like this:
+impractically tiny 4-bit block size, so $2^4 = 16$ possible blocks.
+Since each of those blocks maps to a hexadecimal digit, we'll
+represent the blocks by that digit. Figure \ref{fig:BlockCipherBlocks}
+illustrates the blocks that the cipher operates on.
 
 #+BEGIN_LATEX
-\permutationimg{Ek}
+\illustration{BlockCipher/AllNodes}[.85][All of the 16 nodes operated on by the block cipher. Each nodes is designated by a hexadecimal digit.][fig:BlockCipherBlocks]
 #+END_LATEX
 
-The points $a, b, c \ldots h$ are blocks. The arrows show which blocks
-map to which blocks: that the block at the start of the arrow,
-encrypted using $E$ under key $k$, is mapped to the block at the end
-of the arrow. For example, $E(k, a) = b$.
-
-When you're decrypting instead of encrypting, the block cipher just
-computes the inverse permutation. We get the same illustrations, with
-all the arrows going in the other direction:
+Once we select a secret key, the block cipher will use that to
+determine what the encryption of a given block is. We will illustrate
+that relationship with an arrow: the block at the start of the
+arrow, encrypted using $E$ under key $k$, is mapped to the block at
+the end of the arrow.
 
 #+BEGIN_LATEX
-\permutationimg{Dk}
+\illustration{BlockCipher/Encryption}[.85][An encryption permutation produced by the block cipher under a particular key $k$.][fig:BlockCipherEncryption]
+#+END_LATEX
+
+In figure \ref{fig:BlockCipherEncryption}, you'll notice that the
+permutation isn't just one big cycle: there's a large cycle of 8
+elements, two smaller cycles of 2 and 3 elements, and even a cycle of
+1 element (that is, an element that encrypts to itself). This is to be
+expected when selecting random permutations, and not necessarily a bug
+in the block cipher.
+
+When you're decrypting instead of encrypting, the block cipher just
+computes the inverse permutation. In figure
+\ref{fig:BlockCipherDecryption}, you can see that we get the same
+illustration, except that all the arrows are going in the other
+direction.
+
+#+BEGIN_LATEX
+\illustration{BlockCipher/Decryption}[.85][The decryption permutation produced by the block cipher under the same key $k$: the inverse of the encryption permutation, that is: all the arrows have been reversed.][fig:BlockCipherDecryption]
 #+END_LATEX
 
 The only way to know which block maps to which other block, is to know
 the key. A different key will lead to a completely different set of
-arrows, for example under $k^{\prime}$:
+arrows, as you can see in figure \ref{fig:BlockCipherEncryptionDifferentKey}.
 
 #+BEGIN_LATEX
-\permutationimg{Ekprime}
+\illustration{BlockCipher/Encryption2}[.85][An encryption permutation produced by the block cipher under some other key.][fig:BlockCipherEncryptionDifferentKey]
 #+END_LATEX
 
 Knowing a bunch of (input, output) pairs for a given key shouldn't
@@ -637,11 +642,11 @@ perfect block cipher, there's no easier way to decrypt a block other
 than to "brute-force" the key: i.e. just try every single one of them
 until you find the right one.
 
-Our toy illustration block cipher only has 3 bit blocks, or $2^3 = 8$
+Our toy illustration block cipher only has 4 bit blocks, or $2^4 = 16$
 possibilities. Real, modern block ciphers have much larger block
 sizes, such as 128 bits, or $2^{128}$ (slightly more than $10^{38.5}$)
 possible blocks. Mathematics tells us that there are $n!$ (pronounced
-/n factorial/) different permutations of an $n$ element set. It's
+"$n$ factorial") different permutations of an $n$ element set. It's
 defined as the product of all of the numbers from 1 up to and
 including $n$:
 
