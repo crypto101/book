@@ -2,9 +2,10 @@
  Crypto 101: the book
 ======================
 
-This is the source repository for Crypto 101, the introductory book
+This is the source repository for `Crypto 101`_, the introductory book
 about cryptography by lvh_.
 
+.. _`Crypto 101`: https://www.crypto101.io/
 .. _lvh: https://twitter.com/lvh
 
 License
