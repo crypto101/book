@@ -578,7 +578,7 @@ Or, in blocks:
 
 Block ciphers are an example of a \gls{symmetric-key encryption}
 scheme, also known as a \gls{secret-key encryption} scheme. This means
-that the same, secret key is used for both encryption and decryption.
+that the same secret key is used for both encryption and decryption.
 We will contrast this with \gls{public-key encryption} algorithms,
 which have a distinct key for encryption and decryption, later in the
 book.
@@ -588,8 +588,8 @@ the block cipher maps every possible block to some other block. It's
 also a /keyed/ permutation, because the key determines exactly which
 blocks map to which.
 
-We'll illustrate this by looking at a block cipher with a
-impractically tiny 4-bit block size, so $2^4 = 16$ possible blocks.
+We'll illustrate this by looking at a block cipher with an
+impractical, tiny 4-bit block size, so $2^4 = 16$ possible blocks.
 Since each of those blocks maps to a hexadecimal digit, we'll
 represent the blocks by that digit. Figure \ref{fig:BlockCipherBlocks}
 illustrates the blocks that the cipher operates on.
@@ -754,7 +754,7 @@ AES shifts the rows in the $4 \times 4$ array:
 MixColumns multiplies each column of the state with a fixed
 polynomial.
 
-ShiftRows and MixColumns are represent the diffusion properties of
+ShiftRows and MixColumns represent the diffusion properties of
 AES.
 
 #+BEGIN_LATEX
