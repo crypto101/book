@@ -18,6 +18,7 @@
 *.out
 *.pyg
 *.toc
+Crypto101.brf
 # Book, rendered or partially rendered
 Crypto101.tex
 Crypto101.pdf
