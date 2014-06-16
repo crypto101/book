@@ -671,13 +671,12 @@ as long as it doesn't sacrifice any of the above properties.
 
 *** <<<AES>>>
 
-The most common block cipher in current use is \gls{AES}, the Advanced
-Encryption Standard.
+The most common block cipher in current use is \gls{AES}.
 
 Contrary to its predecessor DES (which we'll look at in more detail in
 the next chapter), AES was selected through a public, peer-reviewed
 competition following an open call for proposals. This competition
-involved several rounds where all of the contestants where presented,
+involved several rounds where all of the contestants were presented,
 subject to extensive cryptanalysis, and voted upon. The AES process
 was well-received among cryptographers, and similar processes are
 generally considered to be the preferred way to select cryptographic
