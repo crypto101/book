@@ -4325,7 +4325,7 @@ TODO: explain synchronous stream ciphers as CSPRNGs
 *** Cryptographically secure pseudorandom generators
 
 While we'll see several examples of cryptographically secure
-pseudorandom generators in the next few chapters, keep in mind that
+pseudorandom generators in the next few sections, keep in mind that
 they are all just algorithms that /could/ be used. As an application
 developer, you should /never/ be making a choice between one of them.
 
