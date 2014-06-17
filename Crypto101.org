@@ -4346,14 +4346,6 @@ cryptosystem is completely and utterly broken.
 
 TODO: talk about the FUD in the Linux man page for urandom
 
-#+BEGIN_LATEX
-  \DeclareDocumentCommand{\csprngwarning}{}{
-    \advanced[Since this is a specific cryptographically secure
-      pseudorandom number generator algorithm, you don't actually need to
-      know how it works to write good software. Just use ~urandom~.]
-  }
-#+END_LATEX
-
 *** Yarrow
 
 #+BEGIN_LATEX
