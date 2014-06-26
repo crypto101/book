@@ -72,6 +72,14 @@ On Debian, you will need at *least* ``texlive-latex-recommended`` and
 
 .. _`TeX Live`: https://www.tug.org/texlive/
 
+potrace
+~~~~~~~
+
+potrace is responsible for turning some of the hand-drawn images into
+vector formats. It is available from most package sources, including
+Homebrew and Macports for OS X, and pretty much every Linux
+distribution's default package repository.
+
 Inkscape
 ~~~~~~~~
 
