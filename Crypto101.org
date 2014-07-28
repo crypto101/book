@@ -2988,13 +2988,13 @@ impossible.
 
 Many systems used a single salt for all users. While that prevented an
 ahead-of-time rainbow table attack, it still allowed attackers to
-attack all passwords at once they knew the value of the salt. An
-attacker would simply compute a single rainbow table for that salt,
-and compare the results with the hashed passwords from the database.
-While this would have been prevented by using a different salt for
-each user, systems that use a cryptographic hash with a per-user salt
-are still considered fundamentally broken today; they are just
-/harder/ to crack, but not at all secure.
+attack all passwords simultaneously, once they knew the value of the
+salt. An attacker would simply compute a single rainbow table for that
+salt, and compare the results with the hashed passwords from the
+database. While this would have been prevented by using a different
+salt for each user, systems that use a cryptographic hash with a
+per-user salt are still considered fundamentally broken today; they
+are just /harder/ to crack, but not at all secure.
 
 Perhaps the biggest problem with salts is that many programmers were
 suddenly convinced they were doing the right thing. They'd heard of
