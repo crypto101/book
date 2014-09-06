@@ -242,9 +242,10 @@ that performs XOR on the respective bits in a value.
 Python, for example, provides the ~^~ (caret) operator that performs
 bitwise XOR on integers. It does this by first expressing those two
 integers in binary[fn::Usually, numbers are already stored in binary
-internally, so this doesn't actually take any work.], and then
-performing XOR on their respective bits. Hence the name, /bitwise/
-XOR.
+internally, so this doesn't actually take any work. When you see a 
+number prefixed with "0b", the remaining digits are a binary representation.], 
+and then performing XOR on their respective bits. Hence the name, 
+/bitwise/ XOR.
 
 #+BEGIN_LATEX
 \begin{align*}
