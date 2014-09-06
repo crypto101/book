@@ -3776,7 +3776,15 @@ TODO (see #49)
 
 *** DSA
 
-TODO: intro (see #50)
+The Digital Signature Algorithm (DSA) is a US Federal Government standard
+for digital signatures. It was first proposed by the National Institute
+of Standards and Technology (NIST) in 1991, to be used in the Digital
+Signature Standard (DSS). The algorithm is attributed to David W. Kravitz,
+a former technical advisor at the NSA.
+
+DSA key generation happens in two steps. The first step is a choice of
+parameters, which can be shared between users. The second step is the
+generation of public and private keys for a single user.
 
 **** Parameter generation
 
