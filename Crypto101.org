@@ -3809,7 +3809,10 @@ Once we have parameters $(p, q, g)$, they can be shared between users.
 
 **** Key generation
 
-TODO: explain key generation (#159)
+Armed with parameters, it's time to compute public and private keys for an
+individual user. First select a random $x$ with $0 < x < q$. Next, calculate
+$y$ where $y = g^x mod p$. This delivers a public key $(p, q, g, y)$, and
+private key $x$.
 
 **** Signing a message
 
