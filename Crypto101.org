@@ -3788,7 +3788,24 @@ generation of public and private keys for a single user.
 
 **** Parameter generation
 
-TODO: explain parameter generation (see #51)
+We start by picking an approved cryptographic hash function $H$. We
+also pick a key length $L$ and an additional number $N$. While the original
+DSS specified that $L$ be between 512 and 1024, NIST now recommends a length
+of 3072 for keys with a security lifetime beyond 2030. As $L$ increases,
+so should $N$.
+
+Next we choose a prime $q$ of length $N$ bits; $N$ must be less than or
+equal to the length of the hash output. We also pick an $L$-bit prime $p$
+such that $p$-1 is a multiple of $q$.
+
+The last part is the most confusing. We have to find a number $g$ whose
+multiplicative order[fn::Given integer $a$ and positive integer $b$ with
+gcd$(a, b) = 1$, the multiplicative order of $a mod b$ is the smallest
+positive integer $k$ such that $a^k = 1 mod b$] $mod p$ is $q$. The easy
+way to do this is to set $g = 2^(p-1)/q mod p$. We can try another number
+greater than 2, and less than $p-1$, if $g$ comes out to equal 1.
+
+Once we have parameters $(p, q, g)$, they can be shared between users.
 
 **** Key generation
 
