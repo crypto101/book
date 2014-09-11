@@ -242,9 +242,9 @@ that performs XOR on the respective bits in a value.
 Python, for example, provides the ~^~ (caret) operator that performs
 bitwise XOR on integers. It does this by first expressing those two
 integers in binary[fn::Usually, numbers are already stored in binary
-internally, so this doesn't actually take any work. When you see a 
-number prefixed with "0b", the remaining digits are a binary representation.], 
-and then performing XOR on their respective bits. Hence the name, 
+internally, so this doesn't actually take any work. When you see a
+number prefixed with "0b", the remaining digits are a binary representation.],
+and then performing XOR on their respective bits. Hence the name,
 /bitwise/ XOR.
 
 #+BEGIN_LATEX
@@ -1921,12 +1921,11 @@ Unlike RC4, most modern stream ciphers provide a way to combine a
 long-term key with a \gls{nonce} (a number used once), to produce
 multiple different keystreams from the same long-term key. RC4, by
 itself, doesn't do that. The most common approach was also the
-simplest: concatenate[fn:: Here we use \| as the operator for 
-concatenation; this symbol is often seen as the "logical or" operator. 
-Other common symbols for concatenation include + (for some programming 
-languages) and a center dot (for formal languages).] 
-the long-term key $k$ with the nonce $n$: $k \| n$, taking advantage 
-of RC4's flexible key length requirements. In this context, concatenation 
+simplest: concatenate[fn:: Here we use \| as the operator for concatenation.
+Other common symbols for concatenation include $+$ (for some programming
+languages, such as Python) and \cdot (for formal languages).] 
+the long-term key $k$ with the nonce $n$: $k \| n$, taking advantage
+of RC4's flexible key length requirements. In this context, concatenation
 means the bits of $n$ are appended to the bits of $k$. This
 scheme meant attackers could recover parts of the combined key,
 eventually allowing them to slowly recover the long-term key from a
