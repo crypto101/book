@@ -3491,7 +3491,7 @@ message-specific polynomial $P$:
 
 #+BEGIN_LATEX
   \[
-  t = \underbrace{(m_b \cdot a^b + \cdots + m_1 \cdot a)}_{P(M, a)} + b \pmod p
+  t = \underbrace{(m_n \cdot a^n + \cdots + m_1 \cdot a)}_{P(M, a)} + b \pmod p
   \]
 #+END_LATEX
 
