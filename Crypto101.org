@@ -3789,20 +3789,18 @@ generation of public and private keys for a single user.
 **** Parameter generation
 
 We start by picking an approved cryptographic hash function $H$. We
-also pick a key length $L$ and an additional number $N$. While the original
+also pick a key length $L$ and a prime length $N$. While the original
 DSS specified that $L$ be between 512 and 1024, NIST now recommends a length
 of 3072 for keys with a security lifetime beyond 2030. As $L$ increases,
 so should $N$.
 
 Next we choose a prime $q$ of length $N$ bits; $N$ must be less than or
 equal to the length of the hash output. We also pick an $L$-bit prime $p$
-such that $p$-1 is a multiple of $q$.
+such that $p-1$ is a multiple of $q$.
 
 The last part is the most confusing. We have to find a number $g$ whose
-multiplicative order[fn::Given integer $a$ and positive integer $b$ with
-gcd$(a, b) = 1$, the multiplicative order of $a mod b$ is the smallest
-positive integer $k$ such that $a^k = 1 mod b$] $mod p$ is $q$. The easy
-way to do this is to set $g = 2^(p-1)/q mod p$. We can try another number
+[[Multiplicative order][multiplicative order]] $\pmod{p}$ is $q$. The easy
+way to do this is to set $g = 2^(p-1)/q \pmod{p}$. We can try another number
 greater than 2, and less than $p-1$, if $g$ comes out to equal 1.
 
 Once we have parameters $(p, q, g)$, they can be shared between users.
@@ -3811,7 +3809,7 @@ Once we have parameters $(p, q, g)$, they can be shared between users.
 
 Armed with parameters, it's time to compute public and private keys for an
 individual user. First select a random $x$ with $0 < x < q$. Next, calculate
-$y$ where $y = g^x mod p$. This delivers a public key $(p, q, g, y)$, and
+$y$ where $y = g^x \pmod{p}$. This delivers a public key $(p, q, g, y)$, and
 private key $x$.
 
 **** Signing a message
@@ -6059,6 +6057,12 @@ the two:
   Shor's algorithm.
 - Mathematical advances in one are typically quickly turned into
   mathematical advances in the other.
+
+*** Multiplicative order<<Multiplicative order>>
+
+Given integer $a$ and positive integer $b$ with
+gcd$(a, b) = 1$, the /multiplicative order/ of $a \pmod{b}$ is the smallest
+positive integer $k$ such that $a^k = 1 \pmod{b}$.
 
 ** Elliptic curves<<Elliptic curves>>
 
