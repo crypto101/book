@@ -31,7 +31,7 @@ def vertices(permutation, reverse=False):
 
 graph_template = """
 digraph G {{
-    graph [splines=curved; layout=neato; start=5; epsilon=0.001];
+    graph [splines=curved; layout=neato; start={start}; epsilon=0.001];
     node [style=filled, shape=circle];
     edge [{edge_style}];
     {nodes}
@@ -42,19 +42,23 @@ digraph G {{
 with open("AllNodes.dot", "w") as f:
     f.write(graph_template.format(nodes=nodes,
                                   vertices=vertices(node_names[1:] + node_names[0]),
-                                  edge_style="style=invis"))
+                                  edge_style="style=invis",
+                                  start=1))
 
 with open("Encryption.dot", "w") as f:
     f.write(graph_template.format(nodes=nodes,
                                   vertices=vertices(shuffled_names),
-                                  edge_style=""))
+                                  edge_style="",
+                                  start=5))
 
 with open("Decryption.dot", "w") as f:
     f.write(graph_template.format(nodes=nodes,
                                   vertices=vertices(shuffled_names, reverse=True),
-                                  edge_style=""))
+                                  edge_style="",
+                                  start=5))
 
 with open("Encryption2.dot", "w") as f:
     f.write(graph_template.format(nodes=nodes,
                                   vertices=vertices(shuffled_names_2),
-                                  edge_style=""))
+                                  edge_style="",
+                                  start=95))
