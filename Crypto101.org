@@ -610,11 +610,12 @@ at the end of the arrow.
 #+END_LATEX
 
 In figure \ref{fig:BlockCipherEncryption}, you'll notice that the
-permutation isn't just one big cycle: there's a large cycle of 8
-elements, two smaller cycles of 2 and 3 elements, and even a cycle of
-1 element (that is, an element that encrypts to itself). This is to be
-expected when selecting random permutations, and not necessarily a bug
-in the block cipher.
+permutation isn't just one big cycle: there's a large cycle of 7
+elements, and several smaller cycles of 4, 3 and 2 elements each. It's
+also perfectly possible that an element encrypts to itself. This is to
+be expected when selecting random permutations, which is approximately
+what a block cipher is doing; it doesn't demonstrate a bug in the
+block cipher.
 
 When you're decrypting instead of encrypting, the block cipher just
 computes the inverse permutation. In figure
