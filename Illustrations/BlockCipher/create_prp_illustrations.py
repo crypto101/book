@@ -23,32 +23,38 @@ shuffle(shuffled_names_2, random)
 
 def vertices(permutation, reverse=False):
     if reverse:
-        pairs = zip(node_names, shuffled_names)
+        pairs = zip(node_names, permutation)
     else:
-        pairs = zip(shuffled_names, node_names)
+        pairs = zip(permutation, node_names)
 
     return " ".join("{0} -> {1};".format(*pair) for pair in pairs)
 
 graph_template = """
 digraph G {{
-    graph [splines=curved; start=5; epsilon=0.001];
+    graph [splines=curved; layout=neato; start=5; epsilon=0.001];
     node [style=filled, shape=circle];
+    edge [{edge_style}];
     {nodes}
     {vertices}
 }}
 """
 
 with open("AllNodes.dot", "w") as f:
-    f.write(graph_template.format(nodes=nodes, vertices=""))
+    f.write(graph_template.format(nodes=nodes,
+                                  vertices=vertices(node_names[1:] + node_names[0]),
+                                  edge_style="style=invis"))
 
 with open("Encryption.dot", "w") as f:
     f.write(graph_template.format(nodes=nodes,
-                                  vertices=vertices(shuffled_names)))
+                                  vertices=vertices(shuffled_names),
+                                  edge_style=""))
 
 with open("Decryption.dot", "w") as f:
     f.write(graph_template.format(nodes=nodes,
-                                  vertices=vertices(shuffled_names, reverse=True)))
+                                  vertices=vertices(shuffled_names, reverse=True),
+                                  edge_style=""))
 
 with open("Encryption2.dot", "w") as f:
     f.write(graph_template.format(nodes=nodes,
-                                  vertices=vertices(shuffled_names_2)))
+                                  vertices=vertices(shuffled_names_2),
+                                  edge_style=""))
