@@ -1,6 +1,6 @@
 
 digraph G {
-    graph [splines=curved; layout=neato; start=5; epsilon=0.001];
+    graph [splines=curved; layout=neato; start=1; epsilon=0.001];
     node [style=filled, shape=circle];
     edge [style=invis];
     0 [fillcolor="0.0 0.4 1"]; 1 [fillcolor="0.0625 0.4 1"]; 2 [fillcolor="0.125 0.4 1"]; 3 [fillcolor="0.1875 0.4 1"]; 4 [fillcolor="0.25 0.4 1"]; 5 [fillcolor="0.3125 0.4 1"]; 6 [fillcolor="0.375 0.4 1"]; 7 [fillcolor="0.4375 0.4 1"]; 8 [fillcolor="0.5 0.4 1"]; 9 [fillcolor="0.5625 0.4 1"]; A [fillcolor="0.625 0.4 1"]; B [fillcolor="0.6875 0.4 1"]; C [fillcolor="0.75 0.4 1"]; D [fillcolor="0.8125 0.4 1"]; E [fillcolor="0.875 0.4 1"]; F [fillcolor="0.9375 0.4 1"];
