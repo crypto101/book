@@ -635,6 +635,10 @@ arrows, as you can see in figure \ref{fig:BlockCipherEncryptionDifferentKey}.
 \illustration{BlockCipher/Encryption2}[.85][An encryption permutation produced by the block cipher under some other key.][fig:BlockCipherEncryptionDifferentKey]
 #+END_LATEX
 
+In this illustration, you'll notice that there's even two permutations
+of length 1: an element that maps to itself. This is again something
+to be expected when selecting random permutations.
+
 Knowing a bunch of (input, output) pairs for a given key shouldn't
 give you any information about any other (input, output) pairs under
 that key[fn::The attentive reader may have noticed that this breaks in
