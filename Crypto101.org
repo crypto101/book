@@ -600,10 +600,10 @@ illustrates the blocks that the cipher operates on.
 #+END_LATEX
 
 Once we select a secret key, the block cipher will use that to
-determine what the encryption of a given block is. We will illustrate
-that relationship with an arrow: the block at the start of the
-arrow, encrypted using $E$ under key $k$, is mapped to the block at
-the end of the arrow.
+determine what the encryption of any given block is. We will
+illustrate that relationship with an arrow: the block at the start of
+the arrow, encrypted using $E$ under key $k$, is mapped to the block
+at the end of the arrow.
 
 #+BEGIN_LATEX
 \illustration{BlockCipher/Encryption}[.85][An encryption permutation produced by the block cipher under a particular key $k$.][fig:BlockCipherEncryption]
