@@ -27,7 +27,7 @@ Crypto101.tex: Crypto101.org
 	inkscape $(realpath $<) --export-pdf=$(addprefix ${CURDIR}/,$@)
 
 %.pdf: %.dot
-	neato -Tpdf -Gstart=1 $(realpath $<) > $(addprefix ${CURDIR}/,$@)
+	neato -Tpdf $(realpath $<) > $(addprefix ${CURDIR}/,$@)
 
 %.pdf: %.mp
 	cd $(dir $<) && mptopdf --metafun $(notdir $<)
