@@ -596,7 +596,7 @@ represent the blocks by that digit. Figure \ref{fig:BlockCipherBlocks}
 illustrates the blocks that the cipher operates on.
 
 #+BEGIN_LATEX
-\illustration{BlockCipher/AllNodes}[.85][All of the 16 nodes operated on by the block cipher. Each nodes is designated by a hexadecimal digit.][fig:BlockCipherBlocks]
+\illustration{BlockCipher/AllNodes}[.85][All of the 16 nodes operated on by the block cipher. Each of the nodes is designated by a hexadecimal digit.][fig:BlockCipherBlocks]
 #+END_LATEX
 
 Once we select a secret key, the block cipher will use that to
