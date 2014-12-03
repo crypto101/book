@@ -5027,7 +5027,7 @@ even sign these client certificates to authenticate them.
 Historically, the most common way to agree on the pre-master secret is
 for the client to select a random number and encrypt it, typically
 using \gls{RSA}. This has a few nice properties. For example, it means
-the server can make due with less entropy: since the random bits are
+the server can make do with less entropy: since the random bits are
 handed to the server by the client, the server doesn't need to produce
 any cryptographically random bits. It also makes the handshake
 slightly faster, since there's no need for back-and-forth
