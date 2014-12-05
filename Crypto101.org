@@ -1184,7 +1184,7 @@ block cipher in CBC mode with a fixed key. For now, we'll assume that
 that server is secure, and there's no way to get it to leak the key.
 
 Mallory gets a hold of all of the rows in the database. Perhaps she
-did it through an SQL injection attack, or maybe with a little social
+did it through a SQL injection attack, or maybe with a little social
 engineering.[fn::Social engineering means tricking people into things
 they shouldn't be doing, like giving out secret keys, or performing
 certain operations. It's usually the most effective way to break
