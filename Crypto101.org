@@ -596,7 +596,7 @@ represent the blocks by that digit. Figure \ref{fig:BlockCipherBlocks}
 illustrates the blocks that the cipher operates on.
 
 #+BEGIN_LATEX
-\illustration{BlockCipher/AllNodes}[.85][All of the 16 nodes operated on by the block cipher. Each of the nodes is designated by a hexadecimal digit.][fig:BlockCipherBlocks]
+\illustration{BlockCipher/AllNodes}[.85][All of the 16 nodes operated on by the block cipher. Each node is designated by a hexadecimal digit.][fig:BlockCipherBlocks]
 #+END_LATEX
 
 Once we select a secret key, the block cipher will use that to
@@ -888,7 +888,7 @@ incoming stream into different blocks, and encrypt each block:
 \end{equation}
 #+END_LATEX
 
-This scheme is called \gls{ECB mode}, and it is one of the many ways
+This scheme is called \gls{ECB mode} (Electronic Code Book Mode), and it is one of the many ways
 that block ciphers can be used to construct stream ciphers.
 Unfortunately, while being very common in home-grown cryptosystems, it
 poses very serious security flaws. For example, in ECB mode, identical
@@ -1184,7 +1184,7 @@ block cipher in CBC mode with a fixed key. For now, we'll assume that
 that server is secure, and there's no way to get it to leak the key.
 
 Mallory gets a hold of all of the rows in the database. Perhaps she
-did it through a SQL injection attack, or maybe with a little social
+did it through an SQL injection attack, or maybe with a little social
 engineering.[fn::Social engineering means tricking people into things
 they shouldn't be doing, like giving out secret keys, or performing
 certain operations. It's usually the most effective way to break
@@ -1298,8 +1298,8 @@ just a different requirement from "not secret", not necessarily a
 where it isn't required, precisely because if it's not supposed to be
 secret, the algorithm may very well treat it as non-secret, as is the
 case here. There /are/ plenty of systems where it is okay to use a
-secret where it isn't required, and in some cases you might even get a
-stronger system as a result, but the point is that that isn't
+secret where it isn't required. In some cases you might even get a
+stronger system as a result, but the point is that it is not
 generally true, and depends on what you're doing.
 
 *** <<<CBC bit flipping attacks>>>
@@ -1314,7 +1314,7 @@ attacker will not even attempt to decrypt any messages, but they will
 just be flipping some bits in a plaintext. We will demonstrate that
 the attacker can turn the ability to flip some bits in the plaintext
 into the ability to have the plaintext say /whatever they want it to
-say/, and, of course, that that can lead to very serious problems in
+say/, and, of course, that can lead to very serious problems in
 real systems.
 
 Suppose we have a CBC encrypted ciphertext. This could be, for
@@ -1608,9 +1608,9 @@ understand the rest of the attack.)
 **** Decrypting one byte
 
 At this point, the attacker has already successfully decrypted the
-last byte of the target block of ciphertext! (Actually, we've
+last byte of the target block of ciphertext! Actually, we've
 decrypted as many bytes as we have valid padding; we're just assuming
-the worst case scenario that that's only a single byte.) How? The
+the worst case scenario where there is only a single byte. How? The
 attacker knows that the last byte of the decrypted ciphertext block
 $C_i$ (we'll call that byte $D(C_i)[b]$), XORed with the iteratively
 found value $r_b$, is \verb|01|:
@@ -2405,7 +2405,7 @@ m_B = g^{r_B} \pmod{p}
 #+END_LATEX
 
 These numbers are sent across the network where Eve can see them. The
-premise of the discrete logarithm problem is that that's okay, because
+premise of the discrete logarithm problem is that it is okay to do so, because
 figuring out $r$ in $m = g^r \pmod{p}$ is supposedly very hard.
 
 Once Alice and Bob have each other's mixed numbers, they add their own
@@ -2629,7 +2629,7 @@ M \equiv C^d \pmod{N}
 #+END_LATEX
 
 The security of RSA relies on that decryption operation being
-impossible without knowing the secret exponent $d$, and that that
+impossible without knowing the secret exponent $d$, and that the
 secret exponent $d$ is very hard (practically impossible) to compute
 from the public key $(N, e)$. We'll see approaches for breaking RSA in
 the next section.
@@ -3394,7 +3394,7 @@ previous values in the dictionary are overwritten. As a result, an
 attacker mounting a length extension attack can effectively control
 parsed dictionary entirely.
 
-If you're thinking that that code has many issues; sure, it does. For
+If you're thinking that this code has many issues; sure, it does. For
 example, it doesn't handle escaping correctly. But even if it did,
 that wouldn't really fix the length extension attack problem. Most
 parsing functions will perfectly happily live with that binary junk in
@@ -4601,7 +4601,7 @@ the output.
 This isn't a big deal at face value. To find the state of the
 algorithm, an attacker needs to find $r$, so they can compute $s$.
 They still need to solve the elliptic curve discrete log problem to
-find $r$ from $rQ$, given $Q$. We're assuming that that's hard.
+find $r$ from $rQ$, given $Q$. We're assuming that problem is hard.
 
 Keep in mind that elliptic curves are primitives used for asymmetric
 encryption. That problem is expected to be hard to solve in general,
@@ -5230,7 +5230,7 @@ does absolutely nothing to prevent attacks against TLS itself.
 
 HSTS can suffer from a chicken-or-egg problem. If a browser has
 never visited a particular HSTS-enabled website before, it's possible
-that the browser doesn't know that that website is HSTS-enabled yet.
+that the browser doesn't know that the website is HSTS-enabled yet.
 Therefore, the browser may still attempt a regular HTTP connection,
 vulnerable to an SSL stripping attack. Some browsers have attempted to
 mitigate this issue by having browsers come pre-loaded with a list of
@@ -6005,7 +6005,7 @@ effectively just skipping the first bit.
 
 The important thing to note here is that no matter what the particular
 value of the exponent is, there is one squaring, one multiplication,
-and one modulus being computed per bit. Keep in mind that that doesn't
+and one modulus being computed per bit. Keep in mind that this doesn't
 necessarily make the entire algorithm take constant time, because the
 individual squaring and multiplication operations are not necessarily
 constant time.
