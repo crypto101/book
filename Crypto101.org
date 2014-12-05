@@ -1992,7 +1992,7 @@ a reason it's expressed that way. Suppose that RC4 was a good stream
 cipher, and all values occurred with equal probability. Then you'd
 expect the probability for any given byte value to be $2^{-8}$ since
 there are $2^8$ different byte values. If RC4 was a good stream
-cipher, two adjacent bytes would both each have probability $2^{-8}$,
+cipher, two adjacent bytes would each have probability $2^{-8}$,
 so any given pair of two bytes would have probability $2^{-8} \cdot
 2^{-8} = 2^{-16}$. However, RC4 isn't an ideal stream cipher, so these
 properties aren't true. By writing the probability in the $2^{-16} (1 +
@@ -2001,7 +2001,7 @@ you'd expect from an ideal stream cipher.
 
 So, let's try to read the first line of the table. It says that when
 the first byte $i = 1$ of any 256-byte chunk from the cipher is $0$,
-then the byte following it is slightly more likely ($(1 + 2^{-9}$
+then the byte following it is slightly more likely ($1 + 2^{-9}$
 times as likely, to be exact) to be 0 than for it to be any other
 number. We can also see that when one of the keystream bytes is $255$,
 you can make many predictions about the next byte, depending on where
@@ -2021,8 +2021,8 @@ we've also developed many secure alternatives. The continuing
 advances in cryptanalysis of RC4 helped contribute to a sense of
 urgency regarding the improvement of commonly available cryptographic
 primitives. Throughout 2013 in particular, this lead to large
-improvements in, for example, browser cryptography. (We will discuss
-browser cryptography, notably SSL/TLS, in a later chapter.)
+improvements in, for example, browser cryptography (We will discuss
+browser cryptography, notably SSL/TLS, in a later chapter).
 
 *** <<<Salsa20>>>
 
@@ -2065,7 +2065,7 @@ we will see in more detail in a later chapter.] with specialized
 hardware instructions.
 
 <<keystream jump>>
-Salsa20 has a two particularly interesting properties. Firstly, It's
+Salsa20 has two particularly interesting properties. Firstly, It's
 possible to "jump" to a particular point in the keystream without
 computing all previous bits. This can be useful, for example, if a
 large file is encrypted, and you'd like to be able to do random reads
@@ -2093,7 +2093,7 @@ ciphers. This book emphasizes what the functionality of the algorithm
 is. Since both block ciphers in a \gls{mode of operation} and a native
 stream cipher take a secret key and can be used to encrypt a stream,
 and the two can usually replace each other in a cryptosystem, we just
-call both of them stream ciphers and be done with it.
+call both of them stream ciphers and are done with it.
 
 We will further emphasize the tight link between the two with CTR
 mode, a mode of operation which produces a synchronous stream cipher.
