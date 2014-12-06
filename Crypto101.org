@@ -2542,7 +2542,7 @@ For a long time, people thought this was impossible. However, starting
 in the 1970s, such algorithms started appearing. The first publicly
 available encryption scheme was produced by three cryptographers from
 MIT: Ron Rivest, Adi Shamir and Leonard Adleman. The algorithm they
-published is still the one most common one today, and carries the
+published is still the most common one today, and carries the
 first letters of their last names: RSA.
 
 \Glspl{public-key algorithm} aren't limited to encryption. In fact,
