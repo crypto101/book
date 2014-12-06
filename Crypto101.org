@@ -2734,7 +2734,7 @@ ciphertext.
 To see how decryption works, we reverse all the steps. The recipient
 gets $X \| Y$ when decrypting the message. They know $k$, since it is a
 fixed parameter of the protocol, so they can split up $X \| Y$ into
-$X$ (the first $n$ bits) and $Y$ (the first $n - k$ bits).
+$X$ (the first $n - k$ bits) and $Y$ (the final k$ bits).
 
 In the previous diagram, the directions are for padding being applied.
 Reverse the arrows on the side of the ladder, and you can see how to
