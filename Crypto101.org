@@ -2575,7 +2575,7 @@ By far the most important reason for this is performance. Compared to
 our speedy stream ciphers (native or otherwise), public-key encryption
 mechanisms are extremely slow. A single 2048-bit RSA encryption takes
 0.29 megacycles, decryption takes a whopping 11.12 megacycles.
-\cite{cryptopp:bench} To put this into comparison, symmetric key
+\cite{cryptopp:bench} To put this into perspective, symmetric key
 algorithms work in order of magnitude 10 or so cycles per byte in
 either direction. In order to encrypt or decrypt 2048 bytes, that
 means approximately 20 kilocycles, which is about 500 times faster
