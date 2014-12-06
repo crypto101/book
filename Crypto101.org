@@ -1314,7 +1314,7 @@ attacker will not even attempt to decrypt any messages, but they will
 just be flipping some bits in a plaintext. We will demonstrate that
 the attacker can turn the ability to flip some bits in the plaintext
 into the ability to have the plaintext say /whatever they want it to
-say/, and, of course, that that can lead to very serious problems in
+say/, and, of course, that can lead to very serious problems in
 real systems.
 
 Suppose we have a CBC encrypted ciphertext. This could be, for
