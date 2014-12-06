@@ -2324,7 +2324,7 @@ color itself. Everyone, including Eve, knows the base color.
 \dhknows{Eve}{Base}
 #+END_LATEX
 
-Then, Alice and Bob both send of their mixed colors over the network.
+Then, Alice and Bob both send their mixed colors over the network.
 Eve sees both mixed colors, but she can't figure out what either of
 Alice and Bob's /secret/ colors are. Even though she knows the base,
 she can't "un-mix" the colors sent over the network.[fn::While this
