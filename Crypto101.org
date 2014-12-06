@@ -2418,7 +2418,7 @@ s = (g^{r_A})^{r_B} \pmod{p}
 #+END_LATEX
 
 While Alice's computation looks different, they get the same result,
-because $(g^{r_A})^{r_B} = (g^{r_B})^{r_A} \pmod{p}$. This is the
+because $(g^{r_A})^{r_B} \pmod{p} = (g^{r_B})^{r_A} \pmod{p}$. This is the
 shared secret.
 
 Because Eve doesn't have $r_A$ or $r_B$, she can not perform the
