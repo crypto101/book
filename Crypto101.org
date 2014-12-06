@@ -1797,9 +1797,9 @@ and the state array $S$:
 1. The key scheduling algorithm, which produces an initial state array
    $S$ for a given key.
 2. The pseudorandom generator, which produces the actual keystream
-   bytes from the state array $S$ produced by the key scheduling
-   algorithm. The pseudorandom generator itself also modifies the
-   state array as produces keystream bytes.
+   bytes from the state array $S$ which was produced by the key scheduling
+   algorithm. The pseudorandom generator itself modifies the
+   state array as it produces keystream bytes.
 
 **** The key scheduling algorithm
 
