@@ -1926,7 +1926,7 @@ Unlike RC4, most modern stream ciphers provide a way to combine a
 long-term key with a \gls{nonce} (a number used once), to produce
 multiple different keystreams from the same long-term key. RC4, by
 itself, doesn't do that. The most common approach was also the
-simplest: concatenate[fn:: Here we use \| as the operator for concatenation.
+simplest: concatenate[fn:: Here we use $\|$ as the operator for concatenation.
 Other common symbols for concatenation include $+$ (for some programming
 languages, such as Python) and \cdot (for formal languages).]
 the long-term key $k$ with the nonce $n$: $k \| n$, taking advantage
