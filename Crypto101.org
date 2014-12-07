@@ -3338,7 +3338,7 @@ for most (cryptographically secure!) hash functions $H$, including
 SHA-2.
 
 As we saw in the chapter on hash functions, many hash functions,
-including as MD5, SHA-0, SHA-1 and SHA-2, pad the message with a
+such as MD5, SHA-0, SHA-1 and SHA-2, pad the message with a
 predictable padding before producing the output digest. The output
 digest is the same thing as the internal state of the hash function.
 That's a problem: the attacker can use those properties to forge
