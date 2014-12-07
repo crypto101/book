@@ -3818,7 +3818,7 @@ Once we have parameters $(p, q, g)$, they can be shared between users.
 **** Key generation
 
 Armed with parameters, it's time to compute public and private keys for an
-individual user. First select a random $x$ with $0 < x < q$. Next, calculate
+individual user. First, select a random $x$ with $0 < x < q$. Next, calculate
 $y$ where $y = g^x \pmod{p}$. This delivers a public key $(p, q, g, y)$, and
 private key $x$.
 
@@ -4060,7 +4060,7 @@ more detail in a following chapter, where they are used to extract
 randomness with high entropy density from many sources that each have
 low entropy density.
 
-There are two main categories of key derivation function, depending on
+There are two main categories of key derivation functions, depending on
 the entropy content of the secret value, which determines how many
 different possible values the secret value can take.
 
@@ -4713,7 +4713,7 @@ pointing to the current integer. It consists of three steps:
 
 1. An optional initialization function, which produces an initial
    state from a small random value called a /seed/.
-1. An state generation function, which produces a new state from the
+1. A state generation function, which produces a new state from the
    old state.
 2. An extraction function, also called the /tempering/ function, that
    produces a random number from the current element of the state (the
@@ -5008,7 +5008,7 @@ In public-key schemes we've seen so far, all peers typically had one
 or more key pairs of their own. There's no reason users can't have
 their own certificates, and use them to authenticate to the server.
 The TLS specification explicitly supports client certificates. This
-feature is only rarely used, even thought it clearly has very
+feature is only rarely used, even though it clearly has very
 interesting security benefits.
 
 The main reason for that is probably rooted in the poor user
@@ -5518,7 +5518,7 @@ the equation and use an $\equiv$ sign instead of an equals sign ($=$):
 
 This is read as "ten plus four is equivalent to two, modulo twelve"
 and "two minus five is equivalent to nine, modulo twelve". That might
-seems like a trivial notational hack now, but the difference will
+seem like a trivial notational hack now, but the difference will
 become apparent once we start applying tricks for doing more complex
 modular computations, like multiplication and exponentiation.
 
@@ -5673,7 +5673,7 @@ efficiently in the next section.
 
 *** Exponentiation
 
-Like multiplication is taught as as repeated addition, exponentiation
+Like multiplication is taught as repeated addition, exponentiation
 can be thought of as repeated multiplication:
 
 #+BEGIN_LATEX
@@ -5720,7 +5720,7 @@ A particularly efficient way to do it on computers is splitting the
 exponent up into a sum of powers of two. This is called exponentiation
 by squaring, or sometimes also binary exponentiation. Suppose we want
 to compute $3^{209} \pmod {19}$. First, we split up 209 into a sum of
-powers of two. This is process is essentially just writing 209 down in
+powers of two. This process is essentially just writing 209 down in
 binary: ~0b11010001~. That's very practical if the computation is
 being performed by a computer, because that's typically how the
 computer had the number stored in the first place.
@@ -5972,7 +5972,7 @@ simple recursive rules.
 The important part about this algorithm is the constant number of
 operations. If $k_j = 0$, computing $g^{L_j}$ involves one squaring
 and $g^{H_j}$ involves one multiplication; if $k_j = 1$, it's the
-other way around. No matter what any of any of the bits of $k$ is, you
+other way around. No matter what any of the bits of $k$ are, you
 need one squaring operation and one multiplication per bit.
 
 **** Implementing the Montgomery ladder in Python
@@ -6057,7 +6057,7 @@ are certainly ways that could change in the future. For example:
 
 Discrete logarithm computation is tightly linked to the problem of
 number factorization. They are still areas of active mathematical
-research; the links between the two problems are not still not
+research; the links between the two problems are still not
 thoroughly understood. That said, there are many similarities between
 the two:
 
