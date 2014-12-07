@@ -3220,7 +3220,7 @@ scheme provided no help whatsoever against an attacker modifying the
 download, either as stored, or in transit.
 
 In order to do this securely, you would either apply a signature
-algorithms to the binaries directly, or by signing the digests, as
+algorithm to the binaries directly, or by signing the digests, as
 long as the hash function used to produce the digest is secure against
 second-preimage attacks. The important difference is that producing a
 signature (using either a pre-shared key with your users, or,
