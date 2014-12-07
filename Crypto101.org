@@ -2215,9 +2215,9 @@ their shared secret.
 
 That protocol is called Diffie-Hellman, named after Whitfield Diffie
 and Martin Hellman, the two cryptographic pioneers who discovered it.
-They suggest calling the protocol Diffie-Hellman-Merkle key exchange,
+They suggested calling the protocol Diffie-Hellman-Merkle key exchange,
 to honor the contributions of Ralph Merkle. While his contributions
-certainly deserve honoring, that term hasn't really caught on much.
+certainly deserve honoring, that term hasn't really caught on.
 For the benefit of the reader we'll use the more common term.
 
 Practical implementations of Diffie-Hellman rely on mathematical
@@ -2324,7 +2324,7 @@ color itself. Everyone, including Eve, knows the base color.
 \dhknows{Eve}{Base}
 #+END_LATEX
 
-Then, Alice and Bob both send of their mixed colors over the network.
+Then, Alice and Bob both send off their mixed colors over the network.
 Eve sees both mixed colors, but she can't figure out what either of
 Alice and Bob's /secret/ colors are. Even though she knows the base,
 she can't "un-mix" the colors sent over the network.[fn::While this
@@ -2360,7 +2360,7 @@ Eve can't perform that computation. She could finish the computation
 with either Alice or Bob's secret color, since she has both mixed
 colors, but she has neither of those secret colors. She can also try
 to mix the two mixed colors, which would have both Alice and Bob's
-secret colors mixed into them, but that would have the base color in
+secret colors mixed into them. However, that would have the base color in
 it twice, resulting in a different color than the shared secret color
 that Alice and Bob computed, which only has the base color in it once.
 
@@ -2446,7 +2446,7 @@ based on the discrete log problem. This is because the fastest
 algorithms for breaking the discrete log problem have a larger
 asymptotic complexity than their elliptic curve variants. For example,
 the number field sieve for discrete logarithms, a state of the art
-algorithm for for attacking discrete logarithm-based Diffie-Hellman,
+algorithm for attacking discrete logarithm-based Diffie-Hellman,
 has time complexity:
 
 #+BEGIN_LATEX
@@ -2542,7 +2542,7 @@ For a long time, people thought this was impossible. However, starting
 in the 1970s, such algorithms started appearing. The first publicly
 available encryption scheme was produced by three cryptographers from
 MIT: Ron Rivest, Adi Shamir and Leonard Adleman. The algorithm they
-published is still the one most common one today, and carries the
+published is still the most commonly used one today, and carries the
 first letters of their last names: RSA.
 
 \Glspl{public-key algorithm} aren't limited to encryption. In fact,
@@ -2836,7 +2836,7 @@ random number generators. We'll see some of these systems in detail in
 future chapters.
 
 Cryptographic hash functions have much stronger properties than
-regular hash function, such as one that you might find in a hash
+regular hash functions, such as one that you might find in a hash
 table. For a cryptographic hash function, we want it to be impossibly
 hard to:
 
@@ -3123,7 +3123,7 @@ contents.
 
 TODO: illustrate
 
-This definition is very wide practical hash trees are often more
+This definition is very broad, practical hash trees are often more
 restricted. They might be binary trees[fn::Each non-leaf node has no
 more than two children], or perhaps only leaf nodes carry data of
 their own, and parent nodes only carry derivative data. Particularly
@@ -3338,7 +3338,7 @@ for most (cryptographically secure!) hash functions $H$, including
 SHA-2.
 
 As we saw in the chapter on hash functions, many hash functions,
-including as MD5, SHA-0, SHA-1 and SHA-2, pad the message with a
+including MD5, SHA-0, SHA-1 and SHA-2, pad the message with a
 predictable padding before producing the output digest. The output
 digest is the same thing as the internal state of the hash function.
 That's a problem: the attacker can use those properties to forge
