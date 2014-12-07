@@ -3392,7 +3392,7 @@ not pleasing to advanced Pythonistas.]
 The parsing function only remembers the last value for a given key:
 previous values in the dictionary are overwritten. As a result, an
 attacker mounting a length extension attack can effectively control
-parsed dictionary entirely.
+the parsed dictionary entirely.
 
 If you're thinking that that code has many issues; sure, it does. For
 example, it doesn't handle escaping correctly. But even if it did,
