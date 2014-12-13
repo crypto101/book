@@ -5634,9 +5634,9 @@ a^{\phi(n)} \equiv 1 \pmod n
 #+END_LATEX
 
 In that equation, $\phi$ is Euler's totient function, which counts the
-amount of numbers that are coprime to its argument. As an example, the
-totient of 10 is 4, as 1, 3, 7, and 9 do not have common prime factors
-with 10.
+amount of numbers that are coprime to (and less than or equal to) its argument. 
+As an example, the totient of 10 is 4, as 1, 3, 7, and 9 do not have common prime 
+factors with 10.
 
 We can use Euler's theorem to find the multiplicative inverse of $a$.
 If we just multiply both sides of the equation by $a^{-1}$, we get:
