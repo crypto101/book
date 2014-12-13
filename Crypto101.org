@@ -5543,7 +5543,7 @@ and itself. For example, 3 is a prime number, but 4 is not, because it
 can be divided by 2.
 
 Any number can be written as a product of prime factors: a bunch of
-prime numbers multiplied together. That product is called a
+prime numbers multiplied together. That product is called a prime 
 factorization. For example, 30 can be factorized into 2, 3 and 5:
 
 #+BEGIN_LATEX
