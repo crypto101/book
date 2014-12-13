@@ -5893,7 +5893,7 @@ L_{j + 1}         = L_3         & = \mathtt{0b110010} \\
 \end{align*}
 #+END_LATEX
 
-You can visually verify that $L_3$ is indeed $L_2$, shifted one to the
+You can visually verify that $L_2$ is indeed $L_3$, shifted one to the
 left (which is the same thing as multiplying by two), plus that one
 bit $k_j$ that "fell off" when shifting right. $k_j$ is the last bit
 of $L_j$; in this case it happens to be 1, but it could equally well
