@@ -4713,7 +4713,7 @@ pointing to the current integer. It consists of three steps:
 
 1. An optional initialization function, which produces an initial
    state from a small random value called a /seed/.
-1. An state generation function, which produces a new state from the
+1. A state generation function, which produces a new state from the
    old state.
 2. An extraction function, also called the /tempering/ function, that
    produces a random number from the current element of the state (the
