@@ -6039,7 +6039,7 @@ throne.
 The complexity of computing discrete logarithms, together with the
 relative simplicity of computing its inverse, modular exponentiation,
 is the basis for many public key cryptosystems. Common examples
-include the RSA encryption primitive, or the Diffie-Hellman key
+include the RSA encryption primitive, and the Diffie-Hellman key
 exchange protocol.
 
 While cryptosystems based on the discrete logarithm problem are
