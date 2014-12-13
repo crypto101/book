@@ -5963,7 +5963,7 @@ exponentiation out:
 
 Remember that $L_j$ is $k$ right-shifted by $j$ bits, so $L_0$ is $k$
 shifted right by 0 bits, or just $k$ itself. That means $g^k$, the
-number we're trying to compute, is the same thing as g^{L_0}$. By
+number we're trying to compute, is the same thing as $g^{L_0}$. By
 starting at $g^{L_{t - 1}}$ ($g$ raised to the power of the leftmost
 bit of $k$) and iteratively making our way down to $g^{L_0} = g^k$, we
 have an elegant inductive method for computing $g^k$ based on two
