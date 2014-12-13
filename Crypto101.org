@@ -6057,7 +6057,7 @@ are certainly ways that could change in the future. For example:
 
 Discrete logarithm computation is tightly linked to the problem of
 number factorization. They are still areas of active mathematical
-research; the links between the two problems are not still not
+research; the links between the two problems are still not
 thoroughly understood. That said, there are many similarities between
 the two:
 
