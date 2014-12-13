@@ -5107,7 +5107,7 @@ stored. When a byte sequence recurs[fn::Within limits; specifically
 within a sliding window, usually 32kB big. Otherwise, the pointers
 would grow bigger than the sequences they're meant to compress.],
 instead of recording the same sequence, a reference is provided to the
-previous sequence: instead of repeating the secret, it says "go back
+previous sequence: instead of repeating the sequence, it says "go back
 and look at the thing I wrote N bytes ago".
 
 Suppose an attacker can control the plaintext. For example, the
