@@ -314,7 +314,7 @@ random data. Secondly, the one-time pad can only be used once (hence
 the name). Unfortunately, most commercial products that claim to be
 "one-time pads" are snake oil[fn::"Snake oil" is a term for all sorts
 of dubious products that claim extraordinary benefits and features,
-but don't really realize any of them], and don't satisfy at least one
+but don't really realize any of them.], and don't satisfy at least one
 of those two properties.
 
 **** Not using truly random data
