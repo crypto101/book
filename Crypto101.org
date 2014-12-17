@@ -5012,7 +5012,7 @@ feature is only rarely used, even thought it clearly has very
 interesting security benefits.
 
 The main reason for that is probably rooted in the poor user
-experience. There are no systems that rely on client certificates 
+experience. There are no systems that rely on client certificates
 that are easy to use for atechnical people. Since there are few such
 systems, even tech-savvy people don't know about them, which means
 new systems aren't created.
