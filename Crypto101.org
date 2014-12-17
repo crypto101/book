@@ -1564,7 +1564,7 @@ the attacker) know that $P_i$ is currently:
 
 #+BEGIN_LATEX
 \begin{equation}
-p_0 p_1 p_2 p_3 p_4 p_5 \mathtt{03} \mathtt{03} \mathtt{03}
+p_0 p_1 p_2 p_3 p_4 \mathtt{03} \mathtt{03} \mathtt{03}
 \end{equation}
 #+END_LATEX
 
@@ -1576,18 +1576,19 @@ some other byte $p^{\prime}_0$:
 
 #+BEGIN_LATEX
 \begin{equation}
-p^{\prime}_0 p_1 p_2 p_3 p_4 p_5 \mathtt{03} \mathtt{03} \mathtt{03}
+p^{\prime}_0 p_1 p_2 p_3 p_4 \mathtt{03} \mathtt{03} \mathtt{03}
 \end{equation}
 #+END_LATEX
 
-As you can see, this doesn't affect the validity of the padding. The
-same goes for $p_1$, $p_2$, $p_3$, $p_4$ and $p_5$. However, when we
-modify the byte after that (for example, we turn that first ~03~ into
-~02~ by modifying $R$) $P_i$ looks like this:
+As you can see, this doesn't affect the validity of the padding. It
+also does not affect $p_1$, $p_2$, $p_3$ or $p_4$. However, when we
+continue modifying subsequent bytes, we will eventually hit a byte
+that /is/ part of the padding. For example, let's say we turn that
+first ~03~ into ~02~ by modifying $R$. $P_i$ now looks like this:
 
 #+BEGIN_LATEX
 \begin{equation}
-p^{\prime}_0 p^{\prime}_1 p^{\prime}_2 p^{\prime}_3 p^{\prime}_4 p^{\prime}_5 \mathtt{02} \mathtt{03} \mathtt{03}
+p^{\prime}_0 p^{\prime}_1 p^{\prime}_2 p^{\prime}_3 p^{\prime}_4 \mathtt{02} \mathtt{03} \mathtt{03}
 \end{equation}
 #+END_LATEX
 
@@ -1595,8 +1596,8 @@ Since ~02 03 03~ isn't valid PKCS#5 padding, the server will reject
 the message. At that point, we know that once we modify six bytes, the
 padding breaks. That means the sixth byte is the first byte of the
 padding. Since the block is 8 bytes long, we know that the padding
-consists of bytes 6, 7 and 8, which means that the padding is three
-bytes long, and, in PKCS#5, equal to ~03 03 03~.
+consists of the sixth, seventh and eighth bytes. So, the padding is
+three bytes long, and, in PKCS#5, equal to ~03 03 03~.
 
 For the next section, we'll assume that it was just ~01~, since that
 is the most common case. The attack doesn't really change depending on
