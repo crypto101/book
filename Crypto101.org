@@ -3124,7 +3124,7 @@ contents.
 
 TODO: illustrate
 
-This definition is very wide practical hash trees are often more
+This definition is very wide: practical hash trees are often more
 restricted. They might be binary trees[fn::Each non-leaf node has no
 more than two children], or perhaps only leaf nodes carry data of
 their own, and parent nodes only carry derivative data. Particularly
