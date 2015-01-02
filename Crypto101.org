@@ -314,7 +314,7 @@ random data. Secondly, the one-time pad can only be used once (hence
 the name). Unfortunately, most commercial products that claim to be
 "one-time pads" are snake oil[fn::"Snake oil" is a term for all sorts
 of dubious products that claim extraordinary benefits and features,
-but don't really realize any of them], and don't satisfy at least one
+but don't really realize any of them.], and don't satisfy at least one
 of those two properties.
 
 **** Not using truly random data
@@ -1564,7 +1564,7 @@ the attacker) know that $P_i$ is currently:
 
 #+BEGIN_LATEX
 \begin{equation}
-p_0 p_1 p_2 p_3 p_4 p_5 \mathtt{03} \mathtt{03} \mathtt{03}
+p_0 p_1 p_2 p_3 p_4 \mathtt{03} \mathtt{03} \mathtt{03}
 \end{equation}
 #+END_LATEX
 
@@ -1576,18 +1576,19 @@ some other byte $p^{\prime}_0$:
 
 #+BEGIN_LATEX
 \begin{equation}
-p^{\prime}_0 p_1 p_2 p_3 p_4 p_5 \mathtt{03} \mathtt{03} \mathtt{03}
+p^{\prime}_0 p_1 p_2 p_3 p_4 \mathtt{03} \mathtt{03} \mathtt{03}
 \end{equation}
 #+END_LATEX
 
-As you can see, this doesn't affect the validity of the padding. The
-same goes for $p_1$, $p_2$, $p_3$, $p_4$ and $p_5$. However, when we
-modify the byte after that (for example, we turn that first ~03~ into
-~02~ by modifying $R$) $P_i$ looks like this:
+As you can see, this doesn't affect the validity of the padding. It
+also does not affect $p_1$, $p_2$, $p_3$ or $p_4$. However, when we
+continue modifying subsequent bytes, we will eventually hit a byte
+that /is/ part of the padding. For example, let's say we turn that
+first ~03~ into ~02~ by modifying $R$. $P_i$ now looks like this:
 
 #+BEGIN_LATEX
 \begin{equation}
-p^{\prime}_0 p^{\prime}_1 p^{\prime}_2 p^{\prime}_3 p^{\prime}_4 p^{\prime}_5 \mathtt{02} \mathtt{03} \mathtt{03}
+p^{\prime}_0 p^{\prime}_1 p^{\prime}_2 p^{\prime}_3 p^{\prime}_4 \mathtt{02} \mathtt{03} \mathtt{03}
 \end{equation}
 #+END_LATEX
 
@@ -1595,8 +1596,8 @@ Since ~02 03 03~ isn't valid PKCS#5 padding, the server will reject
 the message. At that point, we know that once we modify six bytes, the
 padding breaks. That means the sixth byte is the first byte of the
 padding. Since the block is 8 bytes long, we know that the padding
-consists of bytes 6, 7 and 8, which means that the padding is three
-bytes long, and, in PKCS#5, equal to ~03 03 03~.
+consists of the sixth, seventh and eighth bytes. So, the padding is
+three bytes long, and, in PKCS#5, equal to ~03 03 03~.
 
 For the next section, we'll assume that it was just ~01~, since that
 is the most common case. The attack doesn't really change depending on
@@ -1797,9 +1798,9 @@ and the state array $S$:
 1. The key scheduling algorithm, which produces an initial state array
    $S$ for a given key.
 2. The pseudorandom generator, which produces the actual keystream
-   bytes from the state array $S$ produced by the key scheduling
-   algorithm. The pseudorandom generator itself also modifies the
-   state array as produces keystream bytes.
+   bytes from the state array $S$ which was produced by the key scheduling
+   algorithm. The pseudorandom generator itself modifies the
+   state array as it produces keystream bytes.
 
 **** The key scheduling algorithm
 
@@ -1926,7 +1927,7 @@ Unlike RC4, most modern stream ciphers provide a way to combine a
 long-term key with a \gls{nonce} (a number used once), to produce
 multiple different keystreams from the same long-term key. RC4, by
 itself, doesn't do that. The most common approach was also the
-simplest: concatenate[fn:: Here we use \| as the operator for concatenation.
+simplest: concatenate[fn:: Here we use $\|$ as the operator for concatenation.
 Other common symbols for concatenation include $+$ (for some programming
 languages, such as Python) and \cdot (for formal languages).]
 the long-term key $k$ with the nonce $n$: $k \| n$, taking advantage
@@ -2324,7 +2325,7 @@ color itself. Everyone, including Eve, knows the base color.
 \dhknows{Eve}{Base}
 #+END_LATEX
 
-Then, Alice and Bob both send off their mixed colors over the network.
+Then, Alice and Bob both send their mixed colors over the network.
 Eve sees both mixed colors, but she can't figure out what either of
 Alice and Bob's /secret/ colors are. Even though she knows the base,
 she can't "un-mix" the colors sent over the network.[fn::While this
@@ -2418,7 +2419,7 @@ s = (g^{r_A})^{r_B} \pmod{p}
 #+END_LATEX
 
 While Alice's computation looks different, they get the same result,
-because $(g^{r_A})^{r_B} = (g^{r_B})^{r_A} \pmod{p}$. This is the
+because $(g^{r_A})^{r_B} \pmod{p} = (g^{r_B})^{r_A} \pmod{p}$. This is the
 shared secret.
 
 Because Eve doesn't have $r_A$ or $r_B$, she can not perform the
@@ -2542,7 +2543,7 @@ For a long time, people thought this was impossible. However, starting
 in the 1970s, such algorithms started appearing. The first publicly
 available encryption scheme was produced by three cryptographers from
 MIT: Ron Rivest, Adi Shamir and Leonard Adleman. The algorithm they
-published is still the most commonly used one today, and carries the
+published is still the most common one today, and carries the
 first letters of their last names: RSA.
 
 \Glspl{public-key algorithm} aren't limited to encryption. In fact,
@@ -2575,7 +2576,7 @@ By far the most important reason for this is performance. Compared to
 our speedy stream ciphers (native or otherwise), public-key encryption
 mechanisms are extremely slow. A single 2048-bit RSA encryption takes
 0.29 megacycles, decryption takes a whopping 11.12 megacycles.
-\cite{cryptopp:bench} To put this into comparison, symmetric key
+\cite{cryptopp:bench} To put this into perspective, symmetric key
 algorithms work in order of magnitude 10 or so cycles per byte in
 either direction. In order to encrypt or decrypt 2048 bytes, that
 means approximately 20 kilocycles, which is about 500 times faster
@@ -2734,7 +2735,7 @@ ciphertext.
 To see how decryption works, we reverse all the steps. The recipient
 gets $X \| Y$ when decrypting the message. They know $k$, since it is a
 fixed parameter of the protocol, so they can split up $X \| Y$ into
-$X$ (the first $n$ bits) and $Y$ (the first $n - k$ bits).
+$X$ (the first $n - k$ bits) and $Y$ (the final k$ bits).
 
 In the previous diagram, the directions are for padding being applied.
 Reverse the arrows on the side of the ladder, and you can see how to
@@ -3123,7 +3124,7 @@ contents.
 
 TODO: illustrate
 
-This definition is very broad, practical hash trees are often more
+This definition is very wide: practical hash trees are often more
 restricted. They might be binary trees[fn::Each non-leaf node has no
 more than two children], or perhaps only leaf nodes carry data of
 their own, and parent nodes only carry derivative data. Particularly
@@ -3220,7 +3221,7 @@ scheme provided no help whatsoever against an attacker modifying the
 download, either as stored, or in transit.
 
 In order to do this securely, you would either apply a signature
-algorithms to the binaries directly, or by signing the digests, as
+algorithm to the binaries directly, or by signing the digests, as
 long as the hash function used to produce the digest is secure against
 second-preimage attacks. The important difference is that producing a
 signature (using either a pre-shared key with your users, or,
@@ -3338,7 +3339,7 @@ for most (cryptographically secure!) hash functions $H$, including
 SHA-2.
 
 As we saw in the chapter on hash functions, many hash functions,
-including MD5, SHA-0, SHA-1 and SHA-2, pad the message with a
+such as MD5, SHA-0, SHA-1 and SHA-2, pad the message with a
 predictable padding before producing the output digest. The output
 digest is the same thing as the internal state of the hash function.
 That's a problem: the attacker can use those properties to forge
@@ -3392,7 +3393,7 @@ not pleasing to advanced Pythonistas.]
 The parsing function only remembers the last value for a given key:
 previous values in the dictionary are overwritten. As a result, an
 attacker mounting a length extension attack can effectively control
-parsed dictionary entirely.
+the parsed dictionary entirely.
 
 If you're thinking that this code has many issues; sure, it does. For
 example, it doesn't handle escaping correctly. But even if it did,
@@ -5012,8 +5013,8 @@ feature is only rarely used, even though it clearly has very
 interesting security benefits.
 
 The main reason for that is probably rooted in the poor user
-experience. There are no systems that are easy to use for atechnical
-people that rely on client certificates. Since there are few such
+experience. There are no systems that rely on client certificates
+that are easy to use for atechnical people. Since there are few such
 systems, even tech-savvy people don't know about them, which means
 new systems aren't created.
 
@@ -5107,7 +5108,7 @@ stored. When a byte sequence recurs[fn::Within limits; specifically
 within a sliding window, usually 32kB big. Otherwise, the pointers
 would grow bigger than the sequences they're meant to compress.],
 instead of recording the same sequence, a reference is provided to the
-previous sequence: instead of repeating the secret, it says "go back
+previous sequence: instead of repeating the sequence, it says "go back
 and look at the thing I wrote N bytes ago".
 
 Suppose an attacker can control the plaintext. For example, the
@@ -5543,7 +5544,7 @@ and itself. For example, 3 is a prime number, but 4 is not, because it
 can be divided by 2.
 
 Any number can be written as a product of prime factors: a bunch of
-prime numbers multiplied together. That product is called a
+prime numbers multiplied together. That product is called a prime
 factorization. For example, 30 can be factorized into 2, 3 and 5:
 
 #+BEGIN_LATEX
@@ -5634,9 +5635,9 @@ a^{\phi(n)} \equiv 1 \pmod n
 #+END_LATEX
 
 In that equation, $\phi$ is Euler's totient function, which counts the
-amount of numbers that are coprime to its argument. As an example, the
-totient of 10 is 4, as 1, 3, 7, and 9 do not have common prime factors
-with 10.
+amount of numbers that are coprime to (and less than or equal to) its argument.
+As an example, the totient of 10 is 4, as 1, 3, 7, and 9 do not have common prime
+factors with 10.
 
 We can use Euler's theorem to find the multiplicative inverse of $a$.
 If we just multiply both sides of the equation by $a^{-1}$, we get:
@@ -5893,7 +5894,7 @@ L_{j + 1}         = L_3         & = \mathtt{0b110010} \\
 \end{align*}
 #+END_LATEX
 
-You can visually verify that $L_3$ is indeed $L_2$, shifted one to the
+You can visually verify that $L_2$ is indeed $L_3$, shifted one to the
 left (which is the same thing as multiplying by two), plus that one
 bit $k_j$ that "fell off" when shifting right. $k_j$ is the last bit
 of $L_j$; in this case it happens to be 1, but it could equally well
@@ -5963,7 +5964,7 @@ exponentiation out:
 
 Remember that $L_j$ is $k$ right-shifted by $j$ bits, so $L_0$ is $k$
 shifted right by 0 bits, or just $k$ itself. That means $g^k$, the
-number we're trying to compute, is the same thing as g^{L_0}$. By
+number we're trying to compute, is the same thing as $g^{L_0}$. By
 starting at $g^{L_{t - 1}}$ ($g$ raised to the power of the leftmost
 bit of $k$) and iteratively making our way down to $g^{L_0} = g^k$, we
 have an elegant inductive method for computing $g^k$ based on two
@@ -6039,7 +6040,7 @@ throne.
 The complexity of computing discrete logarithms, together with the
 relative simplicity of computing its inverse, modular exponentiation,
 is the basis for many public key cryptosystems. Common examples
-include the RSA encryption primitive, or the Diffie-Hellman key
+include the RSA encryption primitive, and the Diffie-Hellman key
 exchange protocol.
 
 While cryptosystems based on the discrete logarithm problem are
