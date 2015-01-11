@@ -2602,6 +2602,11 @@ to this day.
 RSA encryption and decryption relies on modular arithmetic. You may
 want to review the [[Modular arithmetic][modular arithmetic primer]] before continuing.
 
+This section describes the simplified math problem behind RSA,
+commonly referred to as "textbook RSA". By itself, this doesn't
+produce a secure encryption scheme. We'll see a secure construction
+called OAEP that builds on top of it in a later section.
+
 In order to generate a key, you pick two large prime numbers $p$ and
 $q$. These numbers have to be picked at random, and in secret. You
 multiply them together to produce the modulus $N$, which is public.
