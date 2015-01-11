@@ -596,7 +596,7 @@ represent the blocks by that digit. Figure \ref{fig:BlockCipherBlocks}
 illustrates the blocks that the cipher operates on.
 
 #+BEGIN_LATEX
-\illustration{BlockCipher/AllNodes}[.85][All of the 16 nodes operated on by the block cipher. Each of the nodes is designated by a hexadecimal digit.][fig:BlockCipherBlocks]
+\illustration{BlockCipher/AllNodes}[.85][All of the 16 nodes operated on by the block cipher. Each node is designated by a hexadecimal digit.][fig:BlockCipherBlocks]
 #+END_LATEX
 
 Once we select a secret key, the block cipher will use that to
@@ -888,7 +888,7 @@ incoming stream into different blocks, and encrypt each block:
 \end{equation}
 #+END_LATEX
 
-This scheme is called \gls{ECB mode}, and it is one of the many ways
+This scheme is called \gls{ECB mode} (Electronic Code Book Mode), and it is one of the many ways
 that block ciphers can be used to construct stream ciphers.
 Unfortunately, while being very common in home-grown cryptosystems, it
 poses very serious security flaws. For example, in ECB mode, identical
@@ -1298,8 +1298,8 @@ just a different requirement from "not secret", not necessarily a
 where it isn't required, precisely because if it's not supposed to be
 secret, the algorithm may very well treat it as non-secret, as is the
 case here. There /are/ plenty of systems where it is okay to use a
-secret where it isn't required, and in some cases you might even get a
-stronger system as a result, but the point is that that isn't
+secret where it isn't required. In some cases you might even get a
+stronger system as a result, but the point is that it is not
 generally true, and depends on what you're doing.
 
 *** <<<CBC bit flipping attacks>>>
@@ -1609,9 +1609,9 @@ understand the rest of the attack.)
 **** Decrypting one byte
 
 At this point, the attacker has already successfully decrypted the
-last byte of the target block of ciphertext! (Actually, we've
+last byte of the target block of ciphertext! Actually, we've
 decrypted as many bytes as we have valid padding; we're just assuming
-the worst case scenario that that's only a single byte.) How? The
+the worst case scenario where there is only a single byte. How? The
 attacker knows that the last byte of the decrypted ciphertext block
 $C_i$ (we'll call that byte $D(C_i)[b]$), XORed with the iteratively
 found value $r_b$, is \verb|01|:
@@ -1993,7 +1993,7 @@ a reason it's expressed that way. Suppose that RC4 was a good stream
 cipher, and all values occurred with equal probability. Then you'd
 expect the probability for any given byte value to be $2^{-8}$ since
 there are $2^8$ different byte values. If RC4 was a good stream
-cipher, two adjacent bytes would both each have probability $2^{-8}$,
+cipher, two adjacent bytes would each have probability $2^{-8}$,
 so any given pair of two bytes would have probability $2^{-8} \cdot
 2^{-8} = 2^{-16}$. However, RC4 isn't an ideal stream cipher, so these
 properties aren't true. By writing the probability in the $2^{-16} (1 +
@@ -2002,7 +2002,7 @@ you'd expect from an ideal stream cipher.
 
 So, let's try to read the first line of the table. It says that when
 the first byte $i = 1$ of any 256-byte chunk from the cipher is $0$,
-then the byte following it is slightly more likely ($(1 + 2^{-9}$
+then the byte following it is slightly more likely ($1 + 2^{-9}$
 times as likely, to be exact) to be 0 than for it to be any other
 number. We can also see that when one of the keystream bytes is $255$,
 you can make many predictions about the next byte, depending on where
@@ -2022,8 +2022,8 @@ we've also developed many secure alternatives. The continuing
 advances in cryptanalysis of RC4 helped contribute to a sense of
 urgency regarding the improvement of commonly available cryptographic
 primitives. Throughout 2013 in particular, this lead to large
-improvements in, for example, browser cryptography. (We will discuss
-browser cryptography, notably SSL/TLS, in a later chapter.)
+improvements in, for example, browser cryptography (We will discuss
+browser cryptography, notably SSL/TLS, in a later chapter).
 
 *** <<<Salsa20>>>
 
@@ -2066,7 +2066,7 @@ we will see in more detail in a later chapter.] with specialized
 hardware instructions.
 
 <<keystream jump>>
-Salsa20 has a two particularly interesting properties. Firstly, It's
+Salsa20 has two particularly interesting properties. Firstly, It's
 possible to "jump" to a particular point in the keystream without
 computing all previous bits. This can be useful, for example, if a
 large file is encrypted, and you'd like to be able to do random reads
@@ -2094,7 +2094,7 @@ ciphers. This book emphasizes what the functionality of the algorithm
 is. Since both block ciphers in a \gls{mode of operation} and a native
 stream cipher take a secret key and can be used to encrypt a stream,
 and the two can usually replace each other in a cryptosystem, we just
-call both of them stream ciphers and be done with it.
+call both of them stream ciphers and are done with it.
 
 We will further emphasize the tight link between the two with CTR
 mode, a mode of operation which produces a synchronous stream cipher.
@@ -2216,9 +2216,9 @@ their shared secret.
 
 That protocol is called Diffie-Hellman, named after Whitfield Diffie
 and Martin Hellman, the two cryptographic pioneers who discovered it.
-They suggest calling the protocol Diffie-Hellman-Merkle key exchange,
+They suggested calling the protocol Diffie-Hellman-Merkle key exchange,
 to honor the contributions of Ralph Merkle. While his contributions
-certainly deserve honoring, that term hasn't really caught on much.
+certainly deserve honoring, that term hasn't really caught on.
 For the benefit of the reader we'll use the more common term.
 
 Practical implementations of Diffie-Hellman rely on mathematical
@@ -2361,7 +2361,7 @@ Eve can't perform that computation. She could finish the computation
 with either Alice or Bob's secret color, since she has both mixed
 colors, but she has neither of those secret colors. She can also try
 to mix the two mixed colors, which would have both Alice and Bob's
-secret colors mixed into them, but that would have the base color in
+secret colors mixed into them. However, that would have the base color in
 it twice, resulting in a different color than the shared secret color
 that Alice and Bob computed, which only has the base color in it once.
 
@@ -2406,7 +2406,7 @@ m_B = g^{r_B} \pmod{p}
 #+END_LATEX
 
 These numbers are sent across the network where Eve can see them. The
-premise of the discrete logarithm problem is that that's okay, because
+premise of the discrete logarithm problem is that it is okay to do so, because
 figuring out $r$ in $m = g^r \pmod{p}$ is supposedly very hard.
 
 Once Alice and Bob have each other's mixed numbers, they add their own
@@ -2447,7 +2447,7 @@ based on the discrete log problem. This is because the fastest
 algorithms for breaking the discrete log problem have a larger
 asymptotic complexity than their elliptic curve variants. For example,
 the number field sieve for discrete logarithms, a state of the art
-algorithm for for attacking discrete logarithm-based Diffie-Hellman,
+algorithm for attacking discrete logarithm-based Diffie-Hellman,
 has time complexity:
 
 #+BEGIN_LATEX
@@ -2630,7 +2630,7 @@ M \equiv C^d \pmod{N}
 #+END_LATEX
 
 The security of RSA relies on that decryption operation being
-impossible without knowing the secret exponent $d$, and that that
+impossible without knowing the secret exponent $d$, and that the
 secret exponent $d$ is very hard (practically impossible) to compute
 from the public key $(N, e)$. We'll see approaches for breaking RSA in
 the next section.
@@ -2837,7 +2837,7 @@ random number generators. We'll see some of these systems in detail in
 future chapters.
 
 Cryptographic hash functions have much stronger properties than
-regular hash function, such as one that you might find in a hash
+regular hash functions, such as one that you might find in a hash
 table. For a cryptographic hash function, we want it to be impossibly
 hard to:
 
@@ -3395,7 +3395,7 @@ previous values in the dictionary are overwritten. As a result, an
 attacker mounting a length extension attack can effectively control
 the parsed dictionary entirely.
 
-If you're thinking that that code has many issues; sure, it does. For
+If you're thinking that this code has many issues; sure, it does. For
 example, it doesn't handle escaping correctly. But even if it did,
 that wouldn't really fix the length extension attack problem. Most
 parsing functions will perfectly happily live with that binary junk in
@@ -3819,7 +3819,7 @@ Once we have parameters $(p, q, g)$, they can be shared between users.
 **** Key generation
 
 Armed with parameters, it's time to compute public and private keys for an
-individual user. First select a random $x$ with $0 < x < q$. Next, calculate
+individual user. First, select a random $x$ with $0 < x < q$. Next, calculate
 $y$ where $y = g^x \pmod{p}$. This delivers a public key $(p, q, g, y)$, and
 private key $x$.
 
@@ -4061,7 +4061,7 @@ more detail in a following chapter, where they are used to extract
 randomness with high entropy density from many sources that each have
 low entropy density.
 
-There are two main categories of key derivation function, depending on
+There are two main categories of key derivation functions, depending on
 the entropy content of the secret value, which determines how many
 different possible values the secret value can take.
 
@@ -4602,7 +4602,7 @@ the output.
 This isn't a big deal at face value. To find the state of the
 algorithm, an attacker needs to find $r$, so they can compute $s$.
 They still need to solve the elliptic curve discrete log problem to
-find $r$ from $rQ$, given $Q$. We're assuming that that's hard.
+find $r$ from $rQ$, given $Q$. We're assuming that problem is hard.
 
 Keep in mind that elliptic curves are primitives used for asymmetric
 encryption. That problem is expected to be hard to solve in general,
@@ -5009,7 +5009,7 @@ In public-key schemes we've seen so far, all peers typically had one
 or more key pairs of their own. There's no reason users can't have
 their own certificates, and use them to authenticate to the server.
 The TLS specification explicitly supports client certificates. This
-feature is only rarely used, even thought it clearly has very
+feature is only rarely used, even though it clearly has very
 interesting security benefits.
 
 The main reason for that is probably rooted in the poor user
@@ -5231,7 +5231,7 @@ does absolutely nothing to prevent attacks against TLS itself.
 
 HSTS can suffer from a chicken-or-egg problem. If a browser has
 never visited a particular HSTS-enabled website before, it's possible
-that the browser doesn't know that that website is HSTS-enabled yet.
+that the browser doesn't know that the website is HSTS-enabled yet.
 Therefore, the browser may still attempt a regular HTTP connection,
 vulnerable to an SSL stripping attack. Some browsers have attempted to
 mitigate this issue by having browsers come pre-loaded with a list of
@@ -5519,7 +5519,7 @@ the equation and use an $\equiv$ sign instead of an equals sign ($=$):
 
 This is read as "ten plus four is equivalent to two, modulo twelve"
 and "two minus five is equivalent to nine, modulo twelve". That might
-seems like a trivial notational hack now, but the difference will
+seem like a trivial notational hack now, but the difference will
 become apparent once we start applying tricks for doing more complex
 modular computations, like multiplication and exponentiation.
 
@@ -5674,7 +5674,7 @@ efficiently in the next section.
 
 *** Exponentiation
 
-Like multiplication is taught as as repeated addition, exponentiation
+Like multiplication is taught as repeated addition, exponentiation
 can be thought of as repeated multiplication:
 
 #+BEGIN_LATEX
@@ -5721,7 +5721,7 @@ A particularly efficient way to do it on computers is splitting the
 exponent up into a sum of powers of two. This is called exponentiation
 by squaring, or sometimes also binary exponentiation. Suppose we want
 to compute $3^{209} \pmod {19}$. First, we split up 209 into a sum of
-powers of two. This is process is essentially just writing 209 down in
+powers of two. This process is essentially just writing 209 down in
 binary: ~0b11010001~. That's very practical if the computation is
 being performed by a computer, because that's typically how the
 computer had the number stored in the first place.
@@ -5973,7 +5973,7 @@ simple recursive rules.
 The important part about this algorithm is the constant number of
 operations. If $k_j = 0$, computing $g^{L_j}$ involves one squaring
 and $g^{H_j}$ involves one multiplication; if $k_j = 1$, it's the
-other way around. No matter what any of any of the bits of $k$ is, you
+other way around. No matter what any of the bits of $k$ are, you
 need one squaring operation and one multiplication per bit.
 
 **** Implementing the Montgomery ladder in Python
@@ -6006,7 +6006,7 @@ effectively just skipping the first bit.
 
 The important thing to note here is that no matter what the particular
 value of the exponent is, there is one squaring, one multiplication,
-and one modulus being computed per bit. Keep in mind that that doesn't
+and one modulus being computed per bit. Keep in mind that this doesn't
 necessarily make the entire algorithm take constant time, because the
 individual squaring and multiplication operations are not necessarily
 constant time.
