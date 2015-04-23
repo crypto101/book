@@ -303,7 +303,7 @@ particular bit intercepted by Eve, the eavesdropper.
 
 Let's say Eve sees that a particular ciphertext bit $c_i$ is 1. She
 has no idea if the matching plaintext bit $p_i$ was 0 or 1, because
-she has no idea of the key bit $k_i$ was 0 or 1. Since all of the key
+she has no idea if the key bit $k_i$ was 0 or 1. Since all of the key
 bits are truly random, both options are exactly equally probable.
 
 *** Attacks on "one-time pads"
