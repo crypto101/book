@@ -303,7 +303,7 @@ particular bit intercepted by Eve, the eavesdropper.
 
 Let's say Eve sees that a particular ciphertext bit $c_i$ is 1. She
 has no idea if the matching plaintext bit $p_i$ was 0 or 1, because
-she has no idea of the key bit $k_i$ was 0 or 1. Since all of the key
+she has no idea if the key bit $k_i$ was 0 or 1. Since all of the key
 bits are truly random, both options are exactly equally probable.
 
 *** Attacks on "one-time pads"
@@ -400,8 +400,8 @@ to occur with high probability. Those sequences are called "cribs".
 The name crib-dragging originated from the fact that these small
 "cribs" are dragged from left to right across each ciphertext, and
 from top to bottom across the ciphertexts, in the hope of finding a
-match somewhere in. Those matches form the sites of the start, or
-"crib", if you will, of further decryption.
+match somewhere. Those matches form the sites of the start, or "crib",
+if you will, of further decryption.
 
 The idea is fairly simple. Suppose we have several encrypted messages
 $C_i$ encrypted with the same "one-time" pad $K$.[fn::We use capital
