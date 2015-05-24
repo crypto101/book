@@ -1485,14 +1485,15 @@ To mount this attack, an attacker only needs two things:
  2. A /padding oracle/: a function that takes ciphertexts and tells
     the attacker if the padding was correct
 
-As with the ECB encryption oracle, the availability a padding oracle
-may sound like a very unrealistic assumption. The massive impact of
-this attack proves otherwise. For a long time, most systems did not
-even attempt to hide if the padding was valid or not. This attack
-remained dangerous for a long time after it was originally discovered,
-because it turns out that in many systems it is extremely difficult to
-actually hide if padding is valid or not. We will go into this problem
-in more detail both in this chapter and in later chapters.
+As with the ECB encryption oracle, the availability of a padding
+oracle may sound like a very unrealistic assumption. The massive
+impact of this attack proves otherwise. For a long time, most systems
+did not even attempt to hide if the padding was valid or not. This
+attack remained dangerous for a long time after it was originally
+discovered, because it turns out that in many systems it is extremely
+difficult to actually hide if padding is valid or not. We will go into
+this problem in more detail both in this chapter and in later
+chapters.
 
 In this chapter, we'll assume that PKCS#5/PKCS#7 padding is being
 used, since that's the most popular option. The attack is general
