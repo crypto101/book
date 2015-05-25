@@ -1961,7 +1961,7 @@ not affected.
 Again, attacks only get better. Andreas Klein showed more extensive
 correlation between the key and the keystream. \cite{klein:rc4}
 Instead of tens of millions of messages with the Fluhrer, Mantin,
-Shamir attacks, attackers now only needed several tens of thousands
+Shamir attacks, attackers now only needed several tens of thousands of
 messages to make the attack practical. This was applied against WEP
 with great effect.
 
