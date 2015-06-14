@@ -212,7 +212,7 @@ both) is 1:
 There's a few useful arithmetic tricks we can derive from that.
 
 1. You can apply XOR in any order: $a \xor b = b \xor a$, no matter
-   what values $a$ and $b$ are.
+   what values $a$ and $b$ are (also known as /commutative/).
 2. Any bit XOR itself is 0: $a \xor a = 0$. If $a$ is 0, then it's $0
    \xor 0 = 0$; if $a$ is 1, then it's $1 \xor 1 = 0$.
 3. Any bit XOR 0 is that bit again: $a \xor 0 = a$. If $a$ is 0, then
