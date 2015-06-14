@@ -108,7 +108,7 @@ They'll be marked like this:
 
 ** Development
 
-The entire Crypto 101 project is publicly developed on Github under the
+The entire Crypto 101 project is publicly developed on GitHub under the
 ~crypto101~ organization, including [[https://www.github.com/crypto101/book][this book]].
 
 This is an early pre-release of this book. All of your questions,
