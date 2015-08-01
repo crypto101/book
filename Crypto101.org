@@ -730,12 +730,12 @@ schedule is the process which AES uses to derive 128-bit keys for
 each round from one master key.
 
 First, the key is separated into 4 byte columns. The key is rotated
-and then each byte is run through an S-box (subsitution box) that
-maps it to something else. Each column is then xored with a
+and then each byte is run through an S-box (substitution box) that
+maps it to something else. Each column is then XORed with a
 round constant. The last step is to xor the result with the previous
 round key.
 
-The other columns are then xored with the previous round key to
+The other columns are then XORed with the previous round key to
 produce the remaining columns.
 
 ***** SubBytes
@@ -3735,7 +3735,7 @@ very fast: only requiring roughly one block cipher operation per
 encrypted or associate data block, as well as one additional block
 cipher operation for the final tag. The offsets ($\Delta_i$) are also
 extremely easy to compute. The checksum block $X$ is just all of the
-plaintext blocks $P_i$ XOR'ed together. Finally, OCB mode is easy to
+plaintext blocks $P_i$ XORed together. Finally, OCB mode is easy to
 compute in parallel; only the final authentication tag is dependent on
 all the preceding information.
 
@@ -4347,7 +4347,7 @@ v = \sqrt{4 k_B T R \Delta_f }
 These formulas may seem a little scary to those who haven't seen the
 physics behind them before, but don't worry too much: understanding
 them isn't really necessary to go along with the reasoning. These
-formulas are for the the /root mean square/. If you've never heard
+formulas are for the /root mean square/. If you've never heard
 that term before, you can roughly pretend that means "average".
 $\Delta f$ is the bandwidth, $T$ is the temperature of the system in
 Kelvins, $k_B$ is Boltzmann's constant.
@@ -5131,7 +5131,7 @@ and look at the thing I wrote N bytes ago".
 
 Suppose an attacker can control the plaintext. For example, the
 attacker injects an invisible iframe[fn::An iframe is a web page
-embedded within a page.] or some Javascript code that fires off many
+embedded within a page.] or some JavaScript code that fires off many
 requests. The attacker needs some way to inject their guess of the
 secret so that their guess occurs in the plaintext, such as the query
 parameters[fn::The key-value pairs in a URL after the question mark,
@@ -5238,8 +5238,8 @@ active man-in-the-middle attacks such as SSL stripping.
 
 HSTS also defends against mistakes on the part of the web server. For
 example, a web server might accidentally pull in some executable code,
-such as some Javascript, over an insecure connection. An active
-attacker that can intercept and modify that Javascript would then have
+such as some JavaScript, over an insecure connection. An active
+attacker that can intercept and modify that JavaScript would then have
 complete control over the (supposedly secure) web site.
 
 As with many TLS improvements, HSTS is not a panacea: it is just one
