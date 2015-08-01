@@ -23,6 +23,8 @@ Crypto101.brf
 Crypto101.tex
 Crypto101.pdf
 Crypto101.epub
+# Source highlighting
+_minted-Crypto101
 # Illustrations, vectorized
 Illustrations/*/*.pdf
 *.mps
