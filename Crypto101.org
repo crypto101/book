@@ -725,11 +725,11 @@ AES consists of several independent steps. At a high level, AES is a
 
 ***** Key schedule
 
-AES requires seperate keys for each round in the next steps. The key
+AES requires separate keys for each round in the next steps. The key
 schedule is the process which AES uses to derive 128-bit keys for
 each round from one master key.
 
-First, the key is seperated into 4 byte columns. The key is rotated
+First, the key is separated into 4 byte columns. The key is rotated
 and then each byte is run through an S-box (subsitution box) that
 maps it to something else. Each column is then xored with a
 round constant. The last step is to xor the result with the previous
