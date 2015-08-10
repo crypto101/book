@@ -5596,8 +5596,9 @@ all numbers except 0 itself.
 
 Two numbers are called coprime when their greatest common divisor is
 1, or, to put it in another way, they don't share any prime factors.
-Since the only prime factor a prime has is itself, that means that a
-prime is coprime to every other number.
+Since the only prime factor a prime has is itself, that means that all
+prime numbers are also coprime. More generally, a prime is coprime to
+any number that isn't a multiple of that prime.
 
 *** Multiplication
 
