@@ -271,7 +271,7 @@ there's an encryption scheme, called a one-time pad, which consists of
 just that single operator. It's called a one-time pad because it
 involves a sequence (the "pad") of random bits, and the security of
 the scheme depends on only using that pad once. The sequence is called
-a pad because it was originally a physical, paper pad.
+a pad because it was originally recorded on a physical, paper pad.
 
  This scheme is unique not only in its simplicity, but also because it
 has the strongest possible security guarantee. If the bits are truly
