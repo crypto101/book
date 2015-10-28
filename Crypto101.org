@@ -5477,6 +5477,7 @@ She just needs to make a new DH keypair:
 
 - She picks a random value y that is at least 320 bits long. Lets call it
   y.
+- She then sends to Bob the value $g^y$.
 
 **** Step Three: Reveal Signature Message
 
