@@ -5032,9 +5032,9 @@ interesting security benefits.
 
 The main reason for that is probably rooted in the poor user
 experience. There are no systems that rely on client certificates
-that are easy to use for atechnical people. Since there are few such
-systems, even tech-savvy people don't know about them, which means
-new systems aren't created.
+that are easy to use for non-technical people. Since there are few
+such systems, even tech-savvy people don't know about them, which
+means new systems aren't created.
 
 Client certificates are a great solution for when you control both
 ends of the wire and want to securely authenticate both peers in a
