@@ -6030,7 +6030,7 @@ effectively just skipping the first bit.
 
 The important thing to note here is that no matter what the particular
 value of the exponent is, there is one squaring, one multiplication,
-and one modulus being computed per bit. Keep in mind that this doesn't
+and one modulo operation per bit. Keep in mind that this doesn't
 necessarily make the entire algorithm take constant time, because the
 individual squaring and multiplication operations are not necessarily
 constant time.
