@@ -707,12 +707,17 @@ reduced-round versions of AES \cite{cryptoeprint:2009:374}.
 A related key attack involves making some predictions about how AES
 will behave with two different keys with some specific mathematical
 relation. Those predictions provide some information about what
-identical (input, output) pairs will look like under those different
-keys. Most of these attacks attempt to recover the key entirely,
-completely breaking the encryption. While an ideal block cipher
-wouldn't be vulnerable to a related key attack, no system in the real
-world should ever end up with such related keys. If it does, things
-have gone so completely wrong that all further bets are off.
+identical (input, output) pairs will look like under those related
+keys. Most of these attacks attempt to recover the key, or at least
+parts of it.
+
+While a theoretically ideal block cipher wouldn't be vulnerable to a
+related key attack, these attacks aren't considered practical
+concerns. Because cryptographic keys are cryptographically random, the
+odds of selecting two such related keys is nonexistent. Such attacks
+are interesting from an academic perspective: they can help provide
+insight in the workings of the cipher, guiding cryptographers in
+designing future ciphers and attacks against current ciphers.
 
 **** A closer look at Rijndael
 
