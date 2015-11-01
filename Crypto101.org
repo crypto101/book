@@ -5444,11 +5444,101 @@ OTR uses many of the primitives we've seen so far:
  - Message authentication codes (HMAC with SHA-1)
  - Diffie-Hellman key exchange
 
-**** Authenticated key exchange (AKE)
+OTR also utilizes another abstract protocol called the Socialist
+Millionaire Protocol (SMP) in order to check if the other participant
+is who they actually think, by comparing a shared secret only the two
+of them know.
 
-TODO: Explain (https://otr.cypherpunks.ca/Protocol-v3-4.0.0.html), #33
 
-**** Data exchange
+*** Authenticated key exchange (AKE)
+
+Diffie-Hellman key exchange is utilized heavily in this step. A 1536-bit
+prime is used as a modulo and let $g$ be a generator of that group.
+
+We suppose that two participants, named Alice and Bob want to communicate
+and are willing to exhange sensitive data with eachother. Each have a
+DSA long-term authentication key-pair ($pub_A,pr_A)$ and $(pub_B,pr_b)$
+respectively.
+
+
+**** Step One: Commit Message
+
+Initialy Alice and Bob are in the same protocol state and each waits
+for the other to initiate an OTR connection or they can start one themselves.
+
+Let's suppose that Bob chooses to initiate an OTR conversation with Alice,
+so he sends an OTR Commit Message, and then transitions to state where awaits
+a response from Alice. To sent the message he does the following:
+
+- He picks a random 128-bit value. Lets call it r.
+- He picks another random valude that is at least 320 bits long. We shall
+  call that x.
+- He then sends Alice $AES_r(g^x)$ and $HASH(g^x)$.
+
+**** Step Two: Key message
+
+Here Alice must respond to Bob's message. For now she doesnt have much to do.
+She just needs to make a new DH keypair:
+
+- She picks a random value y that is at least 320 bits long. Lets call it
+  y.
+- She then sends to Bob the value $g^y$.
+
+**** Step Three: Reveal Signature Message
+
+Now Bob can complete the DH exchange. He knows Aice's public key and obviously
+his own secret key. However he is not sure that he is talking to Alice! So further
+steps must be taken for authentication. Also note that Alice cannot complete
+the key exchange unless Bob tells here the value r. So Bob does the following:
+
+- Verifies that Alices public key is a valid value.
+- Computes the shared secret $s = (g^y)^x$.
+- By hashing the value s in certain ways he computes two AES keys $c, c\prime$ and
+  four MAC keys $m_1, m_1\prime, m_2, m_2\prime$.
+- He chooses an id number $keyid_B$ for his current DH keypair $(x,g^x)$.
+- He computes $M_B = MAC_{m_1}(g^x,g^y,pub_B, keyid_B)$.
+- He computes $X_B = pub_B,keyid_B,sig_B(M_B)$
+- He sends Alice $r, AES_c(X_B), MAC_{m_2}(AES_c(X_B))$.
+
+**** Step Four: Signature Message
+
+Now Alice has enough information to both compute that shared secret and
+to also make sure that there was no Man-In-The-Middle, since Bob has signed
+the MAC value with his long term authentication key. She must know somehow tell
+Bob that the key exchange was actually authenticated. So she does the following:
+
+- Decrypts Bob's public DH key using r.
+- Hashes $g^x$ on her own and verifies that it matches the hash value that Bob
+  sent in his original message.
+- Verifies that Bob's public key is a valid value.
+- Computes $s = (g^x)^y$. This is the same value that Bob calculated.
+- By hashing the values in certain ways she computes two AES keys $c, c\prime$ and
+  four MAC keys $m_1, m_1\prime, m_2, m_2\prime$. These will be the same keys that
+  Bob computed.
+- Verifies $MAC_{m_2}(AES_c(X_B))$ using her computed $m_2$.
+- Decrypts $AES_c(X_B)$ using her computed $c$.
+- Computes on her own the value $M_B = MAC_{m_1}(g^x,g^y,pub_B, keyid_B)$ and verifies
+  that it is the same with the one Bob sent.
+- Verifies $sig_B(M_B)$ with Bob's public key.
+- She chooses an id number $keyid_A$ for her current DH keypair $(y,g^y)$.
+- She computes $M_A = MAC_{m_1\prime}(g^y,g^x,pub_A, keyid_A)$.
+- She computes $X_A = pub_A,keyid_A,sig_A(M_A)$
+- She sends Bob $AES_{c\prime}(X_A), MAC_{m_2\prime}(AES_c(X_B))$.
+
+**** Step Five
+
+Now Bob can authenticate Alice by doing the following:
+
+- Verifies $MAC_{m_2\prime}(AES_c(X_B))$ with the $m_2\prime$ he computed.
+- Decrypts $AES_{c\prime}(X_A)$ with $c\prime$ he computed.
+- Computes on his own the value $M_A = MAC_{m_1\prime}(g^y,g^x,pub_A, keyid_A)$ and verifies
+  that it is the same with the one Alice sent.
+- Verifies $sig_A(M_A)$ with Alice's public key.
+
+If ALL checks in the above procedure succeed then Alice and Bob have both completed an authenticated
+Diffie-Hellman exchange and have a shared secret that only the two of them know.
+
+*** Data exchange
 
 TODO: Explain (https://otr.cypherpunks.ca/Protocol-v3-4.0.0.html), #33
 
