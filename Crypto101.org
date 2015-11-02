@@ -5444,99 +5444,118 @@ OTR uses many of the primitives we've seen so far:
  - Message authentication codes (HMAC with SHA-1)
  - Diffie-Hellman key exchange
 
-OTR also utilizes another abstract protocol called the Socialist
-Millionaire Protocol (SMP) in order to check if the other participant
-is who they actually think, by comparing a shared secret only the two
-of them know.
+OTR also utilizes another mechanism, called the \Gls{SMP}, to check if
+peers arrived at the same shared secret.
 
+*** Key exchange
 
-*** Authenticated key exchange (AKE)
+In OTR, \Gls{AKE} relies heavily on Diffie-Hellman key exchange,
+extended with a significant number of extra, interlocking checks. The
+Diffie-Hellman exchange itself uses a fixed 1536-bit prime with a
+fixed generator $g$.
 
-Diffie-Hellman key exchange is utilized heavily in this step. A 1536-bit
-prime is used as a modulo and let $g$ be a generator of that group.
+We suppose that two participants, named Alice and Bob want to
+communicate and are willing to exchange sensitive data with each
+other. Each participant has a long-term DSA authentication key, which
+we'll call ($pub_A,pr_A)$ and $(pub_B,pr_b)$ respectively.
 
-We suppose that two participants, named Alice and Bob want to communicate
-and are willing to exhange sensitive data with eachother. Each have a
-DSA long-term authentication key-pair ($pub_A,pr_A)$ and $(pub_B,pr_b)$
-respectively.
+**** Commit message
 
+Initially Alice and Bob are in a protocol state where they wait for
+the peer to initiate an OTR connection, and advertise their own
+capability of speaking OTR.
 
-**** Step One: Commit Message
+Let's suppose that Bob chooses to initiate an OTR conversation with
+Alice. His client sends an OTR Commit Message, and then transitions to
+a state where he waits for a reply from from Alice's client.
 
-Initialy Alice and Bob are in the same protocol state and each waits
-for the other to initiate an OTR connection or they can start one themselves.
+To send a commit message, a client picks a random 128-bit value $r$
+and a random 320-bit (or larger) Diffie-Hellman secret $x$. It then
+sends $AES_r(g^x)$ and $HASH(g^x)$ to the peer.
 
-Let's suppose that Bob chooses to initiate an OTR conversation with Alice,
-so he sends an OTR Commit Message, and then transitions to state where awaits
-a response from Alice. To sent the message he does the following:
+**** Key message
 
-- He picks a random 128-bit value. Lets call it r.
-- He picks another random valude that is at least 320 bits long. We shall
-  call that x.
-- He then sends Alice $AES_r(g^x)$ and $HASH(g^x)$.
+Alice's client has received Bob's client's advertisement to start an
+OTR session. Her client replies with a key message, which involves
+creating a new Diffie-Hellman key pair. She picks a 320-bit (or
+larger) Diffie-Hellman secret $y$ and sends $g^y$ to Bob.
 
-**** Step Two: Key message
+**** Reveal Signature Message
 
-Here Alice must respond to Bob's message. For now she doesnt have much to do.
-She just needs to make a new DH keypair:
+Now that Alice has sent her public Diffie-Hellman key, Bob can
+complete his part of the Diffie-Hellman protocol. Alice can't continue
+yet, because she hasn't seen Bob's public key.
 
-- She picks a random value y that is at least 320 bits long. Lets call it
-  y.
-- She then sends to Bob the value $g^y$.
+As we saw before, Diffie-Hellman does not /authenticate/ the peer. Bob
+can compute a secret, but doesn't know he's talking to Alice. As with
+TLS and other systems using Diffie-Hellman, this problem is solved by
+authenticating the key exchange.
 
-**** Step Three: Reveal Signature Message
+After verifying that Alice's public key is a valid value, Bob compute
+the shared secret $s = (g^y)^x$. Using a key derivation function, he
+derives several keys from $s$: two AES keys $c, c\prime$, and four MAC
+keys $m_1, m_1\prime, m_2, m_2\prime$.
 
-Now Bob can complete the DH exchange. He knows Aice's public key and obviously
-his own secret key. However he is not sure that he is talking to Alice! So further
-steps must be taken for authentication. Also note that Alice cannot complete
-the key exchange unless Bob tells here the value r. So Bob does the following:
+He chooses an identification number $keyid_B$ for his current
+Diffie-Hellman key pair $(x, g^x)$. This will be important once Alice
+and Bob generate new key pairs, which they will do later on in the OTR
+protocol.
 
-- Verifies that Alices public key is a valid value.
-- Computes the shared secret $s = (g^y)^x$.
-- By hashing the value s in certain ways he computes two AES keys $c, c\prime$ and
-  four MAC keys $m_1, m_1\prime, m_2, m_2\prime$.
-- He chooses an id number $keyid_B$ for his current DH keypair $(x,g^x)$.
-- He computes $M_B = MAC_{m_1}(g^x,g^y,pub_B, keyid_B)$.
-- He computes $X_B = pub_B,keyid_B,sig_B(M_B)$
-- He sends Alice $r, AES_c(X_B), MAC_{m_2}(AES_c(X_B))$.
+Bob computes $M_B = MAC_{m_1}(g^x, g^y, pub_B, keyid_B)$ and $X_B =
+(pub_B, keyid_B, sig_B(M_B))$. He sends Alice $r, AES_c(X_B),
+MAC_{m_2}(AES_c(X_B))$.
 
-**** Step Four: Signature Message
+**** Signature Message
 
-Now Alice has enough information to both compute that shared secret and
-to also make sure that there was no Man-In-The-Middle, since Bob has signed
-the MAC value with his long term authentication key. She must know somehow tell
-Bob that the key exchange was actually authenticated. So she does the following:
+Alice can now confirm she's talking to Bob directly, because Bob
+signed the authenticator for the exchange $M_B$ with his long-term DSA
+key.
 
-- Decrypts Bob's public DH key using r.
-- Hashes $g^x$ on her own and verifies that it matches the hash value that Bob
-  sent in his original message.
-- Verifies that Bob's public key is a valid value.
-- Computes $s = (g^x)^y$. This is the same value that Bob calculated.
-- By hashing the values in certain ways she computes two AES keys $c, c\prime$ and
-  four MAC keys $m_1, m_1\prime, m_2, m_2\prime$. These will be the same keys that
-  Bob computed.
-- Verifies $MAC_{m_2}(AES_c(X_B))$ using her computed $m_2$.
-- Decrypts $AES_c(X_B)$ using her computed $c$.
-- Computes on her own the value $M_B = MAC_{m_1}(g^x,g^y,pub_B, keyid_B)$ and verifies
-  that it is the same with the one Bob sent.
-- Verifies $sig_B(M_B)$ with Bob's public key.
-- She chooses an id number $keyid_A$ for her current DH keypair $(y,g^y)$.
-- She computes $M_A = MAC_{m_1\prime}(g^y,g^x,pub_A, keyid_A)$.
-- She computes $X_A = pub_A,keyid_A,sig_A(M_A)$
-- She sends Bob $AES_{c\prime}(X_A), MAC_{m_2\prime}(AES_c(X_B))$.
+Alice can now also compute the shared secret: Bob has sent her $r$,
+which was previously used to encrypt Bob's Diffie-Hellman public
+key. She then computes $HASH(g^x)$, to check that it is indeed the
+same value as what Bob had previously sent. She then computes $s =
+(g^x)^y$ and derives the same keys: $c, c\prime, m_1, m_1\prime, m_2,
+m_2\prime$. Using $m_2$, she can verify $MAC_{m_2}(AES_c(X_B))$. Once
+that message is verified, she can safely decrypt it using her computed
+$c$.
 
-**** Step Five
+She can then also compute $M_B = MAC_{m_1}(g^x, g^y, pub_B, keyid_B)$,
+and verifies that it is the same as Bob sent. By verifying
+$sig_B(M_B)$ with Bob's public key, she has now unambiguously tied the
+current interaction to Bob's long-term authentication key.
 
-Now Bob can authenticate Alice by doing the following:
+She then computes the same values Bob computed to tie his long-term
+key to the short-term handshake, so that Bob can also authenticate
+her. She chooses an identification number $keyid_A$ for her current DH
+keypair $(y, g^y)$, computes $M_A = MAC_{m_1\prime}(g^y, g^x, pub_A,
+keyid_A)$ and $X_A = pub_A, keyid_A, sig_A(M_A)$. Finally, she sends Bob
+$AES_{c\prime}(X_A), MAC_{m_2\prime}(AES_c(X_B))$.
 
-- Verifies $MAC_{m_2\prime}(AES_c(X_B))$ with the $m_2\prime$ he computed.
-- Decrypts $AES_{c\prime}(X_A)$ with $c\prime$ he computed.
-- Computes on his own the value $M_A = MAC_{m_1\prime}(g^y,g^x,pub_A, keyid_A)$ and verifies
-  that it is the same with the one Alice sent.
-- Verifies $sig_A(M_A)$ with Alice's public key.
+**** Authenticating Alice
 
-If ALL checks in the above procedure succeed then Alice and Bob have both completed an authenticated
-Diffie-Hellman exchange and have a shared secret that only the two of them know.
+Now Bob can also authenticate Alice, again by mirroring steps. First,
+he verifies $MAC_{m_2\prime}(AES_c(X_B))$. This allows him to check
+that Alice saw the same $X_B$ he sent.
+
+Once he decrypts $AES_{c\prime}(X_A)$, he has access to Alice's
+long-term public key information, and he can compute $M_A =
+MAC_{m_1\prime}(g^y, g^x, pub_A, keyid_A)$ to compare it with the
+version Alice sent. Finally, he verifies $sig_A(M_A)$ with Alice's
+public key.
+
+**** What have we accomplished?
+
+If all checks succeed then Alice and Bob have completed an
+authenticated Diffie-Hellman exchange and have a shared secret that
+only the two of them know.
+
+Now that you've seen both sides of the authenticated handshake, you
+can see why so many different keys are derived from the Diffie-Hellman
+secret. Keys marked with a prime ($\prime$) are for messages
+originating from the second peer (the one responding to the
+advertisement, in our case, Alice); keys without a prime are for the
+initiating peer (in our case, Bob).
 
 *** Data exchange
 
