@@ -6028,7 +6028,7 @@ Starting from our previous result:
   \begin{align*}
   L_j & = 2 \cdot L_{j + 1} + k_j \\
       & \Downarrow (L_{j + 1} = H_{j+1} - 1) \\
-  L_j & = H_{j + 1} + k_j + H_{j + 1} - 1 \\
+  L_j & = L_{j + 1} + k_j + H_{j + 1} - 1 \\
       & \Downarrow (L_{j + 1} = H_{j+1} - 1) \\
   L_j & = 2 \cdot H_{j + 1} + k_j - 2
   \end{align*}
