@@ -1397,9 +1397,9 @@ that sequence of ~Z~ bytes.
 An attacker may have some target bytes that they'd like to see in the
 decrypted plaintext, for example, \verb*|;admin=1;|. In order to
 figure out which bytes they should flip (so, the value of $X$ in the
-illustration), they just XOR the filler bytes (~ZZZ~ \ldots) with that
+illustration), they just XOR the filler bytes (~ZZZ~\ldots) with that
 target. Because two XOR operations with the same value cancel each
-other out, the two filler values (~ZZZ~ \ldots) will cancel out, and
+other out, the two filler values (~ZZZ~\ldots) will cancel out, and
 the attacker can expect to see \verb|;admin=1;| pop up in the next
 plaintext block:
 
@@ -1586,7 +1586,7 @@ p_0 p_1 p_2 p_3 p_4 \mathtt{03} \mathtt{03} \mathtt{03}
 \end{equation}
 #+END_LATEX
 
-In that equation, $p_0$ \ldots are some bytes of the plaintext. Their
+In that equation, $p_0 \ldots$ are some bytes of the plaintext. Their
 actual value doesn't matter: the only thing that matters is that
 they're not part of the padding. When we modify the first byte of $R$,
 we'll cause a change in the first byte of $P_i$, so that $p_0$ becomes
