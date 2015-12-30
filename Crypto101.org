@@ -1397,9 +1397,9 @@ that sequence of ~Z~ bytes.
 An attacker may have some target bytes that they'd like to see in the
 decrypted plaintext, for example, \verb*|;admin=1;|. In order to
 figure out which bytes they should flip (so, the value of $X$ in the
-illustration), they just XOR the filler bytes (~ZZZ~ \ldots) with that
+illustration), they just XOR the filler bytes (~ZZZ~\ldots) with that
 target. Because two XOR operations with the same value cancel each
-other out, the two filler values (~ZZZ~ \ldots) will cancel out, and
+other out, the two filler values (~ZZZ~\ldots) will cancel out, and
 the attacker can expect to see \verb|;admin=1;| pop up in the next
 plaintext block:
 
