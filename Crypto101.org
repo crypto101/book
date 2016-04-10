@@ -2522,13 +2522,14 @@ from one person and send them to the other, they can look at the
 plaintext messages, remove messages, and they can also modify them in
 any way they choose.
 
-To make matters worse, even if one of the two participants was somehow
-aware that this was going on, they would have no way to get the other
-party to believe them. After all: Mallory performed the successful
-Diffie-Hellman exchange with the unwitting victim, she has all the
-correct shared secrets. Bob, on the other hand, just has some secrets
-shared with Mallory, but he has no way to prove that to Alice. As far
-as Alice can tell, Bob just chose a few random numbers.
+To make matters worse, even if one of the two participants was somehow aware
+that this was going on, they would have no way to get the other party to
+believe them. After all: Mallory performed the successful Diffie-Hellman
+exchange with the unwitting victim, she has all the correct shared
+secrets. Bob, on the other hand, just has some secrets shared with Mallory,
+but he has no way to prove that to Alice. As far as Alice can tell, Bob just
+chose a few random numbers. There's no way to link any key that Bob has with
+any key that Alice has.
 
 Attacks like these are called \gls{MITM} attacks, because the attacker
 (Mallory) is in between the two peers (Alice and Bob). Given that the
