@@ -2591,18 +2591,17 @@ that they're almost always /hybrid/ cryptosystems: while public-key
 algorithms play a very important role, the bulk of the encryption and
 authentication work is done by secret-key algorithms.
 
-By far the most important reason for this is performance. Compared to
-our speedy stream ciphers (native or otherwise), public-key encryption
-mechanisms are extremely slow. A single 2048-bit RSA encryption takes
-0.29 megacycles, decryption takes a whopping 11.12 megacycles.
-\cite{cryptopp:bench} To put this into perspective, symmetric key
-algorithms work in order of magnitude 10 or so cycles per byte in
-either direction. In order to encrypt or decrypt 2048 bytes, that
-means approximately 20 kilocycles, which is about 500 times faster
-than the asymmetric version. The state of the art in secure symmetric
-ciphers is even faster: AES-GCM with hardware acceleration or
-Salsa20/ChaCha20 only need about 2 to 4 cycles per byte, further
-widening the performance gap.
+By far the most important reason for this is performance. Compared to our
+speedy stream ciphers (native or otherwise), public-key encryption mechanisms
+are extremely slow. A single 2048-bit RSA encryption takes 0.29 megacycles,
+decryption takes a whopping 11.12 megacycles.  \cite{cryptopp:bench} To put
+this into perspective, symmetric key algorithms work within an order of
+magnitude of 10 or so cycles per byte in either direction. In order to encrypt
+or decrypt 2048 bytes, that means approximately 20 kilocycles, which is about
+500 times faster than the asymmetric version. The state of the art in secure
+symmetric ciphers is even faster: AES-GCM with hardware acceleration or
+Salsa20/ChaCha20 only need about 2 to 4 cycles per byte, further widening the
+performance gap.
 
 There are a few other problems with most practical cryptosystems. For
 example, RSA can't encrypt anything larger than its modulus, which is
