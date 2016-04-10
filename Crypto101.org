@@ -2626,14 +2626,13 @@ produce a secure encryption scheme. We'll see a secure construction
 called OAEP that builds on top of it in a later section.
 
 In order to generate a key, you pick two large prime numbers $p$ and
-$q$. These numbers have to be picked at random, and in secret. You
-multiply them together to produce the modulus $N$, which is public.
-Then, you pick an /encryption exponent/ $e$, which is also public.
-Usually, this value is either 3 or 65537; because those numbers have
-few ~1~ numbers in their binary expansion, you can compute the
-exponentiation more efficiently. Put together, $(N, e)$ is the public
-key. Anyone can use the public key to encrypt a message $M$ into a
-ciphertext $C$:
+$q$. These numbers have to be picked at random, and in secret. You multiply
+them together to produce the modulus $N$, which is public.  Then, you pick an
+/encryption exponent/ $e$, which is also public.  Usually, this value is
+either 3 or 65537. Because those numbers have a small number of ~1~'s in their
+binary expansion, you can compute the exponentiation more efficiently. Put
+together, $(N, e)$ is the public key. Anyone can use the public key to encrypt
+a message $M$ into a ciphertext $C$:
 
 #+BEGIN_LATEX
 \[
