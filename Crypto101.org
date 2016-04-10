@@ -2516,11 +2516,11 @@ to be Bob, and once with Bob, where Mallory pretends to be Alice.
 
 [[./Illustrations/DiffieHellman/MITM.pdf]]
 
-Alice and Bob will have a shared secret, but the secret is shared with
-Mallory. The attacker can then simply take all the messages they get
-from one person and send them to the other, they can look at the
-plaintext messages, remove messages, and they can also modify them in
-any way they choose.
+There are two shared secrets here: one between Alice and Mallory, and one
+between Mallory and Bob. The attacker (Mallory) can then simply take all the
+messages they get from one person and send them to the other, they can look at
+the plaintext messages, remove messages, and they can also modify them in any
+way they choose.
 
 To make matters worse, even if one of the two participants was somehow aware
 that this was going on, they would have no way to get the other party to
