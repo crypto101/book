@@ -2528,7 +2528,7 @@ party to believe them. After all: Mallory performed the successful
 Diffie-Hellman exchange with the unwitting victim, she has all the
 correct shared secrets. Bob, on the other hand, just has some secrets
 shared with Mallory, but he has no way to prove that to Alice. As far
-as Alice knows, Bob just chose a few random numbers.
+as Alice can tell, Bob just chose a few random numbers.
 
 Attacks like these are called \gls{MITM} attacks, because the attacker
 (Mallory) is in between the two peers (Alice and Bob). Given that the
