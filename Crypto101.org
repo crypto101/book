@@ -2599,7 +2599,7 @@ and decryption takes a whopping 11.12 megacycles.  \cite{cryptopp:bench} To put
 this into perspective, symmetric key algorithms work within an order of
 magnitude of 10 or so cycles per byte in either direction. This means it will
 take a symmetric key algorithm approximately 3 kilocycles in order to decrypt
-256 bytes which is about 4000 times faster than the asymmetric version.The state of the art in secure
+256 bytes which is about 4000 times faster than the asymmetric version. The state of the art in secure
 symmetric ciphers is even faster: AES-GCM with hardware acceleration or
 Salsa20/ChaCha20 only need about 2 to 4 cycles per byte, further widening the
 performance gap.
