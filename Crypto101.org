@@ -2595,14 +2595,14 @@ By far the most important reason for this is performance. Compared to our
 speedy stream ciphers (native or otherwise), public-key encryption mechanisms
 are extremely slow. RSA is limited to at most its key size, which for 2048-bit
 means 256 bytes. Under these circumstances encryption takes 0.29 megacycles,
-and decryption takes a whopping 11.12 megacycles.  \cite{cryptopp:bench} To put
-this into perspective, symmetric key algorithms work within an order of
+and decryption takes a whopping 11.12 megacycles.  \cite{cryptopp:bench} To
+put this into perspective, symmetric key algorithms work within an order of
 magnitude of 10 or so cycles per byte in either direction. This means it will
 take a symmetric key algorithm approximately 3 kilocycles in order to decrypt
-256 bytes which is about 4000 times faster than the asymmetric version. The state of the art in secure
-symmetric ciphers is even faster: AES-GCM with hardware acceleration or
-Salsa20/ChaCha20 only need about 2 to 4 cycles per byte, further widening the
-performance gap.
+256 bytes, which is about 4000 times faster than the asymmetric version. The
+state of the art in secure symmetric ciphers is even faster: AES-GCM with
+hardware acceleration or Salsa20/ChaCha20 only need about 2 to 4 cycles per
+byte, further widening the performance gap.
 
 There are a few other problems with most practical cryptosystems. For
 example, RSA can't encrypt anything larger than its modulus, which is
