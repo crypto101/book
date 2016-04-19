@@ -3485,10 +3485,11 @@ HMAC to work; their particular values aren't very important, as long
 as the two constants are different.
 
 The two pads are XORed with the key before use. The result is either
-prepended to the original message (for the inner padding $p_{inner}$) or the
+prepended to the original message (for the inner padding $p_{inner}$) or to the
 intermediate hash output (for the outer padding $p_{outer}$). Because
-they're prepended, they can be computed ahead of time, shaving a few
-cycles off the MAC computation time.
+they're prepended, the internal state of the hash function after processing the
+prefixes can be computed ahead of time, shaving a few cycles off the MAC
+computation time.
 
 *** <<<One-time MACs>>>
 
