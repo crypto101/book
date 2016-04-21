@@ -23,6 +23,7 @@ Crypto101.brf
 Crypto101.tex
 Crypto101.pdf
 Crypto101.epub
+*~
 # Source highlighting
 _minted-Crypto101
 # Illustrations, vectorized
@@ -32,3 +33,5 @@ Illustrations/*/*.pdf
 *.mpo
 # Illustrations that start as PDF
 !Illustrations/CC/CC-BY-NC.pdf
+# OS X stuff
+.DS_Store
