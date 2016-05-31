@@ -4024,7 +4024,7 @@ any two signatures that the attacker can see for the attack to work.
 As we've seen, if $k$ is repeated, the $r_i$ values repeat as well.
 Since $r_i$ is a part of the signature, it's very easy to see when the
 signer has made this mistake. So, even if reusing $k$ is something the
-attacker only does rarely (because their random number generator is
+signer only does rarely (because their random number generator is
 broken, for example), doing it once is enough for the attacker to
 break the DSA scheme.
 
