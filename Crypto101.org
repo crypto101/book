@@ -6164,10 +6164,13 @@ The equivalent of this in modular arithmetic is commonly called a
 As with division, if you start from the definition as the inverse of a
 different operator, it's easy to come up with examples. For example,
 since $3^6 \equiv 9 \pmod {15}$, we can define $6 \equiv \log_3 9
-\pmod {15}$. However computing discrete logarithms is generally fairly
-hard, unlike modular inverses. There is no formal proof that computing
-discrete logarithms is complex; we just haven't found any efficient
-algorithms to do it.
+\pmod {15}$. Unlike modular inverses, computing discrete logarithms is
+generally hard. There is no formal proof that computing discrete
+logarithms is /intrinsically/ complex; we just haven't found any
+efficient algorithms to do it. Because this field has gotten extensive
+research and we still don't have very fast general algorithms, we
+consider it safe to base the security of protocols on the assumption
+that computing discrete logs is hard.
 
 There is one theoretical algorithm for computing discrete logarithms
 efficiently. However, it requires a quantum computer, which is a
