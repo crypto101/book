@@ -6236,9 +6236,10 @@ y^2 = x^3 - ax + b
 \]
 #+END_LATEX
 
-This is the most common form when talking about elliptic curves in
-general; there are several other forms which mostly have applications
-in cryptography, notably the Edwards form:
+This is called the "short Weierstrass form", and is the most common
+form when talking about elliptic curves in general. There are several
+other forms which mostly have applications in cryptography, notably
+the Edwards form:
 
 #+BEGIN_LATEX
 \[
