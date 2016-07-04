@@ -1,5 +1,5 @@
 #+TITLE: Crypto 101
-#+AUTHOR: Laurens Van Houtven (lvh)
+#+AUTHOR: lvh
 #+DESCRIPTION: An introduction to cryptography for programmers
 
 #+BEGIN_SRC emacs-lisp :results silent :exports results
