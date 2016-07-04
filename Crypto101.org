@@ -6163,7 +6163,7 @@ The equivalent of this in modular arithmetic is commonly called a
 
 As with division, if you start from the definition as the inverse of a
 different operator, it's easy to come up with examples. For example,
-since $3^6 \equiv 9 \pmod {15}$, we can define $9 \equiv \log_3 6
+since $3^6 \equiv 9 \pmod {15}$, we can define $6 \equiv \log_3 9
 \pmod {15}$. However computing discrete logarithms is generally fairly
 hard, unlike modular inverses. There is no formal proof that computing
 discrete logarithms is complex; we just haven't found any efficient
