@@ -3830,7 +3830,7 @@ of 3072 for keys with a security lifetime beyond 2030. As $L$ increases,
 so should $N$.
 
 Next we choose a prime $q$ of length $N$ bits; $N$ must be less than or
-equal to the length of the hash output. We also pick an $L$-bit prime $p$
+equal to the length of the hash output. We also pick an /L/-bit prime $p$
 such that $p-1$ is a multiple of $q$.
 
 The last part is the most confusing. We have to find a number $g$
