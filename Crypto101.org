@@ -3579,11 +3579,11 @@ explanation of the modular inverse, please refer to [[Modular arithmetic][the ap
     &\Downarrow \text{(remove parentheses)} \\
     t_1 - t_2 &= m_1 \cdot a + b - m_2 \cdot a - b \pmod p \\
     &\Downarrow \text{($b$ and $-b$ cancel out)} \\
-    t_1 - t_2 &= m_1 \cdot a + m_2 \cdot a \pmod p \\
+    t_1 - t_2 &= m_1 \cdot a - m_2 \cdot a \pmod p \\
     &\Downarrow \text{(factor out $a$)} \\
-    t_1 - t_2 &= a \cdot (m_1 + m_2) \pmod p \\
-    &\Downarrow \text{(flip sides, multiply by inverse of $(m_1 + m_2)$)} \\
-    a &= (t_1 - t_2)(m_1 + m_2)^{-1} \pmod p
+    t_1 - t_2 &= a \cdot (m_1 - m_2) \pmod p \\
+    &\Downarrow \text{(flip sides, multiply by inverse of $(m_1 - m_2)$)} \\
+    a &= (t_1 - t_2)(m_1 - m_2)^{-1} \pmod p
   \end{align*}
 #+END_LATEX
 
