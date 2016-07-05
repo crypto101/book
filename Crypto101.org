@@ -3833,9 +3833,9 @@ Next we choose a prime $q$ of length $N$ bits; $N$ must be less than or
 equal to the length of the hash output. We also pick an $L$-bit prime $p$
 such that $p-1$ is a multiple of $q$.
 
-The last part is the most confusing. We have to find a number $g$ whose
-[[Multiplicative order][multiplicative order]] $\pmod{p}$ is $q$. The easy
-way to do this is to set $g = 2^(p-1)/q \pmod{p}$. We can try another number
+The last part is the most confusing. We have to find a number $g$
+whose [[Multiplicative order][multiplicative order]] $\pmod{p}$ is $q$. The easy way to do this
+is to set $g = 2^{(p-1)/q} \pmod{p}$. We can try another number
 greater than 2, and less than $p-1$, if $g$ comes out to equal 1.
 
 Once we have parameters $(p, q, g)$, they can be shared between users.
