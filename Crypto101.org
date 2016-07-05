@@ -5794,9 +5794,9 @@ That gives us a direct formula for computing $a^{-1}$. Unfortunately,
 this is still generally less interesting than using the extended
 Euclidean algorithm, for two reasons:
 
-1. It requires computing the totient function, which is generally more
-   complex than running the extended Euclidean algorithm in the first
-   place (unless you happen to know $n$'s prime factors)
+1. It requires computing the totient function, which is harder than
+   running the extended Euclidean algorithm in the first place, unless
+   you happen to know the prime factors of $n$.
 2. Modular exponentiation is computationally expensive.
 
 One exception to that rule is for prime moduli. Since a prime is
