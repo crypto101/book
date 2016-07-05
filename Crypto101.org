@@ -4581,7 +4581,7 @@ as the new state $s$.
 **** Issues and question marks
 
 First of all, $\phi$ is extremely simple: it just takes the
-$x$-coordinate of the curve point, and discards the $y$ coordinate.
+$x$ coordinate of the curve point, and discards the $y$ coordinate.
 That means that it's quite easy for an attacker who sees the output
 value of $\phi$ to find points that could have produced that value. In
 itself, that's not necessarily a big deal; but, as we'll see, it's one
