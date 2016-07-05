@@ -5870,6 +5870,7 @@ computer had the number stored in the first place.
 
 #+BEGIN_LATEX
 \[
+  \arraycolsep=1pt
   \begin{array}{lllllllll}
   209 &= 1 \cdot 2^{7} &+ 1 \cdot 2^{6} &+ 0 \cdot 2^{5} &+ 1 \cdot 2^{4} &+ 0 \cdot 2^{3} &+ 0 \cdot 2^{2} &+ 0 \cdot 2^{1} &+ 1 \cdot 2^{0} \\
       &= 1 \cdot 128   &+ 1 \cdot 64    &+ 0 \cdot 32    &+ 1 \cdot 16    &+ 0 \cdot 8     &+ 0 \cdot 4     &+ 0 \cdot 2     &+ 1 \cdot 1 \\
