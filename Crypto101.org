@@ -4995,7 +4995,7 @@ like. There's nothing stopping someone from generating a key pair
 pretending to be your bank.
 
 When someone actually tries to use a certificate to impersonate a
-bank, real browsers don't believe you. They notify the user that the
+bank, real browsers don't believe them. They notify the user that the
 certificate is untrusted. They do this using the standard TLS trust
 model of certificate authorities. TLS clients come with a list of
 trusted certificate authorities, commonly shipped with your operating
