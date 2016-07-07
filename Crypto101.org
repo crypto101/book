@@ -6160,7 +6160,7 @@ Just like subtraction is the inverse of addition, and division is the
 inverse of multiplication, logarithms are the inverse of
 exponentiation. In regular arithmetic, $b^x = y$, if $x = \log_b
 y$. This is pronounced "$b$ raised to the power $x$ is $y$", and "the
-logarithm of $x$ with respect to $b$ is $y$".  The equivalent of this
+logarithm of $y$ with respect to $b$ is $x$".  The equivalent of this
 in modular arithmetic is called a "discrete logarithm".
 
 As with division, if you start from the definition as the inverse of a
