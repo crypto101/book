@@ -6079,7 +6079,7 @@ $H_j$:
   \[
   H_j = \begin{cases}
   L_{j + 1} + H_{j + 1} & \mbox{if } k_j = 0, \\
-  2 L_{j + 1} & \mbox{if } k_j = 1.
+  2 H_{j + 1} & \mbox{if } k_j = 1.
   \end{cases}
   \]
 #+END_LATEX
