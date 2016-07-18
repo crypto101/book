@@ -4217,9 +4217,7 @@ which block is currently being produced.
 
 #+BEGIN_SRC python
   def expand(key, info=""):
-      """Expands the key, with optional info.
-
-      """
+      """Expands the key, with optional info."""
       output = ""
       for byte in map(chr, range(256)):
           output = hmac(key, output + info + byte)
@@ -4227,9 +4225,7 @@ which block is currently being produced.
 
   def get_output(desired_length, key, info=""):
       """Collects output from the expansion step until enough
-      has been collected; then returns the collected output.
-
-      """
+      has been collected; then returns that output."""
       outputs, current_length = [], 0
       for output in expand(key, info):
           outputs.append(output)
@@ -4238,9 +4234,10 @@ which block is currently being produced.
           if current_length >= desired_length:
               break
       else:
-          # This block is executed when the for loop *isn't* terminated
-          # by the ``break`` statement, which happens when we run out of
-          # ``expand`` outputs before reaching the desired length.
+          # This block is executed when the for loop *isn't*
+          # terminated by the ``break`` statement, which
+          # happens when we run out of ``expand`` outputs
+          # before reaching the desired length.
           raise RuntimeError("Desired length too long")
 
       return "".join(outputs)[:desired_length]
