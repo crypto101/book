@@ -5513,8 +5513,8 @@ Diffie-Hellman key pair $(x, g^x)$. This will be important once Alice
 and Bob generate new key pairs, which they will do later on in the OTR
 protocol.
 
-Bob computes $M_B = MAC_{m_1}(g^x, g^y, p_B, i_B)$ and $X_B = (p_B,
-i_B, S(B, M_B))$. He sends Alice $r, E_c(X_B), MAC_{m_2}(E_c(X_B))$.
+Bob computes $M_B = M_{m_1}(g^x, g^y, p_B, i_B)$ and $X_B = (p_B,
+i_B, S(B, M_B))$. He sends Alice $r, E_c(X_B), M_{m_2}(E_c(X_B))$.
 
 **** Signature Message
 
@@ -5539,14 +5539,14 @@ interaction to Bob's long-term authentication key.
 She then computes the same values Bob computed to tie his long-term
 key to the short-term handshake, so that Bob can also authenticate
 her. She chooses an identification number $i_A$ for her current DH
-keypair $(y, g^y)$, computes $M_A = MAC_{m_1^\prime}(g^y, g^x, p_A,
+keypair $(y, g^y)$, computes $M_A = M_{m_1^\prime}(g^y, g^x, p_A,
 i_A)$ and $X_A = p_A, i_A, S(A, M_A)$. Finally, she sends Bob
-$AES_{c^\prime}(X_A), MAC_{m_2^\prime}(AES_c(X_B))$.
+$E_{c^\prime}(X_A), M_{m_2^\prime}(E_c(X_B))$.
 
 **** Authenticating Alice
 
 Now Bob can also authenticate Alice, again by mirroring steps. First,
-he verifies $MAC_{m_2^\prime}(AES_c(X_B))$. This allows him to check
+he verifies $M_{m_2^\prime}(E_c(X_B))$. This allows him to check
 that Alice saw the same $X_B$ he sent.
 
 Once he decrypts $E_{c^\prime}(X_A)$, he has access to $X_A$, which is
