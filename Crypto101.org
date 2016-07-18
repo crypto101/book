@@ -5518,8 +5518,18 @@ Diffie-Hellman key pair $(x, g^x)$. This will be important once Alice
 and Bob generate new key pairs, which they will do later on in the OTR
 protocol.
 
-Bob computes $M_B = M_{m_1}(g^x, g^y, p_B, i_B)$ and $X_B = (p_B,
-i_B, S(p_B, M_B))$. He sends Alice $r, E_c(X_B), M_{m_2}(E_c(X_B))$.
+Bob computes:
+
+#+BEGIN_LATEX
+\[
+M_B = M_{m_1}(g^x, g^y, p_B, i_B)
+\]
+\[
+X_B = (p_B, i_B, S(p_B, M_B))
+\]
+#+END_LATEX
+
+He sends Alice $r, E_c(X_B), M_{m_2}(E_c(X_B))$.
 
 **** Signature Message
 
