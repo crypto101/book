@@ -5394,9 +5394,10 @@ groups with no connections to the rest of the web.
 [[./Illustrations/PGP/WebOfTrustIslands.pdf]]
 
 Of course, this is only the default way to use OpenPGP. There's
-nothing stopping you from shipping a particular public key with some
-software, and using that to sign messages, just like you might want to
-do with TLS.
+nothing stopping you from shipping a particular public key as a part
+of a software package, and using that to sign messages or verify
+messages. This is analogous to how you might want to ship a key with a
+client certificate, or a custom root CA certificate, with TLS.
 
 ** Off-The-Record Messaging (<<<OTR>>>)
 *** Description
