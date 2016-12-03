@@ -3085,11 +3085,23 @@ In many hash functions, particularly the previous generations, the
 internal state kept by the hash function is used as the digest value.
 In some poorly engineered systems, that causes a critical flaw: if an
 attacker knows $H(M_1)$, it's very simple to compute $H(M_1 \| M_2)$,
-without actually knowing the value of $M_1$. Since you know $H(M_1)$,
-you know the state of the hash function after it's hashed $M_1$. You
-can use that to reconstruct the hash function, and ask it to hash more
-bytes. Setting the hash function's internal state to a known state
-you got from somewhere else (such as $H(M_1)$) is called /fixation/.
+i.e., the hash digest for some lengthened message,
+without actually knowing the value of $M_1$. 
+Why is this a potential problem? Here is a somewhat silly example:
+Assume that we can add the text $M_2$ = \verb*|", we thought. But actually, it
+would be better to transfer $500,000 to account XYZ."| to a message $M_1$,
+then re-authenticate it with $H(M_1 \| M_2)$ and send it on to the
+receiver, where it would pass the authentication check! A practical
+and more scary attack will be shown in the chapter on MACs
+# **HMM** ... with the key-value-pair code ....
+
+How does this sort of attacks work? Since you know $H(M_1)$,
+you know the state of the hash function after it has hashed $M_1$. You
+can use that to "reconstruct" the hash function, i.e., set the state
+of an implementation exactly to $H(M_1)$ (setting the hash function's 
+internal state to a known state you got from somewhere else 
+is called /fixation/). After that, you can just let it continue the
+computation for additional input bytes.
 
 For most real-world hash functions, it's a little bit more complicated
 than that. They commonly have a padding step that an attacker needs to
@@ -3101,7 +3113,8 @@ simple, so we'll go through it:
  3. Take the total length of the message, before padding, and add it
     as a 64-bit integer.
 
-For the attacker to be able to compute $H(M_1 \| M_2)$ given
+For the attacker to be able to compute with such a hash function
+the value $H(M_1 \| M_2)$ when knowing
 $H(M_1)$, the attacker needs to fake that padding, as well. The
 attacker will actually compute $H(M_1 \| G \| M_2)$, where $G$ is the
 /glue padding/, called that way because it /glues/ the two messages
@@ -3142,6 +3155,8 @@ there's something to be said for preventing them anyway. People will
 end up making mistakes, we might as well mitigate where we can.
 
 TODO: say why this prevents meet in the middle attacks?
+# **HMM** As always, such a (maybe partly redundant) information is helpful for us readers to check that we understand what's going on.
+# **HMM** Is a "/meet/ in the middle attack" the same as a "/man/ in the middle attack"? That would deserve clarification.
 
 *** Hash trees
 
