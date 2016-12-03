@@ -4621,7 +4621,7 @@ y^2 \equiv x^3 + ax + b \pmod p
 The constants $a, b, p$ are specified by the curve. We've just guessed
 a value for $x$, leaving only one unknown, $y$. We can solve that
 quite efficiently. We compute the right hand side and see if it's a
-perfect square: $y^2 = q \equiv \sqrt{x^3 + ax + b} \pmod p$. If it is, $A
+perfect square: $y^2 \equiv q \equiv \sqrt{x^3 + ax + b} \pmod p$. If it is, $A
 = (x, \sqrt{q}) = (x, y)$ is a point on the curve. This gives us a
 number of possible points $A$, one of which is $rQ$ used to produce
 the output.
