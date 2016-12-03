@@ -2912,7 +2912,38 @@ http://www.cs.ucdavis.edu/~rogaway/papers/relates.pdf for further reading
 
 *** MD5
 
-TODO: Explain MD5
+MD5 is a hash function designed by Ronald Rivest in 1991 as an extension of MD4. This hash function outputs 128-bit digests. In 2004 research conducted by Xiaoyun Wang, Dengguo Feng, Xuejia Lai and Hongbo Yu showed that MD5 is vulnerable to collision attacks, therefore it is recommended not to use this hash function when storing sensitive information such as passwords.
+
+Five steps are required to compute an MD5 message digest:
+
+**** Add padding
+
+First, 1 bit is appended to the message and then 0 bits are added to the end until the length is $448 \pmod {512}$.
+
+**** Increase length
+
+The remaining space is filled with 64 bits, which represent the length of the original message, modulo 264.
+
+**** Divide into A, B, C and D
+
+Next, four 32-bit words (A, B, C, D) are used to compute the message digest.
+
+**** 16-Word Blocks
+
+The algorithm then creates message blocks of 16 words.
+
+**** Output message digest
+
+Finally, A, B, C and D produce the message digest.
+
+In Python one can use the hashlib module to create an MD5 digest as follows:
+
+#+BEGIN_SRC python
+  import hashlib
+  hashlib.md5("crypto101").hexdigest()
+#+END_SRC
+
+In the example above, the MD5 hash of "crypto101" is: 682e475edabffbe9870bf44a2c699e5b
 
 *** SHA-1
 
