@@ -2422,33 +2422,33 @@ mix them with the base to produce the mixed numbers $m_A$ and $m_B$:
 
 #+BEGIN_LATEX
 \begin{equation}
-m_A = g^{r_A} \pmod{p}
+m_A \equiv g^{r_A} \pmod{p}
 \end{equation}
 \begin{equation}
-m_B = g^{r_B} \pmod{p}
+m_B \equiv g^{r_B} \pmod{p}
 \end{equation}
 #+END_LATEX
 
 These numbers are sent across the network where Eve can see them. The
 premise of the discrete logarithm problem is that it is okay to do so, because
-figuring out $r$ in $m = g^r \pmod{p}$ is supposedly very hard.
+figuring out $r$ in $m \equiv g^r \pmod{p}$ is supposedly very hard.
 
 Once Alice and Bob have each other's mixed numbers, they add their own
 secret number to it. For example, Bob would compute:
 
 #+BEGIN_LATEX
 \begin{equation}
-s = (g^{r_A})^{r_B} \pmod{p}
+s \equiv (g^{r_A})^{r_B} \pmod{p}
 \end{equation}
 #+END_LATEX
 
 While Alice's computation looks different, they get the same result,
-because $(g^{r_A})^{r_B} \pmod{p} = (g^{r_B})^{r_A} \pmod{p}$. This is the
+because $(g^{r_A})^{r_B} \equiv (g^{r_B})^{r_A} \pmod{p}$. This is the
 shared secret.
 
 Because Eve doesn't have $r_A$ or $r_B$, she can not perform the
 equivalent computation: she only has the base number $g$ and mixed
-numbers $m_A = g^{r_A} \pmod{p}$ and $m_B = g^{r_B} \pmod{p}$ , which
+numbers $m_A \equiv g^{r_A} \pmod{p}$ and $m_B \equiv g^{r_B} \pmod{p}$ , which
 are useless to her. She needs either $r_A$ or $r_B$ (or both) to
 make the computation Alice and Bob do.
 
@@ -3521,7 +3521,7 @@ between 1 and $p$.
 
 #+BEGIN_LATEX
 \[
-t = m \cdot a + b \pmod p
+t \equiv m \cdot a + b \pmod p
 \]
 #+END_LATEX
 
@@ -3532,7 +3532,7 @@ message-specific polynomial $P$:
 
 #+BEGIN_LATEX
   \[
-  t = \underbrace{(m_n \cdot a^n + \cdots + m_1 \cdot a)}_{P(M, a)} + b \pmod p
+  t \equiv \underbrace{(m_n \cdot a^n + \cdots + m_1 \cdot a)}_{P(M, a)} + b \pmod p
   \]
 #+END_LATEX
 
@@ -3542,7 +3542,7 @@ $a$ (also known as Horner's rule):
 
 #+BEGIN_LATEX
   \[
-  P(M, a) = a \cdot (a \cdot (a \cdot (\cdots) + m_2) + m_1) + b \pmod p
+  P(M, a) \equiv a \cdot (a \cdot (a \cdot (\cdots) + m_2) + m_1) + b \pmod p
   \]
 #+END_LATEX
 
@@ -3570,8 +3570,8 @@ authenticate two messages $m_1, m_2$ with the same key $(a, b)$:
 
 #+BEGIN_LATEX
   \begin{align*}
-  t_1 &= m_1 \cdot a + b \pmod p \\
-  t_2 &= m_2 \cdot a + b \pmod p
+  t_1 &\equiv m_1 \cdot a + b \pmod p \\
+  t_2 &\equiv m_2 \cdot a + b \pmod p
   \end{align*}
 #+END_LATEX
 
@@ -3581,15 +3581,15 @@ explanation of the modular inverse, please refer to [[Modular arithmetic][the ap
 
 #+BEGIN_LATEX
   \begin{align*}
-    t_1 - t_2 &= (m_1 \cdot a + b) - (m_2 \cdot a + b) \pmod p \\
+    t_1 - t_2 &\equiv (m_1 \cdot a + b) - (m_2 \cdot a + b) \pmod p \\
     &\Downarrow \text{(remove parentheses)} \\
-    t_1 - t_2 &= m_1 \cdot a + b - m_2 \cdot a - b \pmod p \\
+    t_1 - t_2 &\equiv m_1 \cdot a + b - m_2 \cdot a - b \pmod p \\
     &\Downarrow \text{($b$ and $-b$ cancel out)} \\
-    t_1 - t_2 &= m_1 \cdot a - m_2 \cdot a \pmod p \\
+    t_1 - t_2 &\equiv m_1 \cdot a - m_2 \cdot a \pmod p \\
     &\Downarrow \text{(factor out $a$)} \\
-    t_1 - t_2 &= a \cdot (m_1 - m_2) \pmod p \\
+    t_1 - t_2 &\equiv a \cdot (m_1 - m_2) \pmod p \\
     &\Downarrow \text{(flip sides, multiply by inverse of $(m_1 - m_2)$)} \\
-    a &= (t_1 - t_2)(m_1 - m_2)^{-1} \pmod p
+    a &\equiv (t_1 - t_2)(m_1 - m_2)^{-1} \pmod p
   \end{align*}
 #+END_LATEX
 
@@ -3597,9 +3597,9 @@ Plugging $a$ into either the equation for $t_1$ or $t_2$ gets $b$:
 
 #+BEGIN_LATEX
   \begin{align*}
-  t_1 &= m_1 \cdot a + b \pmod p \\
+  t_1 &\equiv m_1 \cdot a + b \pmod p \\
   &\Downarrow \text{(reorder terms)}\\
-  b &= t_1 - m_1 \cdot a \pmod p
+  b &\equiv t_1 - m_1 \cdot a \pmod p
   \end{align*}
 #+END_LATEX
 
@@ -3841,7 +3841,7 @@ such that $p-1$ is a multiple of $q$.
 
 The last part is the most confusing. We have to find a number $g$
 whose [[Multiplicative order][multiplicative order]] $\pmod{p}$ is $q$. The easy way to do this
-is to set $g = 2^{(p-1)/q} \pmod{p}$. We can try another number
+is to set $g \equiv 2^{(p-1)/q} \pmod{p}$. We can try another number
 greater than 2, and less than $p-1$, if $g$ comes out to equal 1.
 
 Once we have parameters $(p, q, g)$, they can be shared between users.
@@ -3850,7 +3850,7 @@ Once we have parameters $(p, q, g)$, they can be shared between users.
 
 Armed with parameters, it's time to compute public and private keys for an
 individual user. First, select a random $x$ with $0 < x < q$. Next, calculate
-$y$ where $y = g^x \pmod{p}$. This delivers a public key $(p, q, g, y)$, and
+$y$ where $y \equiv g^x \pmod{p}$. This delivers a public key $(p, q, g, y)$, and
 private key $x$.
 
 **** Signing a message
@@ -3863,13 +3863,13 @@ of the message $m$:
 
 #+BEGIN_LATEX
 \[
-r = (g^k \pmod p) \pmod q
+r \equiv (g^k \pmod p) \pmod q
 \]
 #+END_LATEX
 
 #+BEGIN_LATEX
 \[
-s = k^{-1} (H(m) + xr) \pmod q
+s \equiv k^{-1} (H(m) + xr) \pmod q
 \]
 #+END_LATEX
 
@@ -3885,16 +3885,16 @@ and signature $(r, s)$:
 
 #+BEGIN_LATEX
 \[
-w = s^{-1} \pmod q
+w \equiv s^{-1} \pmod q
 \]
 \[
-u_1 = wH(m) \pmod q
+u_1 \equiv wH(m) \pmod q
 \]
 \[
-u_2 = wr \pmod q
+u_2 \equiv wr \pmod q
 \]
 \[
-v = (g^{u_1}y^{u_2} \pmod p) \pmod q
+v \equiv (g^{u_1}y^{u_2} \pmod p) \pmod q
 \]
 #+END_LATEX
 
@@ -3943,10 +3943,10 @@ $m_2$ respectively. Writing down the equations for $s_1$ and $s_2$:
 
 #+BEGIN_LATEX
 \[
-s_1 = k^{-1} (H(m_1) + xr_1) \pmod q
+s_1 \equiv k^{-1} (H(m_1) + xr_1) \pmod q
 \]
 \[
-s_2 = k^{-1} (H(m_2) + xr_2) \pmod q
+s_2 \equiv k^{-1} (H(m_2) + xr_2) \pmod q
 \]
 #+END_LATEX
 
@@ -3955,7 +3955,7 @@ following the definition:
 
 #+BEGIN_LATEX
 \[
-r_i = g^k \pmod q
+r_i \equiv g^k \pmod q
 \]
 #+END_LATEX
 
@@ -3968,10 +3968,10 @@ other arithmetic manipulations:
 
 #+BEGIN_LATEX
 \begin{eqnarray*}
-s_1 - s_2 & = & k^{-1} (H(m_1) + xr) - k^{-1} (H(m_2) + xr) \pmod q \\
-& = & k^{-1} \left( (H(m_1) + xr) - (H(m_2) + xr) \right) \pmod q \\
-& = & k^{-1} (H(m_1) + xr - H(m_2) - xr) \pmod q \\
-& = & k^{-1} (H(m_1) - H(m_2)) \pmod q
+s_1 - s_2 & \equiv & k^{-1} (H(m_1) + xr) - k^{-1} (H(m_2) + xr) \pmod q \\
+& \equiv & k^{-1} \left( (H(m_1) + xr) - (H(m_2) + xr) \right) \pmod q \\
+& \equiv & k^{-1} (H(m_1) + xr - H(m_2) - xr) \pmod q \\
+& \equiv & k^{-1} (H(m_1) - H(m_2)) \pmod q
 \end{eqnarray*}
 #+END_LATEX
 
@@ -3979,7 +3979,7 @@ This gives us the simple, direct solution for $k$:
 
 #+BEGIN_LATEX
 \[
-k = \left(H(m_1) - H(m_2)\right) \left(s_1 - s_2\right)^{-1} \pmod q
+k \equiv \left(H(m_1) - H(m_2)\right) \left(s_1 - s_2\right)^{-1} \pmod q
 \]
 #+END_LATEX
 
@@ -3995,7 +3995,7 @@ solve for:
 
 #+BEGIN_LATEX
 \[
-s = k^{-1} (H(m) + xr) \pmod q
+s \equiv k^{-1} (H(m) + xr) \pmod q
 \]
 #+END_LATEX
 
@@ -4004,13 +4004,13 @@ can just take any signature we saw. Solve for $x$ with some algebra:
 
 #+BEGIN_LATEX
 \[
-sk = H(m) + xr \pmod q
+sk \equiv H(m) + xr \pmod q
 \]
 \[
-sk - H(m) = xr \pmod q
+sk - H(m) \equiv xr \pmod q
 \]
 \[
-r^{-1}(sk - H(m)) = x \pmod q
+r^{-1}(sk - H(m)) \equiv x \pmod q
 \]
 #+END_LATEX
 
@@ -4621,7 +4621,7 @@ y^2 \equiv x^3 + ax + b \pmod p
 The constants $a, b, p$ are specified by the curve. We've just guessed
 a value for $x$, leaving only one unknown, $y$. We can solve that
 quite efficiently. We compute the right hand side and see if it's a
-perfect square: $y^2 = q = \sqrt{x^3 + ax + b} \pmod p$. If it is, $A
+perfect square: $y^2 \equiv q \equiv \sqrt{x^3 + ax + b} \pmod p$. If it is, $A
 = (x, \sqrt{q}) = (x, y)$ is a point on the curve. This gives us a
 number of possible points $A$, one of which is $rQ$ used to produce
 the output.
@@ -4642,7 +4642,7 @@ $rQ$ we're looking for. We can compute:
 
 #+BEGIN_LATEX
 \[
-\phi(eA) = \phi(erQ) = \phi(rP) \pmod p
+\phi(eA) \equiv \phi(erQ) \equiv \phi(rP) \pmod p
 \]
 #+END_LATEX
 
