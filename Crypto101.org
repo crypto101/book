@@ -2943,7 +2943,7 @@ In Python one can use the hashlib module to create an MD5 digest as follows:
   hashlib.md5("crypto101").hexdigest()
 #+END_SRC
 
-In the example above, the MD5 hash of "crypto101" is: 682e475edabffbe9870bf44a2c699e5b
+In the example above, the MD5 hash of "crypto101" is: ~682e475edabffbe9870bf44a2c699e5b~
 
 *** SHA-1
 
