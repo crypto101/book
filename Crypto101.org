@@ -2912,7 +2912,9 @@ http://www.cs.ucdavis.edu/~rogaway/papers/relates.pdf for further reading
 
 *** MD5
 
-MD5 is a hash function designed by Ronald Rivest in 1991 as an extension of MD4. This hash function outputs 128-bit digests. In 2004 research conducted by Xiaoyun Wang, Dengguo Feng, Xuejia Lai and Hongbo Yu showed that MD5 is vulnerable to collision attacks, therefore it is recommended not to use this hash function when storing sensitive information such as passwords.
+MD5 is a hash function designed by Ronald Rivest in 1991 as an extension of MD4. This hash function outputs 128-bit digests. Over the course of the years, the cryptographic community has repeatedly uncovered MD5's weaknesses. In 1993, Bert den Boer and Antoon Bosselaers published a paper demonstrating "pseudo-collisions" for the compression function of MD5. Dobbertin expanded upon this research and was able to produce collisions for the compression function. In 2004, based on Dobbertin's work, Xiaoyun Wang, Dengguo Feng, Xuejia Lai and Hongbo Yu showed that MD5 is vulnerable to real collision attacks. The last straw came when Xiaoyun Wang et al. managed to generate colliding X.509 certificates and then presented a distinguishing attack on HMAC-MD5.
+
+Due to all the issues listed above it is not recommended to use MD5 for its intended purpose of generating digital signatures.
 
 Five steps are required to compute an MD5 message digest:
 
