@@ -198,7 +198,7 @@ Since we'll be dealing with XOR extensively during this book, we'll
 take a closer look at some of its properties. If you're already
 familiar with how XOR works, feel free to skip this section.
 
-We saw that the output XOR is 1 when one input or the other (but not
+We saw that the output of XOR is 1 when one input or the other (but not
 both) is 1:
 
 #+BEGIN_LATEX
