@@ -3151,8 +3151,6 @@ hash value, consisting of its contents and the hash value of its
 ancestor. The root node, not having an ancestor, simply hashes its own
 contents.
 
-TODO: illustrate
-
 This definition is very wide: practical hash trees are often more
 restricted. They might be binary trees[fn::Each non-leaf node has no
 more than two children], or perhaps only leaf nodes carry data of
