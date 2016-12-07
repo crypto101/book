@@ -6350,7 +6350,7 @@ addition operator, forms an Abelian group:
 
 *** The elliptic curve discrete log problem
 
-TOOD: explain fully
+TODO: explain fully
 
 As with the regular discrete log problem, the elliptic curve discrete
 log problem doesn't actually have a formal proof that the operation is
