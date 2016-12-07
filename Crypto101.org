@@ -2912,7 +2912,40 @@ http://www.cs.ucdavis.edu/~rogaway/papers/relates.pdf for further reading
 
 *** MD5
 
-TODO: Explain MD5
+MD5 is a hash function designed by Ronald Rivest in 1991 as an extension of MD4. This hash function outputs 128-bit digests. Over the course of the years, the cryptographic community has repeatedly uncovered MD5's weaknesses. In 1993, Bert den Boer and Antoon Bosselaers published a paper demonstrating "pseudo-collisions" for the compression function of MD5. \cite{denboer:md5} Dobbertin expanded upon this research and was able to produce collisions for the compression function. In 2004, based on Dobbertin's work, Xiaoyun Wang, Dengguo Feng, Xuejia Lai and Hongbo Yu showed that MD5 is vulnerable to real collision attacks. \cite{cryptoeprint:2005:067} The last straw came when Xiaoyun Wang et al. managed to generate colliding X.509 certificates and then presented a distinguishing attack on HMAC-MD5. \cite{cryptoeprint:2005:067} \cite{eurocrypt-2009-23793}
+
+Nowadays, it is not recommended to use MD5 for generating digital signatures, but it is important to note that HMAC-MD5 is still a secure form of message authentication; however, it probably shouldn't be implemented in new cryptosystems.
+
+Five steps are required to compute an MD5 message digest:
+
+**** Add padding
+
+First, 1 bit is appended to the message and then 0 bits are added to the end until the length is $448 \pmod {512}$.
+
+**** Increase length
+
+The remaining space is filled with 64 bits, which represent the length of the original message, modulo 264.
+
+**** Divide into A, B, C and D
+
+Next, four 32-bit words (A, B, C, D) are used to compute the message digest.
+
+**** 16-Word Blocks
+
+The algorithm then creates message blocks of 16 words.
+
+**** Output message digest
+
+Finally, A, B, C and D produce the message digest.
+
+In Python one can use the hashlib module to create an MD5 digest as follows:
+
+#+BEGIN_SRC python
+  import hashlib
+  hashlib.md5("crypto101").hexdigest()
+#+END_SRC
+
+In the example above, the MD5 hash of "crypto101" is: ~682e475edabffbe9870bf44a2c699e5b~
 
 *** SHA-1
 
