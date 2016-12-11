@@ -2962,7 +2962,38 @@ The SHA-1 hash of "crypto101" is: ~0ce9daa99428182f2196c29e55919c18e2e76a6d~
 
 *** SHA-2
 
-TODO: Explain SHA-2
+SHA-2 is a family of hash functions including SHA-224, SHA-256, SHA-384, SHA-512, SHA-512/224 and SHA-512/256 and their digest sizes 224, 256, 384, 512, 224 and 256 respectively. These hash functions are based on the Merkle–Damgård construction and can be used for digital signatures, message authentication and random number generators. SHA-2 not only performs better than than SHA-1, it also provides better security, because of its increase in collision resistance.
+
+SHA-224 and SHA-256 were designed for 32-bit processor registers, while SHA-384 and SHA-512 for 64-bit registers. The 32-bit register variants will therefore run faster on a 32-bit CPU and the 64-bit variants will perform better on a 64-bit CPU. SHA-512/224 and SHA-512/256 are truncated versions of SHA-512 allowing use of 64-bit words with an output size equivalent to the 32-bit register variants (i.e., 224 and 256 digest sizes and better performance on a 64-bit CPU).
+
+The following is a table that gives a good overview of the SHA-2 family:
+
+| Hash function | Message size | Block size | Word size | Digest size |
+|---------------+--------------+------------+-----------+-------------|
+| SHA-224       |       < 2^64 |        512 |        32 |         224 |
+| SHA-256       |       < 2^64 |        512 |        32 |         256 |
+| SHA-384       |      < 2^128 |       1024 |        64 |         384 |
+| SHA-512       |      < 2^128 |       1024 |        64 |         512 |
+| SHA-512/224   |      < 2^128 |       1024 |        64 |         224 |
+| SHA-512/256   |      < 2^128 |       1024 |        64 |         256 |
+
+You can hash an empty string with the hashlib module and compare digest sizes as follows:
+
+#+BEGIN_SRC python
+  >>> import hashlib
+  >>> hashlib.sha224("").hexdigest()
+  'd14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f'
+  >>> hashlib.sha256("").hexdigest()
+  'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
+  >>> hashlib.sha384("").hexdigest()
+  '38b060a751ac96384cd9327eb1b1e36a21fdb71114be07434c0cc7bf63f6e1da274edebfe76f65fbd51ad2f14898b95b'
+  >>> hashlib.sha512("").hexdigest()
+  'cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e'
+#+END_SRC
+
+**** Attacks on SHA-2
+
+Several (pseudo-)collision and preimage attacks have been demonstrated using SHA-256 and SHA-512 with less rounds. It is important to note that by removing a certain amount of rounds one can't attack the entire algorithm. For instance, Somitra Kumar Sanadhya and Palash Sarkar were able to cause collisions with SHA-256 using 24 of 64 rounds (removing the last 40 rounds). \cite{eprint-2008-18172}
 
 *** Keccak and SHA-3
 
