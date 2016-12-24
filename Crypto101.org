@@ -2111,6 +2111,9 @@ a fixed-number of constant-time operations. The result is that every
 block is produced with exactly the same number of operations,
 regardless of what the key is.
 
+<<ARX>>
+The two stream ciphers use the ARX algorithm (Add-Rotate-XOR). ChaCha, for example, inserts the ARX operation's result into keys. A good  characteristic of ARX is the fact that it prevents timing attacks, since it runs in constant time. On top of that, it performs well on PCs.
+
 *** Native stream ciphers versus modes of operation
 
 Some texts only consider native \glspl{stream cipher} to be stream
