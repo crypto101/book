@@ -2,7 +2,7 @@
 #+AUTHOR: lvh
 #+DESCRIPTION: An introduction to cryptography for programmers
 
-#+BEGIN_SRC emacs-lisp :results silent :exports results
+#+BEGIN_SRC emacs-lisp :results output silent :exports none
   (require 'cl) ;; The find function is in the cl library.
   (unless (find "per-file-class" org-latex-classes :key 'car :test 'equal)
     (add-to-list 'org-latex-classes
