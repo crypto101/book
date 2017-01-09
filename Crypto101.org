@@ -2112,7 +2112,17 @@ block is produced with exactly the same number of operations,
 regardless of what the key is.
 
 <<ARX>>
-The two stream ciphers use the ARX algorithm (Add-Rotate-XOR). ChaCha, for example, inserts the ARX operation's result into keys. A good  characteristic of ARX is the fact that it prevents timing attacks, since it runs in constant time. On top of that, it performs well on PCs.
+Both stream ciphers are based on ARX ciphers (Add-Rotate-XOR). A good characteristic of ARX is the fact that it prevents timing attacks, since it runs in constant time. On top of that, it performs well on CPUs, because it doesn't need hardware support to function well.
+
+Here is an example ARX operation:
+
+#+BEGIN_LATEX
+\begin{equation}
+x = x ⊕ (y ⊞ z) <<< n
+\end{equation}
+#+END_LATEX
+
+First we perform a modular addition (⊞) of y and z, then we XOR ($\xor$) the result with x and finally we rotate left (<<<) by n bits.
 
 *** Native stream ciphers versus modes of operation
 
