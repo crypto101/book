@@ -2976,9 +2976,20 @@ Once again the hashlib Python module can be used to generate a SHA-1 hash:
 
 *** SHA-2
 
-SHA-2 is a family of hash functions including SHA-224, SHA-256, SHA-384, SHA-512, SHA-512/224 and SHA-512/256 and their digest sizes 224, 256, 384, 512, 224 and 256 respectively. These hash functions are based on the Merkle–Damgård construction and can be used for digital signatures, message authentication and random number generators. SHA-2 not only performs better than than SHA-1, it also provides better security, because of its increase in collision resistance.
+SHA-2 is a family of hash functions including SHA-224, SHA-256, SHA-384,
+SHA-512, SHA-512/224 and SHA-512/256 and their digest sizes 224, 256, 384, 512,
+224 and 256 respectively. These hash functions are based on the Merkle–Damgård
+construction and can be used for digital signatures, message authentication and
+random number generators. SHA-2 not only performs better than than SHA-1, it
+also provides better security, because of its increase in collision resistance.
 
-SHA-224 and SHA-256 were designed for 32-bit processor registers, while SHA-384 and SHA-512 for 64-bit registers. The 32-bit register variants will therefore run faster on a 32-bit CPU and the 64-bit variants will perform better on a 64-bit CPU. SHA-512/224 and SHA-512/256 are truncated versions of SHA-512 allowing use of 64-bit words with an output size equivalent to the 32-bit register variants (i.e., 224 and 256 digest sizes and better performance on a 64-bit CPU).
+SHA-224 and SHA-256 were designed for 32-bit processor registers, while SHA-384
+and SHA-512 for 64-bit registers. The 32-bit register variants will therefore
+run faster on a 32-bit CPU and the 64-bit variants will perform better on a
+64-bit CPU. SHA-512/224 and SHA-512/256 are truncated versions of SHA-512
+allowing use of 64-bit words with an output size equivalent to the 32-bit
+register variants (i.e., 224 and 256 digest sizes and better performance on a
+64-bit CPU).
 
 The following is a table that gives a good overview of the SHA-2 family:
 
@@ -2991,7 +3002,8 @@ The following is a table that gives a good overview of the SHA-2 family:
 | SHA-512/224   |      < 2^128 |       1024 |        64 |         224 |
 | SHA-512/256   |      < 2^128 |       1024 |        64 |         256 |
 
-You can hash an empty string with the hashlib module and compare digest sizes as follows:
+You can hash an empty string with the hashlib module and compare digest sizes as
+follows:
 
 #+BEGIN_SRC python
   >>> import hashlib
