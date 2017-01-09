@@ -212,12 +212,11 @@ both) is 1:
 
 There's a few useful arithmetic tricks we can derive from that.
 
-1. You can apply XOR in any order or flip the arguments around. $a \xor b = b
-   \xor a$ and $\a xor (\b \xor c) = (a \xor b) \xor c$ no matter what values
-   of $a$, $b$ and $c$ are.
-2. Any bit XOR itself is 0: $a \xor a = 0$. If $a$ is 0, then it's $0
+1. You can apply XOR in any order: $a \xor (b \xor c) = (a \xor b) \xor c$
+2. You can flip the operands around: $a \xor b = b \xor a$
+3. Any bit XOR itself is 0: $a \xor a = 0$. If $a$ is 0, then it's $0
    \xor 0 = 0$; if $a$ is 1, then it's $1 \xor 1 = 0$.
-3. Any bit XOR 0 is that bit again: $a \xor 0 = a$. If $a$ is 0, then
+4. Any bit XOR 0 is that bit again: $a \xor 0 = a$. If $a$ is 0, then
    it's $0 \xor 0 = 0$; if $a$ is 1, then it's $1 \xor 0 = 1$.
 
 These rules also imply $a \xor b \xor a = b$:
