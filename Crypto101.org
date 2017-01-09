@@ -3208,16 +3208,16 @@ People send messages $M_i$, authenticated using $A_i = H(S \| M_i)$,
 where $S$ is a shared secret. We'll see (and break) this MAC algorithm
 in a future section.
 
-It's very easy for the recipient to compute the same function, and
-verify the code is correct. Any change to the message $M_i$ will
-change the value of $A_i$ drastically, thanks to the avalanche effect.
-Unfortunately, it's quite easy for attackers to forge messages. Since
-the authentication codes are usually sent together with the original
-message, the attacker knows the length of the original message. Then,
-the attacker only has to guess at the length of the secret, which
-he'll probably get in a hundred or so tries. Contrast this with
-guessing the secret itself, which is impossible for any reasonably
-chosen secret.
+It's very easy for the recipient to compute the same function, and verify the
+code is correct. Any change to the message $M_i$ will change the value of $A_i$
+drastically, thanks to the avalanche effect. Unfortunately, it's quite easy for
+attackers to forge messages. Since the authentication codes are usually sent
+together with the original message, the attacker knows the length of the
+original message. Then, the attacker only has to guess at the length of the
+secret, which is often fixed as part of the protocol, and, even if it isn't, the
+attacker will probably get in a hundred tries or less. Contrast this with
+guessing the secret itself, which is impossible for any reasonably chosen
+secret.
 
 There are secure authentication codes that can be designed using
 cryptographic hash functions: this one just isn't it. We'll see
