@@ -2932,25 +2932,20 @@ cryptosystems.
 
 Five steps are required to compute an MD5 message digest:
 
-**** Add padding
+1. Add padding. First, 1 bit is appended to the message and then 0 bits are
+   added to the end until the length is $448 \pmod {512}$.
+2. Fill up the remaining 64 bits with the the length of the original message
+   modulo $2^{64}$, so that the entire message is a multiple of 512 bits.
+3. Initialize the state as four 32-bit words, A, B, C and D. These are
+   initialized with constants defined in the spec.
+4. Process the input in 512 bit blocks; for each block, run four "rounds"
+   consisting of 16 similar operations each. The operations all consist of
+   shifts, modular addition, and a specific nonlinear function, different for
+   each round.
 
-First, 1 bit is appended to the message and then 0 bits are added to the end until the length is $448 \pmod {512}$.
-
-**** Increase length
-
-The remaining space is filled with 64 bits, which represent the length of the original message, modulo 264.
-
-**** Divide into A, B, C and D
-
-Next, four 32-bit words (A, B, C, D) are used to compute the message digest.
-
-**** 16-Word Blocks
-
-The algorithm then creates message blocks of 16 words.
-
-**** Output message digest
-
-Finally, A, B, C and D produce the message digest.
+Once done, $A \| B \| C \| D$ is the output of the hash. This padding style
+combined with the concatenation at the end is what makes MD5 vulnerable to
+length extension attacks; more on that later.
 
 In Python one can use the hashlib module to create an MD5 digest as follows:
 
