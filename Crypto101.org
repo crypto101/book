@@ -3026,10 +3026,6 @@ Somitra Kumar Sanadhya and Palash Sarkar were able to cause collisions with
 SHA-256 using 24 of 64 rounds (removing the last 40 rounds).
 \cite{eprint-2008-18172}
 
-*** BLAKE and BLAKE2
-
-TODO: Explain BLAKE, BLAKE2
-
 *** Password storage<<password storage>>
 
 One of the most common use cases for cryptographic hash functions,
