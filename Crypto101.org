@@ -3019,13 +3019,12 @@ follows:
 
 **** Attacks on SHA-2
 
-Several (pseudo-)collision and preimage attacks have been demonstrated using SHA-256 and SHA-512 with less rounds. It is important to note that by removing a certain amount of rounds one can't attack the entire algorithm. For instance, Somitra Kumar Sanadhya and Palash Sarkar were able to cause collisions with SHA-256 using 24 of 64 rounds (removing the last 40 rounds). \cite{eprint-2008-18172}
-
-*** Keccak and SHA-3
-
-TODO: Explain Keccak
-
-TODO: Explain the parameter change debacle in SHA-3
+Several (pseudo-)collision and preimage attacks have been demonstrated using
+SHA-256 and SHA-512 with less rounds. It is important to note that by removing a
+certain amount of rounds one can't attack the entire algorithm. For instance,
+Somitra Kumar Sanadhya and Palash Sarkar were able to cause collisions with
+SHA-256 using 24 of 64 rounds (removing the last 40 rounds).
+\cite{eprint-2008-18172}
 
 *** BLAKE and BLAKE2
 
