@@ -2112,18 +2112,26 @@ block is produced with exactly the same number of operations,
 regardless of what the key is.
 
 <<ARX>>
-
-Both stream ciphers are based on ARX ciphers (Add-Rotate-XOR). A good characteristic of ARX is the fact that it prevents timing attacks, since it runs in constant time. On top of that, it performs well on CPUs, because it doesn't need hardware support to function well.
+Both stream ciphers are based on an \gls{ARX} design. One benefit of ARX ciphers
+is that they are intrinsically constant time. There are no secret memory access
+patterns that might leak information, as with AES. These ciphers also perform
+well on modern CPU architectures without needing cipher-specific optimizations.
+They take advantage of generic vector instructions, where the CPU performs
+related operations on multiple pieces of data in a single instruction. As a
+result, ChaCha20 performance is competitive with AES on modern Intel CPUs, even
+though the latter has specialized hardware.
 
 Here is an example ARX operation:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{equation}
-x = x ⊕ (y ⊞ z) <<< n
+x \leftarrow x \xor (y \madd z) \lll n
 \end{equation}
-#+END_LATEX
+#+END_EXPORT
 
-First we perform a modular addition (⊞) of y and z, then we XOR ($\xor$) the result with x and finally we rotate left (<<<) by n bits.
+To find the new value of $x$, first we perform a modular addition ($\boxplus$)
+of $y$ and $z$, then we XOR ($\xor$) the result with x and finally we rotate
+left ($\lll$) by $n$ bits. This is the core round primitive of Salsa20.
 
 *** Native stream ciphers versus modes of operation
 
