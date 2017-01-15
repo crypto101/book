@@ -2,7 +2,7 @@
 #+AUTHOR: lvh
 #+DESCRIPTION: An introduction to cryptography for programmers
 
-#+BEGIN_SRC emacs-lisp :results silent :exports results
+#+BEGIN_SRC emacs-lisp :results output silent :exports none
   (require 'cl) ;; The find function is in the cl library.
   (unless (find "per-file-class" org-latex-classes :key 'car :test 'equal)
     (add-to-list 'org-latex-classes
@@ -35,21 +35,21 @@
 #+LATEX_CLASS_OPTIONS: [11pt,ebook,table,dvipsnames,oneside,openany]
 #+LATEX_HEADER: \input{Header}
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \OnehalfSpacing
-#+END_LATEX
+#+END_EXPORT
 
 * Foreword
 ** About this book
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{quotation}
 Lots of people working in cryptography have no deep concern with real
 application issues. They are trying to discover things clever enough to write
 papers about.
 \sourceatright{Whitfield Diffie}
 \end{quotation}
-#+END_LATEX
+#+END_EXPORT
 
 This book is intended as an introduction to cryptography for
 programmers of any skill level. It's a continuation of a talk of the
@@ -102,9 +102,9 @@ order to achieve that goal. They're in the book anyway, just in case
 you're curious; but I generally recommend skipping these sections.
 They'll be marked like this:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \advanced
-#+END_LATEX
+#+END_EXPORT
 
 ** Development
 
@@ -155,6 +155,7 @@ particular order):
  - jvasile, for work on typefaces and automated builds
  - hmmueller, for many, many notes and suggestions
  - postboy (Ivan Zuboff), for many reported issues
+ - EdOverflow, for many contributions
 
 .. as well as the huge number of people that contributed spelling,
 grammar and content improvements. Thank you!
@@ -173,17 +174,17 @@ bit, or to just pass it through unchanged. "Inverting" bits is
 colloquially called "flipping" bits, a term we'll use often throughout
 the book.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \illustration{XOR/ProgrammableInverter}[0.4]
-#+END_LATEX
+#+END_EXPORT
 
 In mathematics and cryptography papers, exclusive or is generally
 represented by a cross in a circle: $\xor$. We'll use the same
 notation in this book:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \illustration{XOR/XOR}[0.4]
-#+END_LATEX
+#+END_EXPORT
 
 The inputs and output here are named as if we're using XOR as an
 encryption operation. On the left, we have the plaintext bit $p_i$.
@@ -201,34 +202,33 @@ familiar with how XOR works, feel free to skip this section.
 We saw that the output of XOR is 1 when one input or the other (but not
 both) is 1:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 \begin{array}{c@{\hspace{2em}}c}
 0 \xor 0 = 0 & 1 \xor 0 = 1 \\
 0 \xor 1 = 1 & 1 \xor 1 = 0
 \end{array}
 \]
-#+END_LATEX
+#+END_EXPORT
 
 There's a few useful arithmetic tricks we can derive from that.
 
-1. You can apply XOR in any order or flip the arguments around. $a \xor b = b
-   \xor a$ and $\a xor (\b \xor c) = (a \xor b) \xor c$ no matter what values
-   of $a$, $b$ and $c$ are.
-2. Any bit XOR itself is 0: $a \xor a = 0$. If $a$ is 0, then it's $0
+1. You can apply XOR in any order: $a \xor (b \xor c) = (a \xor b) \xor c$
+2. You can flip the operands around: $a \xor b = b \xor a$
+3. Any bit XOR itself is 0: $a \xor a = 0$. If $a$ is 0, then it's $0
    \xor 0 = 0$; if $a$ is 1, then it's $1 \xor 1 = 0$.
-3. Any bit XOR 0 is that bit again: $a \xor 0 = a$. If $a$ is 0, then
+4. Any bit XOR 0 is that bit again: $a \xor 0 = a$. If $a$ is 0, then
    it's $0 \xor 0 = 0$; if $a$ is 1, then it's $1 \xor 0 = 1$.
 
 These rules also imply $a \xor b \xor a = b$:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{align*}
 a \xor b \xor a & = a \xor a \xor b & \; & \text{(first rule)} \\
                 & = 0 \xor b        & \; & \text{(second rule)} \\
                 & = b               & \; & \text{(third rule)}
 \end{align*}
-#+END_LATEX
+#+END_EXPORT
 
 We'll use this property often when using XOR for encryption; you can
 think of that first XOR with $a$ as encrypting, and the second one as
@@ -249,7 +249,7 @@ number prefixed with "0b", the remaining digits are a binary representation.],
 and then performing XOR on their respective bits. Hence the name,
 /bitwise/ XOR.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{align*}
 73 \xor 87 & = 0b1001001 \xor 0b1010111 \\
            & = \begin{array}{*{7}{C{\widthof{$\xor$}}}c}
@@ -263,7 +263,7 @@ and then performing XOR on their respective bits. Hence the name,
            & = 0b0011110 \\
            & = 30 \\
 \end{align*}
-#+END_LATEX
+#+END_EXPORT
 
 *** One-time pads
 
@@ -289,9 +289,9 @@ also have the pad of random bits, shared between the sender and the
 (one or more) recipients. We can compute the ciphertext by taking the
 bitwise XOR of the two sequences of bits.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \illustration{XOR/OTP}
-#+END_LATEX
+#+END_EXPORT
 
 If an attacker sees the ciphertext, we can prove that they will learn
 zero information about the plaintext without the key. This property is
@@ -299,9 +299,9 @@ called /perfect security/. The proof can be understood intuitively by
 thinking of XOR as a programmable inverter, and then looking at a
 particular bit intercepted by Eve, the eavesdropper.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \illustration{XOR/OTPEve}
-#+END_LATEX
+#+END_EXPORT
 
 Let's say Eve sees that a particular ciphertext bit $c_i$ is 1. She
 has no idea if the matching plaintext bit $p_i$ was 0 or 1, because
@@ -336,7 +336,7 @@ an attacker gets two ciphertexts with the same "one-time" pad. The
 attacker can then XOR the two ciphertexts, which is also the XOR of
 the plaintexts:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{align*}
 c_1 \xor c_2
 &= (p_1 \xor k) \xor (p_2 \xor k) && (\text{definition})\\
@@ -345,7 +345,7 @@ c_1 \xor c_2
 &= p_1 \xor p_2 \xor 0 && (x \xor x = 0) \\
 &= p_1 \xor p_2 && (x \xor 0 = x)
 \end{align*}
-#+END_LATEX
+#+END_EXPORT
 
 At first sight, that may not seem like an issue. To extract either
 $p_1$ or $p_2$, you'd need to cancel out the XOR operation, which
@@ -356,7 +356,7 @@ visually with some images from a broken "one-time" pad process,
 starting with figure \ref{fig:multitimepad} on page
 \pageref{fig:multitimepad}.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
   \begin{figure}[p]
     \centering
     \begin{subfigure}[b]{.4\textwidth}
@@ -392,7 +392,7 @@ starting with figure \ref{fig:multitimepad} on page
     \label{fig:multitimepad}
   \end{figure}
 
-#+END_LATEX
+#+END_EXPORT
 
 **** Crib-dragging
 
@@ -411,7 +411,7 @@ letters when referring to an entire message, as opposed to just bits
 of a message.] If we could correctly guess the plaintext for one of
 the messages, let's say $C_j$, we'd know $K$:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{eqnarray*}
 C_j \xor P_j
 &=& (P_j \xor K) \xor P_j \\
@@ -419,16 +419,16 @@ C_j \xor P_j
 &=& K \xor 0 \\
 &=& K
 \end{eqnarray*}
-#+END_LATEX
+#+END_EXPORT
 
 Since $K$ is the shared secret, we can now use it to decrypt all of
 the other messages, just as if we were the recipient:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 P_i = C_i \xor K \qquad \text{for all }i
 \]
-#+END_LATEX
+#+END_EXPORT
 
 Since we usually can't guess an entire message, this doesn't actually
 work. However, we might be able to guess parts of a message.
@@ -535,14 +535,14 @@ met before.
 
 ** Block ciphers
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{quotation}
 Few false ideas have more firmly gripped the minds of so many intelligent men
 than the one that, if they just tried, they could invent a cipher that no one
 could break.
 \sourceatright{David Kahn}
 \end{quotation}
-#+END_LATEX
+#+END_EXPORT
 
 *** Description
 A \gls{block cipher} is an algorithm that allows us to encrypt blocks
@@ -550,11 +550,11 @@ of a fixed length. It provides an encryption function $E$ that turns
 plaintext blocks $P$ into ciphertext blocks $C$, using a secret key
 $k$:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{equation}
 C = E(k, P)
 \end{equation}
-#+END_LATEX
+#+END_EXPORT
 
 The plaintext and ciphertext blocks are sequences of bytes. They are
 always the same size as one another, and that size is fixed by the
@@ -567,17 +567,17 @@ block. This is done using a decryption function $D$, which takes the
 ciphertext block $C$ and the key $k$ (the same one used to encrypt the
 block) as inputs, and produces the original plaintext block $P$.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{equation}
 P = D(k, C)
 \end{equation}
-#+END_LATEX
+#+END_EXPORT
 
 Or, in blocks:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \illustration{BlockCipher/BlockCipher}
-#+END_LATEX
+#+END_EXPORT
 
 Block ciphers are an example of a \gls{symmetric-key encryption}
 scheme, also known as a \gls{secret-key encryption} scheme. This means
@@ -597,9 +597,9 @@ Since each of those blocks maps to a hexadecimal digit, we'll
 represent the blocks by that digit. Figure \ref{fig:BlockCipherBlocks}
 illustrates the blocks that the cipher operates on.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \illustration{BlockCipher/AllNodes}[.85][All of the 16 nodes operated on by the block cipher. Each node is designated by a hexadecimal digit.][fig:BlockCipherBlocks]
-#+END_LATEX
+#+END_EXPORT
 
 Once we select a secret key, the block cipher will use that to
 determine what the encryption of any given block is. We will
@@ -607,9 +607,9 @@ illustrate that relationship with an arrow: the block at the start of
 the arrow, encrypted using $E$ under key $k$, is mapped to the block
 at the end of the arrow.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \illustration{BlockCipher/Encryption}[.85][An encryption permutation produced by the block cipher under a particular key $k$.][fig:BlockCipherEncryption]
-#+END_LATEX
+#+END_EXPORT
 
 In figure \ref{fig:BlockCipherEncryption}, you'll notice that the
 permutation isn't just one big cycle: there's a large cycle of 7
@@ -625,17 +625,17 @@ computes the inverse permutation. In figure
 illustration, except that all the arrows are going in the other
 direction.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \illustration{BlockCipher/Decryption}[.85][The decryption permutation produced by the block cipher under the same key $k$: the inverse of the encryption permutation, that is: all the arrows have been reversed.][fig:BlockCipherDecryption]
-#+END_LATEX
+#+END_EXPORT
 
 The only way to know which block maps to which other block, is to know
 the key. A different key will lead to a completely different set of
 arrows, as you can see in figure \ref{fig:BlockCipherEncryptionDifferentKey}.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \illustration{BlockCipher/Encryption2}[.85][An encryption permutation produced by the block cipher under some other key.][fig:BlockCipherEncryptionDifferentKey]
-#+END_LATEX
+#+END_EXPORT
 
 In this illustration, you'll notice that there's even two permutations
 of length 1: an element that maps to itself. This is again something
@@ -722,9 +722,9 @@ designing future ciphers and attacks against current ciphers.
 
 **** A closer look at Rijndael
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \advanced
-#+END_LATEX
+#+END_EXPORT
 
 AES consists of several independent steps. At a high level, AES is a
 \gls{substitution-permutation network}.
@@ -759,18 +759,18 @@ whose fifth S-box caused serious security problems. [fn:: In its
 defense, differential attacks were not publicly known back when DES
 was designed.]
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \illustration{AES/SubBytes}
-#+END_LATEX
+#+END_EXPORT
 
 ***** ShiftRows
 
 After having applied the SubBytes step to the 16 bytes of the block,
 AES shifts the rows in the $4 \times 4$ array:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \illustration{AES/ShiftRows}
-#+END_LATEX
+#+END_EXPORT
 
 ***** MixColumns
 
@@ -780,18 +780,18 @@ polynomial.
 ShiftRows and MixColumns represent the diffusion properties of
 AES.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \illustration{AES/MixColumns}
-#+END_LATEX
+#+END_EXPORT
 
 ***** AddRoundKey
 
 As the name implies, the AddRoundKey step adds the bytes from the
 round key produced by the key schedule to the state of the cipher.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \illustration{AES/AddRoundKey}
-#+END_LATEX
+#+END_EXPORT
 
 *** <<<DES>>> and <<<3DES>>>
 
@@ -808,11 +808,11 @@ allowed much of the spent hardware development effort to be reused,
 people came up with 3DES: a scheme where input is first encrypted,
 then decrypted, then encrypted again:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{equation}
 C = E_{DES}(k_1, D_{DES}(k_2, E_{DES}(k_3, p)))
 \end{equation}
-#+END_LATEX
+#+END_EXPORT
 
 This scheme provides two improvements:
 
@@ -896,7 +896,7 @@ Let's try to build a stream cipher using the tools we already have.
 Since we already have block ciphers, we could simply divide an
 incoming stream into different blocks, and encrypt each block:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{equation}
 \begin{matrix}
 \underbrace{\mathtt{abcdefgh}} & \underbrace{\mathtt{ijklmno}} & \underbrace{\mathtt{pqrstuvw}} & ...\\
@@ -904,7 +904,7 @@ incoming stream into different blocks, and encrypt each block:
 \overbrace{\mathtt{APOHGMMW}} & \overbrace{\mathtt{PVMEHQOM}} & \overbrace{\mathtt{MEEZSNFM}} & ...
 \end{matrix}
 \end{equation}
-#+END_LATEX
+#+END_EXPORT
 
 This scheme is called \gls{ECB mode} (Electronic Code Book Mode), and it is one of the many ways
 that block ciphers can be used to construct stream ciphers.
@@ -912,7 +912,7 @@ Unfortunately, while being very common in home-grown cryptosystems, it
 poses very serious security flaws. For example, in ECB mode, identical
 input blocks will always map to identical output blocks:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{equation}
 \begin{matrix}
 \underbrace{\mathtt{abcdefgh}} & \underbrace{\mathtt{abcdefgh}} & \underbrace{\mathtt{abcdefgh}} & ...\\
@@ -920,7 +920,7 @@ input blocks will always map to identical output blocks:
 \overbrace{\mathtt{APOHGMMW}} & \overbrace{\mathtt{APOHGMMW}} & \overbrace{\mathtt{APOHGMMW}} & ...
 \end{matrix}
 \end{equation}
-#+END_LATEX
+#+END_EXPORT
 
 At first, this might not seem like a particularly serious problem.
 Assuming the block cipher is secure, it doesn't look like an attacker
@@ -944,7 +944,7 @@ bitmaps. For other media, the effect isn't significantly less damning:
 it's just less visual.]. We'll then visually inspect the different
 outputs.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
   \begin{figure}[p]
     \centering
 
@@ -989,7 +989,7 @@ outputs.
       block size (figure \subref{fig:ECBDemo5px}, a block size of 5
       pixels or 120 bits) is realistic.}
   \end{figure}
-#+END_LATEX
+#+END_EXPORT
 
 Because identical blocks of pixels in the plaintext will map to
 identical blocks of pixels in the ciphertext, the global structure of
@@ -1034,11 +1034,11 @@ attacker, which is why it's called an \gls{encryption oracle}. Given
 some data $A$ chosen by the attacker, the oracle will encrypt that
 data, followed by a secret suffix $S$, in ECB mode. Or, in symbols:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 C = ECB(E_k, A \| S)
 \]
-#+END_LATEX
+#+END_EXPORT
 
 The secret suffix $S$ is specific to this system. The attacker's goal
 is to decrypt it. We'll see that being able to encrypt other messages
@@ -1076,18 +1076,18 @@ They don't know the value of $s_0$ yet, but now they do know the value
 of the first encrypted block: $E_k(A \| s_0)$. In the illustration,
 this is block $C_{R1}$:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \illustration{ECBEncryptionOracle/RememberFirst}
-#+END_LATEX
+#+END_EXPORT
 
 Then, the attacker tries a full-size block, trying all possible values
 for the final byte. Eventually, they'll find the value of $s_0$; they
 know the guess is correct because the resulting ciphertext block will
 match the ciphertext block $C_{R1}$ they remembered earlier.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \illustration{ECBEncryptionOracle/GuessFirst}
-#+END_LATEX
+#+END_EXPORT
 
 The attacker can repeat this for the penultimate byte. They submit a
 plaintext $A$ that's two bytes shorter than the block size. The oracle
@@ -1095,18 +1095,18 @@ will encrypt a first block consisting of that $A$ followed by the
 first two bytes of the secret suffix, $s_0s_1$. The attacker remembers
 that block.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \illustration{ECBEncryptionOracle/RememberSecond}
-#+END_LATEX
+#+END_EXPORT
 
 Since the attacker already knows $s_0$, they try $A \|
 s_0$ followed by all possible values of $s_1$. Eventually they'll
 guess correctly, which, again, they'll know because the ciphertext
 blocks match:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \illustration{ECBEncryptionOracle/GuessSecond}
-#+END_LATEX
+#+END_EXPORT
 
 The attacker can then rinse and repeat, eventually decrypting an
 entire block. This allows them to brute-force a block in $p \cdot b$
@@ -1115,11 +1115,11 @@ attempts, where $p$ is the number of possible values for each byte
 This is much better than a regular brute-force attack, where an
 attacker has to try all of the possible blocks, which would be:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 \underbrace{p \cdot p \ldots \cdot p}_{b \ \mathrm{positions}} = p^b
 \]
-#+END_LATEX
+#+END_EXPORT
 
 For a typical block size of 16 bytes (or 128 bits), brute forcing
 would mean trying $256^{16}$ combinations. That's a huge, 39-digit
@@ -1230,22 +1230,22 @@ Mallory can construct her plaintext using Alice's IV $IV_A$ (which
 Mallory can see) and her own predicted IV $IV_M$. She makes a guess
 $G$ as to what Alice's data could be. She asks the server to encrypt:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 P_M = IV_M \xor IV_A \xor G
 \]
-#+END_LATEX
+#+END_EXPORT
 
 The server dutifully encrypts that message using the predicted IV
 $IV_M$. It computes:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{align*}
 C_M & = E(k, IV_M \xor P_M) \\
     & = E(k, IV_M \xor (IV_M \xor IV_A \xor G)) \\
     & = E(k, IV_A \xor G)
 \end{align*}
-#+END_LATEX
+#+END_EXPORT
 
 That ciphertext, C_M, is exactly the ciphertext block Alice would have
 had if her plaintext block was G. So, depending on what the data is,
@@ -1285,7 +1285,7 @@ filled with null bytes (value zero).
 Bob decrypts $C^{\prime}$, and gets the three plaintext
 blocks $P^{\prime}_1, P^{\prime}_2, P^{\prime}_3$:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{align*}
 P^{\prime}_1 & = D(k, C_1) \xor IV \\
              & = D(k, C_1) \xor k \\
@@ -1302,7 +1302,7 @@ P^{\prime}_3 & = D(k, C_1) \xor Z \\
              & = D(k, C_1) \\
              & = P_1 \xor IV
 \end{align*}
-#+END_LATEX
+#+END_EXPORT
 
 $R$ is some random block. Its value doesn't matter.
 
@@ -1348,12 +1348,12 @@ When we "flip some bits", we do that by XORing with a sequence of
 bits, which we'll call $X$. If the corresponding bit in $X$ is 1, the
 bit will be flipped; otherwise, the bit will remain the same.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{figure}[h!]
 \centering
 \includegraphics[width=.6\linewidth]{./Illustrations/CBC/BitFlipping.pdf}
 \end{figure}
-#+END_LATEX
+#+END_EXPORT
 
 When we try to decrypt the ciphertext block with the flipped bits, we
 will get indecipherable[fn::Excuse the pun.] nonsense. Remember how
@@ -1409,7 +1409,7 @@ other out, the two filler values (~ZZZ~\ldots) will cancel out, and
 the attacker can expect to see \verb|;admin=1;| pop up in the next
 plaintext block:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{align*}
 P^{\prime}_{i + 1}
 & = P_{i + 1} \xor X \\
@@ -1421,7 +1421,7 @@ P^{\prime}_{i + 1}
   \xor \mathtt{;admin=1;} \\
 & = \mathtt{;admin=1;} \\
 \end{align*}
-#+END_LATEX
+#+END_EXPORT
 
 This attack is another demonstration of an important cryptographic
 principle: encryption is not authentication! It's virtually never
@@ -1522,9 +1522,9 @@ are in the half-a-percent ballpark. If by pure chance the message
 happens to already have valid padding, the attacker can simply skip
 the next step.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \illustration{CBC/PaddingAttack}[.6]
-#+END_LATEX
+#+END_EXPORT
 
 Next, the attacker tries to modify the message so that it does have
 valid padding. They can do that by indirectly modifying the last byte
@@ -1586,11 +1586,11 @@ wouldn't know this; the point of this procedure is to discover what
 that padding is. Suppose the block size is 8 bytes. So, we (but not
 the attacker) know that $P_i$ is currently:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{equation}
 p_0 p_1 p_2 p_3 p_4 \mathtt{03} \mathtt{03} \mathtt{03}
 \end{equation}
-#+END_LATEX
+#+END_EXPORT
 
 In that equation, $p_0 \ldots$ are some bytes of the plaintext. Their
 actual value doesn't matter: the only thing that matters is that
@@ -1598,11 +1598,11 @@ they're not part of the padding. When we modify the first byte of $R$,
 we'll cause a change in the first byte of $P_i$, so that $p_0$ becomes
 some other byte $p^{\prime}_0$:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{equation}
 p^{\prime}_0 p_1 p_2 p_3 p_4 \mathtt{03} \mathtt{03} \mathtt{03}
 \end{equation}
-#+END_LATEX
+#+END_EXPORT
 
 As you can see, this doesn't affect the validity of the padding. It
 also does not affect $p_1$, $p_2$, $p_3$ or $p_4$. However, when we
@@ -1610,11 +1610,11 @@ continue modifying subsequent bytes, we will eventually hit a byte
 that /is/ part of the padding. For example, let's say we turn that
 first ~03~ into ~02~ by modifying $R$. $P_i$ now looks like this:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{equation}
 p^{\prime}_0 p^{\prime}_1 p^{\prime}_2 p^{\prime}_3 p^{\prime}_4 \mathtt{02} \mathtt{03} \mathtt{03}
 \end{equation}
-#+END_LATEX
+#+END_EXPORT
 
 Since ~02 03 03~ isn't valid PKCS#5 padding, the server will reject
 the message. At that point, we know that once we modify six bytes, the
@@ -1640,19 +1640,19 @@ attacker knows that the last byte of the decrypted ciphertext block
 $C_i$ (we'll call that byte $D(C_i)[b]$), XORed with the iteratively
 found value $r_b$, is \verb|01|:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 D(C_i)[b] \xor r_b = \mathtt{01}
 \]
-#+END_LATEX
+#+END_EXPORT
 
 By moving the XOR operation to the other side, the attacker gets:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 D(C_i)[b] = \mathtt{01} \xor r_b
 \]
-#+END_LATEX
+#+END_EXPORT
 
 The attacker has now tricked the receiver into revealing the value of
 the last byte of the block cipher decryption of $C_i$.
@@ -1663,11 +1663,11 @@ Next, the attacker tricks the receiver into decrypting the next byte.
 Remember the previous equation, where we reasoned that the last byte
 of the plaintext was ~01~:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 D(C_i)[b] \xor r_b = \mathtt{01}
 \]
-#+END_LATEX
+#+END_EXPORT
 
 Now, we'd like to get that byte to say ~02~, to produce an /almost/
 valid padding: the last byte would be correct for a 2-byte PKCS#5
@@ -1676,12 +1676,12 @@ yet. To do that, we XOR with ~01~ to cancel the ~01~ that's already
 there (since two XORs with the same value cancel each other out), and
 then we XOR with ~02~ to get ~02~:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{eqnarray*}
 D(C_i)[b] \xor r_b \xor \mathtt{01} \xor \mathtt{02} & = & \mathtt{01} \xor \mathtt{01} \xor \mathtt{02} \\
 & = & \mathtt{02}
 \end{eqnarray*}
-#+END_LATEX
+#+END_EXPORT
 
 The attacker uses that value for the last byte. Then, they try all
 possible values for the second-to-last byte (index $b - 1$).
@@ -1798,9 +1798,9 @@ excruciatingly slow by comparison (134.5 cycles per byte in CTR mode).
 
 **** An in-depth look at RC4
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \advanced[On the other hand, RC4 is incredibly simple, and it may be worth skimming this section.]
-#+END_LATEX
+#+END_EXPORT
 
 RC4 is, unfortunately, quite broken. To better understand just how
 broken, we'll take a look at how RC4 works. The description requires
@@ -1898,9 +1898,9 @@ We can express this in Python:
 
 **** Attacks
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \advanced[The section on the attacks on RC4 is a good deal more complicated than RC4 itself, so you may want to skip this even if you've read this far.]
-#+END_LATEX
+#+END_EXPORT
 
 There are many attacks on RC4-using cryptosystems where RC4 isn't
 really the issue, but are caused by things like key reuse or failing
@@ -1912,10 +1912,10 @@ Intuitively, we can understand how an ideal stream cipher would
 produce a stream of random bits. After all, if that's what it did,
 we'd end up in a situation quite similar to that of a one-time pad.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \illustration{XOR/OTP}[.4][A one-time pad scheme.]
 \illustration{StreamCipher/Synchronous}[.8][A synchronous stream cipher scheme. Note similarity to the one-time pad scheme. The critical difference is that while the one-time pad $k_i$ is truly random, the keystream $K_i$ is only pseudorandom.]
-#+END_LATEX
+#+END_EXPORT
 
 The stream cipher is ideal if the best way we have to attack it is to
 try all of the keys, a process called brute-forcing the key. If
@@ -2135,9 +2135,9 @@ whole is as long as the block size. The resulting concatenated string
 is run through a block cipher. The outputs of the block cipher are
 then used as the keystream.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \illustration{CTR/CTR}[.8][CTR mode: a single nonce $N$ with a zero-padded counter $i$ is encrypted by the block cipher to produce a keystream block; this block is XORed with the plaintext block $P_i$ to produce the ciphertext block $C_i$.]
-#+END_LATEX
+#+END_EXPORT
 
 This illustration shows a single input block $N \| 00 \ldots \| i$,
 consisting of nonce $N$, current counter value $i$ and padding, being
@@ -2280,7 +2280,7 @@ network. We'll keep track of everything she knows and what she can
 compute, and end up seeing /why/ Eve can't compute Alice and Bob's
 shared secret.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \newcommand{\dhimg}[1] {
 \raisebox{-0.5\height}{\includegraphics[width=.1\linewidth]{./Illustrations/DiffieHellman/#1.pdf}}
 }
@@ -2316,7 +2316,7 @@ shared secret.
 \end{figure}
 }
 
-#+END_LATEX
+#+END_EXPORT
 
 To start the protocol, Alice and Bob have to agree on a base color.
 They can communicate that across the network: it's okay if Eve
@@ -2325,29 +2325,29 @@ this base color is a fixed part of the protocol; Alice and Bob don't
 need to communicate it. After this step, Alice, Bob and Eve all have
 the same information: the base color.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \dhknows{Alice}{Base}
 \dhknows{Bob}{Base}
 \dhknows{Eve}{Base}
-#+END_LATEX
+#+END_EXPORT
 
 Alice and Bob both pick a random color, and they mix it with the base
 color.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \dhmix{Alice}{Base}{AliceSecret}{AliceMixedSecret}
 \dhmix{Bob}{Base}{BobSecret}{BobMixedSecret}
-#+END_LATEX
+#+END_EXPORT
 
 At the end of this step, Alice and Bob know their respective secret
 color, the mix of the secret color and the base color, and the base
 color itself. Everyone, including Eve, knows the base color.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \dhknows{Alice}{Base,AliceSecret,AliceMixedSecret}
 \dhknows{Bob}{Base,BobSecret,BobMixedSecret}
 \dhknows{Eve}{Base}
-#+END_LATEX
+#+END_EXPORT
 
 Then, Alice and Bob both send their mixed colors over the network.
 Eve sees both mixed colors, but she can't figure out what either of
@@ -2357,29 +2357,29 @@ might seem like an easy operation with black-and-white approximations
 of color mixing, keep in mind that this is just a failure of the
 illustration: our assumption was that this was hard.]
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \dhsendmixedsecret{Alice}{Bob}
 \dhsendmixedsecret{Bob}{Alice}
-#+END_LATEX
+#+END_EXPORT
 
 At the end of this step, Alice and Bob know the base, their respective
 secrets, their respective mixed colors, and each other's mixed colors.
 Eve knows the base color and both mixed colors.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \dhknows{Alice}{Base,AliceSecret,AliceMixedSecret,BobMixedSecret}
 \dhknows{Bob}{Base,BobSecret,BobMixedSecret, AliceMixedSecret}
 \dhknows{Eve}{Base,AliceMixedSecret,BobMixedSecret}
-#+END_LATEX
+#+END_EXPORT
 
 Once Alice and Bob receive each other's mixed color, they add their
 own secret color to it. Since the order of the mixing doesn't matter,
 they'll both end up with the same secret.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \dhmix{Alice}{BobMixedSecret}{AliceSecret}{SharedSecret}
 \dhmix{Bob}{AliceMixedSecret}{BobSecret}{SharedSecret}
-#+END_LATEX
+#+END_EXPORT
 
 Eve can't perform that computation. She could finish the computation
 with either Alice or Bob's secret color, since she has both mixed
@@ -2401,11 +2401,11 @@ arithmetic, you can either skip this chapter, or first read the
 Discrete log Diffie-Hellman is based on the idea that computing $y$ in
 the following equation is easy (at least for a computer):
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{equation}
 y \equiv g^x \pmod{p}
 \end{equation}
-#+END_LATEX
+#+END_EXPORT
 
 However, computing $x$ given $y$, $g$ and $p$ is believed to be very
 hard. This is called the discrete logarithm problem, because a similar
@@ -2420,14 +2420,14 @@ mixed value.
 When Alice or Bob select their random numbers $r_A$ and $r_B$, they
 mix them with the base to produce the mixed numbers $m_A$ and $m_B$:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{equation}
 m_A \equiv g^{r_A} \pmod{p}
 \end{equation}
 \begin{equation}
 m_B \equiv g^{r_B} \pmod{p}
 \end{equation}
-#+END_LATEX
+#+END_EXPORT
 
 These numbers are sent across the network where Eve can see them. The
 premise of the discrete logarithm problem is that it is okay to do so, because
@@ -2436,11 +2436,11 @@ figuring out $r$ in $m \equiv g^r \pmod{p}$ is supposedly very hard.
 Once Alice and Bob have each other's mixed numbers, they add their own
 secret number to it. For example, Bob would compute:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{equation}
 s \equiv (g^{r_A})^{r_B} \pmod{p}
 \end{equation}
-#+END_LATEX
+#+END_EXPORT
 
 While Alice's computation looks different, they get the same result,
 because $(g^{r_A})^{r_B} \equiv (g^{r_B})^{r_A} \pmod{p}$. This is the
@@ -2474,22 +2474,22 @@ the number field sieve for discrete logarithms, a state of the art
 algorithm for attacking discrete logarithm-based Diffie-Hellman,
 has time complexity:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
   \[
   L\left[1/3,\sqrt[3]{64/9}\right]
   \]
-#+END_LATEX
+#+END_EXPORT
 
 Which is more than polynomial (but less than exponential) in the
 number of digits. On the other hand, the fastest algorithms that could
 be used to break the elliptic curve discrete log problem all have
 complexity:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
   \[
   L\left[1, 1/2\right] = O(\sqrt{n})
   \]
-#+END_LATEX
+#+END_EXPORT
 
 Relatively speaking, that means that it's much harder to solve the
 elliptic curve problem than it is to solve the regular discrete log
@@ -2641,22 +2641,22 @@ binary expansion, you can compute the exponentiation more efficiently. Put
 together, $(N, e)$ is the public key. Anyone can use the public key to encrypt
 a message $M$ into a ciphertext $C$:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 C \equiv M^e \pmod{N}
 \]
-#+END_LATEX
+#+END_EXPORT
 
 The next problem is decryption. It turns out that there is a value
 $d$, the /decryption exponent/, that can turn $C$ back into $M$. That
 value is fairly easy to compute assuming that you know $p$ and $q$,
 which we do. Using $d$, you can decrypt the message like so:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 M \equiv C^d \pmod{N}
 \]
-#+END_LATEX
+#+END_EXPORT
 
 The security of RSA relies on that decryption operation being
 impossible without knowing the secret exponent $d$, and that the
@@ -2671,11 +2671,11 @@ particular mathematical problem. For RSA, this is the RSA problem,
 specifically: to find the plaintext message $M$, given a ciphertext
 $C$, and public key $(N, e)$ in the equation:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{equation}
 C \equiv M^e \pmod{N}
 \end{equation}
-#+END_LATEX
+#+END_EXPORT
 
 The easiest way we know how to do that is to factor $N$ back into $p
 \cdot q$. Given $p$ and $q$, the attacker can just repeat the process
@@ -2737,9 +2737,9 @@ the art in RSA padding. It was introduced by Mihir Bellare and Phillip
 Rogaway in 1995. \cite{bellarerogaway:oaep}. Its structure looks like
 this:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \illustration{OAEP/Diagram}[0.5]
-#+END_LATEX
+#+END_EXPORT
 
 The thing that eventually gets encrypted is $X \| Y$, which is $n$
 bits long, where $n$ is the number of bits of $N$, the RSA modulus. It
@@ -2775,19 +2775,19 @@ TODO: reverse arrows
 We want to get to $M$, which is in $M \| 000\ldots$. There's only one
 way to compute that, which is:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
   \[
   M \| 000\ldots = X \xor G(R)
   \]
-#+END_LATEX
+#+END_EXPORT
 
 Computing $G(R)$ is a little harder:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
   \[
   G(R) = H(X) \xor Y
   \]
-#+END_LATEX
+#+END_EXPORT
 
 As you can see, at least for some definitions of the functions $H$ and
 $G$, we need all of $X$ and all of $Y$ (and hence the entire encrypted
@@ -2912,31 +2912,40 @@ http://www.cs.ucdavis.edu/~rogaway/papers/relates.pdf for further reading
 
 *** MD5
 
-MD5 is a hash function designed by Ronald Rivest in 1991 as an extension of MD4. This hash function outputs 128-bit digests. Over the course of the years, the cryptographic community has repeatedly uncovered MD5's weaknesses. In 1993, Bert den Boer and Antoon Bosselaers published a paper demonstrating "pseudo-collisions" for the compression function of MD5. \cite{denboer:md5} Dobbertin expanded upon this research and was able to produce collisions for the compression function. In 2004, based on Dobbertin's work, Xiaoyun Wang, Dengguo Feng, Xuejia Lai and Hongbo Yu showed that MD5 is vulnerable to real collision attacks. \cite{cryptoeprint:2005:067} The last straw came when Xiaoyun Wang et al. managed to generate colliding X.509 certificates and then presented a distinguishing attack on HMAC-MD5. \cite{cryptoeprint:2005:067} \cite{eurocrypt-2009-23793}
+MD5 is a hash function designed by Ronald Rivest in 1991 as an extension of MD4.
+This hash function outputs 128-bit digests. Over the course of the years, the
+cryptographic community has repeatedly uncovered MD5's weaknesses. In 1993, Bert
+den Boer and Antoon Bosselaers published a paper demonstrating
+"pseudo-collisions" for the compression function of MD5. \cite{denboer:md5}
+Dobbertin expanded upon this research and was able to produce collisions for the
+compression function. In 2004, based on Dobbertin's work, Xiaoyun Wang, Dengguo
+Feng, Xuejia Lai and Hongbo Yu showed that MD5 is vulnerable to real collision
+attacks. \cite{cryptoeprint:2005:067} The last straw came when Xiaoyun Wang et
+al. managed to generate colliding X.509 certificates and then presented a
+distinguishing attack on HMAC-MD5. \cite{cryptoeprint:2005:067}
+\cite{eurocrypt-2009-23793}
 
-Nowadays, it is not recommended to use MD5 for generating digital signatures, but it is important to note that HMAC-MD5 is still a secure form of message authentication; however, it probably shouldn't be implemented in new cryptosystems.
+Nowadays, it is not recommended to use MD5 for generating digital signatures,
+but it is important to note that HMAC-MD5 is still a secure form of message
+authentication; however, it probably shouldn't be implemented in new
+cryptosystems.
 
 Five steps are required to compute an MD5 message digest:
 
-**** Add padding
+1. Add padding. First, 1 bit is appended to the message and then 0 bits are
+   added to the end until the length is $448 \pmod {512}$.
+2. Fill up the remaining 64 bits with the the length of the original message
+   modulo $2^{64}$, so that the entire message is a multiple of 512 bits.
+3. Initialize the state as four 32-bit words, A, B, C and D. These are
+   initialized with constants defined in the spec.
+4. Process the input in 512 bit blocks; for each block, run four "rounds"
+   consisting of 16 similar operations each. The operations all consist of
+   shifts, modular addition, and a specific nonlinear function, different for
+   each round.
 
-First, 1 bit is appended to the message and then 0 bits are added to the end until the length is $448 \pmod {512}$.
-
-**** Increase length
-
-The remaining space is filled with 64 bits, which represent the length of the original message, modulo 264.
-
-**** Divide into A, B, C and D
-
-Next, four 32-bit words (A, B, C, D) are used to compute the message digest.
-
-**** 16-Word Blocks
-
-The algorithm then creates message blocks of 16 words.
-
-**** Output message digest
-
-Finally, A, B, C and D produce the message digest.
+Once done, $A \| B \| C \| D$ is the output of the hash. This padding style
+combined with the concatenation at the end is what makes MD5 vulnerable to
+length extension attacks; more on that later.
 
 In Python one can use the hashlib module to create an MD5 digest as follows:
 
@@ -2945,11 +2954,18 @@ In Python one can use the hashlib module to create an MD5 digest as follows:
   hashlib.md5("crypto101").hexdigest()
 #+END_SRC
 
-In the example above, the MD5 hash of "crypto101" is: ~682e475edabffbe9870bf44a2c699e5b~
-
 *** SHA-1
 
-SHA-1 is another hash function from the MD4 family designed by the NSA, which produces a 160-bit digest. Just like MD5, SHA-1 is no longer considered secure for digital signatures. Many software companies and browsers, including Google Chrome, have started to retire support of the signature algorithm of SHA-1. Until this day no one has managed to produce a collision on the full SHA-1 function, but several methods have been published, including one by Xiaoyun Wang. One of the most recent breakthroughs known as "The SHAppening" demonstrated freestart collisions for SHA-1. A freestart collision allows one to pick the initial value known as the initialization vector at the start of the compression function. \cite{cryptoeprint:2015:967}
+SHA-1 is another hash function from the MD4 family designed by the NSA, which
+produces a 160-bit digest. Just like MD5, SHA-1 is no longer considered secure
+for digital signatures. Many software companies and browsers, including Google
+Chrome, have started to retire support of the signature algorithm of SHA-1.
+Until this day no one has managed to produce a collision on the full SHA-1
+function, but several methods have been published, including one by Xiaoyun
+Wang. One of the most recent breakthroughs known as "The SHAppening"
+demonstrated freestart collisions for SHA-1. A freestart collision allows one to
+pick the initial value known as the initialization vector at the start of the
+compression function. \cite{cryptoeprint:2015:967}
 
 Once again the hashlib Python module can be used to generate a SHA-1 hash:
 
@@ -2958,13 +2974,22 @@ Once again the hashlib Python module can be used to generate a SHA-1 hash:
   hashlib.sha1("crypto101").hexdigest()
 #+END_SRC
 
-The SHA-1 hash of "crypto101" is: ~0ce9daa99428182f2196c29e55919c18e2e76a6d~
-
 *** SHA-2
 
-SHA-2 is a family of hash functions including SHA-224, SHA-256, SHA-384, SHA-512, SHA-512/224 and SHA-512/256 and their digest sizes 224, 256, 384, 512, 224 and 256 respectively. These hash functions are based on the Merkle–Damgård construction and can be used for digital signatures, message authentication and random number generators. SHA-2 not only performs better than than SHA-1, it also provides better security, because of its increase in collision resistance.
+SHA-2 is a family of hash functions including SHA-224, SHA-256, SHA-384,
+SHA-512, SHA-512/224 and SHA-512/256 and their digest sizes 224, 256, 384, 512,
+224 and 256 respectively. These hash functions are based on the Merkle–Damgård
+construction and can be used for digital signatures, message authentication and
+random number generators. SHA-2 not only performs better than than SHA-1, it
+also provides better security, because of its increase in collision resistance.
 
-SHA-224 and SHA-256 were designed for 32-bit processor registers, while SHA-384 and SHA-512 for 64-bit registers. The 32-bit register variants will therefore run faster on a 32-bit CPU and the 64-bit variants will perform better on a 64-bit CPU. SHA-512/224 and SHA-512/256 are truncated versions of SHA-512 allowing use of 64-bit words with an output size equivalent to the 32-bit register variants (i.e., 224 and 256 digest sizes and better performance on a 64-bit CPU).
+SHA-224 and SHA-256 were designed for 32-bit processor registers, while SHA-384
+and SHA-512 for 64-bit registers. The 32-bit register variants will therefore
+run faster on a 32-bit CPU and the 64-bit variants will perform better on a
+64-bit CPU. SHA-512/224 and SHA-512/256 are truncated versions of SHA-512
+allowing use of 64-bit words with an output size equivalent to the 32-bit
+register variants (i.e., 224 and 256 digest sizes and better performance on a
+64-bit CPU).
 
 The following is a table that gives a good overview of the SHA-2 family:
 
@@ -2977,33 +3002,29 @@ The following is a table that gives a good overview of the SHA-2 family:
 | SHA-512/224   |      < 2^128 |       1024 |        64 |         224 |
 | SHA-512/256   |      < 2^128 |       1024 |        64 |         256 |
 
-You can hash an empty string with the hashlib module and compare digest sizes as follows:
+You can hash an empty string with the hashlib module and compare digest sizes as
+follows:
 
 #+BEGIN_SRC python
   >>> import hashlib
-  >>> hashlib.sha224("").hexdigest()
-  'd14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f'
-  >>> hashlib.sha256("").hexdigest()
-  'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'
-  >>> hashlib.sha384("").hexdigest()
-  '38b060a751ac96384cd9327eb1b1e36a21fdb71114be07434c0cc7bf63f6e1da274edebfe76f65fbd51ad2f14898b95b'
-  >>> hashlib.sha512("").hexdigest()
-  'cf83e1357eefb8bdf1542850d66d8007d620e4050b5715dc83f4a921d36ce9ce47d0d13c5d85f2b0ff8318d2877eec2f63b931bd47417a81a538327af927da3e'
+  >>> len(hashlib.sha224("").hexdigest())
+  56
+  >>> len(hashlib.sha256("").hexdigest())
+  64
+  >>> len(hashlib.sha384("").hexdigest())
+  96
+  >>> len(hashlib.sha512("").hexdigest())
+  128
 #+END_SRC
 
 **** Attacks on SHA-2
 
-Several (pseudo-)collision and preimage attacks have been demonstrated using SHA-256 and SHA-512 with less rounds. It is important to note that by removing a certain amount of rounds one can't attack the entire algorithm. For instance, Somitra Kumar Sanadhya and Palash Sarkar were able to cause collisions with SHA-256 using 24 of 64 rounds (removing the last 40 rounds). \cite{eprint-2008-18172}
-
-*** Keccak and SHA-3
-
-TODO: Explain Keccak
-
-TODO: Explain the parameter change debacle in SHA-3
-
-*** BLAKE and BLAKE2
-
-TODO: Explain BLAKE, BLAKE2
+Several (pseudo-)collision and preimage attacks have been demonstrated using
+SHA-256 and SHA-512 with less rounds. It is important to note that by removing a
+certain amount of rounds one can't attack the entire algorithm. For instance,
+Somitra Kumar Sanadhya and Palash Sarkar were able to cause collisions with
+SHA-256 using 24 of 64 rounds (removing the last 40 rounds).
+\cite{eprint-2008-18172}
 
 *** Password storage<<password storage>>
 
@@ -3187,16 +3208,16 @@ People send messages $M_i$, authenticated using $A_i = H(S \| M_i)$,
 where $S$ is a shared secret. We'll see (and break) this MAC algorithm
 in a future section.
 
-It's very easy for the recipient to compute the same function, and
-verify the code is correct. Any change to the message $M_i$ will
-change the value of $A_i$ drastically, thanks to the avalanche effect.
-Unfortunately, it's quite easy for attackers to forge messages. Since
-the authentication codes are usually sent together with the original
-message, the attacker knows the length of the original message. Then,
-the attacker only has to guess at the length of the secret, which
-he'll probably get in a hundred or so tries. Contrast this with
-guessing the secret itself, which is impossible for any reasonably
-chosen secret.
+It's very easy for the recipient to compute the same function, and verify the
+code is correct. Any change to the message $M_i$ will change the value of $A_i$
+drastically, thanks to the avalanche effect. Unfortunately, it's quite easy for
+attackers to forge messages. Since the authentication codes are usually sent
+together with the original message, the attacker knows the length of the
+original message. Then, the attacker only has to guess at the length of the
+secret, which is often fixed as part of the protocol, and, even if it isn't, the
+attacker will probably get in a hundred tries or less. Contrast this with
+guessing the secret itself, which is impossible for any reasonably chosen
+secret.
 
 There are secure authentication codes that can be designed using
 cryptographic hash functions: this one just isn't it. We'll see
@@ -3590,32 +3611,32 @@ multiplication and addition modulo some large prime $p$. In this case,
 the secret key consists of two truly random numbers $a$ and $b$, both
 between 1 and $p$.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 t \equiv m \cdot a + b \pmod p
 \]
-#+END_LATEX
+#+END_EXPORT
 
 This simple example only works for one-block messages $m$, and some
 prime $p$ slightly bigger than the biggest $m$. It can be extended to
 support bigger messages $M$ consisting of blocks $m_i$ by using a
 message-specific polynomial $P$:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
   \[
   t \equiv \underbrace{(m_n \cdot a^n + \cdots + m_1 \cdot a)}_{P(M, a)} + b \pmod p
   \]
-#+END_LATEX
+#+END_EXPORT
 
 This might look like a lot of computation, but this polynomial can be
 efficiently evaluated by iteratively factoring out the common factor
 $a$ (also known as Horner's rule):
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
   \[
   P(M, a) \equiv a \cdot (a \cdot (a \cdot (\cdots) + m_2) + m_1) + b \pmod p
   \]
-#+END_LATEX
+#+END_EXPORT
 
 By computing each multiplication modulo $p$, the numbers will remain
 conveniently small.
@@ -3639,18 +3660,18 @@ important properties about the keys $a, b$:
 We'll illustrate that our example MAC is insecure if it is used to
 authenticate two messages $m_1, m_2$ with the same key $(a, b)$:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
   \begin{align*}
   t_1 &\equiv m_1 \cdot a + b \pmod p \\
   t_2 &\equiv m_2 \cdot a + b \pmod p
   \end{align*}
-#+END_LATEX
+#+END_EXPORT
 
 An attacker can reconstruct $a, b$ with some simple modular
 arithmetic: [fn:: For a refresher on modular arithmetic, including an
 explanation of the modular inverse, please refer to [[Modular arithmetic][the appendix]].]
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
   \begin{align*}
     t_1 - t_2 &\equiv (m_1 \cdot a + b) - (m_2 \cdot a + b) \pmod p \\
     &\Downarrow \text{(remove parentheses)} \\
@@ -3662,17 +3683,17 @@ explanation of the modular inverse, please refer to [[Modular arithmetic][the ap
     &\Downarrow \text{(flip sides, multiply by inverse of $(m_1 - m_2)$)} \\
     a &\equiv (t_1 - t_2)(m_1 - m_2)^{-1} \pmod p
   \end{align*}
-#+END_LATEX
+#+END_EXPORT
 
 Plugging $a$ into either the equation for $t_1$ or $t_2$ gets $b$:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
   \begin{align*}
   t_1 &\equiv m_1 \cdot a + b \pmod p \\
   &\Downarrow \text{(reorder terms)}\\
   b &\equiv t_1 - m_1 \cdot a \pmod p
   \end{align*}
-#+END_LATEX
+#+END_EXPORT
 
 As you can see, as with one-time pads, re-using the key even once
 leads to a complete failure of the cryptosystem to preserve privacy or
@@ -3694,11 +3715,11 @@ one-time MAC $O$ to produce a tag for the bulk of the data, and then
 encrypt a nonce $n$ with a pseudorandom function $F$, such as a block
 cipher, to protect that one-time tag:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
   \[
   CW((k_1, k_2), n, M) = F(k_1, n) \xor O(k_2, M)
   \]
-#+END_LATEX
+#+END_EXPORT
 
 As long as $F$ is a secure pseudorandom function, the nonce's
 encryption is totally unpredictable. In the eyes of an attacker, that
@@ -3789,9 +3810,9 @@ separately:
 
 *** <<<OCB mode>>>
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \advanced[Usually, you will want to use a much more high level cryptosystem, such as OpenPGP, NaCl or TLS.]
-#+END_LATEX
+#+END_EXPORT
 
 OCB mode is an \gls{AEAD} mode of operation. It is one of the earliest
 developed \glspl{AEAD mode}.
@@ -3838,9 +3859,9 @@ significantly impacted how much OCB mode is used in the field.
 
 *** <<<GCM mode>>>
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \advanced[Usually, you will want to use a much more high level cryptosystem, such as OpenPGP, NaCl or TLS.]
-#+END_LATEX
+#+END_EXPORT
 
 GCM mode is an \gls{AEAD mode} with an unfortunate case of RAS
 (redundant acronym syndrome) syndrome: GCM itself stands for "Galois
@@ -3932,17 +3953,17 @@ involved process; but we'll go into more detail on that later. With
 $k$ chosen, they then compute the two parts of the signature $r, s$
 of the message $m$:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 r \equiv (g^k \pmod p) \pmod q
 \]
-#+END_LATEX
+#+END_EXPORT
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 s \equiv k^{-1} (H(m) + xr) \pmod q
 \]
-#+END_LATEX
+#+END_EXPORT
 
 If either of these happen to be 0 (a rare event, with 1 in $q$ odds,
 and $q$ being a pretty large number), pick a different $k$.
@@ -3954,7 +3975,7 @@ TODO: Talk about k^-1, the modular inverse (see #52)
 Verifying the signature is a lot more complex. Given the message $m$
 and signature $(r, s)$:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 w \equiv s^{-1} \pmod q
 \]
@@ -3967,7 +3988,7 @@ u_2 \equiv wr \pmod q
 \[
 v \equiv (g^{u_1}y^{u_2} \pmod p) \pmod q
 \]
-#+END_LATEX
+#+END_EXPORT
 
 If the signature is valid that final result $v$ will be equal to $r$,
 the second part of the signature.
@@ -4012,23 +4033,23 @@ different messages $m_i$, all with the same $k$. The attacker picks
 any two signatures $(r_1, s_1)$ and $(r_2, s_2)$ of messages $m_1$ and
 $m_2$ respectively. Writing down the equations for $s_1$ and $s_2$:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 s_1 \equiv k^{-1} (H(m_1) + xr_1) \pmod q
 \]
 \[
 s_2 \equiv k^{-1} (H(m_2) + xr_2) \pmod q
 \]
-#+END_LATEX
+#+END_EXPORT
 
 The attacker can simplify this further: $r_1$ and $r_2$ must be equal,
 following the definition:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 r_i \equiv g^k \pmod q
 \]
-#+END_LATEX
+#+END_EXPORT
 
 Since the signer is reusing $k$, and the value of $r$ only depends on
 $k$, all $r_i$ will be equal. Since the signer is using the same key,
@@ -4037,22 +4058,22 @@ $x$ is equal in the two equations as well.
 Subtract the two $s_i$ equations from each other, followed by some
 other arithmetic manipulations:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{eqnarray*}
 s_1 - s_2 & \equiv & k^{-1} (H(m_1) + xr) - k^{-1} (H(m_2) + xr) \pmod q \\
 & \equiv & k^{-1} \left( (H(m_1) + xr) - (H(m_2) + xr) \right) \pmod q \\
 & \equiv & k^{-1} (H(m_1) + xr - H(m_2) - xr) \pmod q \\
 & \equiv & k^{-1} (H(m_1) - H(m_2)) \pmod q
 \end{eqnarray*}
-#+END_LATEX
+#+END_EXPORT
 
 This gives us the simple, direct solution for $k$:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 k \equiv \left(H(m_1) - H(m_2)\right) \left(s_1 - s_2\right)^{-1} \pmod q
 \]
-#+END_LATEX
+#+END_EXPORT
 
 The hash values $H(m_1)$ and $H(m_2)$ are easy to compute. They're not
 secret: the messages being signed are public. The two values $s_1$ and
@@ -4064,16 +4085,16 @@ Let's write the equation for $s$ down again, but this time thinking of
 $k$ as something we know, and $x$ as the variable we're trying to
 solve for:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 s \equiv k^{-1} (H(m) + xr) \pmod q
 \]
-#+END_LATEX
+#+END_EXPORT
 
 All $(r, s)$ that are valid signatures satisfy this equation, so we
 can just take any signature we saw. Solve for $x$ with some algebra:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 sk \equiv H(m) + xr \pmod q
 \]
@@ -4083,7 +4104,7 @@ sk - H(m) \equiv xr \pmod q
 \[
 r^{-1}(sk - H(m)) \equiv x \pmod q
 \]
-#+END_LATEX
+#+END_EXPORT
 
 Again, $H(m)$ is public, plus the attacker needed it to compute $k$,
 anyway. They've already computed $k$, and $s$ is plucked straight from
@@ -4225,9 +4246,9 @@ secure hash function you want.
 
 **** A closer look at HKDF
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \advanced
-#+END_LATEX
+#+END_EXPORT
 
 HKDF consists of two phases. In the first phase, called the
 /extraction phase/, a fixed-length key is extracted from the input
@@ -4328,12 +4349,12 @@ derivation function is being executed for or the like. \cite{rfc5869}
 
 ** Random number generators
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{quotation}
 The generation of random numbers is too important to be left to chance.
 \sourceatright{Robert R. Coveyou}
 \end{quotation}
-#+END_LATEX
+#+END_EXPORT
 
 *** Introduction
 
@@ -4356,13 +4377,13 @@ consider separately:
 
 *** True random number generators
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{quotation}
 Any one who considers arithmetical methods of producing random digits
 is, of course, in a state of sin.
 \sourceatright{John von Neumann}
 \end{quotation}
-#+END_LATEX
+#+END_EXPORT
 
 John von Neumann, father of the modern model of computing, made an
 obvious point. We can't expect to produce random numbers using
@@ -4414,7 +4435,7 @@ certain resistance. That causes a tiny current to flow through the
 resistor (or, alternatively put, causes a tiny voltage difference
 across the resistor).
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 i = \sqrt{\frac{4 k_B T \Delta_f}{R}}
 \]
@@ -4422,7 +4443,7 @@ i = \sqrt{\frac{4 k_B T \Delta_f}{R}}
 \[
 v = \sqrt{4 k_B T R \Delta_f }
 \]
-#+END_LATEX
+#+END_EXPORT
 
 These formulas may seem a little scary to those who haven't seen the
 physics behind them before, but don't worry too much: understanding
@@ -4480,19 +4501,19 @@ cryptosystem is completely and utterly broken.
 
 TODO: talk about the FUD in the Linux man page for urandom
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
   \DeclareDocumentCommand{\csprngwarning}{}{
     \advanced[Since this is a specific cryptographically secure
       pseudorandom number generator algorithm, you don't actually need to
       know how it works to write good software. Just use ~urandom~.]
   }
-#+END_LATEX
+#+END_EXPORT
 
 *** Yarrow
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \csprngwarning
-#+END_LATEX
+#+END_EXPORT
 
 The Yarrow algorithm is a cryptographically secure pseudorandom number
 generator.
@@ -4506,18 +4527,18 @@ alias for \verb|/dev/random|.
 
 *** <<<Blum Blum Shub>>>
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \csprngwarning
-#+END_LATEX
+#+END_EXPORT
 
 TODO: explain this, and why it's good (provable), but why we don't use
 it (slow)
 
 *** =Dual_EC_DRBG=
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \csprngwarning
-#+END_LATEX
+#+END_EXPORT
 
 =Dual_EC_DRBG= is a NIST standard for a cryptographically secure
 pseudorandom bit generator. It sparked a large amount of controversy:
@@ -4609,12 +4630,12 @@ We'll illustrate this graphically, with an illustration based on the
 work by Shumow and Ferguson, two cryptographers who highlighted some
 of the major issues with this algorithm:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{figure}
 \centering
 \includegraphics[width=.8\linewidth]{./Illustrations/Dual_EC_DRBG/Diagram.pdf}
 \end{figure}
-#+END_LATEX
+#+END_EXPORT
 
 Throughout the algorithm, $\phi$ is a function that takes a curve
 point and turns it into an integer. The algorithm needs two given
@@ -4624,11 +4645,11 @@ a new block of bits, the algorithm turns $s$ into a different value
 $r$ using the $\phi$ function and elliptic curve scalar multiplication
 with $P$:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
   \[
   r = \phi(sP)
   \]
-#+END_LATEX
+#+END_EXPORT
 
 That value, $r$, is used both for producing the output bits and
 updating the internal state of the generator. In order to produce the
@@ -4636,21 +4657,21 @@ output bits, a different elliptic curve point, $Q$, is used. The
 output bits are produced by multiplying $r$ with $Q$, and running the
 result through a transformation $\theta$:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
   \[
   o = \theta(\phi(rQ))
   \]
-#+END_LATEX
+#+END_EXPORT
 
 In order to perform the state update, $r$ is multiplied with $P$
 again, and the result is converted to an integer. That integer is used
 as the new state $s$.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
   \[
   s = \phi(rP)
   \]
-#+END_LATEX
+#+END_EXPORT
 
 **** Issues and question marks
 
@@ -4683,11 +4704,11 @@ coordinate of a point. Since we know it came from a point on the
 curve, we just have to check if our guess is a solution for the curve
 equation:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 y^2 \equiv x^3 + ax + b \pmod p
 \]
-#+END_LATEX
+#+END_EXPORT
 
 The constants $a, b, p$ are specified by the curve. We've just guessed
 a value for $x$, leaving only one unknown, $y$. We can solve that
@@ -4711,11 +4732,11 @@ Let's put ourselves in the shoes of an attacker knowing $e$. We repeat
 our math from earlier. One of those points $A$ we just found is the
 $rQ$ we're looking for. We can compute:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 \phi(eA) \equiv \phi(erQ) \equiv \phi(rP) \pmod p
 \]
-#+END_LATEX
+#+END_EXPORT
 
 That last step is a consequence of the special relationship between
 $e, P, Q$. That's pretty interesting, because $\phi(rP)$ is exactly
@@ -4798,9 +4819,9 @@ properties, it is /not/ cryptographically secure.
 
 **** An in-depth look at the Mersenne Twister
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \advanced
-#+END_LATEX
+#+END_EXPORT
 
 To demonstrate why Mersenne Twister isn't cryptographically secure,
 we'll take a look at how the algorithm works. Fortunately, it's not
@@ -5589,14 +5610,14 @@ protocol.
 
 Bob computes:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 M_B = M_{m_1}(g^x, g^y, p_B, i_B)
 \]
 \[
 X_B = (p_B, i_B, S(p_B, M_B))
 \]
-#+END_LATEX
+#+END_EXPORT
 
 He sends Alice $r, E_c(X_B), M_{m_2}(E_c(X_B))$.
 
@@ -5658,9 +5679,9 @@ initiating peer (in our case, Bob).
 TODO: Explain (https://otr.cypherpunks.ca/Protocol-v3-4.0.0.html), #33
 
 * Appendices
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \appendix
-#+END_LATEX
+#+END_EXPORT
 ** Modular arithmetic<<Modular arithmetic>>
 
 Modular arithmetic is used for many public key cryptosystems,
@@ -5671,13 +5692,13 @@ Modular arithmetic is something most people actually already
 understand, they just don't know it's called that. We can illustrate
 the principles of modular arithmetic using a clock.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=.4\linewidth]{./Illustrations/ModularArithmetic/Clock2.pdf}
 \caption{A clock, pointing to 2.}
 \end{figure}
-#+END_LATEX
+#+END_EXPORT
 
 For simplicity's sake, our demonstration 12-hour clock only shows
 hours, not minutes or seconds. Also unlike real clocks, the hour hand
@@ -5691,27 +5712,27 @@ now, and you'd like to know what time it is five hours from now, you
 can add 5, and end up with 7, as you can see in figure
 \ref{fig:Clock2Plus5} on page \pageref{fig:Clock2Plus5}.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=.4\linewidth]{./Illustrations/ModularArithmetic/Clock2Plus5.pdf}
 \caption{$2 + 5 = 7$, on the clock.}
 \label{fig:Clock2Plus5}
 \end{figure}
-#+END_LATEX
+#+END_EXPORT
 
 Similarly, we can subtract times. If it's 10 o'clock now, and you'd
 like to know what time it was two hours ago, you subtract 2 and end
 up with 8.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{figure}[ht!]
 \centering
 \includegraphics[width=.4\linewidth]{./Illustrations/ModularArithmetic/Clock10Minus2.pdf}
 \caption{$10 - 2 = 8$, on the clock.}
 \label{fig:ClockMinus}
 \end{figure}
-#+END_LATEX
+#+END_EXPORT
 
 The "weird" part is when you cross the boundary at 12. As far as the
 clock is concerned, there's no real difference between 12 and 0. If
@@ -5721,14 +5742,14 @@ o'clock now, it was 9 o'clock five hours ago.
 This is an example of what's called "modular arithmetic". The
 modulus, in this case, is 12. We can write the above equations as:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 (10 + 4) \bmod{12} = 2
 \]
 \[
 (2 - 5) \bmod{12} = 9
 \]
-#+END_LATEX
+#+END_EXPORT
 
 In these equations, the $\bmod$ is an operator, giving the remainder
 after division. When we are dealing with modular arithmetic, where all
@@ -5736,14 +5757,14 @@ operations are affected by the modulus instead of a simple single
 operation, we'll instead write $\negthickspace\pmod{12}$ at the end of
 the equation and use an $\equiv$ sign instead of an equals sign ($=$):
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 10 + 4 \equiv 2 \pmod{12}
 \]
 \[
 2 - 5 \equiv 9 \pmod{12}
 \]
-#+END_LATEX
+#+END_EXPORT
 
 This is read as "ten plus four is equivalent to two, modulo twelve"
 and "two minus five is equivalent to nine, modulo twelve". That might
@@ -5775,21 +5796,21 @@ Any number can be written as a product of prime factors: a bunch of
 prime numbers multiplied together. That product is called a prime
 factorization. For example, 30 can be factorized into 2, 3 and 5:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 30 = 2 \cdot 3 \cdot 5
 \]
-#+END_LATEX
+#+END_EXPORT
 
 Sometimes, a prime number will occur more than once in a
 factorization. For example, the factorization of 360 has 2 in it
 three times, and three in it twice:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 360 = 2^3 \cdot 3^2 \cdot 5
 \]
-#+END_LATEX
+#+END_EXPORT
 
 The factorization of any prime number is just that prime number itself.
 
@@ -5815,11 +5836,11 @@ any number that isn't a multiple of that prime.
 You might remember you were first taught multiplication as repeated
 addition:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 n \cdot x = \underbrace{x + x + \ldots + x}_{n \text{ times}}
 \]
-#+END_LATEX
+#+END_EXPORT
 
 Modular multiplication is no different. You can compute modular
 multiplication by adding the numbers together, and taking the modulus
@@ -5857,11 +5878,11 @@ TODO: explain, and how you can get modular inverses with it
 Euler's theorem states that if two numbers $a$ and $n$ are coprime,
 then:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 a^{\phi(n)} \equiv 1 \pmod n
 \]
-#+END_LATEX
+#+END_EXPORT
 
 In that equation, $\phi$ is Euler's totient function, which counts the
 amount of numbers that are coprime to (and less than or equal to) its argument.
@@ -5871,11 +5892,11 @@ factors with 10.
 We can use Euler's theorem to find the multiplicative inverse of $a$.
 If we just multiply both sides of the equation by $a^{-1}$, we get:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 a^{\phi(n) - 1} \equiv a^{-1} \pmod n
 \]
-#+END_LATEX
+#+END_EXPORT
 
 That gives us a direct formula for computing $a^{-1}$. Unfortunately,
 this is still generally less interesting than using the extended
@@ -5891,11 +5912,11 @@ coprime to every other number, and since there are $p - 1$ numbers
 smaller than $p$, $\phi(p) = p - 1$. So, for a prime modulus, the
 modular inverse of $a$ is simply:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 a^{-1} \equiv a^{\phi(p) - 1} \equiv a^{p - 2} \pmod p
 \]
-#+END_LATEX
+#+END_EXPORT
 
 This still requires us to be able to efficiently raise $a$ to a power
 using modular arithmetic. We'll discuss how you can do that
@@ -5906,11 +5927,11 @@ efficiently in the next section.
 Like multiplication is taught as repeated addition, exponentiation
 can be thought of as repeated multiplication:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 a^n = \underbrace{a \cdot a \cdot \ldots \cdot a}_{n \text{ times}}
 \]
-#+END_LATEX
+#+END_EXPORT
 
 As with multiplication, it's possible to compute modular
 exponentiation by performing regular exponentiation, and then taking
@@ -5922,11 +5943,11 @@ more efficiently. This is done by splitting the problem up into
 smaller sub-problems. For example, instead of computing $2^{20}$
 directly you could split it up:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 2^{20} = (2^{10})^2
 \]
-#+END_LATEX
+#+END_EXPORT
 
 $2^{10}$ is something you can compute on your hands: start at 2, which
 is $2^1$, and then keep multiplying by two. Every time you multiply by
@@ -5934,7 +5955,7 @@ two, the exponent goes up by 1, so by the time you've counted all your
 fingers (assuming you have ten of them), you're done. The result
 is 1024. So:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{align*}
 2^{20} &\equiv (2^{10} \bmod {15})^2 \pmod {15} \\
        &\equiv (1024 \bmod {15})^2   \pmod {15} \\
@@ -5942,7 +5963,7 @@ is 1024. So:
        &\equiv 16                    \pmod {15} \\
        &\equiv 1                     \pmod {15}
 \end{align*}
-#+END_LATEX
+#+END_EXPORT
 
 *** Exponentiation by squaring
 
@@ -5955,7 +5976,7 @@ binary: ~0b11010001~. That's very practical if the computation is
 being performed by a computer, because that's typically how the
 computer had the number stored in the first place.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
   \arraycolsep=1pt
   \begin{array}{lllllllll}
@@ -5964,16 +5985,16 @@ computer had the number stored in the first place.
       &= 128           &+ 64            &                &+ 16            &                &                &                &+ 1
   \end{array}
 \]
-#+END_LATEX
+#+END_EXPORT
 
 We use that expansion into a sum of powers of two to rewrite the equation:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{align*}
 3^{209} &= 3^{128 + 64 + 16 + 1} \\
         &= 3^{128} \cdot 3^{64} \cdot 3^{16} \cdot 3^1
 \end{align*}
-#+END_LATEX
+#+END_EXPORT
 
 Now, we need to compute those individual powers of 3: 1, 16, 64
 and 128. A nice property of this algorithm is that we don't actually
@@ -5982,32 +6003,32 @@ previously computed smaller powers to compute the larger ones. For
 example, we need both $3^{128} \pmod {19}$ and $3^{64} \pmod {19}$, but
 you can write the former in terms of the latter:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 3^{128} \bmod {19} = (3^{64} \bmod {19})^2 \pmod {19}
 \]
-#+END_LATEX
+#+END_EXPORT
 
 Let's compute all the powers of 3 we need. For sake of brevity, we
 won't write these out entirely, but remember that all tricks we've
 already seen to compute these still apply:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{align*}
 3^{16}  &\equiv 17                               \pmod {19} \\
 3^{64}  &\equiv (3^{16})^4 \equiv 17^4 \equiv 16 \pmod {19} \\
 3^{128} &\equiv (3^{64})^2 \equiv 16^2 \equiv 9  \pmod {19}
 \end{align*}
-#+END_LATEX
+#+END_EXPORT
 
 Filling these back in to our old equation:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{align*}
 3^{209} &=      3^{128} \cdot 3^{64} \cdot 3^{16} \cdot 3^1 \pmod {19} \\
         &\equiv 9       \cdot 16     \cdot 17     \cdot 3   \pmod {19}
 \end{align*}
-#+END_LATEX
+#+END_EXPORT
 
 This trick is particularly interesting when the exponent is a very
 large number. That is the case in many cryptographic applications. For
@@ -6040,9 +6061,9 @@ abelian group. \cite{montgomerypowerladder}
 
 **** Deriving the ladder
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
   \advanced[This section involves a good deal of arithmetic tricks. You might want to get out some paper and pencil to follow along.]
-#+END_LATEX
+#+END_EXPORT
 
 Like with exponentiation by squaring, we start by looking at the
 binary expansion of the exponent $k$. Generally, any $k$ can be
@@ -6050,11 +6071,11 @@ written as a sum ($\sum$) of some powers of two ($2^i$). If $2^j$
 appears in the binary expansion, we'll say that $k_j = 1$; if it
 doesn't, we'll say that $k_j = 0$. That gives us:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 k = \sum_{i=0}^{t-1} 2^i k_i
 \]
-#+END_LATEX
+#+END_EXPORT
 
 That definition might look scary, but all you're really doing here is
 defining $k_i$ as bit of $k$ at position $i$. The sum goes over all
@@ -6063,14 +6084,14 @@ index of the highest bit is $t - 1$, and the index of the lowest bit
 is 0. For example, the binary expansion of the number 6 is ~0b110~.
 That number is three bits long, so $t = 3$. So:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{align*}
 6 &= \sum_{i = 0}^{t - 1} 2^i k_i \\
   &= \sum_{i = 0}^{2} 2^i k_i \\
   &= k_2 \cdot 2^2 + k_1 \cdot 2^1 + k_0 \cdot 2^0 \\
   &= 1 \cdot 2^2 + 1 \cdot 2^1 + 0 \cdot 2^0
 \end{align*}
-#+END_LATEX
+#+END_EXPORT
 
 So, $(k_2, k_1, k_0) = (1, 1, 0)$.
 
@@ -6078,22 +6099,22 @@ The next few steps don't make a lot of sense until you see them come
 together at the end, so bear with me and check that the math works
 out. We'll define a related sum, $L_j$:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 L_j = \sum_{i = j}^{t - 1} 2^{i - j} k_i
 \]
-#+END_LATEX
+#+END_EXPORT
 
 For example, $L_1$ (still with $k = 6$) becomes:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{align*}
 L_1 & = \sum_{i = 1}^{2} 2^{i - 1} k_i \\
     & = \underbrace{2^1 \cdot k_2}_{i = 2} + \underbrace{2^0 \cdot k_1}_{i = 1} \\
     & = 2 \cdot 1 + 1 \cdot 1 \\
     & = 3
 \end{align*}
-#+END_LATEX
+#+END_EXPORT
 
 Essentially, $L_j$ is just $k$ shifted to the right by $j$ bits.
 Shifting to the right by one bit is the same thing as flooring
@@ -6105,24 +6126,24 @@ inverse operation, and is equivalent to /multiplying/ by two.
 
 Next, we'll perform a little arithmetical hocus pocus. First of all:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
   \[
   L_j = 2 \cdot L_{j + 1} + k_j
   \]
-#+END_LATEX
+#+END_EXPORT
 
 While you can verify this arithmetically, the easiest way to check
 this is to think of it in terms of right and left shifts. If you shift
 $k$ to the right by $j$ positions, that
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \begin{align*}
 k                               & = \mathtt{0b110010111} \\
 L_j               = L_2         & = \mathtt{0b1100101} \\
 L_{j + 1}         = L_3         & = \mathtt{0b110010} \\
 2 \cdot L_{j + 1} = 2 \cdot L_3 & = \mathtt{0b1100100}
 \end{align*}
-#+END_LATEX
+#+END_EXPORT
 
 You can visually verify that $L_2$ is indeed $L_3$, shifted one to the
 left (which is the same thing as multiplying by two), plus that one
@@ -6132,15 +6153,15 @@ have been 0.
 
 We define another very simple function $H_j$:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
   \[
   H_j = L_j + 1 \iff L_j = H_j - 1
   \]
-#+END_LATEX
+#+END_EXPORT
 
 Starting from our previous result:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
   \begin{align*}
   L_j & = 2 \cdot L_{j + 1} + k_j \\
       & \Downarrow (L_{j + 1} = H_{j+1} - 1) \\
@@ -6148,49 +6169,49 @@ Starting from our previous result:
       & \Downarrow (L_{j + 1} = H_{j+1} - 1) \\
   L_j & = 2 \cdot H_{j + 1} + k_j - 2
   \end{align*}
-#+END_LATEX
+#+END_EXPORT
 
 We can combine these to produce an inductive way to compute $L_j$ and
 $H_j$:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
   \[
   L_j = \begin{cases}
   2 L_{j + 1}           & \mbox{if } k_j = 0, \\
   L_{j + 1} + H_{j + 1} & \mbox{if } k_j = 1.
   \end{cases}
   \]
-#+END_LATEX
+#+END_EXPORT
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
   \[
   H_j = \begin{cases}
   L_{j + 1} + H_{j + 1} & \mbox{if } k_j = 0, \\
   2 H_{j + 1} & \mbox{if } k_j = 1.
   \end{cases}
   \]
-#+END_LATEX
+#+END_EXPORT
 
 Remember that we're doing this to compute $g^k$. Let's write the
 exponentiation out:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
   \[
   g^{L_j} = \begin{cases}
   g^{2 L_{j + 1}} = \left(g^{L_{j + 1}}\right)^2 & \mbox{if } k_j = 0, \\
   g^{L_{j + 1} + H_{j + 1}} = g^{L_{j + 1}} \cdot g^{H_{j+1}} & \mbox{if } k_j = 1.
   \end{cases}
   \]
-#+END_LATEX
+#+END_EXPORT
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
   \[
   g^{H_j} = \begin{cases}
   g^{L_{j + 1} + H_{j + 1}} = g^{L_{j + 1}} \cdot g^{H_{j+1}} & \mbox{if } k_j = 0, \\
   g^{2 H_{j + 1}} = \left(g^{H_{j + 1}}\right)^2 & \mbox{if } k_j = 1.
   \end{cases}
   \]
-#+END_LATEX
+#+END_EXPORT
 
 Remember that $L_j$ is $k$ right-shifted by $j$ bits, so $L_0$ is $k$
 shifted right by 0 bits, or just $k$ itself. That means $g^k$, the
@@ -6318,22 +6339,22 @@ elliptic curve counterpart.
 
 Elliptic curves are curves with the following form:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 y^2 = x^3 - ax + b
 \]
-#+END_LATEX
+#+END_EXPORT
 
 This is called the "short Weierstrass form", and is the most common
 form when talking about elliptic curves in general. There are several
 other forms which mostly have applications in cryptography, notably
 the Edwards form:
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \[
 x^2 + y^2 = 1 + dx^2y^2
 \]
-#+END_LATEX
+#+END_EXPORT
 
 We can define addition of points on the curve.
 
@@ -6415,11 +6436,11 @@ TODO: Explain why the edwards form is great?
 *** Power measurement attacks
 TODO: Say something here.
 
-#+BEGIN_LATEX
+#+BEGIN_EXPORT latex
 \bibliographystyle{plain}
 \bibliography{Crypto101}
 
 \setglossarystyle{altlisthypergroup}
 \glsaddall
 \printglossaries
-#+END_LATEX
+#+END_EXPORT
