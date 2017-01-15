@@ -556,7 +556,7 @@ C = E(k, P)
 \end{equation}
 #+END_EXPORT
 
-The plaintext and ciphertext blocks are sequences of bytes. They are
+The plaintext and ciphertext blocks are sequences of bits. They are
 always the same size as one another, and that size is fixed by the
 block cipher: it's called the block cipher's /block size/. The set of
 all possible keys is called the \gls{keyspace}.
