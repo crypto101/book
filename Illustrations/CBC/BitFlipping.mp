@@ -1,6 +1,5 @@
 input ../common;
 
-
 %%% Drawing scale
 numeric u;
 u := 1cm;
@@ -36,7 +35,7 @@ beginfig(1);
     drawarrow (7.5u, 4u) -- (7.5u, 2.25u);
     %  feedback
     drawarrow (3.5u, 2u) -- (4.25u, 2u);
-    drawarrow (4.5u, 5.5u) -- (6u, 5.5u) -- (6u, 2u) -- (7.25u, 2u);
+    drawarrow (4.5u, 5.5u) -- (6u, 5.5u) -- (6u, 2u) -- (7.25u, 2u) withcolor red;
     draw (7.5u, 5.5u) -- (8u, 5.5u);
 
     % labels
