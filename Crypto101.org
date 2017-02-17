@@ -3030,9 +3030,9 @@ SHA-256 using 24 of 64 rounds (removing the last 40 rounds).
 
 Keccak is a family of sponge functions designed by Guido Bertoni, Joan Daemen, Gilles Van Assche and Michaël Peeters, which won NIST's Secure Hash Algorithm Competition in 2012. Keccak has since been standardized in form of the SHA3-224, SHA3-256, SHA3-384 and SHA3-512 hash functions.
 
-Although SHA-3 sounds like it might come from the same family as SHA-2, the two are designed very differently. SHA-3 is very efficient in hardware, but is relatively slow in software in comparison to SHA-2. Security wise, there is nothing to say that SHA-3 is more secure than SHA-2. It is simply a possible replacement in case SHA-2 is broken.
+Although SHA-3 sounds like it might come from the same family as SHA-2, the two are designed very differently. SHA-3 is very efficient in hardware \cite{SHA-3-hardware}, but is relatively slow in software in comparison to SHA-2. \cite{SHA-3-finalists} Later in the book, you will find the security aspects of SHA-3, such as preventing length extension attacks.
 
-The SHA-3 hash functions were introduced in Python version 3.6 and can be implemented as follows:
+The SHA-3 hash functions were introduced in Python version 3.6 and can be used as follows:
 
 #+BEGIN_SRC python
   import hashlib
