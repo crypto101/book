@@ -2978,16 +2978,7 @@ In Python one can use the hashlib module to create an MD5 digest as follows:
 
 *** SHA-1
 
-SHA-1 is another hash function from the MD4 family designed by the NSA, which
-produces a 160-bit digest. Just like MD5, SHA-1 is no longer considered secure
-for digital signatures. Many software companies and browsers, including Google
-Chrome, have started to retire support of the signature algorithm of SHA-1.
-Until this day no one has managed to produce a collision on the full SHA-1
-function, but several methods have been published, including one by Xiaoyun
-Wang. One of the most recent breakthroughs known as "The SHAppening"
-demonstrated freestart collisions for SHA-1. A freestart collision allows one to
-pick the initial value known as the initialization vector at the start of the
-compression function. \cite{cryptoeprint:2015:967}
+SHA-1 is another hash function from the MD4 family designed by the NSA, which produces a 160-bit digest. Just like MD5, SHA-1 is no longer considered secure for digital signatures. Many software companies and browsers, including Google Chrome, have started to retire support of the signature algorithm of SHA-1. On February 23, 2017 researchers from CWI Amsterdam and Google managed to produce a collision on the full SHA-1 function. \cite{Shattered} In the past methods to cause collisions on reduced versions of SHA-1 have been published, including one by Xiaoyun Wang. "The SHAppening" demonstrated freestart collisions for SHA-1. A freestart collision allows one to pick the initial value known as the initialization vector at the start of the compression function. \cite{cryptoeprint:2015:967}
 
 Once again the hashlib Python module can be used to generate a SHA-1 hash:
 
