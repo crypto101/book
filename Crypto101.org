@@ -556,7 +556,7 @@ C = E(k, P)
 \end{equation}
 #+END_EXPORT
 
-The plaintext and ciphertext blocks are sequences of bytes. They are
+The plaintext and ciphertext blocks are sequences of bits. They are
 always the same size as one another, and that size is fixed by the
 block cipher: it's called the block cipher's /block size/. The set of
 all possible keys is called the \gls{keyspace}.
@@ -2111,6 +2111,28 @@ a fixed-number of constant-time operations. The result is that every
 block is produced with exactly the same number of operations,
 regardless of what the key is.
 
+<<ARX>>
+Both stream ciphers are based on an \gls{ARX} design. One benefit of ARX ciphers
+is that they are intrinsically constant time. There are no secret memory access
+patterns that might leak information, as with AES. These ciphers also perform
+well on modern CPU architectures without needing cipher-specific optimizations.
+They take advantage of generic vector instructions, where the CPU performs
+related operations on multiple pieces of data in a single instruction. As a
+result, ChaCha20 performance is competitive with AES on modern Intel CPUs, even
+though the latter has specialized hardware.
+
+Here is an example ARX operation:
+
+#+BEGIN_EXPORT latex
+\begin{equation}
+x \leftarrow x \xor (y \madd z) \lll n
+\end{equation}
+#+END_EXPORT
+
+To find the new value of $x$, first we perform a modular addition ($\boxplus$)
+of $y$ and $z$, then we XOR ($\xor$) the result with x and finally we rotate
+left ($\lll$) by $n$ bits. This is the core round primitive of Salsa20.
+
 *** Native stream ciphers versus modes of operation
 
 Some texts only consider native \glspl{stream cipher} to be stream
@@ -3016,6 +3038,22 @@ certain amount of rounds one can't attack the entire algorithm. For instance,
 Somitra Kumar Sanadhya and Palash Sarkar were able to cause collisions with
 SHA-256 using 24 of 64 rounds (removing the last 40 rounds).
 \cite{eprint-2008-18172}
+
+*** Keccak and SHA-3
+
+Keccak is a family of sponge functions designed by Guido Bertoni, Joan Daemen, Gilles Van Assche and Michaël Peeters, which won NIST's Secure Hash Algorithm Competition in 2012. Keccak has since been standardized in form of the SHA3-224, SHA3-256, SHA3-384 and SHA3-512 hash functions.
+
+Although SHA-3 sounds like it might come from the same family as SHA-2, the two are designed very differently. SHA-3 is very efficient in hardware \cite{SHA-3-hardware}, but is relatively slow in software in comparison to SHA-2. \cite{SHA-3-finalists} Later in the book, you will find the security aspects of SHA-3, such as preventing length extension attacks.
+
+The SHA-3 hash functions were introduced in Python version 3.6 and can be used as follows:
+
+#+BEGIN_SRC python
+  import hashlib
+  hashlib.sha3_224("crypto101").hexdigest()
+  hashlib.sha3_256("crypto101").hexdigest()
+  hashlib.sha3_384("crypto101").hexdigest()
+  hashlib.sha3_512("crypto101").hexdigest()
+#+END_SRC
 
 *** Password storage<<password storage>>
 
