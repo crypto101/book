@@ -2978,16 +2978,7 @@ In Python one can use the hashlib module to create an MD5 digest as follows:
 
 *** SHA-1
 
-SHA-1 is another hash function from the MD4 family designed by the NSA, which
-produces a 160-bit digest. Just like MD5, SHA-1 is no longer considered secure
-for digital signatures. Many software companies and browsers, including Google
-Chrome, have started to retire support of the signature algorithm of SHA-1.
-Until this day no one has managed to produce a collision on the full SHA-1
-function, but several methods have been published, including one by Xiaoyun
-Wang. One of the most recent breakthroughs known as "The SHAppening"
-demonstrated freestart collisions for SHA-1. A freestart collision allows one to
-pick the initial value known as the initialization vector at the start of the
-compression function. \cite{cryptoeprint:2015:967}
+SHA-1 is another hash function from the MD4 family designed by the NSA, which produces a 160-bit digest. Just like MD5, SHA-1 is no longer considered secure for digital signatures. Many software companies and browsers, including Google Chrome, have started to retire support of the signature algorithm of SHA-1. On February 23, 2017 researchers from CWI Amsterdam and Google managed to produce a collision on the full SHA-1 function. \cite{Shattered} In the past methods to cause collisions on reduced versions of SHA-1 have been published, including one by Xiaoyun Wang. "The SHAppening" demonstrated freestart collisions for SHA-1. A freestart collision allows one to pick the initial value known as the initialization vector at the start of the compression function. \cite{cryptoeprint:2015:967}
 
 Once again the hashlib Python module can be used to generate a SHA-1 hash:
 
@@ -3047,6 +3038,22 @@ certain amount of rounds one can't attack the entire algorithm. For instance,
 Somitra Kumar Sanadhya and Palash Sarkar were able to cause collisions with
 SHA-256 using 24 of 64 rounds (removing the last 40 rounds).
 \cite{eprint-2008-18172}
+
+*** Keccak and SHA-3
+
+Keccak is a family of sponge functions designed by Guido Bertoni, Joan Daemen, Gilles Van Assche and Michaël Peeters, which won NIST's Secure Hash Algorithm Competition in 2012. Keccak has since been standardized in form of the SHA3-224, SHA3-256, SHA3-384 and SHA3-512 hash functions.
+
+Although SHA-3 sounds like it might come from the same family as SHA-2, the two are designed very differently. SHA-3 is very efficient in hardware \cite{SHA-3-hardware}, but is relatively slow in software in comparison to SHA-2. \cite{SHA-3-finalists} Later in the book, you will find the security aspects of SHA-3, such as preventing length extension attacks.
+
+The SHA-3 hash functions were introduced in Python version 3.6 and can be used as follows:
+
+#+BEGIN_SRC python
+  import hashlib
+  hashlib.sha3_224("crypto101").hexdigest()
+  hashlib.sha3_256("crypto101").hexdigest()
+  hashlib.sha3_384("crypto101").hexdigest()
+  hashlib.sha3_512("crypto101").hexdigest()
+#+END_SRC
 
 *** Password storage<<password storage>>
 
