@@ -187,10 +187,10 @@ notation in this book:
 #+END_EXPORT
 
 The inputs and output here are named as if we're using XOR as an
-encryption operation. On the left, we have the plaintext bit $p_i$.
+encryption operation. On the left, we have the plaintext bit $P_i$.
 The $i$ is just an index, since we'll usually deal with more than one
 such bit. On top, we have the key bit $k_i$, that decides whether or
-not to invert $p_i$. On the right, we have the ciphertext bit, $c_i$,
+not to invert $P_i$. On the right, we have the ciphertext bit, $C_i$,
 which is the result of the XOR operation.
 
 *** A few properties of XOR
