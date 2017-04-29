@@ -224,9 +224,9 @@ These rules also imply $a \xor b \xor a = b$:
 
 #+BEGIN_EXPORT latex
 \begin{align*}
-a \xor b \xor a & = a \xor a \xor b & \; & \text{(first rule)} \\
-                & = 0 \xor b        & \; & \text{(second rule)} \\
-                & = b               & \; & \text{(third rule)}
+a \xor b \xor a & = a \xor a \xor b & \; & \text{(second rule)} \\
+                & = 0 \xor b        & \; & \text{(third rule)} \\
+                & = b               & \; & \text{(fourth rule)}
 \end{align*}
 #+END_EXPORT
 
