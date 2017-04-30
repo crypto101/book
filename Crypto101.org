@@ -738,7 +738,7 @@ each round from one master key.
 First, the key is separated into 4 byte columns. The key is rotated
 and then each byte is run through an S-box (substitution box) that
 maps it to something else. Each column is then XORed with a
-round constant. The last step is to xor the result with the previous
+round constant. The last step is to XOR the result with the previous
 round key.
 
 The other columns are then XORed with the previous round key to
