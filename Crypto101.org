@@ -1270,7 +1270,7 @@ Conveniently, many block ciphers have block sizes that are the same
 length or less than the key size, so the key is big enough.
 
 This setup is completely insecure. If Alice sends a message to Bob,
-Mallory, an active adversary that can intercept and modify the message
+Mallory, an active adversary who can intercept and modify the message,
 can perform a chosen ciphertext attack to recover the key.
 
 Alice turns her plaintext message $P$ into three blocks $P_1 P_2 P_3$
