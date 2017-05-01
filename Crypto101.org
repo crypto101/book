@@ -2045,7 +2045,7 @@ There's no way around it: we need to stop using RC4. Fortunately,
 we've also developed many secure alternatives. The continuing
 advances in cryptanalysis of RC4 helped contribute to a sense of
 urgency regarding the improvement of commonly available cryptographic
-primitives. Throughout 2013 in particular, this lead to large
+primitives. Throughout 2013 in particular, this led to large
 improvements in, for example, browser cryptography (We will discuss
 browser cryptography, notably SSL/TLS, in a later chapter).
 
@@ -4581,7 +4581,7 @@ random number generator.
 
 Several years afterwards, leaked documents suggested a backdoor in an
 unnamed NIST standard released in the same year as ~Dual_EC_DRBG~,
-fueling the suspicions further. This lead to an official
+fueling the suspicions further. This led to an official
 recommendation from the standards body to stop using the standard,
 which was previously unheard of under such circumstances.
 
