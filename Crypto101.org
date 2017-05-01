@@ -2045,7 +2045,7 @@ we've also developed many secure alternatives. The continuing
 advances in cryptanalysis of RC4 helped contribute to a sense of
 urgency regarding the improvement of commonly available cryptographic
 primitives. Throughout 2013 in particular, this led to large
-improvements in, for example, browser cryptography (We will discuss
+improvements in, for example, browser cryptography (we will discuss
 browser cryptography, notably SSL/TLS, in a later chapter).
 
 *** <<<Salsa20>>>
