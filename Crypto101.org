@@ -1946,7 +1946,6 @@ Fluhrer, showing large biases in the first bytes of the keystream.
 \cite{fms:rc4} They also showed that knowing even small parts of the
 key would allow attackers to make strong predictions about the state
 and outputs of the cipher.
-
 Unlike RC4, most modern stream ciphers provide a way to combine a
 long-term key with a \gls{nonce} (a number used once), to produce
 multiple different keystreams from the same long-term key. RC4, by
