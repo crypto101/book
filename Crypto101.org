@@ -5629,7 +5629,7 @@ he's talking to Alice. As with TLS and other systems using
 Diffie-Hellman, this problem is solved by authenticating the key
 exchange.
 
-After verifying that Alice's public key is a valid value, Bob compute
+After verifying that Alice's public key is a valid value, Bob computes
 the shared secret $s = (g^y)^x$. Using a key derivation function, he
 derives several keys from $s$: two AES keys $c, c^\prime$, and four MAC
 keys $m_1, m_1^\prime, m_2, m_2^\prime$.
