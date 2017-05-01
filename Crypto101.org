@@ -586,10 +586,12 @@ We will contrast this with \gls{public-key encryption} algorithms,
 which have a distinct key for encryption and decryption, later in the
 book.
 
-A block cipher is a /keyed permutation/. It's a /permutation/, because
-the block cipher maps every possible block to some other block. It's
-also a /keyed/ permutation, because the key determines exactly which
-blocks map to which.
+A block cipher is a /keyed permutation/. It's a /permutation/, because the block
+cipher maps every possible block to some other block. It's also a /keyed/
+permutation, because the key determines exactly which blocks map to which. It's
+important that it's a permutation, because the recipient needs to be able to map
+blocks back to the original blocks as well, which you can only do if it's
+one-to-one.
 
 We'll illustrate this by looking at a block cipher with an
 impractical, tiny 4-bit block size, so $2^4 = 16$ possible blocks.
