@@ -1833,7 +1833,7 @@ That means that each byte is mapped to itself.
 
 [[./Illustrations/RC4/IdentityPermutation.pdf]]
 
-Then, the key is mixed into the state. This is done by iterating over
+Then, the key is mixed into the state. This is done by letting index $i$ iterate over
 every element of the state. The $j$ index is found by adding the
 current value of $j$ (starting at 0) with the next byte of the key,
 and the current state element:
