@@ -1977,7 +1977,7 @@ messages to make the attack practical. This was applied against WEP
 with great effect.
 
 In 2013, a team of researchers at Royal Holloway in London produced a
-combination of two independent practical attacks. \cite{rhul:rc4}
+combination of two independent practical attacks \cite{rhul:rc4}.
 These attacks proved to be very damning for RC4: while RC4's
 weaknesses had been known for a long time, they finally drove the
 point home for everyone that it really shouldn't be used anymore.
