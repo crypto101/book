@@ -3,7 +3,7 @@
 set -e
 
 if [[ -z "${ORG_DIR}" ]]; then
-    ORG_DIR="$(find $HOME/.emacs.d/elpa -maxdepth 1 -type d -regex ".*org-[0-9]*")"
+    ORG_DIR="$(find -E $HOME/.emacs.d/elpa -maxdepth 1 -type d -regex ".*org(-plus-contrib)?-[0-9]*")"
     # -maxdepth *is* a GNUism, but it's been ported everywhere by now.
 fi
 

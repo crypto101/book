@@ -187,10 +187,10 @@ notation in this book:
 #+END_EXPORT
 
 The inputs and output here are named as if we're using XOR as an
-encryption operation. On the left, we have the plaintext bit $p_i$.
+encryption operation. On the left, we have the plaintext bit $P_i$.
 The $i$ is just an index, since we'll usually deal with more than one
 such bit. On top, we have the key bit $k_i$, that decides whether or
-not to invert $p_i$. On the right, we have the ciphertext bit, $c_i$,
+not to invert $P_i$. On the right, we have the ciphertext bit, $C_i$,
 which is the result of the XOR operation.
 
 *** A few properties of XOR
@@ -211,7 +211,7 @@ both) is 1:
 \]
 #+END_EXPORT
 
-There's a few useful arithmetic tricks we can derive from that.
+There are a few useful arithmetic tricks we can derive from that.
 
 1. You can apply XOR in any order: $a \xor (b \xor c) = (a \xor b) \xor c$
 2. You can flip the operands around: $a \xor b = b \xor a$
@@ -224,9 +224,9 @@ These rules also imply $a \xor b \xor a = b$:
 
 #+BEGIN_EXPORT latex
 \begin{align*}
-a \xor b \xor a & = a \xor a \xor b & \; & \text{(first rule)} \\
-                & = 0 \xor b        & \; & \text{(second rule)} \\
-                & = b               & \; & \text{(third rule)}
+a \xor b \xor a & = a \xor a \xor b & \; & \text{(second rule)} \\
+                & = 0 \xor b        & \; & \text{(third rule)} \\
+                & = b               & \; & \text{(fourth rule)}
 \end{align*}
 #+END_EXPORT
 
@@ -586,10 +586,12 @@ We will contrast this with \gls{public-key encryption} algorithms,
 which have a distinct key for encryption and decryption, later in the
 book.
 
-A block cipher is a /keyed permutation/. It's a /permutation/, because
-the block cipher maps every possible block to some other block. It's
-also a /keyed/ permutation, because the key determines exactly which
-blocks map to which.
+A block cipher is a /keyed permutation/. It's a /permutation/, because the block
+cipher maps every possible block to some other block. It's also a /keyed/
+permutation, because the key determines exactly which blocks map to which. It's
+important that it's a permutation, because the recipient needs to be able to map
+blocks back to the original blocks as well, which you can only do if it's
+one-to-one.
 
 We'll illustrate this by looking at a block cipher with an
 impractical, tiny 4-bit block size, so $2^4 = 16$ possible blocks.
@@ -637,7 +639,7 @@ arrows, as you can see in figure \ref{fig:BlockCipherEncryptionDifferentKey}.
 \illustration{BlockCipher/Encryption2}[.85][An encryption permutation produced by the block cipher under some other key.][fig:BlockCipherEncryptionDifferentKey]
 #+END_EXPORT
 
-In this illustration, you'll notice that there's even two permutations
+In this illustration, you'll even notice that there are two permutations
 of length 1: an element that maps to itself. This is again something
 to be expected when selecting random permutations.
 
@@ -738,7 +740,7 @@ each round from one master key.
 First, the key is separated into 4 byte columns. The key is rotated
 and then each byte is run through an S-box (substitution box) that
 maps it to something else. Each column is then XORed with a
-round constant. The last step is to xor the result with the previous
+round constant. The last step is to XOR the result with the previous
 round key.
 
 The other columns are then XORed with the previous round key to
@@ -2567,7 +2569,7 @@ realistic, and a secure cryptosystem will have to address them
 somehow.
 
 While the Diffie-Hellman protocol successfully produced a shared
-secret between two peers, there's clearly some pieces of the puzzle
+secret between two peers, there are clearly some pieces of the puzzle
 still missing to build those cryptosystems. We need tools that help us
 authenticate Alice to Bob and vice versa, and we need tools that help
 guarantee message integrity, allowing the receiver to verify that the
@@ -2723,7 +2725,7 @@ the mathematical problem stated above.
 
 Right now, there are no known practical complete breaks against RSA.
 That's not to say that systems employing RSA aren't routinely broken.
-Like with most broken cryptosystems, there's plenty of cases where
+Like with most broken cryptosystems, there are plenty of cases where
 sound components, improperly applied, result in a useless system. For
 a more complete overview of the things that can go wrong with RSA
 implementations, please refer to \cite{boneh:twentyyears} and
@@ -4824,7 +4826,7 @@ There are two ways one might try to fix this particular algorithm:
 - Generate random $Q$ every time you start the algorithm, possibly by
   picking a random $d$ and setting $Q = dP$. Of course, $d$ has to be
   sufficiently large and truly random: if $\theta$ is unchanged, and
-  there's only few values $d$ can have, the attacker can just perform
+  there are only a few values $d$ can have, the attacker can just perform
   the above attack for all values of $d$.
 
 Both of these are really just band-aid solutions; it would be a much
@@ -5317,7 +5319,7 @@ being able to extract secrets, such as CSRF tokens, within one minute.
 
 In order to defend against CRIME, disable TLS compression. This is
 generally done in most systems by default. In order to defend against
-BREACH, there's a number of possible options:
+BREACH, there are a number of possible options:
 
  * Don't allow the user to inject arbitrary data into the request.
  * Don't put secrets in the response bodies.
@@ -5627,7 +5629,7 @@ he's talking to Alice. As with TLS and other systems using
 Diffie-Hellman, this problem is solved by authenticating the key
 exchange.
 
-After verifying that Alice's public key is a valid value, Bob compute
+After verifying that Alice's public key is a valid value, Bob computes
 the shared secret $s = (g^y)^x$. Using a key derivation function, he
 derives several keys from $s$: two AES keys $c, c^\prime$, and four MAC
 keys $m_1, m_1^\prime, m_2, m_2^\prime$.
