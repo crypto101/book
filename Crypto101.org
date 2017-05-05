@@ -716,7 +716,8 @@ parts of it.
 
 While a theoretically ideal block cipher wouldn't be vulnerable to a
 related key attack, these attacks aren't considered practical
-concerns. Because cryptographic keys are cryptographically random, the
+concerns.
+Because in practice cryptographic keys are generated pseudorandomly, the
 odds of selecting two such related keys is nonexistent. Such attacks
 are interesting from an academic perspective: they can help provide
 insight in the workings of the cipher, guiding cryptographers in
