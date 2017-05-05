@@ -2754,6 +2754,10 @@ cryptography. Salt currently also supports SSH as a transport, but the
 aforementioned DIY RSA/AES system remains, and is at time of writing
 still the recommended and the default transport.
 
+***** Fermat Factorization
+
+Choosing $p$ and $q$ in some funny way such that $|p-q|$ is small, the entire implementation is vulnerable to Fermat factorization. Using this method, $n$ can be factorized easily. The actual method is highly mathematical and might be out of the scope of this book.
+
 **** <<<OAEP>>>
 
 OAEP, short for optimal asymmetric encryption padding, is the state of
