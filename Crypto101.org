@@ -716,7 +716,8 @@ parts of it.
 
 While a theoretically ideal block cipher wouldn't be vulnerable to a
 related key attack, these attacks aren't considered practical
-concerns. Because cryptographic keys are cryptographically random, the
+concerns.
+Because in practice cryptographic keys are generated pseudorandomly, the
 odds of selecting two such related keys is nonexistent. Such attacks
 are interesting from an academic perspective: they can help provide
 insight in the workings of the cipher, guiding cryptographers in
@@ -2182,7 +2183,7 @@ an attacker to mount multi-time pad attacks.
 This is different from an \gls{initialization vector} such as the one
 used by CBC. An \gls{IV} has to be unpredictable. An attacker being
 able to predict a CTR \gls{nonce} doesn't really matter: without the
-secret key, he has no idea what the output of the block cipher (the
+secret key, they have no idea what the output of the block cipher (the
 sequence in the keystream) would be.
 
 Like Salsa20, CTR mode has the interesting property that you can jump
