@@ -879,7 +879,7 @@ block length of the block cipher. Obviously, we'd like to be able to
 send much larger messages, or, ideally, streams of indeterminate size.
 We'll address this problem with a [[Stream ciphers][stream cipher]].
 
-Although we have reduced the key size drastically (from the total size
+Although we have reduced the key size drastically (from the total size of
 all data ever sent under a one-time pad scheme versus a few bytes for
 most block ciphers), we still need to address the issue of agreeing on
 those few key bytes, potentially over an insecure channel. We'll
