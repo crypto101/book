@@ -2809,7 +2809,7 @@ Computing $G(R)$ is a little harder:
 
 #+BEGIN_EXPORT latex
   \[
-  G(R) = H(X) \xor Y
+  G(R) = G(H(X) \xor Y)
   \]
 #+END_EXPORT
 
