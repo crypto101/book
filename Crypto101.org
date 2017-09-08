@@ -708,20 +708,23 @@ related-key attacks \cite{cryptoeprint:2009:317}, some of them only on
 reduced-round versions of AES \cite{cryptoeprint:2009:374}.
 
 A related key attack involves making some predictions about how AES
-will behave with two different keys with some specific mathematical
-relation. Those predictions provide some information about what
-identical (input, output) pairs will look like under those related
-keys. Most of these attacks attempt to recover the key, or at least
-parts of it.
+will behave under several different keys with some specific
+mathematical relation. These relations are fairly simple, such as
+XORing with an attacker-chosen constant. If an attacker is allowed to
+encrypt and decrypt a large number of blocks with these related keys,
+they can attempt to recover the original key with significantly less
+computation than would ordinarily be necessary to crack it.
 
 While a theoretically ideal block cipher wouldn't be vulnerable to a
 related key attack, these attacks aren't considered practical
-concerns.
-Because in practice cryptographic keys are generated pseudorandomly, the
-odds of selecting two such related keys is nonexistent. Such attacks
-are interesting from an academic perspective: they can help provide
-insight in the workings of the cipher, guiding cryptographers in
-designing future ciphers and attacks against current ciphers.
+concerns. In practice cryptographic keys are generated via a
+cryptographically secure pseudorandom number generator, or a similarly
+secure key agreement scheme or key derivation scheme (we'll see more
+about those later). Therefore, the odds of selecting two such related
+keys by accident is nonexistent. These attacks are interesting from an
+academic perspective: they can help provide insight in the workings of
+the cipher, guiding cryptographers in designing future ciphers and
+attacks against current ciphers.
 
 **** A closer look at Rijndael
 
