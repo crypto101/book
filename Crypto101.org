@@ -4966,27 +4966,30 @@ show the code instead of explaining how it works:
       return y
 #+END_SRC
 
-It may not be obvious, especially if you're not used to binary
-arithmetic, but this function is /bijective/ or /one-to-one/: each 32
-bit integer input maps to exactly one output, and vice versa: for each
-32 bit integer we get as an output there was exactly one 32 bit
-integer it could have come from.
+It may not be obvious, especially if you're not used to binary arithmetic, but
+this function is /bijective/ or /one-to-one/: each 32 bit integer input maps to
+exactly one output, and vice versa: for each 32 bit integer we get as an output
+there was exactly one 32 bit integer it could have come from. Because it uses
+right and left shifts, it might look like it throws away data at first glance,
+and hence can't possibly be reversible. It's true that those shifts throw some
+bits away, however, the critical operation here is the inline XOR (~^=~): those
+shifts are just used to compute masks that the value to be tempered is XOR'd
+with. The XOR operations themselves are reversible, and because each independent
+operation is reversible, their composition is too.
 
-Because the tempering function is one-to-one, there is an inverse
-function: a function that gives you the untempered equivalent of a
-number. It may not be obvious to you how to construct that function
-unless you're a bitwise arithmetic wizard, but that's okay; in the
-worst case scenario we could still brute-force it. Suppose we just try
-every single 32 bit integer, and remember the result in a table. Then,
-when we get a result, we look it up in the table, and find the
-original. That table would have to be at least $2^{32} \cdot 32$ bits
-in length, or a good 17 gigabytes; big, but not impossibly so.
+Because the tempering function is one-to-one, there is an inverse function: a
+function that gives you the untempered equivalent of a number. It may not be
+obvious to you how to construct that function unless you're a bitwise arithmetic
+wizard, but that's okay; in the worst case scenario we could still brute-force
+it. Suppose we just try every single 32 bit integer, and remember the result in
+a table. Then, when we get a result, we look it up in the table, and find the
+original. That table would have to be at least $2^{32} \cdot 32$ bits in length,
+or a good 17 gigabytes; big, but not impossibly so.
 
-Fortunately, there's a much simpler method to compute the inverse of
-the temper function. We'll see why that's interesting when we evaluate
-the cryptographic security of the Mersenne Twister in the next
-section. For those interested in the result, the untempering function
-looks like this:
+Fortunately, there's a much simpler method to compute the inverse of the temper
+function. We'll see why that's interesting when we evaluate the cryptographic
+security of the Mersenne Twister in the next section. For those interested in
+the result, the untempering function looks like this:
 
 #+BEGIN_SRC python
 def untemper(y):
