@@ -1685,7 +1685,16 @@ D(C_i)[b] \xor r_b \xor \mathtt{01} \xor \mathtt{02} & = & \mathtt{01} \xor \mat
 \end{eqnarray*}
 #+END_EXPORT
 
-The attacker uses that value for the last byte. Then, they try all
+So, to produce a value of ~02~ in the final position of the decrypted
+plaintext, the attacker replaces $r_b$ with:
+
+#+BEGIN_EXPORT latex
+\[
+r_b^{\prime} = r_b \xor \mathtt{01} \xor \mathtt{02}
+\]
+#+END_EXPORT
+
+This accomplishes the goal of almost valid padding. Then, they try all
 possible values for the second-to-last byte (index $b - 1$).
 Eventually, one of them will cause the message to have valid padding.
 Since we modified the random block so that the final byte of the
@@ -4947,6 +4956,13 @@ it modifies the state array in place, instead of returning a new one.
 The ~%~ in an expression like ~s[(i + n) % 624]~ means that a next
 element of the state is looked at, wrapping around to the start of the
 state array if there is no next element.
+
+The values ~0x80000000~ and ~0x7fffffff~ have a specific meaning when
+interpreted as sequences of 32 bits. ~0x80000000~ has only the first bit set;
+~0x7fffffff~ has every bit except the first bit set. Because these are bitwise
+AND'ed together (~&~), this effectively means that after the first two lines in
+the loop, ~y~ consists of the first bit of the current state element and all the
+subsequent bits of the next element.
 
 **** The tempering function
 
