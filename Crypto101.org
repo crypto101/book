@@ -1629,6 +1629,25 @@ padding. Since the block is 8 bytes long, we know that the padding
 consists of the sixth, seventh and eighth bytes. So, the padding is
 three bytes long, and, in PKCS#5, equal to ~03 03 03~.
 
+A clever attacker who's trying to minimize the number of oracle queries
+can leverage the fact that longer valid padding becomes progressively
+more rare. They can do this by starting from the penultimate byte
+instead of the beginning of the block. The advantage to this method is
+that short paddings (which are more common) are detected more quickly.
+For example, if the padding is ~0x01~ and an attacker starts modifying
+the penultimate byte, they only need one query to learn what the padding
+was. If the penultimate byte is changed to any other value and the
+padding is still valid, the padding must be ~0x01~. If the padding is
+not valid, the padding must be at least ~0x02 0x02~. So, they go back to
+the original block and start modifying the third byte from the back. If
+that passes, the padding was indeed ~0x02 0x02~, otherwise the padding
+must be at least ~0x03 0x03 0x03~. The process repeats until they've
+found the correct length. This is a little trickier to implement; you
+can't just keep modifying the same block (if it's mutable), and you're
+waiting for the oracle to fail instead of pass, which can be confusing.
+But other than being faster at the cost of a slightly more complex, this
+technique is equivalent to the one described above.
+
 For the next section, we'll assume that it was just ~01~, since that
 is the most common case. The attack doesn't really change depending on
 the length of the padding. If you guess more bytes of padding
