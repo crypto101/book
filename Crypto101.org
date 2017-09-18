@@ -1645,8 +1645,8 @@ must be at least ~0x03 0x03 0x03~. The process repeats until they've
 found the correct length. This is a little trickier to implement; you
 can't just keep modifying the same block (if it's mutable), and you're
 waiting for the oracle to fail instead of pass, which can be confusing.
-But other than being faster at the cost of a slightly more complex, this
-technique is equivalent to the one described above.
+But other than being faster at the cost of being slightly more complex,
+this technique is equivalent to the one described above.
 
 For the next section, we'll assume that it was just ~01~, since that
 is the most common case. The attack doesn't really change depending on
