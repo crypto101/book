@@ -702,10 +702,14 @@ became AES through the \gls{FIPS} standardization process, the
 parameters were restricted to a block size of 128 bits and keys sizes
 of 128, 192 and 256 bits. \cite{fips:aes}
 
-There are no practical attacks known against AES. While there have
-been some developments in the last few years, most of them involve
-related-key attacks \cite{cryptoeprint:2009:317}, some of them only on
-reduced-round versions of AES \cite{cryptoeprint:2009:374}.
+There are no practical attacks known against AES. While there have been some
+developments in the last few years, most of them involve related-key attacks
+\cite{cryptoeprint:2009:317}, some of them only on reduced-round versions of AES
+\cite{cryptoeprint:2009:374}. [fn:rounds]
+
+[fn:rounds] Symmetric algorithms usually rely on a round function to be repeated
+a number of times, typically including a "round key" derived from the main key.
+A reduced-round version is intentionally easier to attack.
 
 A related key attack involves making some predictions about how AES
 will behave under several different keys with some specific
