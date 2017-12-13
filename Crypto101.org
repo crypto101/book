@@ -753,7 +753,7 @@ produce the remaining columns.
 ***** SubBytes
 
 SubBytes is the S-box (substitution box) in AES. It is $8 \times 8$
-bits in size.
+bytes in size.
 
 It works by taking the multiplicative inverse over the Galois field, and then
 applying an affine transformation so that there are no values $x$ so that $x
