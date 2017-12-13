@@ -708,8 +708,9 @@ developments in the last few years, most of them involve related-key attacks
 \cite{cryptoeprint:2009:374}. [fn:rounds]
 
 [fn:rounds] Symmetric algorithms usually rely on a round function to be repeated
-a number of times, typically including a "round key" derived from the main key.
-A reduced-round version is intentionally easier to attack.
+a number of times. Typically each invocation involves a "round key" derived from
+the main key. A reduced-round version is intentionally easier to attack. These
+attacks can give insight as to how resistant the full cipher is.
 
 A related key attack involves making some predictions about how AES
 will behave under several different keys with some specific
