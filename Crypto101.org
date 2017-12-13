@@ -756,16 +756,18 @@ produce the remaining columns.
 
 ***** SubBytes
 
-SubBytes is the S-box (substitution box) in AES. It is $8 \times 8$
-bits in size.
+SubBytes is the step that applies the S-box (substitution box) in AES. The S-box
+itself substitutes a byte with another byte, and this S-box is applied to each
+byte in the AES state.
 
 It works by taking the multiplicative inverse over the Galois field, and then
 applying an affine transformation so that there are no values $x$ so that $x
 \xor S(x) = 0$ or $x \xor S(x)=\texttt{0xff}$. To rephrase: there are no values
 of $x$ that the substitution box maps to $x$ itself, or $x$ with all bits
-flipped. This makes the cipher resistant to linear attacks, unlike the earlier
-DES algorithm, whose fifth S-box caused serious security problems. [fn:: In its
-defense, linear attacks were not publicly known back when DES was designed.]
+flipped. This makes the cipher resistant to linear cryptanalysis, unlike the
+earlier DES algorithm, whose fifth S-box caused serious security problems. [fn::
+In its defense, linear attacks were not publicly known back when DES was
+designed.]
 
 #+BEGIN_EXPORT latex
 \illustration{AES/SubBytes}
