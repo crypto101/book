@@ -2,6 +2,9 @@
  Crypto 101: the book
 ======================
 
+.. image:: https://travis-ci.com/crypto101/book.svg?branch=master
+    :target: https://travis-ci.com/crypto101/book
+
 This is the source repository for `Crypto 101`_, the introductory book
 about cryptography by lvh_.
 
@@ -71,6 +74,13 @@ On Debian, you will need at *least* ``texlive-latex-recommended`` and
 ``texlive-xetex``.
 
 .. _`TeX Live`: https://www.tug.org/texlive/
+
+Graphviz
+~~~~~~~
+
+Graphviz is a package of open-source tools initiated by AT&T Labs Research for
+drawing graphs specified in DOT language scripts. It also provides libraries
+for software applications to use the tools.
 
 potrace
 ~~~~~~~
