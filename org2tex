@@ -11,7 +11,6 @@ if [[ -d "$ORG_DIR" ]]; then
     emacs -Q --batch \
         --eval "(add-to-list 'load-path \"$ORG_DIR\")" \
         --eval "(require 'org)" \
-        --eval "(setq org-latex-listings 'minted)" \
         --eval "(setq org-confirm-babel-evaluate nil)" \
         --visit="$1" --funcall org-latex-export-to-latex
 else

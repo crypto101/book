@@ -23,6 +23,8 @@
                  (closing-single-quote :utf-8 "’" :html "&rsquo;" :latex "}" :texinfo "'")
                  (apostrophe :utf-8 "’" :html "&rsquo;")))
 
+  (setq org-latex-listings 'minted)
+
   ;; Header.tex explicitly loads all necessary packages.
   (make-local-variable 'org-latex-default-packages-alist)
   (setf org-latex-default-packages-alist nil)
