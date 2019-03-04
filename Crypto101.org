@@ -2,6 +2,7 @@
 #+AUTHOR: lvh
 #+DESCRIPTION: An introduction to cryptography for programmers
 
+#+NAME: header
 #+BEGIN_SRC emacs-lisp :results output silent :exports none
   (require 'cl) ;; The find function is in the cl library.
   (unless (find "per-file-class" org-latex-classes :key 'car :test 'equal)
@@ -30,6 +31,8 @@
   (setf org-latex-default-packages-alist nil)
 
 #+END_SRC
+
+#+CALL: header()
 
 #+LANGUAGE: en
 #+OPTIONS: H:5 ':t
