@@ -24,3 +24,14 @@ jobs:
           --eval "(package-refresh-contents)" \
           --eval "(package-install '\''org-plus-contrib)"
         cd /repo; make' bash "${TRAVIS_EVENT_TYPE}"
+
+deploy:
+  provider: releases
+  api_key:
+    secure:
+      XYZ-run-travis-encrypt-with-Github-OAuth-token==
+  file: Crypto101.pdf
+  draft: true
+  skip_cleanup: true
+  on:
+    tags: true
