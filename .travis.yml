@@ -1,26 +1,30 @@
 language: minimal
-
 dist: xenial
-
 services:
-  - docker
-
+- docker
 jobs:
   include:
-    - script: |
-        docker run -it -v ${TRAVIS_BUILD_DIR}:/repo fedora:29 /bin/bash -c '
-        TRAVIS_EVENT_TYPE="$1"
-        set -e # exit on failure
-        set -x # trace for debug
-        dnf install -y texlive-glossaries texlive-minted texlive-wrapfig \
-          texlive-collection-metapost texlive-memoir texlive-adjustbox \
-          texlive-blindtext texlive-context latexmk texlive-sourceserifpro \
-          texlive-sourcecodepro texlive-microtype texlive-polyglossia texlive-ctablestack \
-          emacs graphviz inkscape make git findutils
-        emacs -Q --batch \
-          --eval "(require '\''package)" \
-          --eval "(add-to-list '\''package-archives '\''(\"org\" . \"https://orgmode.org/elpa/\"))" \
-          --eval "(package-initialize t)" \
-          --eval "(package-refresh-contents)" \
-          --eval "(package-install '\''org-plus-contrib)"
-        cd /repo; make' bash "${TRAVIS_EVENT_TYPE}"
+  - script: |
+      docker run -it -v ${TRAVIS_BUILD_DIR}:/repo fedora:29 /bin/bash -c '
+      TRAVIS_EVENT_TYPE="$1"
+      set -e # exit on failure
+      set -x # trace for debug
+      dnf install -y texlive-glossaries texlive-minted texlive-wrapfig \
+        texlive-collection-metapost texlive-memoir texlive-adjustbox \
+        texlive-blindtext texlive-context latexmk texlive-sourceserifpro \
+        texlive-sourcecodepro texlive-microtype texlive-polyglossia texlive-ctablestack \
+        emacs graphviz inkscape make git findutils
+      emacs -Q --batch \
+        --eval "(require '\''package)" \
+        --eval "(add-to-list '\''package-archives '\''(\"org\" . \"https://orgmode.org/elpa/\"))" \
+        --eval "(package-initialize t)" \
+        --eval "(package-refresh-contents)" \
+        --eval "(package-install '\''org-plus-contrib)"
+      cd /repo; make' bash "${TRAVIS_EVENT_TYPE}"
+deploy:
+  provider: releases
+  api_key:
+    secure: ex7uUwr09xvZd+UnbYNYJ+YcAkziLZ39UTg4FM0OKd6KaYPBqVucndkIsQz5LV1gO6YmVZpvCkGMVWMduI0AH8DzuAidRhtV9Ejr3t2tZOmnEJeKBAK+eKfLqeiVQ29ywAn+MtjwZziaKvGcAfXRwVI9ksWg81kO2mIYrGnDN/WTZUsYTMYp0wbfNNwXLEGamz4BMTDwoLA8jDtwwtmwxujLvgWepISeDj1fveTJcGBQHy0zeJVCUPfYT1alceZW04CYQKrU0dXjdES8q6ab3jFqUFqkYQnMCuB+QXThitBmzoxjCxPGdBrZ2C6t/hGnrL0QuE9IUxkdIkcDV69RVuG3SlnKAE4bmMf+ydG633Mmh7A4aVCgUS6TzgHpSJlWbsE2/CJA6JPRDqWr6iHKy/3gEmEnANC2rRLwaO75MJaP6qDHFNgYCB+3buzsgoHvF2274g5xro5wenzugJ/vH4P5qy98Ad12sHuXVCXQyOW/rqLN9M+uuba0NgZW4+WUGX/gssO/CbZPl3W7mEth+LN7Qtnvn2OO6P8tf6Tl5LPh6T9LrfXEJDUVBI0bql8ujIG3agzemrPTjzfvdzIPulnCj8QEbOl1VyOWnmroa+fZd6G25umXxnXBKiPSdfpgqGL5A1hSRqbyg2xtLKl4B8hhxwNSntW/pvqd8bdqnqI=
+  file: Crypto101.pdf
+  on:
+    repo: crypto101/book
