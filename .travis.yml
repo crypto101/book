@@ -1,26 +1,19 @@
 language: minimal
+
 dist: xenial
+
 services:
 - docker
+
 jobs:
   include:
   - script: |
-      docker run -it -v ${TRAVIS_BUILD_DIR}:/repo fedora:29 /bin/bash -c '
-      TRAVIS_EVENT_TYPE="$1"
-      set -e # exit on failure
-      set -x # trace for debug
-      dnf install -y texlive-glossaries texlive-minted texlive-wrapfig \
-        texlive-collection-metapost texlive-memoir texlive-adjustbox \
-        texlive-blindtext texlive-context latexmk texlive-sourceserifpro \
-        texlive-sourcecodepro texlive-microtype texlive-polyglossia texlive-ctablestack \
-        emacs graphviz inkscape make git findutils
-      emacs -Q --batch \
-        --eval "(require '\''package)" \
-        --eval "(add-to-list '\''package-archives '\''(\"org\" . \"https://orgmode.org/elpa/\"))" \
-        --eval "(package-initialize t)" \
-        --eval "(package-refresh-contents)" \
-        --eval "(package-install '\''org-plus-contrib)"
-      cd /repo; make' bash "${TRAVIS_EVENT_TYPE}"
+      docker build -t crypto101 .
+      docker run -it -v ${TRAVIS_BUILD_DIR}:/repo crypto101 /bin/bash -c '
+        set -e # exit on failure
+        set -x # trace for debug
+        make' bash
+
 deploy:
   provider: releases
   skip_cleanup: true
