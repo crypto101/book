@@ -161,6 +161,7 @@ particular order):
  - hmmueller, for many, many notes and suggestions
  - postboy (Ivan Zuboff), for many reported issues
  - EdOverflow, for many contributions
+ - gliptak (Gábor Lipták) for work on automating builds
 
 .. as well as the huge number of people that contributed spelling,
 grammar and content improvements. Thank you!
