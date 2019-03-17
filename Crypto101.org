@@ -3017,7 +3017,7 @@ In Python one can use the hashlib module to create an MD5 digest as follows:
 
 #+BEGIN_SRC python
   import hashlib
-  hashlib.md5("crypto101").hexdigest()
+  hashlib.md5(b"crypto101").hexdigest()
 #+END_SRC
 
 *** SHA-1
@@ -3028,7 +3028,7 @@ Once again the hashlib Python module can be used to generate a SHA-1 hash:
 
 #+BEGIN_SRC python
   import hashlib
-  hashlib.sha1("crypto101").hexdigest()
+  hashlib.sha1(b"crypto101").hexdigest()
 #+END_SRC
 
 *** SHA-2
@@ -3064,13 +3064,13 @@ follows:
 
 #+BEGIN_SRC python
   >>> import hashlib
-  >>> len(hashlib.sha224("").hexdigest())
+  >>> len(hashlib.sha224(b"").hexdigest())
   56
-  >>> len(hashlib.sha256("").hexdigest())
+  >>> len(hashlib.sha256(b"").hexdigest())
   64
-  >>> len(hashlib.sha384("").hexdigest())
+  >>> len(hashlib.sha384(b"").hexdigest())
   96
-  >>> len(hashlib.sha512("").hexdigest())
+  >>> len(hashlib.sha512(b"").hexdigest())
   128
 #+END_SRC
 
@@ -3093,10 +3093,10 @@ The SHA-3 hash functions were introduced in Python version 3.6 and can be used a
 
 #+BEGIN_SRC python
   import hashlib
-  hashlib.sha3_224("crypto101").hexdigest()
-  hashlib.sha3_256("crypto101").hexdigest()
-  hashlib.sha3_384("crypto101").hexdigest()
-  hashlib.sha3_512("crypto101").hexdigest()
+  hashlib.sha3_224(b"crypto101").hexdigest()
+  hashlib.sha3_256(b"crypto101").hexdigest()
+  hashlib.sha3_384(b"crypto101").hexdigest()
+  hashlib.sha3_512(b"crypto101").hexdigest()
 #+END_SRC
 
 *** Password storage<<password storage>>
