@@ -3017,7 +3017,7 @@ In Python one can use the hashlib module to create an MD5 digest as follows:
 
 #+BEGIN_SRC python
   import hashlib
-  hashlib.md5("crypto101").hexdigest()
+  hashlib.md5(b"crypto101").hexdigest()
 #+END_SRC
 
 *** SHA-1
