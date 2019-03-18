@@ -1905,7 +1905,7 @@ Or, in Python:
       key_bytes = cycle(ord(x) for x in key)
 
       j = 0
-      for i in xrange(256):
+      for i in range(256):
           j = (j + s[i] + next(key_bytes)) % 256
           s[i], s[j] = s[j], s[i]
 
