@@ -1905,7 +1905,7 @@ Or, in Python:
       key_bytes = cycle(ord(x) for x in key)
 
       j = 0
-      for i in xrange(256):
+      for i in range(256):
           j = (j + s[i] + next(key_bytes)) % 256
           s[i], s[j] = s[j], s[i]
 
@@ -4944,7 +4944,7 @@ Here's the Python source code:
   def initialize_state(seed):
       state = [seed]
 
-      for i in xrange(1, 624):
+      for i in range(1, 624):
           prev = state[-1]
           elem = 0x6c078965 * (prev ^ (prev >> 30)) + i
           state.append(uint32(elem))
@@ -4975,7 +4975,7 @@ it modifies the state array in place, instead of returning a new one.
 
 #+BEGIN_SRC python
   def regenerate(s):
-      for i in xrange(624):
+      for i in range(624):
           y = s[i] & 0x80000000
           y += s[(i + 1) % 624] & 0x7fffffff
 
@@ -5053,7 +5053,7 @@ def untemper(y):
 def _undo_shift_2(y):
     t = y
 
-    for _ in xrange(5):
+    for _ in range(5):
         t <<= 7
         t = y ^ (t & _TEMPER_MASK_1)
 
@@ -5062,7 +5062,7 @@ def _undo_shift_2(y):
 def _undo_shift_1(y):
     t = y
 
-    for _ in xrange(2):
+    for _ in range(2):
         t >>= 11
         t ^= y
 
