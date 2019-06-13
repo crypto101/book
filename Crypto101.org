@@ -4941,6 +4941,9 @@ new element. Elements are produced until there are 624 of them.
 Here's the Python source code:
 
 #+BEGIN_SRC python
+  def uint32(n):
+      return 0xFFFFFFFF & n
+
   def initialize_state(seed):
       state = [seed]
 
