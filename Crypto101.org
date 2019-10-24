@@ -3037,7 +3037,7 @@ SHA-2 is a family of hash functions including SHA-224, SHA-256, SHA-384,
 SHA-512, SHA-512/224 and SHA-512/256 and their digest sizes 224, 256, 384, 512,
 224 and 256 respectively. These hash functions are based on the Merkle–Damgård
 construction and can be used for digital signatures, message authentication and
-random number generators. SHA-2 not only performs better than than SHA-1, it
+random number generators. SHA-2 not only performs better than SHA-1, it
 also provides better security, because of its increase in collision resistance.
 
 SHA-224 and SHA-256 were designed for 32-bit processor registers, while SHA-384
