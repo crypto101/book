@@ -1,16 +1,32 @@
 FROM fedora:29
 
-RUN dnf install -y texlive-glossaries texlive-minted texlive-wrapfig \
-          texlive-collection-metapost texlive-memoir texlive-adjustbox \
-          texlive-blindtext texlive-context latexmk texlive-sourceserifpro \
-          texlive-sourcecodepro texlive-microtype texlive-polyglossia texlive-ctablestack \
-          emacs graphviz inkscape make git findutils
+RUN dnf install -y \
+    emacs \
+    findutils \
+    git \
+    graphviz \
+    inkscape \
+    latexmk \
+    make \
+    texlive-adjustbox \
+    texlive-blindtext \
+    texlive-collection-metapost \
+    texlive-context \
+    texlive-ctablestack \
+    texlive-glossaries \
+    texlive-memoir \
+    texlive-microtype \
+    texlive-minted \
+    texlive-polyglossia \
+    texlive-sourcecodepro \
+    texlive-sourceserifpro \
+    texlive-wrapfig
     
 RUN emacs -Q --batch \
-          --eval "(require 'package)" \
-          --eval "(add-to-list 'package-archives '(\"org\" . \"https://orgmode.org/elpa/\"))" \
-          --eval "(package-initialize t)" \
-          --eval "(package-refresh-contents)" \
-          --eval "(package-install 'org-plus-contrib)"
+    --eval "(require 'package)" \
+    --eval "(add-to-list 'package-archives '(\"org\" . \"https://orgmode.org/elpa/\"))" \
+    --eval "(package-initialize t)" \
+    --eval "(package-refresh-contents)" \
+    --eval "(package-install 'org-plus-contrib)"
 
 WORKDIR /repo
