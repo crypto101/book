@@ -3284,7 +3284,7 @@ in a future section.
 It's very easy for the recipient to compute the same function, and verify the
 code is correct. Any change to the message $M_i$ will change the value of $A_i$
 drastically, thanks to the avalanche effect. Unfortunately, it's quite easy for
-attackers to forge messages. Since the authentication codes are usually sent
+attackers to forge messages. Since the MAC is usually sent
 together with the original message, the attacker knows the length of the
 original message. Then, the attacker only has to guess at the length of the
 secret, which is often fixed as part of the protocol, and, even if it isn't, the
