@@ -6427,7 +6427,7 @@ Elliptic curves are curves with the following form:
 
 #+BEGIN_EXPORT latex
 \[
-y^2 = x^3 - ax + b
+y^2 = x^3 + ax + b
 \]
 #+END_EXPORT
 
