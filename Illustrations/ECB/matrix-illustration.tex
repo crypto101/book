@@ -1,0 +1,36 @@
+\documentclass[varwidth=20cm, border=10pt]{standalone}
+\usepackage{graphicx,capt-of}
+\usepackage{multicol}
+
+\newcounter{subfloat}
+\renewcommand{\thesubfloat}{\alph{subfloat}}
+\newcommand{\image}[2]{%
+  \stepcounter{subfloat}%
+  \begin{tabular}[t]{@{}c@{}}
+  #2 \\
+  (\thesubfloat) #1
+  \end{tabular}%
+}
+
+\begin{document}
+
+\begin{tabular}{cc}
+\image{Plaintext image, 2000 by 1400 pixels, 24 bit color depth.}{%
+  \includegraphics[width=.4\textwidth]{./Plaintext.png}
+} & \image{ECB mode ciphertext, 5 pixel (120 bit) block size.}{%
+  \includegraphics[width=.4\textwidth]{./Ciphertext5.png}
+}\\
+\image{ECB mode ciphertext, 30 pixel (720 bit) block size.}{%
+  \includegraphics[width=.4\textwidth]{./Ciphertext30.png}
+} & \image{ECB mode ciphertext, 100 pixel (2400 bit) block size.}{%
+  \includegraphics[width=.4\textwidth]{./Ciphertext100.png}
+} \\
+\image{ECB mode ciphertext, 400 pixel (9600 bit) block size.}{%
+  \includegraphics[width=.4\textwidth]{./Ciphertext400.png}
+} &
+\image{Ciphertext under idealized encryption.}{%
+  \includegraphics[width=.4\textwidth]{./Random.png}
+}\\
+\end{tabular}
+
+\end{document}

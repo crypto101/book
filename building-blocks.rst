@@ -16,17 +16,17 @@ inverter”: one input bit decides whether to invert the other input bit,
 or to just pass it through unchanged. “Inverting” bits is colloquially
 called “flipping” bits, a term we'll use often throughout the book.
 
-.. raw:: latex
-
-   \illustration{XOR/ProgrammableInverter}[0.4]
+.. figure:: Illustrations/XOR/ProgrammableInverter.svg
+   :scale: 40%
+   :alt: a programmable inverter
 
 In mathematics and cryptography papers, exclusive or is generally
 represented by a cross in a circle: :math:`\xor`. We'll use the same
 notation in this book:
 
-.. raw:: latex
-
-   \illustration{XOR/XOR}[0.4]
+.. figure:: Illustrations/XOR/XOR.svg
+   :scale: 40%
+   :alt: XOR
 
 The inputs and output here are named as if we're using XOR as an
 encryption operation. On the left, we have the plaintext bit
@@ -46,14 +46,12 @@ how XOR works, feel free to skip this section.
 We saw that the output of XOR is 1 when one input or the other (but not
 both) is 1:
 
-.. raw:: latex
+.. math::
 
-   \[
    \begin{array}{c@{\hspace{2em}}c}
    0 \xor 0 = 0 & 1 \xor 0 = 1 \\
    0 \xor 1 = 1 & 1 \xor 1 = 0
    \end{array}
-   \]
 
 There are a few useful arithmetic tricks we can derive from that.
 
@@ -61,21 +59,20 @@ There are a few useful arithmetic tricks we can derive from that.
    :math:`a \xor (b \xor c) = (a \xor b) \xor c`
 #. You can flip the operands around: :math:`a \xor b = b \xor a`
 #. Any bit XOR itself is 0: :math:`a \xor a = 0`. If :math:`a` is 0,
-   then it's :math:`0
-     \xor 0 = 0`; if :math:`a` is 1, then it's :math:`1 \xor 1 = 0`.
+   then it's :math:`0 \xor 0 = 0`; if :math:`a` is 1, then it's :math:`1 \xor 1 = 0`.
 #. Any bit XOR 0 is that bit again: :math:`a \xor 0 = a`. If :math:`a`
    is 0, then it's :math:`0 \xor 0 = 0`; if :math:`a` is 1, then it's
    :math:`1 \xor 0 = 1`.
 
 These rules also imply :math:`a \xor b \xor a = b`:
 
-.. raw:: latex
+.. math::
 
-   \begin{align*}
+   \begin{aligned}
    a \xor b \xor a & = a \xor a \xor b & \; & \text{(second rule)} \\
                    & = 0 \xor b        & \; & \text{(third rule)} \\
                    & = b               & \; & \text{(fourth rule)}
-   \end{align*}
+   \end{aligned}
 
 We'll use this property often when using XOR for encryption; you can
 think of that first XOR with :math:`a` as encrypting, and the second one
@@ -94,9 +91,9 @@ bitwise XOR on integers. It does this by first expressing those two
 integers in binary [3]_, and then performing XOR on their respective
 bits. Hence the name, *bitwise* XOR.
 
-.. raw:: latex
+.. math::
 
-   \begin{align*}
+   \begin{aligned}
    73 \xor 87 & = 0b1001001 \xor 0b1010111 \\
               & = \begin{array}{*{7}{C{\widthof{$\xor$}}}c}
                       1    & 0    & 0    & 1    & 0    & 0    & 1    & \quad \text{(left)}\\
@@ -108,7 +105,7 @@ bits. Hence the name, *bitwise* XOR.
                   \end{array} \\
               & = 0b0011110 \\
               & = 30 \\
-   \end{align*}
+   \end{aligned}
 
 One-time pads
 ~~~~~~~~~~~~~
@@ -131,9 +128,9 @@ have the pad of random bits, shared between the sender and the (one or
 more) recipients. We can compute the ciphertext by taking the bitwise
 XOR of the two sequences of bits.
 
-.. raw:: latex
-
-   \illustration{XOR/OTP}
+.. figure:: Illustrations/XOR/OTP.svg
+   :scale: 40%
+   :alt: OTP
 
 If an attacker sees the ciphertext, we can prove that they will learn
 zero information about the plaintext without the key. This property is
@@ -141,9 +138,9 @@ called *perfect security*. The proof can be understood intuitively by
 thinking of XOR as a programmable inverter, and then looking at a
 particular bit intercepted by Eve, the eavesdropper.
 
-.. raw:: latex
-
-   \illustration{XOR/OTPEve}
+.. figure:: Illustrations/XOR/OTPEve.svg
+   :scale: 40%
+   :alt: OTP eve
 
 Let's say Eve sees that a particular ciphertext bit :math:`c_i` is 1.
 She has no idea if the matching plaintext bit :math:`p_i` was 0 or 1,
@@ -180,16 +177,16 @@ an attacker gets two ciphertexts with the same “one-time” pad. The
 attacker can then XOR the two ciphertexts, which is also the XOR of the
 plaintexts:
 
-.. raw:: latex
+.. math::
 
-   \begin{align*}
+   \begin{aligned}
    c_1 \xor c_2
    &= (p_1 \xor k) \xor (p_2 \xor k) && (\text{definition})\\
    &= p_1 \xor k \xor p_2 \xor k && (\text{reorder terms})\\
    &= p_1 \xor p_2 \xor k \xor k && (a \xor b = b \xor a) \\
    &= p_1 \xor p_2 \xor 0 && (x \xor x = 0) \\
    &= p_1 \xor p_2 && (x \xor 0 = x)
-   \end{align*}
+   \end{aligned}
 
 At first sight, that may not seem like an issue. To extract either
 :math:`p_1` or :math:`p_2`, you'd need to cancel out the XOR operation,
@@ -197,45 +194,17 @@ which means you need to know the other plaintext. The problem is that
 even the result of the XOR operation on two plaintexts contains quite a
 bit information about the plaintexts themselves. We'll illustrate this
 visually with some images from a broken “one-time” pad process, starting
-with figure :raw-latex:`\ref{fig:multitimepad}` on page
-:raw-latex:`\pageref{fig:multitimepad}`.
+with :numref:`fig-multitimepad`.
 
-.. raw:: latex
 
-   \begin{figure}[p]
-     \centering
-     \begin{subfigure}[b]{.4\textwidth}
-       \includegraphics[width=\textwidth,frame]{./Illustrations/KeyReuse/Broken.png}
-       \caption{First plaintext.}
-     \end{subfigure}
-     \begin{subfigure}[b]{.4\textwidth}
-       \includegraphics[width=\textwidth,frame]{./Illustrations/KeyReuse/Crypto.png}
-       \caption{Second plaintext.}
-     \end{subfigure}
+.. _fig-multitimepad:
 
-     \begin{subfigure}[b]{.4\textwidth}
-       \includegraphics[width=\textwidth]{./Illustrations/KeyReuse/BrokenEncrypted.png}
-       \caption{First ciphertext.}
-     \end{subfigure}
-     \begin{subfigure}[b]{.4\textwidth}
-       \includegraphics[width=\textwidth]{./Illustrations/KeyReuse/CryptoEncrypted.png}
-       \caption{Second ciphertext.}
-     \end{subfigure}
+.. figure:: Illustrations/KeyReuse/matrix.svg
+   :align: center
 
-     \begin{subfigure}[b]{.4\textwidth}
-       \includegraphics[width=\textwidth]{./Illustrations/KeyReuse/Key.png}
-       \caption{Reused key.}
-     \end{subfigure}
-     \begin{subfigure}[b]{.4\textwidth}
-       \includegraphics[width=\textwidth]{./Illustrations/KeyReuse/CiphertextsXOR.png}
-       \caption{XOR of ciphertexts.}
-     \end{subfigure}
-
-     \caption{Two plaintexts, the re-used key, their respective
-       ciphertexts, and the XOR of the ciphertexts. Information about the
-       plaintexts clearly leaks through when we XOR the ciphertexts.}
-     \label{fig:multitimepad}
-   \end{figure}
+   Two plaintexts, the re-used key, their respective
+   ciphertexts, and the XOR of the ciphertexts. Information about the
+   plaintexts clearly leaks through when we XOR the ciphertexts.
 
 Crib-dragging
 ^^^^^^^^^^^^^
@@ -254,24 +223,22 @@ The idea is fairly simple. Suppose we have several encrypted messages
 could correctly guess the plaintext for one of the messages, let's say
 :math:`C_j`, we'd know :math:`K`:
 
-.. raw:: latex
+.. math::
 
-   \begin{eqnarray*}
+   \begin{aligned}
    C_j \xor P_j
-   &=& (P_j \xor K) \xor P_j \\
-   &=& K \xor P_j \xor P_j \\
-   &=& K \xor 0 \\
-   &=& K
-   \end{eqnarray*}
+   &= (P_j \xor K) \xor P_j \\
+   &= K \xor P_j \xor P_j \\
+   &= K \xor 0 \\
+   &= K
+   \end{aligned}
 
 Since :math:`K` is the shared secret, we can now use it to decrypt all
 of the other messages, just as if we were the recipient:
 
-.. raw:: latex
+.. math::
 
-   \[
    P_i = C_i \xor K \qquad \text{for all }i
-   \]
 
 Since we usually can't guess an entire message, this doesn't actually
 work. However, we might be able to guess parts of a message.
@@ -377,14 +344,11 @@ before.
 Block ciphers
 -------------
 
-.. raw:: latex
-
-   \begin{quotation}
    Few false ideas have more firmly gripped the minds of so many intelligent men
    than the one that, if they just tried, they could invent a cipher that no one
    could break.
-   \sourceatright{David Kahn}
-   \end{quotation}
+
+       David Kahn
 
 .. _description-1:
 
@@ -396,11 +360,9 @@ fixed length. It provides an encryption function :math:`E` that turns
 plaintext blocks :math:`P` into ciphertext blocks :math:`C`, using a
 secret key :math:`k`:
 
-.. raw:: latex
+.. math::
 
-   \begin{equation}
    C = E(k, P)
-   \end{equation}
 
 The plaintext and ciphertext blocks are sequences of bits. They are
 always the same size as one another, and that size is fixed by the block
@@ -414,17 +376,14 @@ ciphertext block :math:`C` and the key :math:`k` (the same one used to
 encrypt the block) as inputs, and produces the original plaintext block
 :math:`P`.
 
-.. raw:: latex
+.. math::
 
-   \begin{equation}
    P = D(k, C)
-   \end{equation}
 
 Or, in blocks:
 
-.. raw:: latex
-
-   \illustration{BlockCipher/BlockCipher}
+.. figure:: Illustrations/BlockCipher/BlockCipher.svg
+   :align: center
 
 Block ciphers are an example of a symmetric-key encryption scheme, also
 known as a secret-key encryption scheme. This means that the same secret
@@ -442,12 +401,16 @@ well, which you can only do if it's one-to-one.
 We'll illustrate this by looking at a block cipher with an impractical,
 tiny 4-bit block size, so :math:`2^4 = 16` possible blocks. Since each
 of those blocks maps to a hexadecimal digit, we'll represent the blocks
-by that digit. Figure :raw-latex:`\ref{fig:BlockCipherBlocks}`
+by that digit. :numref:`fig-BlockCipherBlocks`
 illustrates the blocks that the cipher operates on.
 
-.. raw:: latex
 
-   \illustration{BlockCipher/AllNodes}[.85][All of the 16 nodes operated on by the block cipher. Each node is designated by a hexadecimal digit.][fig:BlockCipherBlocks]
+.. _fig-BlockCipherBlocks:
+
+.. figure:: Illustrations/BlockCipher/AllNodes.svg
+   :align: center
+
+   All of the 16 nodes operated on by the block cipher. Each node is designated by a hexadecimal digit.
 
 Once we select a secret key, the block cipher will use that to determine
 what the encryption of any given block is. We will illustrate that
@@ -455,11 +418,14 @@ relationship with an arrow: the block at the start of the arrow,
 encrypted using :math:`E` under key :math:`k`, is mapped to the block at
 the end of the arrow.
 
-.. raw:: latex
+.. _fig-BlockCipherEncryption:
 
-   \illustration{BlockCipher/Encryption}[.85][An encryption permutation produced by the block cipher under a particular key $k$.][fig:BlockCipherEncryption]
+.. figure:: Illustrations/BlockCipher/Encryption.svg
+   :align: center
 
-In figure :raw-latex:`\ref{fig:BlockCipherEncryption}`, you'll notice
+   An encryption permutation produced by the block cipher under a particular key :math:`k`.
+
+In :numref:`fig-BlockCipherEncryption`, you'll notice
 that the permutation isn't just one big cycle: there's a large cycle of
 7 elements, and several smaller cycles of 4, 3 and 2 elements each. It's
 also perfectly possible that an element encrypts to itself. This is to
@@ -468,23 +434,30 @@ what a block cipher is doing; it doesn't demonstrate a bug in the block
 cipher.
 
 When you're decrypting instead of encrypting, the block cipher just
-computes the inverse permutation. In figure
-:raw-latex:`\ref{fig:BlockCipherDecryption}`, you can see that we get
-the same illustration, except that all the arrows are going in the other
-direction.
+computes the inverse permutation. In :numref:`fig-BlockCipherDecryption`,
+you can see that we get the same illustration, except that all the arrows are
+going in the other direction.
 
-.. raw:: latex
+.. _fig-BlockCipherDecryption:
 
-   \illustration{BlockCipher/Decryption}[.85][The decryption permutation produced by the block cipher under the same key $k$: the inverse of the encryption permutation, that is: all the arrows have been reversed.][fig:BlockCipherDecryption]
+.. figure:: Illustrations/BlockCipher/Decryption.svg
+   :align: center
+
+   The decryption permutation produced by the block cipher under the same key
+   :math:`k`: the inverse of the encryption permutation, that is: all the arrows
+   have been reversed.
+
 
 The only way to know which block maps to which other block, is to know
 the key. A different key will lead to a completely different set of
-arrows, as you can see in figure
-:raw-latex:`\ref{fig:BlockCipherEncryptionDifferentKey}`.
+arrows, as you can see in :numref:`fig-BlockCipherEncryptionDifferentKey`.
 
-.. raw:: latex
+.. _fig-BlockCipherEncryptionDifferentKey:
 
-   \illustration{BlockCipher/Encryption2}[.85][An encryption permutation produced by the block cipher under some other key.][fig:BlockCipherEncryptionDifferentKey]
+.. figure:: Illustrations/BlockCipher/Encryption2.svg
+   :align: center
+
+   An encryption permutation produced by the block cipher under some other key.
 
 In this illustration, you'll even notice that there are two permutations
 of length 1: an element that maps to itself. This is again something to
@@ -507,12 +480,10 @@ numbers from 1 up to and including :math:`n`:
 
 .. math::
 
-
    n! = 1 \cdot 2 \cdot 3 \cdot \ldots \cdot (n - 1) \cdot n
 
 Factorials grow incredibly quickly. For example, :math:`5! = 120`,
-:math:`10! =
-3628800`, and the rate continues to increase. The number of permutations
+:math:`10! = 3628800`, and the rate continues to increase. The number of permutations
 of the set of blocks of a cipher with a 128 bit block size is
 :math:`(2^{128})!`. Just :math:`2^{128}` is large already (it takes 39
 digits to write it down), so :math:`(2^{128})!` is a mind-bogglingly
@@ -558,9 +529,7 @@ them only on reduced-round versions of AES
 A closer look at Rijndael
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. raw:: latex
-
-   \advanced
+.. advanced::
 
 AES consists of several independent steps. At a high level, AES is a
 substitution-permutation network.
@@ -589,16 +558,14 @@ applied to each byte in the AES state.
 
 It works by taking the multiplicative inverse over the Galois field, and
 then applying an affine transformation so that there are no values
-:math:`x` so that :math:`x
-\xor S(x) = 0` or :math:`x \xor S(x)=\texttt{0xff}`. To rephrase: there
-are no values of :math:`x` that the substitution box maps to :math:`x`
-itself, or :math:`x` with all bits flipped. This makes the cipher
+:math:`x` so that :math:`x \xor S(x) = 0` or :math:`x \xor S(x)=\texttt{0xff}`.
+To rephrase: there are no values of :math:`x` that the substitution box maps to
+:math:`x` itself, or :math:`x` with all bits flipped. This makes the cipher
 resistant to linear cryptanalysis, unlike the earlier DES algorithm,
 whose fifth S-box caused serious security problems.  [9]_
 
-.. raw:: latex
-
-   \illustration{AES/SubBytes}
+.. figure:: Illustrations/AES/SubBytes.svg
+   :align: center
 
 ShiftRows
 '''''''''
@@ -606,9 +573,8 @@ ShiftRows
 After having applied the SubBytes step to the 16 bytes of the block, AES
 shifts the rows in the :math:`4 \times 4` array:
 
-.. raw:: latex
-
-   \illustration{AES/ShiftRows}
+.. figure:: Illustrations/AES/ShiftRows.svg
+   :align: center
 
 MixColumns
 ''''''''''
@@ -617,9 +583,8 @@ MixColumns multiplies each column of the state with a fixed polynomial.
 
 ShiftRows and MixColumns represent the diffusion properties of AES.
 
-.. raw:: latex
-
-   \illustration{AES/MixColumns}
+.. figure:: Illustrations/AES/MixColumns.svg
+   :align: center
 
 AddRoundKey
 '''''''''''
@@ -627,9 +592,8 @@ AddRoundKey
 As the name implies, the AddRoundKey step adds the bytes from the round
 key produced by the key schedule to the state of the cipher.
 
-.. raw:: latex
-
-   \illustration{AES/AddRoundKey}
+.. figure:: Illustrations/AES/AddRoundKey.svg
+   :align: center
 
 DES and 3DES
 ~~~~~~~~~~~~
@@ -647,11 +611,9 @@ allowed much of the spent hardware development effort to be reused,
 people came up with 3DES: a scheme where input is first encrypted, then
 decrypted, then encrypted again:
 
-.. raw:: latex
+.. math::
 
-   \begin{equation}
    C = E_{DES}(k_1, D_{DES}(k_2, E_{DES}(k_3, p)))
-   \end{equation}
 
 This scheme provides two improvements:
 
@@ -747,15 +709,13 @@ Let's try to build a stream cipher using the tools we already have.
 Since we already have block ciphers, we could simply divide an incoming
 stream into different blocks, and encrypt each block:
 
-.. raw:: latex
+.. math::
 
-   \begin{equation}
    \begin{matrix}
    \underbrace{\mathtt{abcdefgh}} & \underbrace{\mathtt{ijklmno}} & \underbrace{\mathtt{pqrstuvw}} & ...\\
    \downarrow & \downarrow & \downarrow & \\
    \overbrace{\mathtt{APOHGMMW}} & \overbrace{\mathtt{PVMEHQOM}} & \overbrace{\mathtt{MEEZSNFM}} & ...
    \end{matrix}
-   \end{equation}
 
 This scheme is called ECB mode (Electronic Code Book Mode), and it is
 one of the many ways that block ciphers can be used to construct stream
@@ -763,15 +723,13 @@ ciphers. Unfortunately, while being very common in home-grown
 cryptosystems, it poses very serious security flaws. For example, in ECB
 mode, identical input blocks will always map to identical output blocks:
 
-.. raw:: latex
+.. math::
 
-   \begin{equation}
    \begin{matrix}
    \underbrace{\mathtt{abcdefgh}} & \underbrace{\mathtt{abcdefgh}} & \underbrace{\mathtt{abcdefgh}} & ...\\
    \downarrow & \downarrow & \downarrow & \\
    \overbrace{\mathtt{APOHGMMW}} & \overbrace{\mathtt{APOHGMMW}} & \overbrace{\mathtt{APOHGMMW}} & ...
    \end{matrix}
-   \end{equation}
 
 At first, this might not seem like a particularly serious problem.
 Assuming the block cipher is secure, it doesn't look like an attacker
@@ -793,52 +751,19 @@ To demonstrate that this is, in fact, a serious problem, we'll use a
 simulated block cipher of various block sizes and apply it to an
 image [10]_. We'll then visually inspect the different outputs.
 
-.. raw:: latex
+.. _fig-ECBDemo5px:
+.. _fig-ECBDemoPlaintext:
+.. _fig-ECBDemoIdealizedCiphertext:
 
-   \begin{figure}[p]
-     \centering
+.. figure:: ./Illustrations/ECB/matrix.svg
 
-     \begin{subfigure}[b]{.45\textwidth}
-       \includegraphics[width=\textwidth]{./Illustrations/ECB/Plaintext.png}
-       \caption{Plaintext image, 2000 by 1400 pixels, 24 bit color depth.}
-       \label{fig:ECBDemoPlaintext}
-     \end{subfigure}
-     \quad
-     \begin{subfigure}[b]{.45\textwidth}
-       \includegraphics[width=\textwidth]{./Illustrations/ECB/Ciphertext5.png}
-       \caption{ECB mode ciphertext, 5 pixel (120 bit) block size.}
-       \label{fig:ECBDemo5px}
-     \end{subfigure}
-
-     \begin{subfigure}[b]{.45\textwidth}
-       \includegraphics[width=\textwidth]{./Illustrations/ECB/Ciphertext30.png}
-       \caption{ECB mode ciphertext, 30 pixel (720 bit) block size.}
-     \end{subfigure}
-     \quad
-     \begin{subfigure}[b]{.45\textwidth}
-       \includegraphics[width=\textwidth]{./Illustrations/ECB/Ciphertext100.png}
-       \caption{ECB mode ciphertext, 100 pixel (2400 bit) block size.}
-     \end{subfigure}
-
-     \begin{subfigure}[b]{.45\textwidth}
-       \includegraphics[width=\textwidth]{./Illustrations/ECB/Ciphertext400.png}
-       \caption{ECB mode ciphertext, 400 pixel (9600 bit) block size.}
-     \end{subfigure}
-     \quad
-     \begin{subfigure}[b]{.45\textwidth}
-       \includegraphics[width=\textwidth]{./Illustrations/ECB/Random.png}
-       \caption{Ciphertext under idealized encryption.}
-       \label{fig:ECBDemoIdealizedCiphertext}
-     \end{subfigure}
-
-     \caption{Plaintext image with ciphertext images under idealized
-       encryption and ECB mode encryption with various block sizes.
-       Information about the macro-structure of the image clearly leaks.
-       This becomes less apparent as block sizes increase, but only at
-       block sizes far larger than typical block ciphers. Only the first
-       block size (figure \subref{fig:ECBDemo5px}, a block size of 5
-       pixels or 120 bits) is realistic.}
-   \end{figure}
+   Plaintext image with ciphertext images under idealized
+   encryption and ECB mode encryption with various block sizes.
+   Information about the macro-structure of the image clearly leaks.
+   This becomes less apparent as block sizes increase, but only at
+   block sizes far larger than typical block ciphers. Only the first
+   block size (figure :math:`b`, a block size of 5
+   pixels or 120 bits) is realistic.
 
 Because identical blocks of pixels in the plaintext will map to
 identical blocks of pixels in the ciphertext, the global structure of
@@ -883,11 +808,9 @@ attacker, which is why it's called an encryption oracle. Given some data
 :math:`A` chosen by the attacker, the oracle will encrypt that data,
 followed by a secret suffix :math:`S`, in ECB mode. Or, in symbols:
 
-.. raw:: latex
+.. math::
 
-   \[
    C = ECB(E_k, A \| S)
-   \]
 
 The secret suffix :math:`S` is specific to this system. The attacker's
 goal is to decrypt it. We'll see that being able to encrypt other
@@ -926,18 +849,16 @@ block. They don't know the value of :math:`s_0` yet, but now they do
 know the value of the first encrypted block: :math:`E_k(A \| s_0)`. In
 the illustration, this is block :math:`C_{R1}`:
 
-.. raw:: latex
-
-   \illustration{ECBEncryptionOracle/RememberFirst}
+.. figure:: Illustrations/ECBEncryptionOracle/RememberFirst.svg
+   :align: center
 
 Then, the attacker tries a full-size block, trying all possible values
 for the final byte. Eventually, they'll find the value of :math:`s_0`;
 they know the guess is correct because the resulting ciphertext block
 will match the ciphertext block :math:`C_{R1}` they remembered earlier.
 
-.. raw:: latex
-
-   \illustration{ECBEncryptionOracle/GuessFirst}
+.. figure:: Illustrations/ECBEncryptionOracle/GuessFirst.svg
+   :align: center
 
 The attacker can repeat this for the penultimate byte. They submit a
 plaintext :math:`A` that's two bytes shorter than the block size. The
@@ -945,18 +866,16 @@ oracle will encrypt a first block consisting of that :math:`A` followed
 by the first two bytes of the secret suffix, :math:`s_0s_1`. The
 attacker remembers that block.
 
-.. raw:: latex
-
-   \illustration{ECBEncryptionOracle/RememberSecond}
+.. figure:: Illustrations/ECBEncryptionOracle/RememberSecond.svg
+   :align: center
 
 Since the attacker already knows :math:`s_0`, they try :math:`A \|
 s_0` followed by all possible values of :math:`s_1`. Eventually they'll
 guess correctly, which, again, they'll know because the ciphertext
 blocks match:
 
-.. raw:: latex
-
-   \illustration{ECBEncryptionOracle/GuessSecond}
+.. figure:: Illustrations/ECBEncryptionOracle/GuessSecond.svg
+   :align: center
 
 The attacker can then rinse and repeat, eventually decrypting an entire
 block. This allows them to brute-force a block in :math:`p \cdot b`
@@ -965,11 +884,9 @@ attempts, where :math:`p` is the number of possible values for each byte
 block size. This is much better than a regular brute-force attack, where
 an attacker has to try all of the possible blocks, which would be:
 
-.. raw:: latex
+.. math::
 
-   \[
    \underbrace{p \cdot p \ldots \cdot p}_{b \ \mathrm{positions}} = p^b
-   \]
 
 For a typical block size of 16 bytes (or 128 bits), brute forcing would
 mean trying :math:`256^{16}` combinations. That's a huge, 39-digit
@@ -1030,12 +947,14 @@ illustrate this later with an attack on predictable CBC IVs.
 
 The following diagram demonstrates encryption in CBC mode:
 
-`./Illustrations/CBC/Encryption.pdf <./Illustrations/CBC/Encryption.pdf>`__
+.. figure:: ./Illustrations/CBC/Encryption.pdf
+   :align: center
 
 Decryption is the inverse construction, with block ciphers in decryption
 mode instead of encryption mode:
 
-`./Illustrations/CBC/Decryption.pdf <./Illustrations/CBC/Decryption.pdf>`__
+.. figure:: ./Illustrations/CBC/Decryption.pdf
+   :align: center
 
 While CBC mode itself is not inherently insecure (unlike ECB mode), its
 particular use in TLS 1.0 was. This eventually led to the BEAST attack,
@@ -1131,24 +1050,24 @@ filled with null bytes (value zero).
 Bob decrypts :math:`C^{\prime}`, and gets the three plaintext blocks
 :math:`P^{\prime}_1, P^{\prime}_2, P^{\prime}_3`:
 
-.. raw:: latex
+.. math::
 
-   \begin{align*}
+   \begin{aligned}
    P^{\prime}_1 & = D(k, C_1) \xor IV \\
                 & = D(k, C_1) \xor k \\
                 & = P_1
-   \end{align*}
+   \end{aligned}
 
-   \begin{align*}
+   \begin{aligned}
    P^{\prime}_2 & = D(k, Z) \xor C_1 \\
                 & = R
-   \end{align*}
+   \end{aligned}
 
-   \begin{align*}
+   \begin{aligned}
    P^{\prime}_3 & = D(k, C_1) \xor Z \\
                 & = D(k, C_1) \\
                 & = P_1 \xor IV
-   \end{align*}
+   \end{aligned}
 
 :math:`R` is some random block. Its value doesn't matter.
 
@@ -1194,12 +1113,8 @@ When we “flip some bits”, we do that by XORing with a sequence of bits,
 which we'll call :math:`X`. If the corresponding bit in :math:`X` is 1,
 the bit will be flipped; otherwise, the bit will remain the same.
 
-.. raw:: latex
-
-   \begin{figure}[h!]
-   \centering
-   \includegraphics[width=.6\linewidth]{./Illustrations/CBC/BitFlipping.pdf}
-   \end{figure}
+.. figure:: ./Illustrations/CBC/BitFlipping.svg
+   :align: center
 
 When we try to decrypt the ciphertext block with the flipped bits, we
 will get indecipherable [13]_ nonsense. Remember how CBC decryption
@@ -1254,9 +1169,9 @@ Because two XOR operations with the same value cancel each other out,
 the two filler values (~ZZZ~…) will cancel out, and the attacker can
 expect to see ``;admin=1;`` pop up in the next plaintext block:
 
-.. raw:: latex
+.. math::
 
-   \begin{align*}
+   \begin{aligned}
    P^{\prime}_{i + 1}
    & = P_{i + 1} \xor X \\
    & = P_{i + 1}
@@ -1266,7 +1181,7 @@ expect to see ``;admin=1;`` pop up in the next plaintext block:
      \xor \mathtt{ZZZZZZZZZ}
      \xor \mathtt{;admin=1;} \\
    & = \mathtt{;admin=1;} \\
-   \end{align*}
+   \end{aligned}
 
 This attack is another demonstration of an important cryptographic
 principle: encryption is not authentication! It's virtually never
@@ -1361,17 +1276,15 @@ Decrypting the first byte
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The attacker fills a block with arbitrary bytes
-:math:`R = r_1, r_2\ldots
-r_b`. They also pick a target block :math:`C_i` from the ciphertext that
-they'd like to decrypt. The attacker asks the padding oracle if the
-plaintext of :math:`R \| C_i` has valid padding. Statistically speaking,
+:math:`R = r_1, r_2\ldots r_b`. They also pick a target block :math:`C_i` from
+the ciphertext that they'd like to decrypt. The attacker asks the padding oracle
+if the plaintext of :math:`R \| C_i` has valid padding. Statistically speaking,
 such a random plaintext probably won't have valid padding: the odds are
 in the half-a-percent ballpark. If by pure chance the message happens to
 already have valid padding, the attacker can simply skip the next step.
 
-.. raw:: latex
-
-   \illustration{CBC/PaddingAttack}[.6]
+.. figure:: Illustrations/CBC/PaddingAttack.svg
+   :align: center
 
 Next, the attacker tries to modify the message so that it does have
 valid padding. They can do that by indirectly modifying the last byte of
@@ -1435,11 +1348,9 @@ wouldn't know this; the point of this procedure is to discover what that
 padding is. Suppose the block size is 8 bytes. So, we (but not the
 attacker) know that :math:`P_i` is currently:
 
-.. raw:: latex
+.. math::
 
-   \begin{equation}
    p_0 p_1 p_2 p_3 p_4 \mathtt{03} \mathtt{03} \mathtt{03}
-   \end{equation}
 
 In that equation, :math:`p_0 \ldots` are some bytes of the plaintext.
 Their actual value doesn't matter: the only thing that matters is that
@@ -1447,11 +1358,9 @@ they're not part of the padding. When we modify the first byte of
 :math:`R`, we'll cause a change in the first byte of :math:`P_i`, so
 that :math:`p_0` becomes some other byte :math:`p^{\prime}_0`:
 
-.. raw:: latex
+.. math::
 
-   \begin{equation}
    p^{\prime}_0 p_1 p_2 p_3 p_4 \mathtt{03} \mathtt{03} \mathtt{03}
-   \end{equation}
 
 As you can see, this doesn't affect the validity of the padding. It also
 does not affect :math:`p_1`, :math:`p_2`, :math:`p_3` or :math:`p_4`.
@@ -1460,11 +1369,9 @@ hit a byte that *is* part of the padding. For example, let's say we turn
 that first ``03`` into ``02`` by modifying :math:`R`. :math:`P_i` now
 looks like this:
 
-.. raw:: latex
+.. math::
 
-   \begin{equation}
    p^{\prime}_0 p^{\prime}_1 p^{\prime}_2 p^{\prime}_3 p^{\prime}_4 \mathtt{02} \mathtt{03} \mathtt{03}
-   \end{equation}
 
 Since ``02 03 03`` isn't valid PKCS#5 padding, the server will reject
 the message. At that point, we know that once we modify six bytes, the
@@ -1511,19 +1418,15 @@ the last byte of the decrypted ciphertext block :math:`C_i` (we'll call
 that byte :math:`D(C_i)[b]`), XORed with the iteratively found value
 :math:`r_b`, is ``01``:
 
-.. raw:: latex
+.. math::
 
-   \[
    D(C_i)[b] \xor r_b = \mathtt{01}
-   \]
 
 By moving the XOR operation to the other side, the attacker gets:
 
-.. raw:: latex
+.. math::
 
-   \[
    D(C_i)[b] = \mathtt{01} \xor r_b
-   \]
 
 The attacker has now tricked the receiver into revealing the value of
 the last byte of the block cipher decryption of :math:`C_i`.
@@ -1535,11 +1438,9 @@ Next, the attacker tricks the receiver into decrypting the next byte.
 Remember the previous equation, where we reasoned that the last byte of
 the plaintext was ``01``:
 
-.. raw:: latex
+.. math::
 
-   \[
    D(C_i)[b] \xor r_b = \mathtt{01}
-   \]
 
 Now, we'd like to get that byte to say ``02``, to produce an *almost*
 valid padding: the last byte would be correct for a 2-byte PKCS#5
@@ -1548,21 +1449,19 @@ yet. To do that, we XOR with ``01`` to cancel the ``01`` that's already
 there (since two XORs with the same value cancel each other out), and
 then we XOR with ``02`` to get ``02``:
 
-.. raw:: latex
+.. math::
 
-   \begin{eqnarray*}
-   D(C_i)[b] \xor r_b \xor \mathtt{01} \xor \mathtt{02} & = & \mathtt{01} \xor \mathtt{01} \xor \mathtt{02} \\
-   & = & \mathtt{02}
-   \end{eqnarray*}
+   \begin{aligned}
+   D(C_i)[b] \xor r_b \xor \mathtt{01} \xor \mathtt{02} & = \mathtt{01} \xor \mathtt{01} \xor \mathtt{02} \\
+   & = \mathtt{02}
+   \end{aligned}
 
 So, to produce a value of ``02`` in the final position of the decrypted
 plaintext, the attacker replaces :math:`r_b` with:
 
-.. raw:: latex
+.. math::
 
-   \[
    r_b^{\prime} = r_b \xor \mathtt{01} \xor \mathtt{02}
-   \]
 
 This accomplishes the goal of almost valid padding. Then, they try all
 possible values for the second-to-last byte (index :math:`b - 1`).
@@ -1626,7 +1525,8 @@ identical operation as encryption, just repeated: the keystream is
 produced from the key, and is XORed with the ciphertext to produce the
 plaintext.
 
-`./Illustrations/StreamCipher/Synchronous.pdf <./Illustrations/StreamCipher/Synchronous.pdf>`__
+.. figure:: ./Illustrations/StreamCipher/Synchronous.svg
+   :align: center
 
 You can see how this construction looks quite similar to a one-time pad,
 except that the truly random one-time pad has been replaced by a
@@ -1679,9 +1579,9 @@ by comparison (134.5 cycles per byte in CTR mode).
 An in-depth look at RC4
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-.. raw:: latex
+.. advanced::
 
-   \advanced[On the other hand, RC4 is incredibly simple, and it may be worth skimming this section.]
+On the other hand, RC4 is incredibly simple, and it may be worth skimming this section.
 
 RC4 is, unfortunately, quite broken. To better understand just how
 broken, we'll take a look at how RC4 works. The description requires
@@ -1714,19 +1614,22 @@ The key scheduling algorithm
 The key scheduling algorithm starts with the *identity permutation*.
 That means that each byte is mapped to itself.
 
-`./Illustrations/RC4/IdentityPermutation.pdf <./Illustrations/RC4/IdentityPermutation.pdf>`__
+.. figure:: ./Illustrations/RC4/IdentityPermutation.svg
+   :align: center
 
 Then, the key is mixed into the state. This is done by letting index
 :math:`i` iterate over every element of the state. The :math:`j` index
 is found by adding the current value of :math:`j` (starting at 0) with
 the next byte of the key, and the current state element:
 
-`./Illustrations/RC4/FindIndex.pdf <./Illustrations/RC4/FindIndex.pdf>`__
+.. figure:: ./Illustrations/RC4/FindIndex.svg
+   :align: center
 
 Once :math:`j` has been found, :math:`S[i]` and :math:`S[j]` are
 swapped:
 
-`./Illustrations/RC4/Swap.pdf <./Illustrations/RC4/Swap.pdf>`__
+.. figure:: ./Illustrations/RC4/Swap.svg
+   :align: center
 
 This process is repeated for all the elements of :math:`S`. If you run
 out of key bytes, you just wrap around on the key. This explains why RC4
@@ -1760,13 +1663,15 @@ XORed with the plaintext to produce the ciphertext. For each index
 :math:`i`, it computes :math:`j = j + S[i]` (:math:`j` starts at 0).
 Then, :math:`S[i]` and :math:`S[j]` are swapped:
 
-`./Illustrations/RC4/Swap.pdf <./Illustrations/RC4/Swap.pdf>`__
+.. figure:: ./Illustrations/RC4/Swap.svg
+   :align: center
 
 To produce the output byte, :math:`S[i]` and :math:`S[j]` are added
 together. Their sum is used as an index into :math:`S`; the value at
 :math:`S[S[i] + S[j]]` is the keystream byte :math:`K_i`:
 
-`./Illustrations/RC4/PRNGOutput.pdf <./Illustrations/RC4/PRNGOutput.pdf>`__
+.. figure:: ./Illustrations/RC4/PRNGOutput.svg
+   :align: center
 
 We can express this in Python:
 
@@ -1784,9 +1689,9 @@ We can express this in Python:
 Attacks
 ^^^^^^^
 
-.. raw:: latex
+.. advanced::
 
-   \advanced[The section on the attacks on RC4 is a good deal more complicated than RC4 itself, so you may want to skip this even if you've read this far.]
+The section on the attacks on RC4 is a good deal more complicated than RC4 itself, so you may want to skip this even if you've read this far.
 
 There are many attacks on RC4-using cryptosystems where RC4 isn't really
 the issue, but are caused by things like key reuse or failing to
@@ -1798,10 +1703,16 @@ Intuitively, we can understand how an ideal stream cipher would produce
 a stream of random bits. After all, if that's what it did, we'd end up
 in a situation quite similar to that of a one-time pad.
 
-.. raw:: latex
+.. figure:: Illustrations/XOR/OTP.svg
 
-   \illustration{XOR/OTP}[.4][A one-time pad scheme.]
-   \illustration{StreamCipher/Synchronous}[.8][A synchronous stream cipher scheme. Note similarity to the one-time pad scheme. The critical difference is that while the one-time pad $k_i$ is truly random, the keystream $K_i$ is only pseudorandom.]
+   A one-time pad scheme.
+
+.. figure:: Illustrations/StreamCipher/Synchronous.svg
+
+   A synchronous stream cipher scheme. Note similarity to the one-time pad
+   scheme. The critical difference is that while the one-time pad :math:`k_i` is
+   truly random, the keystream :math:`K_i` is only pseudorandom.
+
 
 The stream cipher is ideal if the best way we have to attack it is to
 try all of the keys, a process called brute-forcing the key. If there's
@@ -1879,11 +1790,9 @@ keystream. It turns out that adjacent bytes of the keystream have an
 exploitable relation, whereas in an ideal stream cipher you would expect
 them to be completely independent.
 
-==================== =========================================
-============================
+==================== =====================================================================
 Byte pair            Byte position (mod 256) :math:`i`         Probability
-==================== =========================================
-============================
+==================== =====================================================================
 :math:`(0, 0)`       :math:`i = 1`                             :math:`2^{-16} (1 + 2^{-9})`
 :math:`(0, 0)`       :math:`i \not \in \{{1, 255}\}`           :math:`2^{-16} (1 + 2^{-8})`
 :math:`(0, 1)`       :math:`i \not \in \{{0, 1}\}`             :math:`2^{-16} (1 + 2^{-8})`
@@ -1896,8 +1805,7 @@ Byte pair            Byte position (mod 256) :math:`i`         Probability
 :math:`(255, 2)`     :math:`i \in \{{0, 1}\}`                  :math:`2^{-16} (1 + 2^{-8})`
 :math:`(255, 255)`   :math:`i \ne 254`                         :math:`2^{-16} (1 + 2^{-8})`
 :math:`(129, 129)`   :math:`i = 2`                             :math:`2^{-16} (1 + 2^{-8})`
-==================== =========================================
-============================
+==================== =====================================================================
 
 This table may seem a bit daunting at first. The probability expression
 in the rightmost column may look a bit complex, but there's a reason
@@ -1909,8 +1817,7 @@ two adjacent bytes would each have probability :math:`2^{-8}`, so any
 given pair of two bytes would have probability :math:`2^{-8} \cdot
 2^{-8} = 2^{-16}`. However, RC4 isn't an ideal stream cipher, so these
 properties aren't true. By writing the probability in the
-:math:`2^{-16} (1 +
-2^{-k})` form, it's easier to see how much RC4 deviates from what you'd
+:math:`2^{-16} (1 + 2^{-k})` form, it's easier to see how much RC4 deviates from what you'd
 expect from an ideal stream cipher.
 
 So, let's try to read the first line of the table. It says that when the
@@ -2006,11 +1913,9 @@ the latter has specialized hardware.
 
 Here is an example ARX operation:
 
-.. raw:: latex
+.. math::
 
-   \begin{equation}
    x \leftarrow x \xor (y \madd z) \lll n
-   \end{equation}
 
 To find the new value of :math:`x`, first we perform a modular addition
 (:math:`\boxplus`) of :math:`y` and :math:`z`, then we XOR
@@ -2043,9 +1948,14 @@ each block, and padded with zeroes so that the whole is as long as the
 block size. The resulting concatenated string is run through a block
 cipher. The outputs of the block cipher are then used as the keystream.
 
-.. raw:: latex
+.. figure:: Illustrations/CTR/CTR.svg
+   :align: center
 
-   \illustration{CTR/CTR}[.8][CTR mode: a single nonce $N$ with a zero-padded counter $i$ is encrypted by the block cipher to produce a keystream block; this block is XORed with the plaintext block $P_i$ to produce the ciphertext block $C_i$.]
+   CTR mode: a single nonce :math:`N` with a zero-padded counter :math:`i` is
+   encrypted by the block cipher to produce a keystream block; this block is
+   XORed with the plaintext block :math:`P_i` to produce the ciphertext block
+   :math:`C_i`.
+
 
 This illustration shows a single input block
 :math:`N \| 00 \ldots \| i`, consisting of nonce :math:`N`, current
@@ -2056,8 +1966,7 @@ ciphertext block :math:`C_i`.
 
 Obviously, to decrypt, you do the exact same thing again, since XORing a
 bit with the same value twice always produces the original bit:
-:math:`p_i
-\xor s_i \xor s_i = p_i`. As a consequence, CTR encryption and
+:math:`p_i \xor s_i \xor s_i = p_i`. As a consequence, CTR encryption and
 decryption is the same thing: in both cases you produce the keystream,
 and you XOR either the plaintext or the ciphertext with it in order to
 get the other one.
@@ -2074,7 +1983,7 @@ would be.
 
 Like Salsa20, CTR mode has the interesting property that you can jump to
 any point in the keystream easily: just increment the counter to that
-point. :ref:`The Salsa20 paragraph on this topic <keystream jump>\`
+point. :ref:`The Salsa20 paragraph on this topic <keystream jump>`
 explains why that might be useful.
 
 Another interesting property is that since any keystream block can be
@@ -2198,43 +2107,6 @@ middle. Eve is listening to all of the messages sent across the network.
 We'll keep track of everything she knows and what she can compute, and
 end up seeing *why* Eve can't compute Alice and Bob's shared secret.
 
-.. raw:: latex
-
-   \newcommand{\dhimg}[1] {
-   \raisebox{-0.5\height}{\includegraphics[width=.1\linewidth]{./Illustrations/DiffieHellman/#1.pdf}}
-   }
-
-   \newcommand{\dhmix}[4] {
-   \begin{figure}[ht!]
-   \centering
-   \dhimg{#1}
-   \dhimg{#2}
-   \dhimg{Plus}
-   \dhimg{#3}
-   \dhimg{Equals}
-   \dhimg{#4}
-   \end{figure}
-   }
-
-   \newcommand{\dhknows}[2]{
-   \begin{figure}[ht!]
-   \centering
-   \dhimg{#1}
-   \foreach \i in {#2}{
-   \dhimg{\i}
-   }
-   \end{figure}}
-
-   \newcommand{\dhsendmixedsecret}[2]{
-   \begin{figure}[ht!]
-   \centering
-   \dhimg{#1}
-   \dhimg{#1MixedSecret}
-   \dhimg{Arrow}
-   \dhimg{#2}
-   \end{figure}
-   }
-
 To start the protocol, Alice and Bob have to agree on a base color. They
 can communicate that across the network: it's okay if Eve intercepts the
 message and finds out what the color is. Typically, this base color is a
@@ -2242,58 +2114,44 @@ fixed part of the protocol; Alice and Bob don't need to communicate it.
 After this step, Alice, Bob and Eve all have the same information: the
 base color.
 
-.. raw:: latex
-
-   \dhknows{Alice}{Base}
-   \dhknows{Bob}{Base}
-   \dhknows{Eve}{Base}
+.. figure:: ./Illustrations/DiffieHellman/alice-bob-eve.svg
+   :align: center
 
 Alice and Bob both pick a random color, and they mix it with the base
 color.
 
-.. raw:: latex
-
-   \dhmix{Alice}{Base}{AliceSecret}{AliceMixedSecret}
-   \dhmix{Bob}{Base}{BobSecret}{BobMixedSecret}
+.. figure:: ./Illustrations/DiffieHellman/alice-bob-secret.svg
+   :align: center
 
 At the end of this step, Alice and Bob know their respective secret
 color, the mix of the secret color and the base color, and the base
 color itself. Everyone, including Eve, knows the base color.
 
-.. raw:: latex
-
-   \dhknows{Alice}{Base,AliceSecret,AliceMixedSecret}
-   \dhknows{Bob}{Base,BobSecret,BobMixedSecret}
-   \dhknows{Eve}{Base}
+.. figure:: ./Illustrations/DiffieHellman/alice-bob-eve-secret.svg
+   :align: center
 
 Then, Alice and Bob both send their mixed colors over the network. Eve
 sees both mixed colors, but she can't figure out what either of Alice
 and Bob's *secret* colors are. Even though she knows the base, she can't
 “un-mix” the colors sent over the network. [19]_
 
-.. raw:: latex
-
-   \dhsendmixedsecret{Alice}{Bob}
-   \dhsendmixedsecret{Bob}{Alice}
+.. figure:: ./Illustrations/DiffieHellman/mixed-secret.svg
+   :align: center
 
 At the end of this step, Alice and Bob know the base, their respective
 secrets, their respective mixed colors, and each other's mixed colors.
 Eve knows the base color and both mixed colors.
 
-.. raw:: latex
+.. figure:: ./Illustrations/DiffieHellman/alice-bob-eve-mixed.svg
+   :align: center
 
-   \dhknows{Alice}{Base,AliceSecret,AliceMixedSecret,BobMixedSecret}
-   \dhknows{Bob}{Base,BobSecret,BobMixedSecret, AliceMixedSecret}
-   \dhknows{Eve}{Base,AliceMixedSecret,BobMixedSecret}
 
 Once Alice and Bob receive each other's mixed color, they add their own
 secret color to it. Since the order of the mixing doesn't matter,
 they'll both end up with the same secret.
 
-.. raw:: latex
-
-   \dhmix{Alice}{BobMixedSecret}{AliceSecret}{SharedSecret}
-   \dhmix{Bob}{AliceMixedSecret}{BobSecret}{SharedSecret}
+.. figure:: ./Illustrations/DiffieHellman/alice-bob-shared-mixed.svg
+   :align: center
 
 Eve can't perform that computation. She could finish the computation
 with either Alice or Bob's secret color, since she has both mixed
@@ -2316,11 +2174,9 @@ background appendix <Modular arithmetic>`.
 Discrete log Diffie-Hellman is based on the idea that computing
 :math:`y` in the following equation is easy (at least for a computer):
 
-.. raw:: latex
+.. math::
 
-   \begin{equation}
    y \equiv g^x \pmod{p}
-   \end{equation}
 
 However, computing :math:`x` given :math:`y`, :math:`g` and :math:`p` is
 believed to be very hard. This is called the discrete logarithm problem,
@@ -2337,14 +2193,13 @@ When Alice or Bob select their random numbers :math:`r_A` and
 :math:`r_B`, they mix them with the base to produce the mixed numbers
 :math:`m_A` and :math:`m_B`:
 
-.. raw:: latex
+.. math::
 
-   \begin{equation}
    m_A \equiv g^{r_A} \pmod{p}
-   \end{equation}
-   \begin{equation}
+
+.. math::
+
    m_B \equiv g^{r_B} \pmod{p}
-   \end{equation}
 
 These numbers are sent across the network where Eve can see them. The
 premise of the discrete logarithm problem is that it is okay to do so,
@@ -2354,11 +2209,9 @@ supposedly very hard.
 Once Alice and Bob have each other's mixed numbers, they add their own
 secret number to it. For example, Bob would compute:
 
-.. raw:: latex
+.. math::
 
-   \begin{equation}
    s \equiv (g^{r_A})^{r_B} \pmod{p}
-   \end{equation}
 
 While Alice's computation looks different, they get the same result,
 because :math:`(g^{r_A})^{r_B} \equiv (g^{r_B})^{r_A} \pmod{p}`. This is
@@ -2393,21 +2246,17 @@ than their elliptic curve variants. For example, the number field sieve
 for discrete logarithms, a state of the art algorithm for attacking
 discrete logarithm-based Diffie-Hellman, has time complexity:
 
-.. raw:: latex
+.. math::
 
-   \[
    L\left[1/3,\sqrt[3]{64/9}\right]
-   \]
 
 Which is more than polynomial (but less than exponential) in the number
 of digits. On the other hand, the fastest algorithms that could be used
 to break the elliptic curve discrete log problem all have complexity:
 
-.. raw:: latex
+.. math::
 
-   \[
    L\left[1, 1/2\right] = O(\sqrt{n})
-   \]
 
 Relatively speaking, that means that it's much harder to solve the
 elliptic curve problem than it is to solve the regular discrete log
@@ -2424,7 +2273,6 @@ Security level in bits Discrete log key bits Elliptic curve key bits
 112                    2048                  224
 128                    3072                  256
 256                    15360                 512
-\
 ====================== ===================== =======================
 
 .. _remaining-problems-3:
@@ -2440,7 +2288,8 @@ in between Alice and Bob, she can still perform the Diffie-Hellman
 protocol twice: once with Alice, where Mallory pretends to be Bob, and
 once with Bob, where Mallory pretends to be Alice.
 
-`./Illustrations/DiffieHellman/MITM.pdf <./Illustrations/DiffieHellman/MITM.pdf>`__
+.. figure:: ./Illustrations/DiffieHellman/MITM.svg
+   :align: center
 
 There are two shared secrets here: one between Alice and Mallory, and
 one between Mallory and Bob. The attacker (Mallory) can then simply take
@@ -2553,7 +2402,7 @@ Encryption and decryption
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 RSA encryption and decryption relies on modular arithmetic. You may want
-to review the :ref:`modular arithmetic primer <Modular arithmetic>\`
+to review the :ref:`modular arithmetic primer <Modular arithmetic>`
 before continuing.
 
 This section describes the simplified math problem behind RSA, commonly
@@ -2571,11 +2420,9 @@ compute the exponentiation more efficiently. Put together,
 :math:`(N, e)` is the public key. Anyone can use the public key to
 encrypt a message :math:`M` into a ciphertext :math:`C`:
 
-.. raw:: latex
+.. math::
 
-   \[
    C \equiv M^e \pmod{N}
-   \]
 
 The next problem is decryption. It turns out that there is a value
 :math:`d`, the *decryption exponent*, that can turn :math:`C` back into
@@ -2583,11 +2430,9 @@ The next problem is decryption. It turns out that there is a value
 :math:`p` and :math:`q`, which we do. Using :math:`d`, you can decrypt
 the message like so:
 
-.. raw:: latex
+.. math::
 
-   \[
    M \equiv C^d \pmod{N}
-   \]
 
 The security of RSA relies on that decryption operation being impossible
 without knowing the secret exponent :math:`d`, and that the secret
@@ -2603,15 +2448,12 @@ particular mathematical problem. For RSA, this is the RSA problem,
 specifically: to find the plaintext message :math:`M`, given a
 ciphertext :math:`C`, and public key :math:`(N, e)` in the equation:
 
-.. raw:: latex
+.. math::
 
-   \begin{equation}
    C \equiv M^e \pmod{N}
-   \end{equation}
 
 The easiest way we know how to do that is to factor :math:`N` back into
-:math:`p
-\cdot q`. Given :math:`p` and :math:`q`, the attacker can just repeat
+:math:`p \cdot q`. Given :math:`p` and :math:`q`, the attacker can just repeat
 the process that the legitimate owner of the key does during key
 generation in order to compute the private exponent :math:`d`.
 
@@ -2655,8 +2497,7 @@ provided by a third party package.
 
 For a long time, Salt used a public exponent (:math:`e`) of 1, which
 meant the encryption phase didn't actually do anything:
-:math:`P^e \equiv P^1
-\equiv P \pmod N`. This meant that the resulting ciphertext was in fact
+:math:`P^e \equiv P^1 \equiv P \pmod N`. This meant that the resulting ciphertext was in fact
 just the plaintext. While this issue has now been fixed, this only goes
 to show that you probably shouldn't implement your own cryptography.
 Salt currently also supports SSH as a transport, but the aforementioned
@@ -2671,9 +2512,8 @@ the art in RSA padding. It was introduced by Mihir Bellare and Phillip
 Rogaway in 1995. :cite:`bellarerogaway:oaep`. Its structure
 looks like this:
 
-.. raw:: latex
-
-   \illustration{OAEP/Diagram}[0.5]
+.. figure:: Illustrations/OAEP/Diagram.svg
+   :align: center
 
 The thing that eventually gets encrypted is :math:`X \| Y`, which is
 :math:`n` bits long, where :math:`n` is the number of bits of :math:`N`,
@@ -2683,8 +2523,7 @@ message is first padded with zeroes to be :math:`n - k` bits long. If
 you look at the above “ladder”, everything on the left half is
 :math:`n - k` bits long, and everything on the right half is :math:`k`
 bits long. The random block :math:`R` and zero-padded message
-:math:`M \|
-000\ldots` are combined using two “trapdoor” functions, :math:`G` and
+:math:`M \| 000\ldots` are combined using two “trapdoor” functions, :math:`G` and
 :math:`H`. A trapdoor function is a function that's very easy to compute
 in one direction and very hard to reverse. In practice, these are
 cryptographic hash functions; we'll see more about those later.
@@ -2712,19 +2551,15 @@ TODO: reverse arrows
 We want to get to :math:`M`, which is in :math:`M \| 000\ldots`. There's
 only one way to compute that, which is:
 
-.. raw:: latex
+.. math::
 
-   \[
    M \| 000\ldots = X \xor G(R)
-   \]
 
 Computing :math:`G(R)` is a little harder:
 
-.. raw:: latex
+.. math::
 
-   \[
    G(R) = G(H(X) \xor Y)
-   \]
 
 As you can see, at least for some definitions of the functions :math:`H`
 and :math:`G`, we need all of :math:`X` and all of :math:`Y` (and hence
@@ -3429,7 +3264,6 @@ message with the secret key and hash the whole thing:
 
 .. math::
 
-
    t = H(k \| m)
 
 This scheme is most commonly called “Prefix-MAC”, because it is a MAC
@@ -3542,8 +3376,7 @@ Issues with prefix-MAC has tempted people to come up with all sorts of
 clever variations. For example, why not add the key to the end instead
 of the beginning (:math:`t = H(m \| k)`, or “suffix-MAC”, if you will)?
 Or maybe we should append the key to both ends for good measure
-(:math:`t = H(k
-\| m \| k)`, “sandwich-MAC” perhaps?)?
+(:math:`t = H(k \| m \| k)`, “sandwich-MAC” perhaps?)?
 
 For what it's worth, both of these are at least better than prefix-MAC,
 but both of these have serious issues. For example, a suffix-MAC system
@@ -3579,7 +3412,8 @@ The biggest difference between HMAC and prefix-MAC or its variants is
 that the message passes through a hash function twice, and is combined
 with the key before each pass. Visually, HMAC looks like this:
 
-:raw-latex:`\illustration{HMAC/HMAC}`[.4]
+.. figure:: ./Illustration/HMAC/HMAC.svg
+   :align: center
 
 The only surprising thing here perhaps are the two constants
 :math:`p_{inner}` (the inner padding, one hash function's block length
@@ -3618,32 +3452,26 @@ multiplication and addition modulo some large prime :math:`p`. In this
 case, the secret key consists of two truly random numbers :math:`a` and
 :math:`b`, both between 1 and :math:`p`.
 
-.. raw:: latex
+.. math::
 
-   \[
    t \equiv m \cdot a + b \pmod p
-   \]
 
 This simple example only works for one-block messages :math:`m`, and
 some prime :math:`p` slightly bigger than the biggest :math:`m`. It can
 be extended to support bigger messages :math:`M` consisting of blocks
 :math:`m_i` by using a message-specific polynomial :math:`P`:
 
-.. raw:: latex
+.. math::
 
-   \[
    t \equiv \underbrace{(m_n \cdot a^n + \cdots + m_1 \cdot a)}_{P(M, a)} + b \pmod p
-   \]
 
 This might look like a lot of computation, but this polynomial can be
 efficiently evaluated by iteratively factoring out the common factor
 :math:`a` (also known as Horner's rule):
 
-.. raw:: latex
+.. math::
 
-   \[
    P(M, a) \equiv a \cdot (a \cdot (a \cdot (\cdots) + m_2) + m_1) + b \pmod p
-   \]
 
 By computing each multiplication modulo :math:`p`, the numbers will
 remain conveniently small.
@@ -3668,19 +3496,19 @@ We'll illustrate that our example MAC is insecure if it is used to
 authenticate two messages :math:`m_1, m_2` with the same key
 :math:`(a, b)`:
 
-.. raw:: latex
+.. math::
 
-   \begin{align*}
+   \begin{aligned}
    t_1 &\equiv m_1 \cdot a + b \pmod p \\
    t_2 &\equiv m_2 \cdot a + b \pmod p
-   \end{align*}
+   \end{aligned}
 
 An attacker can reconstruct :math:`a, b` with some simple modular
 arithmetic:  [26]_
 
-.. raw:: latex
+.. math::
 
-   \begin{align*}
+   \begin{aligned}
      t_1 - t_2 &\equiv (m_1 \cdot a + b) - (m_2 \cdot a + b) \pmod p \\
      &\Downarrow \text{(remove parentheses)} \\
      t_1 - t_2 &\equiv m_1 \cdot a + b - m_2 \cdot a - b \pmod p \\
@@ -3690,18 +3518,18 @@ arithmetic:  [26]_
      t_1 - t_2 &\equiv a \cdot (m_1 - m_2) \pmod p \\
      &\Downarrow \text{(flip sides, multiply by inverse of $(m_1 - m_2)$)} \\
      a &\equiv (t_1 - t_2)(m_1 - m_2)^{-1} \pmod p
-   \end{align*}
+   \end{aligned}
 
 Plugging :math:`a` into either the equation for :math:`t_1` or
 :math:`t_2` gets :math:`b`:
 
-.. raw:: latex
+.. math::
 
-   \begin{align*}
+   \begin{aligned}
    t_1 &\equiv m_1 \cdot a + b \pmod p \\
    &\Downarrow \text{(reorder terms)}\\
    b &\equiv t_1 - m_1 \cdot a \pmod p
-   \end{align*}
+   \end{aligned}
 
 As you can see, as with one-time pads, re-using the key even once leads
 to a complete failure of the cryptosystem to preserve privacy or
@@ -3724,11 +3552,9 @@ The idea behind a Carter-Wegman MAC is that you can use a one-time MAC
 nonce :math:`n` with a pseudorandom function :math:`F`, such as a block
 cipher, to protect that one-time tag:
 
-.. raw:: latex
+.. math::
 
-   \[
    CW((k_1, k_2), n, M) = F(k_1, n) \xor O(k_2, M)
-   \]
 
 As long as :math:`F` is a secure pseudorandom function, the nonce's
 encryption is totally unpredictable. In the eyes of an attacker, that
@@ -3818,19 +3644,21 @@ metadata to encrypted content, so that the whole of the encrypted
 content and the metadata is authenticated, and not the two pieces
 separately:
 
-:raw-latex:`\illustration{AEAD/AEAD}`[.6]
+.. figure:: Illustration/AEAD/AEAD.svg
+   :align: center
 
 OCB mode
 ~~~~~~~~
 
-.. raw:: latex
+.. advanced::
 
-   \advanced[Usually, you will want to use a much more high level cryptosystem, such as OpenPGP, NaCl or TLS.]
+Usually, you will want to use a much more high level cryptosystem, such as OpenPGP, NaCl or TLS.
 
 OCB mode is an AEAD mode of operation. It is one of the earliest
 developed AEAD modes.
 
-:raw-latex:`\illustration{OCB/Encryption}`[.7]
+.. figure:: Illustration/OCB/Encryption.svg
+   :align: center
 
 As you can see, most of this scheme looks quite similar to :ref:`ECB
 mode <ECB mode>`. The name OCB is quite similar to electronic codebook,
@@ -3845,7 +3673,8 @@ plaintext. There is also another, separate tag :math:`t_a`, which
 authenticates the AEAD associated data. That associated data tag
 :math:`t_a` is computed as follows:
 
-:raw-latex:`\illustration{OCB/Auth}`[.5]
+.. figure:: Illustration/OCB/Auth.svg
+   :align: center
 
 This design has a number of interesting properties. For example, it is
 very fast: only requiring roughly one block cipher operation per
@@ -3872,13 +3701,13 @@ much OCB mode is used in the field. :cite:`ocb:license`
 GCM mode
 ~~~~~~~~
 
-.. raw:: latex
+.. advanced::
 
-   \advanced[Usually, you will want to use a much more high level cryptosystem, such as OpenPGP, NaCl or TLS.]
+Usually, you will want to use a much more high level cryptosystem, such as OpenPGP, NaCl or TLS.
 
 GCM mode is an AEAD mode with an unfortunate case of RAS (redundant
 acronym syndrome) syndrome: GCM itself stands for “Galois Counter Mode”.
-It is formalized in a NIST Special Publication:cite:`gcm`
+It is formalized in a NIST Special Publication :cite:`gcm`
 and roughly boils down to a combination of classical CTR mode with a
 Carter-Wegman MAC. That MAC can be used by itself as well, which is
 called GMAC.
@@ -3958,7 +3787,7 @@ pick an *L*-bit prime :math:`p` such that :math:`p-1` is a multiple of
 :math:`q`.
 
 The last part is the most confusing. We have to find a number :math:`g`
-whose :ref:`multiplicative order <Multiplicative order>\`
+whose :ref:`multiplicative order <Multiplicative order>`
 :math:`\pmod{p}` is :math:`q`. The easy way to do this is to set
 :math:`g \equiv 2^{(p-1)/q} \pmod{p}`. We can try another number greater
 than 2, and less than :math:`p-1`, if :math:`g` comes out to equal 1.
@@ -3984,17 +3813,13 @@ sensitive and involved process; but we'll go into more detail on that
 later. With :math:`k` chosen, they then compute the two parts of the
 signature :math:`r, s` of the message :math:`m`:
 
-.. raw:: latex
+.. math::
 
-   \[
    r \equiv (g^k \pmod p) \pmod q
-   \]
 
-.. raw:: latex
+.. math::
 
-   \[
    s \equiv k^{-1} (H(m) + xr) \pmod q
-   \]
 
 If either of these happen to be 0 (a rare event, with 1 in :math:`q`
 odds, and :math:`q` being a pretty large number), pick a different
@@ -4008,20 +3833,21 @@ Verifying a signature
 Verifying the signature is a lot more complex. Given the message
 :math:`m` and signature :math:`(r, s)`:
 
-.. raw:: latex
+.. math::
 
-   \[
    w \equiv s^{-1} \pmod q
-   \]
-   \[
+
+.. math::
+
    u_1 \equiv wH(m) \pmod q
-   \]
-   \[
+
+.. math::
+
    u_2 \equiv wr \pmod q
-   \]
-   \[
+
+.. math::
+
    v \equiv (g^{u_1}y^{u_2} \pmod p) \pmod q
-   \]
 
 If the signature is valid that final result :math:`v` will be equal to
 :math:`r`, the second part of the signature.
@@ -4068,23 +3894,20 @@ attacker picks any two signatures :math:`(r_1, s_1)` and
 :math:`(r_2, s_2)` of messages :math:`m_1` and :math:`m_2` respectively.
 Writing down the equations for :math:`s_1` and :math:`s_2`:
 
-.. raw:: latex
+.. math::
 
-   \[
    s_1 \equiv k^{-1} (H(m_1) + xr_1) \pmod q
-   \]
-   \[
+
+.. math::
+
    s_2 \equiv k^{-1} (H(m_2) + xr_2) \pmod q
-   \]
 
 The attacker can simplify this further: :math:`r_1` and :math:`r_2` must
 be equal, following the definition:
 
-.. raw:: latex
+.. math::
 
-   \[
    r_i \equiv g^k \pmod q
-   \]
 
 Since the signer is reusing :math:`k`, and the value of :math:`r` only
 depends on :math:`k`, all :math:`r_i` will be equal. Since the signer is
@@ -4093,22 +3916,20 @@ using the same key, :math:`x` is equal in the two equations as well.
 Subtract the two :math:`s_i` equations from each other, followed by some
 other arithmetic manipulations:
 
-.. raw:: latex
+.. math::
 
-   \begin{eqnarray*}
+   \begin{aligned}
    s_1 - s_2 & \equiv & k^{-1} (H(m_1) + xr) - k^{-1} (H(m_2) + xr) \pmod q \\
    & \equiv & k^{-1} \left( (H(m_1) + xr) - (H(m_2) + xr) \right) \pmod q \\
    & \equiv & k^{-1} (H(m_1) + xr - H(m_2) - xr) \pmod q \\
    & \equiv & k^{-1} (H(m_1) - H(m_2)) \pmod q
-   \end{eqnarray*}
+   \end{aligned}
 
 This gives us the simple, direct solution for :math:`k`:
 
-.. raw:: latex
+.. math::
 
-   \[
    k \equiv \left(H(m_1) - H(m_2)\right) \left(s_1 - s_2\right)^{-1} \pmod q
-   \]
 
 The hash values :math:`H(m_1)` and :math:`H(m_2)` are easy to compute.
 They're not secret: the messages being signed are public. The two values
@@ -4120,27 +3941,25 @@ Let's write the equation for :math:`s` down again, but this time
 thinking of :math:`k` as something we know, and :math:`x` as the
 variable we're trying to solve for:
 
-.. raw:: latex
+.. math::
 
-   \[
    s \equiv k^{-1} (H(m) + xr) \pmod q
-   \]
 
 All :math:`(r, s)` that are valid signatures satisfy this equation, so
 we can just take any signature we saw. Solve for :math:`x` with some
 algebra:
 
-.. raw:: latex
+.. math::
 
-   \[
    sk \equiv H(m) + xr \pmod q
-   \]
-   \[
+
+.. math::
+
    sk - H(m) \equiv xr \pmod q
-   \]
-   \[
+
+.. math::
+
    r^{-1}(sk - H(m)) \equiv x \pmod q
-   \]
 
 Again, :math:`H(m)` is public, plus the attacker needed it to compute
 :math:`k`, anyway. They've already computed :math:`k`, and :math:`s` is
@@ -4275,8 +4094,8 @@ scrypt
 HKDF
 ~~~~
 
-The HKDF, defined in RFC 5869:cite:`rfc5869` and explained
-in detail in a related paper:cite:`hkdf`, is a key
+The HKDF, defined in RFC 5869 :cite:`rfc5869` and explained
+in detail in a related paper :cite:`hkdf`, is a key
 derivation function designed for high entropy inputs, such as shared
 secrets from a Diffie-Hellman key exchange. It is specifically *not*
 designed to be secure for low-entropy inputs such as passwords.
@@ -4296,9 +4115,7 @@ function you want.
 A closer look at HKDF
 ^^^^^^^^^^^^^^^^^^^^^
 
-.. raw:: latex
-
-   \advanced
+.. advanced::
 
 HKDF consists of two phases. In the first phase, called the *extraction
 phase*, a fixed-length key is extracted from the input entropy. In the
@@ -4400,12 +4217,9 @@ function is being executed for or the like. :cite:`rfc5869`
 Random number generators
 ------------------------
 
-.. raw:: latex
-
-   \begin{quotation}
    The generation of random numbers is too important to be left to chance.
-   \sourceatright{Robert R. Coveyou}
-   \end{quotation}
+
+       Robert R. Coveyou
 
 Introduction
 ~~~~~~~~~~~~
@@ -4429,13 +4243,10 @@ consider separately:
 True random number generators
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. raw:: latex
-
-   \begin{quotation}
    Any one who considers arithmetical methods of producing random digits
    is, of course, in a state of sin.
-   \sourceatright{John von Neumann}
-   \end{quotation}
+
+       John von Neumann
 
 John von Neumann, father of the modern model of computing, made an
 obvious point. We can't expect to produce random numbers using
@@ -4489,15 +4300,13 @@ resistance. That causes a tiny current to flow through the resistor (or,
 alternatively put, causes a tiny voltage difference across the
 resistor).
 
-.. raw:: latex
+.. math::
 
-   \[
    i = \sqrt{\frac{4 k_B T \Delta_f}{R}}
-   \]
 
-   \[
+.. math::
+
    v = \sqrt{4 k_B T R \Delta_f }
-   \]
 
 These formulas may seem a little scary to those who haven't seen the
 physics behind them before, but don't worry too much: understanding them
@@ -4555,20 +4364,16 @@ utterly broken.
 
 TODO: talk about the FUD in the Linux man page for urandom
 
-.. raw:: latex
+.. advanced::
 
-   \DeclareDocumentCommand{\csprngwarning}{}{
-     \advanced[Since this is a specific cryptographically secure
-       pseudorandom number generator algorithm, you don't actually need to
-       know how it works to write good software. Just use ~urandom~.]
-   }
+   Since this is a specific cryptographically secure
+   pseudorandom number generator algorithm, you don't actually need to
+   know how it works to write good software. Just use ~urandom~.
 
 Yarrow
 ~~~~~~
 
-.. raw:: latex
-
-   \csprngwarning
+.. advanced::
 
 The Yarrow algorithm is a cryptographically secure pseudorandom number
 generator.
@@ -4583,19 +4388,13 @@ Mac OS X. On both of these operating systems, it's used to implement
 Blum Blum Shub
 ~~~~~~~~~~~~~~
 
-.. raw:: latex
-
-   \csprngwarning
-
 TODO: explain this, and why it's good (provable), but why we don't use
 it (slow)
 
 ``Dual_EC_DRBG``
 ~~~~~~~~~~~~~~~~
 
-.. raw:: latex
-
-   \csprngwarning
+.. advanced::
 
 ``Dual_EC_DRBG`` is a NIST standard for a cryptographically secure
 pseudorandom bit generator. It sparked a large amount of controversy:
@@ -4672,7 +4471,7 @@ unless you had proof that you were getting something in return for the
 performance hit.
 
 Cryptographers later did the homework that NIST should have provided in
-the specification:cite:`ecdrbg1`:cite:`ecdrbg2`.
+the specification :cite:`ecdrbg1` :cite:`ecdrbg2`.
 Those analyses quickly highlighted a few issues.
 
 A quick overview of the algorithm
@@ -4688,12 +4487,8 @@ We'll illustrate this graphically, with an illustration based on the
 work by Shumow and Ferguson, two cryptographers who highlighted some of
 the major issues with this algorithm:
 
-.. raw:: latex
-
-   \begin{figure}
-   \centering
-   \includegraphics[width=.8\linewidth]{./Illustrations/Dual_EC_DRBG/Diagram.pdf}
-   \end{figure}
+.. figure:: ./Illustrations/Dual_EC_DRBG/Diagram.svg
+   :align: center
 
 Throughout the algorithm, :math:`\phi` is a function that takes a curve
 point and turns it into an integer. The algorithm needs two given points
@@ -4703,11 +4498,9 @@ producing a new block of bits, the algorithm turns :math:`s` into a
 different value :math:`r` using the :math:`\phi` function and elliptic
 curve scalar multiplication with :math:`P`:
 
-.. raw:: latex
+.. math::
 
-   \[
    r = \phi(sP)
-   \]
 
 That value, :math:`r`, is used both for producing the output bits and
 updating the internal state of the generator. In order to produce the
@@ -4715,21 +4508,17 @@ output bits, a different elliptic curve point, :math:`Q`, is used. The
 output bits are produced by multiplying :math:`r` with :math:`Q`, and
 running the result through a transformation :math:`\theta`:
 
-.. raw:: latex
+.. math::
 
-   \[
    o = \theta(\phi(rQ))
-   \]
 
 In order to perform the state update, :math:`r` is multiplied with
 :math:`P` again, and the result is converted to an integer. That integer
 is used as the new state :math:`s`.
 
-.. raw:: latex
+.. math::
 
-   \[
    s = \phi(rP)
-   \]
 
 Issues and question marks
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -4763,19 +4552,16 @@ values are the outputs of :math:`\phi`, which as we saw just returns the
 the curve, we just have to check if our guess is a solution for the
 curve equation:
 
-.. raw:: latex
+.. math::
 
-   \[
    y^2 \equiv x^3 + ax + b \pmod p
-   \]
 
 The constants :math:`a, b, p` are specified by the curve. We've just
 guessed a value for :math:`x`, leaving only one unknown, :math:`y`. We
 can solve that quite efficiently. We compute the right hand side and see
 if it's a perfect square:
 :math:`y^2 \equiv q \equiv \sqrt{x^3 + ax + b} \pmod p`. If it is,
-:math:`A
-= (x, \sqrt{q}) = (x, y)` is a point on the curve. This gives us a
+:math:`A = (x, \sqrt{q}) = (x, y)` is a point on the curve. This gives us a
 number of possible points :math:`A`, one of which is :math:`rQ` used to
 produce the output.
 
@@ -4794,11 +4580,9 @@ Let's put ourselves in the shoes of an attacker knowing :math:`e`. We
 repeat our math from earlier. One of those points :math:`A` we just
 found is the :math:`rQ` we're looking for. We can compute:
 
-.. raw:: latex
+.. math::
 
-   \[
    \phi(eA) \equiv \phi(erQ) \equiv \phi(rP) \pmod p
-   \]
 
 That last step is a consequence of the special relationship between
 :math:`e, P, Q`. That's pretty interesting, because :math:`\phi(rP)` is
@@ -4828,8 +4612,8 @@ NIST curve's :math:`P` and :math:`p` values, but came up with their own
 :math:`Q'`. They did this by starting with :math:`P`, picking a random
 :math:`d` (keeping it secret), and setting :math:`Q' = dP`. The trick is
 that there's an efficient algorithm for computing :math:`e` in
-:math:`eQ' = P` if you know the :math:`d` in :math:`Q' =
-dP`. This is the :math:`e` we need for our earlier attack. When they
+:math:`eQ' = P` if you know the :math:`d` in :math:`Q' = dP`. This is the
+:math:`e` we need for our earlier attack. When they
 tried this out, they discovered that in all cases (that is, for many
 random :math:`d`), seeing 32 bytes of output was enough to determine the
 state :math:`s`.
@@ -4885,9 +4669,7 @@ properties, it is *not* cryptographically secure.
 An in-depth look at the Mersenne Twister
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. raw:: latex
-
-   \advanced
+.. advanced::
 
 To demonstrate why Mersenne Twister isn't cryptographically secure,
 we'll take a look at how the algorithm works. Fortunately, it's not very

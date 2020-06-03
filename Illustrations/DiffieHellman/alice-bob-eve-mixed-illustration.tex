@@ -1,0 +1,9 @@
+\documentclass[varwidth=10cm, border=10pt]{standalone}
+
+\input{lib}
+
+\begin{document}
+\dhknows{Alice}{Base,AliceSecret,AliceMixedSecret,BobMixedSecret}
+\dhknows{Bob}{Base,BobSecret,BobMixedSecret, AliceMixedSecret}
+\dhknows{Eve}{Base,AliceMixedSecret,BobMixedSecret}
+\end{document}

@@ -1,0 +1,39 @@
+\usepackage{tikz}
+\usepackage{xparse}
+\usepackage{etoolbox}
+\usepackage{graphicx}
+
+\newcommand{\dhimg}[1] {
+\raisebox{-0.5\height}{\includegraphics[width=.1\linewidth]{./#1.pdf}}
+}
+
+\newcommand{\dhmix}[4] {
+\begin{figure}[ht!]
+\centering
+\dhimg{#1}
+\dhimg{#2}
+\dhimg{Plus}
+\dhimg{#3}
+\dhimg{Equals}
+\dhimg{#4}
+\end{figure}
+}
+
+\newcommand{\dhknows}[2]{
+\begin{figure}[ht!]
+\centering
+\dhimg{#1}
+\foreach \i in {#2}{
+\dhimg{\i}
+}
+\end{figure}}
+
+\newcommand{\dhsendmixedsecret}[2]{
+\begin{figure}[ht!]
+\centering
+\dhimg{#1}
+\dhimg{#1MixedSecret}
+\dhimg{Arrow}
+\dhimg{#2}
+\end{figure}
+}
