@@ -82,8 +82,7 @@ worded, *that's a bug* and I would very much like to fix it! Of course,
 if I never hear about your issue, it's very hard for me to address…
 
 The copy of this book that you are reading right now is based on the git
-commit with hash call\ :sub:`gitcommit`\ (), also known as
-call\ :sub:`gitdesc`\ ().
+commit with hash |version|, also known as |release|.
 
 Acknowledgments
 ---------------
