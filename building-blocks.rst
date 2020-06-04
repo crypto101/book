@@ -253,13 +253,13 @@ for all the other messages.
 Guessing parts of the plaintext is a lot easier than guessing the entire
 plaintext. Suppose we know that the plaintext is in English. There are
 some sequences that we know will occur very commonly, for example (the
-```` symbol denotes a space):
+:math:`\verb*| |` symbol denotes a space):
 
--  ``the`` and variants such as ``. The``
--  ``of`` and variants
--  ``to`` and variants
--  ``and`` (no variants; only occurs in the middle of a sentence)
--  ``a`` and variants
+-  :math:`\verb*| the |` and variants such as :math:`\verb*|. The |`
+-  :math:`\verb*| of |` and variants
+-  :math:`\verb*| to |` and variants
+-  :math:`\verb*| and |` (no variants; only occurs in the middle of a sentence)
+-  :math:`\verb*| a |` and variants
 
 If we know more about the plaintext, we can make even better guesses.
 For example, if it's HTTP serving HTML, we would expect to see things
