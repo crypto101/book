@@ -56,7 +56,7 @@ weakest, which is all that is necessary for a downgrade attack to
 succeed.
 
 This is one of the many reasons that there is an explicit
-RFC:cite:`turner:prohibitssl20` prohibiting new TLS
+RFC :cite:`turner:prohibitssl20` prohibiting new TLS
 implementations from having SSL v2.0 support.
 
 Certificate authorities
@@ -207,7 +207,7 @@ learn information about the plaintext if it is compressed before
 encryption.
 
 The most common algorithm used to compress both HTTP and
-TLS:cite:`rfc3749:tlscompression` is called DEFLATE. The
+TLS :cite:`rfc3749:tlscompression` is called DEFLATE. The
 exact mechanics of DEFLATE aren't too important, but the important
 feature is that byte sequences that occur more than once can be
 efficiently stored. When a byte sequence recurs [32]_, instead of
@@ -383,7 +383,7 @@ published. However, TLSv1.1 had not seen wide adoption.
 Good advice necessarily changes over time, and it's impossible to do so
 in a persistent medium such as a book. Instead, you should look at
 continuously updated third party sources such as :ref:`Qualys SSL Labs
-https://www.ssllabs.com/\ \`. They provide tests for both SSL clients
+https://www.ssllabs.com/`. They provide tests for both SSL clients
 and servers, and extensive advice on how to improve configurations.
 
 That said, there are certainly some general things we want from a TLS
@@ -443,7 +443,8 @@ on it.
 There's a direct trust link between the two of us, and we can
 communicate securely.
 
-`./Illustrations/PGP/WebOfTrustDirect.pdf <./Illustrations/PGP/WebOfTrustDirect.pdf>`__
+.. figure:: ./Illustrations/PGP/WebOfTrustDirect.svg
+   :align: center
 
 A slightly more complicated case is when a friend of yours would like to
 send me a message. We've never met: he's never signed my key, nor have I
@@ -452,7 +453,8 @@ signed your friend's key, and vice versa. Your friend can choose to
 leverage your assertion that I'm indeed the person in possession of that
 key you signed, and use that to communicate with me securely.
 
-`./Illustrations/PGP/WebOfTrustIndirect.pdf <./Illustrations/PGP/WebOfTrustIndirect.pdf>`__
+.. figure:: ./Illustrations/PGP/WebOfTrustIndirect.svg
+   :align: center
 
 You might wonder how your friend would ever see signatures that you
 placed on my key. This is because keys and signatures are typically
@@ -467,7 +469,8 @@ programming conferences, this system is very effective. The main
 weakness in this system are “islands” of trust: individuals or small
 groups with no connections to the rest of the web.
 
-`./Illustrations/PGP/WebOfTrustIslands.pdf <./Illustrations/PGP/WebOfTrustIslands.pdf>`__
+.. figure:: ./Illustrations/PGP/WebOfTrustIslands.svg
+   :align: center
 
 Of course, this is only the default way to use OpenPGP. There's nothing
 stopping you from shipping a particular public key as a part of a
@@ -484,7 +487,7 @@ Description
 ~~~~~~~~~~~
 
 OTR messaging is a protocol for securing instant messaging communication
-between people:cite:`borisov:otr`. It intends to be the
+between people :cite:`borisov:otr`. It intends to be the
 online equivalent of a private, real-life conversation. It encrypts
 messages, preventing eavesdroppers from reading them. It also
 authenticates peers to each other, so they know who they're talking to.
@@ -603,14 +606,13 @@ OTR protocol.
 
 Bob computes:
 
-.. raw:: latex
+.. math::
 
-   \[
    M_B = M_{m_1}(g^x, g^y, p_B, i_B)
-   \]
-   \[
+
+.. math::
+
    X_B = (p_B, i_B, S(p_B, M_B))
-   \]
 
 He sends Alice :math:`r, E_c(X_B), M_{m_2}(E_c(X_B))`.
 
@@ -625,12 +627,10 @@ Alice can now also compute the shared secret: Bob has sent her
 :math:`r`, which was previously used to encrypt Bob's Diffie-Hellman
 public key. She then computes :math:`H(g^x)` herself, to compare it
 against what Bob sent. By completing her side of the Diffie-Hellman
-exchange (:math:`s =
-(g^x)^y`), she derives the same keys:
-:math:`c, c^\prime, m_1, m_1^\prime,
-m_2, m_2^\prime`. Using :math:`m_2`, she can verify
-:math:`M_{m_2}(E_c(X_B))`. Once that message is verified, she can safely
-decrypt it using her computed :math:`c`.
+exchange (:math:`s = (g^x)^y`), she derives the same keys:
+:math:`c, c^\prime, m_1, m_1^\prime, m_2, m_2^\prime`. Using :math:`m_2`, she
+can verify :math:`M_{m_2}(E_c(X_B))`. Once that message is verified, she can
+safely decrypt it using her computed :math:`c`.
 
 She can then also compute :math:`M_B = M_{m_1}(g^x, g^y, p_B, i_B)`, and
 verifies that it is the same as Bob sent. By verifying the signed
@@ -641,8 +641,8 @@ authentication key.
 She then computes the same values Bob computed to tie his long-term key
 to the short-term handshake, so that Bob can also authenticate her. She
 chooses an identification number :math:`i_A` for her current DH keypair
-:math:`(y, g^y)`, computes :math:`M_A = M_{m_1^\prime}(g^y, g^x, p_A,
-i_A)` and :math:`X_A = p_A, i_A, S(p_A, M_A)`. Finally, she sends Bob
+:math:`(y, g^y)`, computes :math:`M_A = M_{m_1^\prime}(g^y, g^x, p_A, i_A)`
+and :math:`X_A = p_A, i_A, S(p_A, M_A)`. Finally, she sends Bob
 :math:`E_{c^\prime}(X_A), M_{m_2^\prime}(E_c(X_B))`.
 
 Authenticating Alice
@@ -654,9 +654,10 @@ Alice saw the same :math:`X_B` he sent.
 
 Once he decrypts :math:`E_{c^\prime}(X_A)`, he has access to
 :math:`X_A`, which is Alice's long-term public key information. He can
-then compute :math:`M_A =
-M_{m_1^\prime}(g^y, g^x, p_A, i_A)` to compare it with the version Alice
-sent. Finally, he verifies :math:`S(p_A, M_A)` with Alice's public key.
+then compute :math:`M_A = M_{m_1^\prime}(g^y, g^x, p_A, i_A)` to compare it with
+the version Alice sent. Finally, he verifies :math:`S(p_A, M_A)` with Alice's
+public key.
+
 
 What have we accomplished?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
