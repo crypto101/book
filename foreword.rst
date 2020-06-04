@@ -4,14 +4,11 @@ Foreword
 About this book
 ---------------
 
-.. raw:: latex
-
-   \begin{quotation}
    Lots of people working in cryptography have no deep concern with real
    application issues. They are trying to discover things clever enough to write
    papers about.
-   \sourceatright{Whitfield Diffie}
-   \end{quotation}
+
+      Whitfield Diffie
 
 This book is intended as an introduction to cryptography for programmers
 of any skill level. It's a continuation of a talk of the same name,
@@ -64,16 +61,14 @@ to achieve that goal. They're in the book anyway, just in case you're
 curious; but I generally recommend skipping these sections. They'll be
 marked like this:
 
-.. raw:: latex
-
-   \advanced
+.. advanced::
 
 Development
 -----------
 
 The entire Crypto 101 project is publicly developed on GitHub under the
 ``crypto101`` organization, including :ref:`this book
-https://www.github.com/crypto101/book\ \`.
+https://www.github.com/crypto101/book/`.
 
 This is an early pre-release of this book. All of your questions,
 comments and bug reports are highly appreciated. If you don't understand
