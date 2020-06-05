@@ -140,33 +140,18 @@ todo_include_todos = False
 # a list of builtin themes.
 #
 html_theme = 'alabaster'
-
-# Theme options are theme-specific and customize the look and feel of a theme
-# further.  For a list of options available for each theme, see the
-# documentation.
-#
 # https://alabaster.readthedocs.io/en/latest/customization.html#theme-options
-# html_theme_options = {
-#     "show_relbars": True,
-#     "fixed_sidebar": True,
-#     "github_user": "multun",
-#     "github_repo": "crypto101-fr",
-#     "github_button": True,
-#     "github_type": "star",
-#     # "description": "A Python package for assisting neural network production with TensorFlow.",
-# }
+html_theme_options = {
+    "show_relbars": True,
+    "fixed_sidebar": True,
+    "github_user": "crypto101",
+    "github_repo": "book",
+    "github_button": True,
+    "github_type": "star",
+}
 
 html_show_sourcelink = False
-# html_sidebars = { '**': ['globaltoc.html', 'relations.html', 'sourcelink.html', 'searchbox.html'], }
 
-# Add any paths that contain custom static files (such as style sheets) here,
-# relative to this directory. They are copied after the builtin static files,
-# so a file named "default.css" will overwrite the builtin "default.css".
-# html_static_path = ['_static']
-
-# -- Options for HTMLHelp output ------------------------------------------
-
-# Output file base name for HTML help builder.
 htmlhelp_basename = 'crypto101-fr-doc'
 
 
