@@ -17,15 +17,15 @@ or to just pass it through unchanged. “Inverting” bits is colloquially
 called “flipping” bits, a term we'll use often throughout the book.
 
 .. figure:: Illustrations/XOR/ProgrammableInverter.svg
-   :scale: 40%
    :alt: a programmable inverter
+   :align: center
 
 In mathematics and cryptography papers, exclusive or is generally
 represented by a cross in a circle: :math:`\xor`. We'll use the same
 notation in this book:
 
 .. figure:: Illustrations/XOR/XOR.svg
-   :scale: 40%
+   :align: center
    :alt: XOR
 
 The inputs and output here are named as if we're using XOR as an
@@ -129,7 +129,7 @@ more) recipients. We can compute the ciphertext by taking the bitwise
 XOR of the two sequences of bits.
 
 .. figure:: Illustrations/XOR/OTP.svg
-   :scale: 40%
+   :align: center
    :alt: OTP
 
 If an attacker sees the ciphertext, we can prove that they will learn
@@ -139,7 +139,7 @@ thinking of XOR as a programmable inverter, and then looking at a
 particular bit intercepted by Eve, the eavesdropper.
 
 .. figure:: Illustrations/XOR/OTPEve.svg
-   :scale: 40%
+   :align: center
    :alt: OTP eve
 
 Let's say Eve sees that a particular ciphertext bit :math:`c_i` is 1.
