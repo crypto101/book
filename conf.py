@@ -103,7 +103,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'crypto101-fr'
+project = 'crypto101'
 copyright = '2020, Victor Collod, Victoria Krajcovicova'
 author = 'Victor Collod, Victoria Krajcovicova'
 
