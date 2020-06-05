@@ -28,6 +28,7 @@ Crypto101.epub
 _minted-Crypto101
 # Illustrations, vectorized
 Illustrations/*/*.pdf
+Illustrations/*/*.svg
 *.mps
 *.mpx
 *.mpo
