@@ -420,7 +420,7 @@ We'll define a related sum, :math:`L_j`:
 
 For example, :math:`L_1` (still with :math:`k = 6`) becomes:
 
-.. raw:: latex
+.. math::
 
    \begin{aligned}
    L_1 & = \sum_{i = 1}^{2} 2^{i - 1} k_i \\
