@@ -1,3 +1,6 @@
+Crypto101
+=========
+
 .. toctree::
    :maxdepth: 2
 
