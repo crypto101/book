@@ -76,7 +76,7 @@ On Debian, you will need at *least* ``texlive-latex-recommended`` and
 .. _`TeX Live`: https://www.tug.org/texlive/
 
 Graphviz
-~~~~~~~
+~~~~~~~~
 
 Graphviz is a package of open-source tools initiated by AT&T Labs Research for
 drawing graphs specified in DOT language scripts. It also provides libraries

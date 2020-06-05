@@ -35,3 +35,7 @@ Illustrations/*/*.pdf
 !Illustrations/CC/CC-BY-NC.pdf
 # OS X stuff
 .DS_Store
+.auctex-auto
+.mypy_cache
+.venv
+_build

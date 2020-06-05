@@ -1,7 +1,6 @@
-FROM fedora:29
+FROM fedora:32
 
 RUN dnf install -y \
-    emacs \
     findutils \
     git \
     graphviz \
@@ -20,13 +19,9 @@ RUN dnf install -y \
     texlive-polyglossia \
     texlive-sourcecodepro \
     texlive-sourceserifpro \
-    texlive-wrapfig
+    texlive-wrapfig \
+    python3-sphinx \
+    python3-sphinx-intl \
+    python3-sphinxcontrib-bibtex
     
-RUN emacs -Q --batch \
-    --eval "(require 'package)" \
-    --eval "(add-to-list 'package-archives '(\"org\" . \"https://orgmode.org/elpa/\"))" \
-    --eval "(package-initialize t)" \
-    --eval "(package-refresh-contents)" \
-    --eval "(package-install 'org-plus-contrib)"
-
 WORKDIR /repo

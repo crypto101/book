@@ -1,0 +1,34 @@
+PBM_FILES := $(shell find Illustrations -mindepth 2 -type f -name '*.pbm')
+RENDERED_PBM_FILES = $(patsubst %.pbm,%.pdf,${PBM_FILES})
+
+SVG_FILES := $(shell find Illustrations -mindepth 2 -type f -name '*.svg')
+RENDERED_SVG_FILES = $(patsubst %.svg,%.pdf,${SVG_FILES})
+
+DOT_FILES := $(shell find Illustrations -mindepth 2 -type f -name '*.dot')
+RENDERED_DOT_FILES = $(patsubst %.dot,%.pdf,${DOT_FILES})
+
+MP_FILES := $(shell find Illustrations -mindepth 2 -type f -name '*.mp')
+RENDERED_MP_FILES = $(patsubst %.mp,%.pdf,${MP_FILES})
+
+FINAL_PDF_FILES = ${RENDERED_PBM_FILES} ${RENDERED_DOT_FILES} ${RENDERED_MP_FILES} ${RENDERED_SVG_FILES}
+FINAL_SVG_FILES = $(patsubst %.pdf,%.svg,${FINAL_PDF_FILES})
+
+assets: ${FINAL_SVG_FILES} ${FINAL_PDF_FILES}
+
+%.svg: %.pdf
+	pdf2svg $< $@
+
+%.pdf: %.pbm
+	potrace -b pdf $<
+
+%.pdf: %.svg
+	inkscape $(realpath $<) --export-pdf=$(addprefix ${CURDIR}/,$@)
+
+%.pdf: %.dot
+	neato -Tpdf $(realpath $<) > $(addprefix ${CURDIR}/,$@)
+
+%.pdf: %.mp
+	cd $(dir $<) && mptopdf --metafun $(notdir $<)
+	mv $(addsuffix -mps.pdf,$(basename $<)) $(addsuffix .pdf,$(basename $<))
+
+.PHONY: assets

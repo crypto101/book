@@ -1,37 +1,28 @@
-PBM_FILES := $(shell find Illustrations -mindepth 2 -type f -name '*.pbm')
-RENDERED_PBM_FILES = $(patsubst %.pbm,%.pdf,${PBM_FILES})
+# Minimal makefile for Sphinx documentation
+#
 
-SVG_FILES := $(shell find Illustrations -mindepth 2 -type f -name '*.svg')
-RENDERED_SVG_FILES = $(patsubst %.svg,%.pdf,${SVG_FILES})
+# You can set these variables from the command line.
+SPHINXOPTS    =
+SPHINXBUILD   = sphinx-build
+SPHINXPROJ    = crypto101-fr
+SOURCEDIR     = .
+BUILDDIR      = _build
 
-DOT_FILES := $(shell find Illustrations -mindepth 2 -type f -name '*.dot')
-RENDERED_DOT_FILES = $(patsubst %.dot,%.pdf,${DOT_FILES})
+# Put it first so that "make" without argument is like "make help".
+help:
+	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-MP_FILES := $(shell find Illustrations -mindepth 2 -type f -name '*.mp')
-RENDERED_MP_FILES = $(patsubst %.mp,%.pdf,${MP_FILES})
+.PHONY: help Makefile
 
-.PHONY: all clean
+# Serve _build/html with Python built-in server
+serve: html
+	cd $(BUILDDIR)/html && python3 -m http.server
 
-all: Crypto101.pdf
+deploy: html
+	rsync -r $(BUILDDIR)/html/* multun@multun.net:/srv/www/crypto101.multun.net/
 
-Crypto101.pdf: ${RENDERED_PBM_FILES} ${RENDERED_SVG_FILES} ${RENDERED_DOT_FILES} ${RENDERED_MP_FILES} Crypto101.tex Header.tex Glossary.tex Crypto101.bib
-	latexmk -bibtex -pdf -f Crypto101.tex
-
-Crypto101.tex: Crypto101.org
-	./org2tex Crypto101.org
-
-%.pdf: %.pbm
-	potrace -b pdf $<
-
-%.pdf: %.svg
-	inkscape $(realpath $<) --export-pdf=$(addprefix ${CURDIR}/,$@)
-
-%.pdf: %.dot
-	neato -Tpdf $(realpath $<) > $(addprefix ${CURDIR}/,$@)
-
-%.pdf: %.mp
-	cd $(dir $<) && mptopdf --metafun $(notdir $<)
-	mv $(addsuffix -mps.pdf,$(basename $<)) $(addsuffix .pdf,$(basename $<))
-
-clean:
-	git clean -fdx
+# Catch-all target: route all unknown targets to Sphinx using the new
+# "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
+%: Makefile
+	make -f Makefile.assets
+	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
