@@ -43,6 +43,7 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.mathjax',
     'sphinxcontrib.bibtex',
+    'sphinxcontrib.rsvgconverter',
     'advanced_admonition',
 ]
 
@@ -103,9 +104,9 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'crypto101'
-copyright = '2020, Victor Collod, Victoria Krajcovicova'
-author = 'Victor Collod, Victoria Krajcovicova'
+project = 'Crypto 101'
+copyright = '2020, Laurens Van Houtven (lvh)'
+author = 'Laurens Van Houtven (lvh)'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -159,24 +160,149 @@ htmlhelp_basename = 'crypto101-fr-doc'
 
 
 # -- Options for LaTeX output ---------------------------------------------
+latex_engine = 'xelatex'
 
 latex_elements = {
-    # The paper size ('letterpaper' or 'a4paper').
-    #
-    # 'papersize': 'letterpaper',
-
-    # The font size ('10pt', '11pt' or '12pt').
-    #
-    # 'pointsize': '10pt',
-
-    # Additional stuff for the LaTeX preamble.
-    #
-    # 'preamble': '',
-
-    # Latex figure (float) alignment
-    #
-    # 'figure_align': 'htbp',
+    'fontpkg': '''
+\\usepackage{fontspec}
+\\defaultfontfeatures{Ligatures=TeX}
+\\setmainfont{Source Serif Pro}
+\\setmonofont[Scale=MatchLowercase]{Source Code Pro}
+\\usepackage{microtype}
+\\usepackage{setspace}
+\\usepackage{csquotes}
+    ''',
+    'passoptionstopackages': '''
+\\PassOptionsToPackage{dvipsnames,table}{xcolor}
+    ''',
+    'preamble': '''
+% \\usepackage[dvipsnames,table]{xcolor}
+% \\usepackage[pagebackref]{hyperref}
+\\hypersetup{
+    pdftitle={''' + project + '''},
+    pdfauthor={''' + author + '''},
+    colorlinks,
+    linkcolor=Sepia,
+    citecolor=Periwinkle
 }
+
+\\usepackage{amsmath}
+\\usepackage{amssymb}
+\\newcommand{\\xor}{\\oplus}
+\\newcommand{\\madd}{\\boxplus}
+
+% Advanced command definitions
+\\usepackage{xparse}
+
+% Figures and subfigures
+\\usepackage{float}
+\\usepackage{rotating}
+\\usepackage{subcaption}
+\\usepackage{array}
+\\usepackage{calc}
+\\usepackage{framed}
+\\usepackage{wrapfig}
+\\usepackage{longtable}
+\\newcolumntype{C}[1]{>{\\centering\\arraybackslash$}p{#1}<{$}}
+\\usepackage[export]{adjustbox}
+
+% % does't yet work with the sphinx stuff
+% \\usepackage{tikz, blindtext}
+% \\makechapterstyle{box}{
+%   \\renewcommand*{\\printchaptername}{}
+%   \\renewcommand*{\\printchapternum}{
+%     \\flushright
+%     \\begin{tikzpicture}
+%       \\draw[fill,color=black] (0,0) rectangle (2cm,2cm);
+%       \\draw[color=white] (1cm,1cm) node { \\chapnumfont\\thechapter };
+%     \\end{tikzpicture}
+%   }
+%   \\renewcommand*{\\printchaptertitle}[1]{\\flushright\\chaptitlefont##1}
+% }
+% \\chapterstyle{box}
+
+% Title page deps
+\\usepackage{geometry}
+\\usepackage{titlesec}
+''',
+    'maketitle': '''
+% Title page markup
+\\makeatletter
+\\newlength\\drop
+\\begin{titlepage}
+  \\thispagestyle{empty}
+  \\begingroup
+  \\drop = 0.1\\textheight
+  \\vspace*{\\baselineskip}
+  \\vfill
+  \\hbox{%
+    \\hspace*{0.2\\textwidth}%
+    \\rule{1pt}{\\dimexpr\\textheight-28pt\\relax}%
+    \\hspace*{0.05\\textwidth}%
+    \\parbox[b]{0.75\\textwidth}{%
+      \\vbox{%
+        \\vspace{\\drop}
+               {\\Huge\\bfseries\\raggedright\\@title\\par}\\vskip2.37\\baselineskip
+               {\\Large\\bfseries\\@author\\par}
+               \\vspace{0.5\\textheight}
+      }% end of vbox
+    }% end of parbox
+  }% end of hbox
+  \\vfill
+  \\null
+  \\endgroup
+  \\thispagestyle{plain}
+  \\par
+  \\noindent
+  Copyright 2013-2017, Laurens Van Houtven (lvh)
+  \\noindent
+  This work is available under the Creative Commons
+  Attribution-NonCommercial 4.0 International (CC BY-NC 4.0) license.
+  You can find the full text of the license
+  at \\url{https://creativecommons.org/licenses/by-nc/4.0/}.
+  \\begin{center}
+    \\includegraphics{./CC-BY-NC.pdf}
+  \\end{center}
+  \\noindent
+  The following is a human-readable summary of (and not a substitute
+  for) the license. You can:
+  \\begin{itemize}
+  \\item Share: copy and redistribute the material in any medium or format
+  \\item Adapt: remix, transform, and build upon the material
+  \\end{itemize}
+  The licensor cannot revoke these freedoms as long as you follow the
+  license terms:
+  \\begin{itemize}
+  \\item Attribution: you must give appropriate credit, provide a link
+  to the license, and indicate if changes were made. You may do so in
+  any reasonable manner, but not in any way that suggests the licensor
+  endorses you or your use.
+  \\item NonCommercial: you may not use the material for commercial
+  purposes.
+  \\item No additional restrictions: you may not apply legal terms or
+  technological measures that legally restrict others from doing
+  anything the license permits.
+  \\end{itemize}
+  You do not have to comply with the license for elements of the
+  material in the public domain or where your use is permitted by an
+  applicable exception or limitation.
+  No warranties are given. The license may not give you all of the
+  permissions necessary for your intended use. For example, other
+  rights such as publicity, privacy, or moral rights may limit how you
+  use the material.
+ \\clearpage
+ \\thispagestyle{plain}
+ \\par
+ \\vspace*{.3\\textheight}{
+   \\centering
+   \\emph{Pomidorkowi}
+   \\par
+   \\clearpage
+ }
+\\end{titlepage}
+    ''',
+}
+latex_additional_files = ["./Illustrations/CC/CC-BY-NC.pdf"]
 
 advanced_admonition_text = str(_(
     "This is an optional, in-depth section. It almost certainly won't help you write better software, "
