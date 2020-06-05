@@ -1,0 +1,38 @@
+[main]
+host = https://www.transifex.com
+
+[crypto101.building-blocks]
+file_filter = locale/<lang>/LC_MESSAGES/building-blocks.po
+source_file = _build/gettext/building-blocks.pot
+source_lang = en
+type = PO
+
+[crypto101.index]
+file_filter = locale/<lang>/LC_MESSAGES/index.po
+source_file = _build/gettext/index.pot
+source_lang = en
+type = PO
+
+[crypto101.complete-cryptosystems]
+file_filter = locale/<lang>/LC_MESSAGES/complete-cryptosystems.po
+source_file = _build/gettext/complete-cryptosystems.pot
+source_lang = en
+type = PO
+
+[crypto101.appendices]
+file_filter = locale/<lang>/LC_MESSAGES/appendices.po
+source_file = _build/gettext/appendices.pot
+source_lang = en
+type = PO
+
+[crypto101.references]
+file_filter = locale/<lang>/LC_MESSAGES/zreferences.po
+source_file = _build/gettext/zreferences.pot
+source_lang = en
+type = PO
+
+[crypto101.foreword]
+file_filter = locale/<lang>/LC_MESSAGES/foreword.po
+source_file = _build/gettext/foreword.pot
+source_lang = en
+type = PO
