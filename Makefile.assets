@@ -34,7 +34,12 @@ assets: ${FINAL_SVG_FILES}
 	cd $(dir $<) && mptopdf --metafun $(notdir $<)
 	mv $(addsuffix -mps.pdf,$(basename $<)) $(addsuffix .pdf,$(basename $<))
 
+
+# compress pdf assets, which otherwise are big enough to make librsvg crash
+GS_QUALITY = ebook
+GS_COMPRESS = gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/$(GS_QUALITY) -dNOPAUSE -dQUIET -dBATCH
+
 %.pdf: %-illustration.tex
-	name=$(notdir $<); cd $(dir $<) && pdflatex $$name && mv $${name%.tex}.pdf $(notdir $@)
+	name=$(notdir $<); cd $(dir $<) && pdflatex $$name && $(GS_COMPRESS) -sOutputFile=$(notdir $@) $${name%.tex}.pdf && rm -f $${name%.tex}.pdf
 
 .PHONY: assets
