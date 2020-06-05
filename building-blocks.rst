@@ -2267,7 +2267,7 @@ elliptic curve problem than it is to solve the regular discrete log
 problem, using state of the art algorithms for both. The flip side of
 that is that for equivalent security levels, the elliptic curve
 algorithm needs much smaller key
-sizes:cite:`rsa:keysizes`:cite:`nist:keymanagement` [20]_:
+sizes :cite:`rsa:keysizes` :cite:`nist:keymanagement` [20]_:
 
 ====================== ===================== =======================
 Security level in bits Discrete log key bits Elliptic curve key bits

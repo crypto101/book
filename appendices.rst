@@ -744,11 +744,3 @@ Power measurement attacks
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 TODO: Say something here.
-
-.. bibliography:: Crypto101.bib
-
-.. raw:: latex
-
-   \setglossarystyle{altlisthypergroup}
-   \glsaddall
-   \printglossaries
