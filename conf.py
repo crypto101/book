@@ -33,6 +33,8 @@
 # ones.
 import sys
 import pathlib
+from sphinx.locale import _
+
 root = pathlib.Path(__file__)
 sys.path.insert(0, str(root.parent))
 sys.path.insert(0, str(root.parent.parent))
@@ -41,6 +43,7 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx.ext.mathjax',
     'sphinxcontrib.bibtex',
+    'advanced_admonition',
 ]
 
 extensions.append('sphinx.ext.imgmath')
@@ -186,3 +189,8 @@ latex_elements = {
     #
     # 'figure_align': 'htbp',
 }
+
+advanced_admonition_text = str(_(
+    "This is an optional, in-depth section. It almost certainly won't help you write better software, "
+    "so feel free to skip it. It is only here to satisfy your inner geek's curiosity."
+))
