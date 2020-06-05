@@ -53,7 +53,7 @@ def latex_visit_advanced_node(self: LaTeXTranslator, node: advanced_node) -> Non
 
     # the title is generated when processing the directive
     title_node = cast(nodes.title, node[0])
-    title = texescape.escape(title_node.astext(), self.config.latex_engine)
+    title = texescape.escape(title_node.astext())
     self.body.append("%s}" % title)
     node.pop(0)
 
