@@ -9,9 +9,3 @@ Crypto101
    complete-cryptosystems
    appendices
    zreferences
-
-.. raw:: latex
-
-   \setglossarystyle{altlisthypergroup}
-   \glsaddall
-   \printglossaries
