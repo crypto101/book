@@ -382,8 +382,8 @@ published. However, TLSv1.1 had not seen wide adoption.
 
 Good advice necessarily changes over time, and it's impossible to do so
 in a persistent medium such as a book. Instead, you should look at
-continuously updated third party sources such as :ref:`Qualys SSL Labs
-https://www.ssllabs.com/`. They provide tests for both SSL clients
+continuously updated third party sources such as `Qualys SSL Labs
+<https://www.ssllabs.com/>`_. They provide tests for both SSL clients
 and servers, and extensive advice on how to improve configurations.
 
 That said, there are certainly some general things we want from a TLS

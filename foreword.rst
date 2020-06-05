@@ -67,8 +67,8 @@ Development
 -----------
 
 The entire Crypto 101 project is publicly developed on GitHub under the
-``crypto101`` organization, including :ref:`this book
-https://www.github.com/crypto101/book/`.
+``crypto101`` organization, including `this book
+<https://www.github.com/crypto101/book/>`_.
 
 This is an early pre-release of this book. All of your questions,
 comments and bug reports are highly appreciated. If you don't understand

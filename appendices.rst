@@ -5,6 +5,8 @@ Appendices
 
    \appendix
 
+.. _modular-arithmetic:
+
 Modular arithmetic
 ------------------
 
@@ -623,6 +625,8 @@ understood. That said, there are many similarities between the two:
    Shor's algorithm.
 -  Mathematical advances in one are typically quickly turned into
    mathematical advances in the other.
+
+.. _multiplicative-order:
 
 Multiplicative order
 ~~~~~~~~~~~~~~~~~~~~

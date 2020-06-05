@@ -3789,7 +3789,7 @@ pick an *L*-bit prime :math:`p` such that :math:`p-1` is a multiple of
 :math:`q`.
 
 The last part is the most confusing. We have to find a number :math:`g`
-whose :ref:`multiplicative order <Multiplicative order>`
+whose :ref:`multiplicative order <multiplicative-order>`
 :math:`\pmod{p}` is :math:`q`. The easy way to do this is to set
 :math:`g \equiv 2^{(p-1)/q} \pmod{p}`. We can try another number greater
 than 2, and less than :math:`p-1`, if :math:`g` comes out to equal 1.
