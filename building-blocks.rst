@@ -678,14 +678,16 @@ Even with block ciphers, there are still some unsolved problems.
 For example, we can only send messages of a very limited length: the
 block length of the block cipher. Obviously, we'd like to be able to
 send much larger messages, or, ideally, streams of indeterminate size.
-We'll address this problem with a :ref:`stream cipher <Stream ciphers>`.
+We'll address this problem with a :ref:`stream cipher <stream-ciphers>`.
 
 Although we have reduced the key size drastically (from the total size
 of all data ever sent under a one-time pad scheme versus a few bytes for
 most block ciphers), we still need to address the issue of agreeing on
 those few key bytes, potentially over an insecure channel. We'll address
-this problem in a later chapter with a :ref:`key exchange protocol <Key
-exchange>`.
+this problem in a later chapter with a :ref:`key exchange protocol <key-exchange>`.
+
+
+.. _stream-ciphers:
 
 Stream ciphers
 --------------
@@ -2045,6 +2047,8 @@ message, and in many flawed systems even decrypt messages. In a future
 chapter, we'll discuss how to *authenticate* messages, to prevent
 attackers from modifying them.
 
+.. _key-exchange:
+
 Key exchange
 ------------
 
@@ -2168,8 +2172,8 @@ This section describes a practical implementation of the Diffie-Hellman
 algorithm, based on the discrete logarithm problem. It is intended to
 provide some mathematical background, and requires modular arithmetic to
 understand. If you are unfamiliar with modular arithmetic, you can
-either skip this chapter, or first read the :ref:`mathematical
-background appendix <Modular arithmetic>`.
+either skip this chapter, or first read the :ref:`mathematical background appendix
+<modular-arithmetic>`.
 
 Discrete log Diffie-Hellman is based on the idea that computing
 :math:`y` in the following equation is easy (at least for a computer):
@@ -2235,8 +2239,8 @@ algorithm, based on the elliptic curve discrete logarithm problem. It is
 intended to provide some mathematical background, and requires a (very
 basic) understanding of the mathematics behind elliptic curve
 cryptography. If you are unfamiliar with elliptic curves, you can either
-skip this chapter, or first read the :ref:`mathematical background
-appendix <Elliptic curves>`.
+skip this chapter, or first read the :ref:`mathematical background appendix
+<elliptic-curves>`.
 
 One of the benefits of the elliptic curve Diffie-Hellman variant is that
 the required key size is much, much smaller than the variant based on
@@ -2402,7 +2406,7 @@ Encryption and decryption
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 RSA encryption and decryption relies on modular arithmetic. You may want
-to review the :ref:`modular arithmetic primer <Modular arithmetic>`
+to review the :ref:`modular arithmetic primer <modular-arithmetic>`
 before continuing.
 
 This section describes the simplified math problem behind RSA, commonly
@@ -5033,8 +5037,7 @@ secure pseudorandom number generator.
 
 .. [26]
    For a refresher on modular arithmetic, including an explanation of
-   the modular inverse, please refer to :ref:`the appendix <Modular
-   arithmetic>`.
+   the modular inverse, please refer to :ref:`the appendix <modular-arithmetic>`.
 
 .. [27]
    The period of a pseudorandom number generator is how many random

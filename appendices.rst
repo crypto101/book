@@ -632,6 +632,8 @@ gcd\ :math:`(a, b) = 1`, the *multiplicative order* of
 :math:`a \pmod{b}` is the smallest positive integer :math:`k` such that
 :math:`a^k = 1 \pmod{b}`.
 
+.. _elliptic-curves:
+
 Elliptic curves
 ---------------
 
