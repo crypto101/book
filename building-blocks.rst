@@ -3195,19 +3195,17 @@ less ambiguous “plaintext” and “ciphertext”.
 There are three common ways to combine a ciphertext with a MAC.
 
 #. Authenticate and encrypt. You authenticate and encrypt the plaintext
-   separately. This is how SSH does it. In symbols: :math:`C =
-     E(K_C, P)`, :math:`t = MAC(K_M, P)`, and you send both ciphertext
-   :math:`C` and tag :math:`t`.
+   separately. This is how SSH does it. In symbols: :math:`C = E(K_C, P)`,
+   :math:`t = MAC(K_M, P)`, and you send both ciphertext :math:`C` and tag
+   :math:`t`.
 #. Authenticate, then encrypt. You authenticate the plaintext and then
    encrypt the combination of the plaintext and the authentication tag.
-   This is how TLS usually does it. In symbols: :math:`t = MAC(K_M,
-     P)`, :math:`C = E(K_C, P \| t)`, and you only send :math:`C`. (You
-   don't need to send :math:`t`, because it's already an encrypted part
-   of :math:`C`.)
+   This is how TLS usually does it. In symbols: :math:`t = MAC(K_M, P)`,
+   :math:`C = E(K_C, P \| t)`, and you only send :math:`C`. (You don't need to
+   send :math:`t`, because it's already an encrypted part of :math:`C`.)
 #. Encrypt, then authenticate. You encrypt the plaintext, compute the
    MAC of that ciphertext. This is how IPSec does it. In symbols:
-   :math:`C =
-     E(K_C, P)`, :math:`t = MAC(K_M, C)`, and you send both :math:`C`
+   :math:`C = E(K_C, P)`, :math:`t = MAC(K_M, C)`, and you send both :math:`C`
    and :math:`t`.
 
 All of these options were studied and compared extensively.
@@ -4740,8 +4738,7 @@ operators:
 
 -  ``>>`` and ``<<`` are right-shift and left-shift
 -  ``&`` is binary AND: :math:`0 \& 0 = 0 \& 1 = 1 \& 0 = 0`, and
-   :math:`1 \& 1 =
-    1`.
+   :math:`1 \& 1 = 1`.
 -  ``^`` is binary XOR, ``^=`` XORs and assigns the result to the name
    on the left-hand side, so ``x ^= k`` is the same thing as
    ``x = x ^ k``.
