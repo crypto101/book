@@ -949,13 +949,13 @@ illustrate this later with an attack on predictable CBC IVs.
 
 The following diagram demonstrates encryption in CBC mode:
 
-.. figure:: ./Illustrations/CBC/Encryption.pdf
+.. figure:: ./Illustrations/CBC/Encryption.svg
    :align: center
 
 Decryption is the inverse construction, with block ciphers in decryption
 mode instead of encryption mode:
 
-.. figure:: ./Illustrations/CBC/Decryption.pdf
+.. figure:: ./Illustrations/CBC/Decryption.svg
    :align: center
 
 While CBC mode itself is not inherently insecure (unlike ECB mode), its
@@ -996,22 +996,20 @@ Mallory can see) and her own predicted IV :math:`IV_M`. She makes a
 guess :math:`G` as to what Alice's data could be. She asks the server to
 encrypt:
 
-.. raw:: latex
+.. math::
 
-   \[
    P_M = IV_M \xor IV_A \xor G
-   \]
 
 The server dutifully encrypts that message using the predicted IV
 :math:`IV_M`. It computes:
 
-.. raw:: latex
+.. math::
 
-   \begin{align*}
+   \begin{aligned}
    C_M & = E(k, IV_M \xor P_M) \\
        & = E(k, IV_M \xor (IV_M \xor IV_A \xor G)) \\
        & = E(k, IV_A \xor G)
-   \end{align*}
+   \end{aligned}
 
 That ciphertext, C\ :sub:`M`, is exactly the ciphertext block Alice
 would have had if her plaintext block was G. So, depending on what the
