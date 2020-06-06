@@ -1,5 +1,7 @@
 #!/bin/sh
 
+source_language='en'
+
 project_root="$(dirname "$(realpath "$0")")"
 
 if [ $# -lt 1 ]; then
@@ -15,8 +17,16 @@ if [ $# -lt 1 ]; then
     exit 1
 fi >&2
 
-language="$1"
+run_make() {
+    exec make -C "${project_root}" "$@"
+}
 
+language="$1"
 shift
 
-exec make -C "${project_root=}"  -e SPHINXOPTS="-D language='${language}'" "$@"
+export BUILDDIR="_build_${language}"
+if [ "${language}" = "${source_language}" ]; then
+    run_make "$@"
+else
+    run_make -e SPHINXOPTS="-D language='${language}'" "$@"
+fi
