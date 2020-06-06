@@ -31,8 +31,8 @@ or 9.
 .. _Modular subtraction:
 .. _Modular addition:
 
-_Addition and subtraction
-~~~~~~~~~~~~~~~~~~~~~~~~~
+Addition and subtraction
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 It obviously makes sense to add hours on our clock: if it's 2 o'clock
 now, and you'd like to know what time it is five hours from now, you can
