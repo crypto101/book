@@ -251,7 +251,7 @@
        rx="90.634903"
        ry="87.718063" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:0.00049789;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;stroke:#000000;stroke-width:0.00049789;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;opacity:0"
        d="m 231.32844,488.72772 c 55.50467,0 55.32762,0 55.32762,0"
        id="path7995"
        inkscape:connector-curvature="0" />
@@ -262,7 +262,8 @@
        id="use7997"
        transform="matrix(0,-1.0087241,0.99135132,0,-225.50861,749.97945)"
        width="744.09448"
-       height="1052.3622" />
+       height="1052.3622"
+       style="opacity:0" />
     <path
        style="fill:none;stroke:#000000;stroke-width:7.38777781;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.39215686"
        d="m 268.35306,483.36402 c -43.84295,24.90779 -43.84295,24.90779 -43.84295,24.90779"
