@@ -108,6 +108,12 @@ latex_elements = {
     "papersize": "ebook",
     "fncychap": "",
     "extraclassoptions": "table,dvipsnames,oneside,openany",
+    "sphinxsetup": ",".join((
+        # titles should be black
+        "TitleColor={rgb}{0.0,0.0,0.0}",
+        # set the title font family to bold
+        "HeaderFamily={\\bfseries}",
+    )),
     "fontpkg": r"""
 \usepackage{fontspec}
 \defaultfontfeatures{Ligatures=TeX}
