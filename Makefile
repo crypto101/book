@@ -6,7 +6,8 @@ SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 SPHINXPROJ    = crypto101
 SOURCEDIR     = .
-BUILDDIR      ?= _build_en
+DEFAULT_BUILDDIR = _build_en
+BUILDDIR      ?= $(DEFAULT_BUILDDIR)
 
 # Put it first so that "make" without argument is like "make help".
 help:
@@ -23,7 +24,7 @@ deploy: html
 
 tx_push:
 	# regenerate the .pot translatable strings files
-	sphinx-build -b gettext . _build/gettext
+	sphinx-build -b gettext . $(DEFAULT_BUILDDIR)/gettext
 	# push the strings to transifex
 	tx push -s
 
