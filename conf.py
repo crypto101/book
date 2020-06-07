@@ -72,7 +72,7 @@ html_theme_options = {
 }
 
 html_show_sourcelink = False
-
+html_static_path = ["_static/custom.css"]
 htmlhelp_basename = "crypto101"
 epub_basename = "crypto101"
 
