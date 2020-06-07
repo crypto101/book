@@ -2,6 +2,7 @@ Glossary
 ========
 
 .. glossary::
+   :sorted:
 
    AEAD
       Authenticated Encryption with Associated Data
