@@ -28,14 +28,18 @@ RUN dnf install -y \
     texlive-tabulary \
     texlive-parskip \
     texlive-needspace \
+    texlive-amscls \
     texlive-times \
     texlive-helvetic \
+    texlive-anyfontsize \
     texlive-gnu-freefont \
+    texlive-dvisvgm \
     pdf2svg \
     python3-sphinx \
     python3-sphinx-intl \
     python3-sphinxcontrib-bibtex \
     python3-sphinxcontrib-rsvgconverter \
-    ghostscript
+    ghostscript && \
+    chmod +x $(readlink -f /usr/bin/mptopdf)
 
 WORKDIR /repo
