@@ -47,8 +47,8 @@ author = "lvh"
 
 # these can be accessed as |version| and |release| inside the .rst source
 import subprocess
-version = subprocess.check_output(["git", "rev-parse", "--short", "HEAD"]).decode()
-release = subprocess.check_output(["git", "describe"]).decode()
+version = subprocess.check_output(["git", "rev-parse", "--short", "HEAD"]).decode().strip()
+release = subprocess.check_output(["git", "describe"]).decode().strip()
 
 # i18n configuration
 locale_dirs = ["locale/"]
