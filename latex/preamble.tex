@@ -42,3 +42,13 @@
 
 % display the index on a single column
 \usepackage[columns=1]{idxlayout}
+
+% on normal pages, get the page number on the right and the chapter name on the left
+\usepackage{fancyhdr}
+\fancypagestyle{normal}{
+  \fancyhf{}
+  \fancyhead[LE,RO]{\thepage}
+  \fancyhead[RE,LO]{\itshape \leftmark}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
