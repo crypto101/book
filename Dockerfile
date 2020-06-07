@@ -34,6 +34,7 @@ RUN dnf install -y \
     texlive-anyfontsize \
     texlive-gnu-freefont \
     texlive-dvisvgm \
+    texlive-xindy \
     pdf2svg \
     python3-sphinx \
     python3-sphinx-intl \

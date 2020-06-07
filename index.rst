@@ -8,4 +8,5 @@ Crypto101
    building-blocks
    complete-cryptosystems
    appendices
+   glossary
    zreferences
