@@ -7,7 +7,7 @@ Exclusive or
 Description
 ~~~~~~~~~~~
 
-Exclusive or, often called “XOR”, is a Boolean [1]_ binary [2]_ operator
+Exclusive or, often called “XOR”, is a Boolean [#boolean]_ binary [#binary]_ operator
 that is true when either the first input or the second input, but not
 both, are true.
 
@@ -35,6 +35,12 @@ with more than one such bit. On top, we have the key bit :math:`k_i`,
 that decides whether or not to invert :math:`P_i`. On the right, we have
 the ciphertext bit, :math:`C_i`, which is the result of the XOR
 operation.
+
+.. [#boolean]
+   Uses only “true” and “false” as input and output values.
+
+.. [#binary]
+   Takes two parameters.
 
 A few properties of XOR
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -88,7 +94,7 @@ performs XOR on the respective bits in a value.
 
 Python, for example, provides the ``^`` (caret) operator that performs
 bitwise XOR on integers. It does this by first expressing those two
-integers in binary [3]_, and then performing XOR on their respective
+integers in binary [#binary-integer]_, and then performing XOR on their respective
 bits. Hence the name, *bitwise* XOR.
 
 .. math::
@@ -107,6 +113,11 @@ bits. Hence the name, *bitwise* XOR.
               & = 30 \\
    \end{aligned}
 
+.. [#binary-integer]
+   Usually, numbers are already stored in binary internally, so this
+   doesn't actually take any work. When you see a number prefixed with
+   “0b”, the remaining digits are a binary representation.
+
 One-time pads
 ~~~~~~~~~~~~~
 
@@ -121,7 +132,15 @@ This scheme is unique not only in its simplicity, but also because it
 has the strongest possible security guarantee. If the bits are truly
 random (and therefore unpredictable by an attacker), and the pad is only
 used once, the attacker learns nothing about the plaintext when they see
-a ciphertext. [4]_
+a ciphertext. [#msg-exists]_
+
+.. [#msg-exists]
+   The attacker does learn that the message exists, and, in this simple
+   scheme, the length of the message. While this typically isn't too
+   important, there are situations where this might matter, and there
+   are secure cryptosystems to both hide the existence and the length of
+   a message.
+
 
 Suppose we can translate our plaintext into a sequence of bits. We also
 have the pad of random bits, shared between the sender and the (one or
@@ -155,8 +174,13 @@ The one-time pad security guarantee only holds if it is used correctly.
 First of all, the one-time pad has to consist of truly random data.
 Secondly, the one-time pad can only be used once (hence the name).
 Unfortunately, most commercial products that claim to be “one-time pads”
-are snake oil [5]_, and don't satisfy at least one of those two
+are snake oil [#snake-oil]_, and don't satisfy at least one of those two
 properties.
+
+.. [#snake-oil]
+   “Snake oil” is a term for all sorts of dubious products that claim
+   extraordinary benefits and features, but don't really realize any of
+   them.
 
 Not using truly random data
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -219,9 +243,14 @@ Those matches form the sites of the start, or “crib”, if you will, of
 further decryption.
 
 The idea is fairly simple. Suppose we have several encrypted messages
-:math:`C_i` encrypted with the same “one-time” pad :math:`K`. [6]_ If we
-could correctly guess the plaintext for one of the messages, let's say
-:math:`C_j`, we'd know :math:`K`:
+:math:`C_i` encrypted with the same “one-time” pad :math:`K`
+[#capital-letters]_. If we could correctly guess the plaintext for one of the
+messages, let's say :math:`C_j`, we'd know :math:`K`:
+
+.. [#capital-letters]
+   We use capital letters when referring to an entire message, as
+   opposed to just bits of a message.
+
 
 .. math::
 
@@ -465,10 +494,15 @@ be expected when selecting random permutations.
 
 Knowing a bunch of (input, output) pairs for a given key shouldn't give
 you any information about any other (input, output) pairs under that
-key [7]_. As long as we're talking about a hypothetical perfect block
+key [#]_. As long as we're talking about a hypothetical perfect block
 cipher, there's no easier way to decrypt a block other than to
 “brute-force” the key: i.e. just try every single one of them until you
 find the right one.
+
+.. [#]
+   The attentive reader may have noticed that this breaks in the
+   extremes: if you know all but one of the pairs, then you know the
+   last one by exclusion.
 
 Our toy illustration block cipher only has 4 bit blocks, or
 :math:`2^4 = 16` possibilities. Real, modern block ciphers have much
@@ -524,7 +558,33 @@ There are no practical attacks known against AES. While there have been
 some developments in the last few years, most of them involve
 related-key attacks :cite:`cryptoeprint:2009:317`, some of
 them only on reduced-round versions of AES
-:cite:`cryptoeprint:2009:374`.  [8]_
+:cite:`cryptoeprint:2009:374`.  [#]_
+
+.. [#]
+   Symmetric algorithms usually rely on a round function to be repeated
+   a number of times. Typically each invocation involves a “round key”
+   derived from the main key. A reduced-round version is intentionally
+   easier to attack. These attacks can give insight as to how resistant
+   the full cipher is.
+
+   A related key attack involves making some predictions about how AES
+   will behave under several different keys with some specific
+   mathematical relation. These relations are fairly simple, such as
+   XORing with an attacker-chosen constant. If an attacker is allowed to
+   encrypt and decrypt a large number of blocks with these related keys,
+   they can attempt to recover the original key with significantly less
+   computation than would ordinarily be necessary to crack it.
+
+   While a theoretically ideal block cipher wouldn't be vulnerable to a
+   related key attack, these attacks aren't considered practical
+   concerns. In practice cryptographic keys are generated via a
+   cryptographically secure pseudorandom number generator, or a
+   similarly secure key agreement scheme or key derivation scheme (we'll
+   see more about those later). Therefore, the odds of selecting two
+   such related keys by accident is nonexistent. These attacks are
+   interesting from an academic perspective: they can help provide
+   insight in the workings of the cipher, guiding cryptographers in
+   designing future ciphers and attacks against current ciphers.
 
 A closer look at Rijndael
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -562,10 +622,14 @@ then applying an affine transformation so that there are no values
 To rephrase: there are no values of :math:`x` that the substitution box maps to
 :math:`x` itself, or :math:`x` with all bits flipped. This makes the cipher
 resistant to linear cryptanalysis, unlike the earlier DES algorithm,
-whose fifth S-box caused serious security problems.  [9]_
+whose fifth S-box caused serious security problems.  [#]_
 
 .. figure:: Illustrations/AES/SubBytes.svg
    :align: center
+
+.. [#]
+   In its defense, linear attacks were not publicly known back when DES
+   was designed.
 
 ShiftRows
 '''''''''
@@ -751,7 +815,12 @@ Visual inspection of an encrypted stream
 
 To demonstrate that this is, in fact, a serious problem, we'll use a
 simulated block cipher of various block sizes and apply it to an
-image [10]_. We'll then visually inspect the different outputs.
+image [#]_. We'll then visually inspect the different outputs.
+
+.. [#]
+   This particular demonstration only works on uncompressed bitmaps. For
+   other media, the effect isn't significantly less damning: it's just
+   less visual.
 
 .. _fig-ECBDemo5px:
 .. _fig-ECBDemoPlaintext:
@@ -924,9 +993,13 @@ like a stream cipher. These configurations are commonly called
 mode of operations. They aren't specific to a particular block cipher.
 
 ECB mode, which we've just seen, is the simplest such mode of operation.
-The letters ``ECB`` stand for electronic code book [11]_. For reasons
+The letters ``ECB`` stand for electronic code book [#]_. For reasons
 we've already gone into, ECB mode is very ineffective. Fortunately,
 there are plenty of other choices.
+
+.. [#]
+   Traditionally, modes of operation seem to be referred to by a
+   three-letter acronym.
 
 CBC mode
 ~~~~~~~~
@@ -977,8 +1050,14 @@ server is secure, and there's no way to get it to leak the key.
 
 Mallory gets a hold of all of the rows in the database. Perhaps she did
 it through a SQL injection attack, or maybe with a little social
-engineering. [12]_ Everything is supposed to remain secure: Mallory only
+engineering. [#]_ Everything is supposed to remain secure: Mallory only
 has the ciphertexts, but she doesn't have the secret key.
+
+.. [#]
+   Social engineering means tricking people into things they shouldn't
+   be doing, like giving out secret keys, or performing certain
+   operations. It's usually the most effective way to break otherwise
+   secure cryptosystems.
 
 Mallory wants to figure out what Alice's record says. For simplicity's
 sake, let's say there's only one ciphertext block. That means Alice's
@@ -1117,7 +1196,7 @@ the bit will be flipped; otherwise, the bit will remain the same.
    :align: center
 
 When we try to decrypt the ciphertext block with the flipped bits, we
-will get indecipherable [13]_ nonsense. Remember how CBC decryption
+will get indecipherable [#]_ nonsense. Remember how CBC decryption
 works: the output of the block cipher is XORed with the previous
 ciphertext block to produce the plaintext block. Now that the input
 ciphertext block :math:`C_i` has been modified, the output of the block
@@ -1126,6 +1205,10 @@ nonsense. After being XORed with that previous ciphertext block, it will
 still be nonsense. As a result, the produced plaintext block is still
 just nonsense. In the illustration, this unintelligible plaintext block
 is :math:`P_i^{\prime}`.
+
+.. [#]
+   Excuse the pun.
+
 
 However, in the block *after* that, the bits we flipped in the
 ciphertext will be flipped in the plaintext as well! This is because, in
@@ -1218,10 +1301,16 @@ PKCS#5/PKCS#7 padding
 A better, and much more popular scheme, is PKCS#5/PKCS#7 padding.
 
 PKCS#5, PKCS#7 and later CMS padding are all more or less the same
-idea [14]_. Take the number of bytes you have to pad, and pad them with
+idea [#]_. Take the number of bytes you have to pad, and pad them with
 that many times the byte with that value. For example, if the block size
 is 8 bytes, and the last block has the three bytes ``12 34 45``, the
 block becomes ``12 34 45 05 05 05 05 05`` after padding.
+
+.. [#]
+   Technically, PKCS#5 padding is only defined for 8 byte block sizes,
+   but the idea clearly generalizes easily, and it's also the most
+   commonly used term.
+
 
 If the plaintext happened to be exactly a multiple of the block size, an
 entire block of padding is used. Otherwise, the recipient would look at
@@ -1745,7 +1834,7 @@ the state and outputs of the cipher. Unlike RC4, most modern stream
 ciphers provide a way to combine a long-term key with a nonce (a number
 used once), to produce multiple different keystreams from the same
 long-term key. RC4, by itself, doesn't do that. The most common approach
-was also the simplest: concatenate [15]_ the long-term key :math:`k`
+was also the simplest: concatenate [#]_ the long-term key :math:`k`
 with the nonce :math:`n`: :math:`k \| n`, taking advantage of RC4's
 flexible key length requirements. In this context, concatenation means
 the bits of :math:`n` are appended to the bits of :math:`k`. This scheme
@@ -1753,6 +1842,11 @@ meant attackers could recover parts of the combined key, eventually
 allowing them to slowly recover the long-term key from a large amount of
 messages (around :math:`2^{24}` to :math:`2^{26}`, or tens of millions
 of messages).
+
+.. [#]
+   Here we use :math:`\|` as the operator for concatenation. Other
+   common symbols for concatenation include :math:`+` (for some
+   programming languages, such as Python) and ⋅ (for formal languages).
 
 WEP, a standard for protecting wireless networks that was popular at the
 time, was heavily affected by this attack, because it used this
@@ -1855,12 +1949,17 @@ information security very much in mind.
 
 There are two minor variants of Salsa20, called Salsa20/12 and
 Salsa20/8, which are simply the same algorithm except with 12 and 8
-rounds [16]_ respectively, down from the original 20. ChaCha is another,
+rounds [#]_ respectively, down from the original 20. ChaCha is another,
 orthogonal tweak of the Salsa20 cipher, which tries to increase the
 amount of diffusion per round while maintaining or improving
 performance. ChaCha doesn't have a “20” after it; specific algorithms do
 have a number after them (ChaCha8, ChaCha12, ChaCha20), which refers to
 the number of rounds.
+
+.. [#]
+   Rounds are repetitions of an internal function. Typically a number of
+   rounds are required to make an algorithm work effectively; attacks
+   often start on reduced-round versions of an algorithm.
 
 Salsa20 and ChaCha are among the state of the art of modern stream
 ciphers. There are currently no publicly known attacks against Salsa20,
@@ -1874,9 +1973,19 @@ per byte for the 12-round version and about 2 cycles per byte for the
 :cite:`salsa20:speed` and modern AMD processors
 :cite:`cryptopp:bench`. ChaCha is (on most platforms)
 slightly faster still. To put that into comparison, that's more than
-three times faster than RC4 [17]_, approximately three times faster than
+three times faster than RC4 [#rc4-bench]_, approximately three times faster than
 AES-CTR with a 128 bit key at 12.6 cycles per byte, and roughly in the
-ballpark of AES GCM mode [18]_ with specialized hardware instructions.
+ballpark of AES GCM mode [#gcm-mode]_ with specialized hardware instructions.
+
+.. [#rc4-bench]
+   The quoted benchmarks don't mention RC4 but MARC4, which stands for
+   “modified alleged RC4”. The RC4 section explains why it's “alleged”,
+   and “modified” means it throws away the first 256 bytes because of a
+   weakness in RC4.
+
+.. [#gcm-mode]
+   GCM mode is an authenticated encryption mode, which we will see in
+   more detail in a later chapter.
 
 .. _keystream jump:
 
@@ -2135,10 +2244,16 @@ color itself. Everyone, including Eve, knows the base color.
 Then, Alice and Bob both send their mixed colors over the network. Eve
 sees both mixed colors, but she can't figure out what either of Alice
 and Bob's *secret* colors are. Even though she knows the base, she can't
-“un-mix” the colors sent over the network. [19]_
+“un-mix” the colors sent over the network. [#]_
 
 .. figure:: ./Illustrations/DiffieHellman/mixed-secret.svg
    :align: center
+
+.. [#]
+   While this might seem like an easy operation with black-and-white
+   approximations of color mixing, keep in mind that this is just a
+   failure of the illustration: our assumption was that this was hard.
+
 
 At the end of this step, Alice and Bob know the base, their respective
 secrets, their respective mixed colors, and each other's mixed colors.
@@ -2265,7 +2380,12 @@ elliptic curve problem than it is to solve the regular discrete log
 problem, using state of the art algorithms for both. The flip side of
 that is that for equivalent security levels, the elliptic curve
 algorithm needs much smaller key
-sizes :cite:`rsa:keysizes` :cite:`nist:keymanagement` [20]_:
+sizes :cite:`rsa:keysizes` :cite:`nist:keymanagement` [#]_:
+
+.. [#]
+   These figures are actually for the RSA problem versus the equivalent
+   elliptic curve problem, but their security levels are sufficiently
+   close to give you an idea.
 
 ====================== ===================== =======================
 Security level in bits Discrete log key bits Elliptic curve key bits
@@ -2492,10 +2612,16 @@ PKCSv1.5 padding
 Salt
 ''''
 
-Salt [21]_ is a provisioning system written in Python. It has one major
+Salt [#]_ is a provisioning system written in Python. It has one major
 flaw: it has a module named ``crypt``. Instead of reusing existing
 complete cryptosystems, it implements its own, using RSA and AES
 provided by a third party package.
+
+.. [#]
+   So, there's Salt the provisioning system, salts the things used in
+   broken password stores, NaCl pronounced “salt” the cryptography
+   library, and NaCl which runs native code in some browsers, and
+   probably a bunch I'm forgetting. Can we stop naming things after it?
 
 For a long time, Salt used a public exponent (:math:`e`) of 1, which
 meant the encryption phase didn't actually do anything:
@@ -2919,11 +3045,16 @@ everyone was using one of a handful of hash functions. The same password
 would result in the same hash everywhere.
 
 This problem was generally solved by using salts. By mixing (appending
-or prepending [22]_) the password with some random value before hashing
+or prepending [#]_) the password with some random value before hashing
 it, you could produce completely different hash values out of the same
 hash function. It effectively turns a hash function into a whole family
 of related hash functions, with virtually identical security and
 performance properties, except with completely different output values.
+
+.. [#]
+   While you could also do this with XOR, it's needlessly more
+   error-prone, and doesn't provide better results. Unless you zero-pad
+   both the password and the salt, you might be truncating either one.
 
 The salt value is stored next to the password hash in the database. When
 the user authenticates using the password, you just combine the salt
@@ -3065,14 +3196,21 @@ TODO: say why this prevents meet in the middle attacks?
 Hash trees
 ~~~~~~~~~~
 
-Hash trees are trees [23]_ where each node is identified by a hash
+Hash trees are trees [#]_ where each node is identified by a hash
 value, consisting of its contents and the hash value of its ancestor.
 The root node, not having an ancestor, simply hashes its own contents.
 
+.. [#]
+   Directed graphs, where each node except the root has exactly one
+   ancestor.
+
 This definition is very wide: practical hash trees are often more
-restricted. They might be binary trees [24]_, or perhaps only leaf nodes
+restricted. They might be binary trees [#]_, or perhaps only leaf nodes
 carry data of their own, and parent nodes only carry derivative data.
 Particularly these restricted kinds are often called Merkle trees.
+
+.. [#]
+   Each non-leaf node has no more than two children
 
 Systems like these or their variants are used by many systems,
 particularly distributed systems. Examples include distributed version
@@ -3336,7 +3474,12 @@ only forge tags for a message that consists of a message we sent,
 followed by some binary junk, followed by something the attacker
 chooses. However, it turns out that for many systems, this is plenty to
 result in real breaks. Consider the following Python code that parses a
-sequence of key-value pairs that look like ``k1=v1&k2=v2&...``: [25]_
+sequence of key-value pairs that look like ``k1=v1&k2=v2&...``: [#]_
+
+.. [#]
+   I realize there are briefer ways to write that function. I am trying
+   to make it comprehensible to most programmers; not pleasing to
+   advanced Pythonistas.
 
 .. code:: python
 
@@ -3504,7 +3647,11 @@ authenticate two messages :math:`m_1, m_2` with the same key
    \end{aligned}
 
 An attacker can reconstruct :math:`a, b` with some simple modular
-arithmetic:  [26]_
+arithmetic:  [#]_
+
+.. [#]
+   For a refresher on modular arithmetic, including an explanation of
+   the modular inverse, please refer to :ref:`the appendix <modular-arithmetic>`.
 
 .. math::
 
@@ -4661,10 +4808,14 @@ Mersenne Twister
 ~~~~~~~~~~~~~~~~
 
 Mersenne Twister is a very common pseudorandom number generator. It has
-many nice properties, such as high performance, a huge period [27]_ of
+many nice properties, such as high performance, a huge period [#]_ of
 :math:`2^{19937} - 1 \approx 4 \cdot 10^{6001}`, and it passes all but
 the most demanding randomness tests. Despite all of these wonderful
 properties, it is *not* cryptographically secure.
+
+.. [#]
+   The period of a pseudorandom number generator is how many random
+   numbers it produces before the entire sequence repeats.
 
 An in-depth look at the Mersenne Twister
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -4890,150 +5041,3 @@ Again, this is not a weakness of Mersenne Twister. It's designed to be
 fast and have strong randomness properties. It is not designed to be
 unpredictable, which is the defining property of a cryptographically
 secure pseudorandom number generator.
-
-
-.. [1]
-   Uses only “true” and “false” as input and output values.
-
-.. [2]
-   Takes two parameters.
-
-.. [3]
-   Usually, numbers are already stored in binary internally, so this
-   doesn't actually take any work. When you see a number prefixed with
-   “0b”, the remaining digits are a binary representation.
-
-.. [4]
-   The attacker does learn that the message exists, and, in this simple
-   scheme, the length of the message. While this typically isn't too
-   important, there are situations where this might matter, and there
-   are secure cryptosystems to both hide the existence and the length of
-   a message.
-
-.. [5]
-   “Snake oil” is a term for all sorts of dubious products that claim
-   extraordinary benefits and features, but don't really realize any of
-   them.
-
-.. [6]
-   We use capital letters when referring to an entire message, as
-   opposed to just bits of a message.
-
-.. [7]
-   The attentive reader may have noticed that this breaks in the
-   extremes: if you know all but one of the pairs, then you know the
-   last one by exclusion.
-
-.. [8]
-   Symmetric algorithms usually rely on a round function to be repeated
-   a number of times. Typically each invocation involves a “round key”
-   derived from the main key. A reduced-round version is intentionally
-   easier to attack. These attacks can give insight as to how resistant
-   the full cipher is.
-
-   A related key attack involves making some predictions about how AES
-   will behave under several different keys with some specific
-   mathematical relation. These relations are fairly simple, such as
-   XORing with an attacker-chosen constant. If an attacker is allowed to
-   encrypt and decrypt a large number of blocks with these related keys,
-   they can attempt to recover the original key with significantly less
-   computation than would ordinarily be necessary to crack it.
-
-   While a theoretically ideal block cipher wouldn't be vulnerable to a
-   related key attack, these attacks aren't considered practical
-   concerns. In practice cryptographic keys are generated via a
-   cryptographically secure pseudorandom number generator, or a
-   similarly secure key agreement scheme or key derivation scheme (we'll
-   see more about those later). Therefore, the odds of selecting two
-   such related keys by accident is nonexistent. These attacks are
-   interesting from an academic perspective: they can help provide
-   insight in the workings of the cipher, guiding cryptographers in
-   designing future ciphers and attacks against current ciphers.
-
-.. [9]
-   In its defense, linear attacks were not publicly known back when DES
-   was designed.
-
-.. [10]
-   This particular demonstration only works on uncompressed bitmaps. For
-   other media, the effect isn't significantly less damning: it's just
-   less visual.
-
-.. [11]
-   Traditionally, modes of operation seem to be referred to by a
-   three-letter acronym.
-
-.. [12]
-   Social engineering means tricking people into things they shouldn't
-   be doing, like giving out secret keys, or performing certain
-   operations. It's usually the most effective way to break otherwise
-   secure cryptosystems.
-
-.. [13]
-   Excuse the pun.
-
-.. [14]
-   Technically, PKCS#5 padding is only defined for 8 byte block sizes,
-   but the idea clearly generalizes easily, and it's also the most
-   commonly used term.
-
-.. [15]
-   Here we use :math:`\|` as the operator for concatenation. Other
-   common symbols for concatenation include :math:`+` (for some
-   programming languages, such as Python) and ⋅ (for formal languages).
-
-.. [16]
-   Rounds are repetitions of an internal function. Typically a number of
-   rounds are required to make an algorithm work effectively; attacks
-   often start on reduced-round versions of an algorithm.
-
-.. [17]
-   The quoted benchmarks don't mention RC4 but MARC4, which stands for
-   “modified alleged RC4”. The RC4 section explains why it's “alleged”,
-   and “modified” means it throws away the first 256 bytes because of a
-   weakness in RC4.
-
-.. [18]
-   GCM mode is an authenticated encryption mode, which we will see in
-   more detail in a later chapter.
-
-.. [19]
-   While this might seem like an easy operation with black-and-white
-   approximations of color mixing, keep in mind that this is just a
-   failure of the illustration: our assumption was that this was hard.
-
-.. [20]
-   These figures are actually for the RSA problem versus the equivalent
-   elliptic curve problem, but their security levels are sufficiently
-   close to give you an idea.
-
-.. [21]
-   So, there's Salt the provisioning system, salts the things used in
-   broken password stores, NaCl pronounced “salt” the cryptography
-   library, and NaCl which runs native code in some browsers, and
-   probably a bunch I'm forgetting. Can we stop naming things after it?
-
-.. [22]
-   While you could also do this with XOR, it's needlessly more
-   error-prone, and doesn't provide better results. Unless you zero-pad
-   both the password and the salt, you might be truncating either one.
-
-.. [23]
-   Directed graphs, where each node except the root has exactly one
-   ancestor.
-
-.. [24]
-   Each non-leaf node has no more than two children
-
-.. [25]
-   I realize there are briefer ways to write that function. I am trying
-   to make it comprehensible to most programmers; not pleasing to
-   advanced Pythonistas.
-
-.. [26]
-   For a refresher on modular arithmetic, including an explanation of
-   the modular inverse, please refer to :ref:`the appendix <modular-arithmetic>`.
-
-.. [27]
-   The period of a pseudorandom number generator is how many random
-   numbers it produces before the entire sequence repeats.

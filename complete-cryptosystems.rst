@@ -10,12 +10,16 @@ Description
 ~~~~~~~~~~~
 
 SSL, short for Secure Socket Layer, is a cryptographic protocol
-originally introduced by Netscape Communications [28]_ for securing
+originally introduced by Netscape Communications [#]_ for securing
 traffic on the Web. The standard is now superseded by TLS (Transport
 Layer Security), a standard publicized in RFCs by the IETF. The term SSL
 is still commonly used, even when the speaker actually means a TLS
 connection. From now on, this book will only use the term TLS, unless we
 really mean the old SSL standard.
+
+.. [#]
+   For those too young to remember, Netscape is a company that used to
+   make browsers.
 
 Its first and foremost goal is to transport bytes securely, over the
 Internet or any other insecure medium. :cite:`tls12` It's a
@@ -31,8 +35,13 @@ are used to authenticate that data.
 TLS is the world's most common cryptosystem, and hence probably also the
 most studied. Over the years, many flaws have been discovered in SSL and
 TLS, despite many of the world's top cryptographers contributing to and
-examining the standard [29]_. As far as we know, the current versions of
+examining the standard [#]_. As far as we know, the current versions of
 TLS are secure, or at least can be configured to be secure.
+
+.. [#]
+   In case I haven't driven this point home yet: it only goes to show
+   that designing cryptosystems is hard, and you probably shouldn't do
+   it yourself.
 
 Handshakes
 ~~~~~~~~~~
@@ -187,14 +196,21 @@ categories. This section is particularly about the latter.
 CRIME and BREACH
 ^^^^^^^^^^^^^^^^
 
-CRIME [30]_ is an attack by the authors of BEAST. It's an innovative
+CRIME [#CRIME]_ is an attack by the authors of BEAST. It's an innovative
 side channel attack that relies on TLS compression leaking information
-about secrets in the plaintext. In a related attack called BREACH [31]_,
+about secrets in the plaintext. In a related attack called BREACH [#BREACH]_,
 the attackers accomplish the same effect using HTTP compression. That
 was predicted by the authors of the original paper, but the BREACH
 authors were the first to demonstrate it as a practical attack. The
 BREACH attack was more practically applicable, though: HTTP compression
 is significantly more common than TLS compression.
+
+.. [#CRIME]
+   Compression Ratio Info-leak Made Easy
+
+.. [#BREACH]
+   Browser Reconnaissance and Exfiltration via Adaptive Compression of
+   Hypertext
 
 Both of these rely on encryption of a compressed plaintext, and their
 mechanisms are virtually identical: only the specific details related to
@@ -210,18 +226,30 @@ The most common algorithm used to compress both HTTP and
 TLS :cite:`rfc3749:tlscompression` is called DEFLATE. The
 exact mechanics of DEFLATE aren't too important, but the important
 feature is that byte sequences that occur more than once can be
-efficiently stored. When a byte sequence recurs [32]_, instead of
+efficiently stored. When a byte sequence recurs [#]_, instead of
 recording the same sequence, a reference is provided to the previous
 sequence: instead of repeating the sequence, it says “go back and look
 at the thing I wrote N bytes ago”.
 
+.. [#]
+   Within limits; specifically within a sliding window, usually 32kB
+   big. Otherwise, the pointers would grow bigger than the sequences
+   they're meant to compress.
+
 Suppose an attacker can control the plaintext. For example, the attacker
-injects an invisible iframe [33]_ or some JavaScript code that fires off
+injects an invisible iframe [#iframe]_ or some JavaScript code that fires off
 many requests. The attacker needs some way to inject their guess of the
 secret so that their guess occurs in the plaintext, such as the query
-parameters [34]_. Usually, they can prefix their guess with something
+parameters [#query-params]_. Usually, they can prefix their guess with something
 known. Suppose they're trying to intercept an authentication token being
 supplied in the body of the web page:
+
+.. [#iframe]
+   An iframe is a web page embedded within a page.
+
+.. [#query-params]
+   The key-value pairs in a URL after the question mark, e.g. the
+   ``x=1&y=2`` in ``http://example.test/path?x=1&y=2``.
 
 .. code:: html
 
@@ -239,7 +267,7 @@ website; the web browser will provide the stored cookie, and the
 vulnerable website will mistake that for an authenticated request.
 
 The attacker makes guesses at the value of the token, starting with the
-first byte, and moving on one byte at a time. [35]_ When they guess a
+first byte, and moving on one byte at a time. [#]_ When they guess a
 byte correctly, the ciphertext will be just a little shorter: the
 compression algorithm will notice that it's seen this pattern before,
 and be able to compress the plaintext before encrypting. The plaintext,
@@ -251,6 +279,10 @@ block-oriented mode such as CBC mode, the difference might get lost in
 the block padding. The attacker can solve that by simply controlling the
 prefix so that the difference in ciphertext size will be an entire
 block.
+
+.. [#]
+   They may be able to move more quickly than just one byte at a time,
+   but this is the simplest way to reason about.
 
 Once they've guessed one byte correctly, they can move on to the next
 byte, until they recover the entire token.
@@ -403,7 +435,11 @@ Description
 
 OpenPGP is an open standard that describes a method for encrypting and
 signing messages. GPG is the most popular implementation of that
-standard [36]_, available under a free software license.
+standard [#]_, available under a free software license.
+
+.. [#]
+   GPG 2 also implements S/MIME, which is unrelated to the OpenPGP
+   standard. This chapter only discusses OpenPGP.
 
 Unlike TLS, which focuses on data in motion, OpenPGP focuses on data at
 rest. A TLS session is active: bytes fly back and forth as the peers set
@@ -677,40 +713,3 @@ Data exchange
 ~~~~~~~~~~~~~
 
 TODO: Explain (https://otr.cypherpunks.ca/Protocol-v3-4.0.0.html), #33
-
-
-.. [28]
-   For those too young to remember, Netscape is a company that used to
-   make browsers.
-
-.. [29]
-   In case I haven't driven this point home yet: it only goes to show
-   that designing cryptosystems is hard, and you probably shouldn't do
-   it yourself.
-
-.. [30]
-   Compression Ratio Info-leak Made Easy
-
-.. [31]
-   Browser Reconnaissance and Exfiltration via Adaptive Compression of
-   Hypertext
-
-.. [32]
-   Within limits; specifically within a sliding window, usually 32kB
-   big. Otherwise, the pointers would grow bigger than the sequences
-   they're meant to compress.
-
-.. [33]
-   An iframe is a web page embedded within a page.
-
-.. [34]
-   The key-value pairs in a URL after the question mark, e.g. the
-   ``x=1&y=2`` in ``http://example.test/path?x=1&y=2``.
-
-.. [35]
-   They may be able to move more quickly than just one byte at a time,
-   but this is the simplest way to reason about.
-
-.. [36]
-   GPG 2 also implements S/MIME, which is unrelated to the OpenPGP
-   standard. This chapter only discusses OpenPGP.
