@@ -6,7 +6,7 @@ SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 SPHINXPROJ    = crypto101
 SOURCEDIR     = .
-BUILDDIR      ?= _build
+BUILDDIR      ?= _build_en
 
 # Put it first so that "make" without argument is like "make help".
 help:
