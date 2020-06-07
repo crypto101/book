@@ -29,6 +29,7 @@ source_suffix = ".rst"
 
 # paths to exclude from the document source scan
 exclude_patterns = [
+    "_release",
     "_build",
     "_build_*",
     "Thumbs.db",

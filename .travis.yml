@@ -9,7 +9,7 @@ jobs:
   include:
   - script: |
       docker build -t crypto101 .
-      docker run --rm -it -v ${TRAVIS_BUILD_DIR}:/repo crypto101 ./build_release ./release/
+      docker run --rm -it -v ${TRAVIS_BUILD_DIR}:/repo crypto101 ./build_release ./_release/
 
 deploy:
   provider: releases
