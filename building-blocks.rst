@@ -199,7 +199,7 @@ with :numref:`fig-multitimepad`.
 
 .. _fig-multitimepad:
 
-.. figure:: Illustrations/KeyReuse/matrix.svg
+.. figure:: Illustrations/KeyReuse/keyreuse-matrix.svg
    :align: center
 
    Two plaintexts, the re-used key, their respective
@@ -757,7 +757,7 @@ image [10]_. We'll then visually inspect the different outputs.
 .. _fig-ECBDemoPlaintext:
 .. _fig-ECBDemoIdealizedCiphertext:
 
-.. figure:: ./Illustrations/ECB/matrix.svg
+.. figure:: ./Illustrations/ECB/ecb-matrix.svg
 
    Plaintext image with ciphertext images under idealized
    encryption and ECB mode encryption with various block sizes.
