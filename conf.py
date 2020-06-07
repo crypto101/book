@@ -103,6 +103,7 @@ latex_docclass = {"manual": "memoir"}
 
 
 latex_elements = {
+    "printindex": "",
     "pointsize": "11pt",
     "papersize": "ebook",
     "fncychap": "",

@@ -209,3 +209,9 @@ Glossary
       Kind of attack where a malicious website tricks the browser into making
       requests to another website. Can be prevented by properly authenticating
       requests instead of relying on ambient authority such as session cookies
+
+
+.. raw:: latex
+
+   \renewcommand{\indexname}{Index}
+   \printindex
