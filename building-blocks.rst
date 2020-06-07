@@ -348,7 +348,7 @@ Block ciphers
    than the one that, if they just tried, they could invent a cipher that no one
    could break.
 
-       David Kahn
+       *David Kahn*
 
 .. _description-1:
 
@@ -4219,7 +4219,7 @@ Random number generators
 
    The generation of random numbers is too important to be left to chance.
 
-       Robert R. Coveyou
+       *Robert R. Coveyou*
 
 Introduction
 ~~~~~~~~~~~~
@@ -4246,7 +4246,7 @@ True random number generators
    Any one who considers arithmetical methods of producing random digits
    is, of course, in a state of sin.
 
-       John von Neumann
+       *John von Neumann*
 
 John von Neumann, father of the modern model of computing, made an
 obvious point. We can't expect to produce random numbers using

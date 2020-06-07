@@ -8,7 +8,7 @@ About this book
    application issues. They are trying to discover things clever enough to write
    papers about.
 
-      Whitfield Diffie
+      *Whitfield Diffie*
 
 This book is intended as an introduction to cryptography for programmers
 of any skill level. It's a continuation of a talk of the same name,
