@@ -29,7 +29,7 @@ master_doc = "index"
 
 project = "Crypto 101"
 copyright = "2020, Laurens Van Houtven (lvh)"
-author = "Laurens Van Houtven (lvh)"
+author = "lvh"
 
 import subprocess
 
