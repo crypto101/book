@@ -121,6 +121,7 @@ latex_elements = {
 \PassOptionsToPackage{dvipsnames,table}{xcolor}
     """,
     "preamble": read_latex_template("preamble"),
+    "hyperref": read_latex_template("hyperref"),
     "maketitle": read_latex_template("maketitle"),
 }
 
