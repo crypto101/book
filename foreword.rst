@@ -17,7 +17,7 @@ which was given by the author at PyCon 2013.
 The structure of this book is very similar: it starts with very simple
 primitives, and gradually introduces new ones, demonstrating why they're
 necessary. Eventually, all of this is put together into complete,
-practical cryptosystems, such as TLS, GPG and OTR.
+practical cryptosystems, such as TLS, GPG and :term:`OTR`.
 
 The goal of this book is not to make anyone a cryptographer or a
 security researcher. The goal of this book is to understand how complete

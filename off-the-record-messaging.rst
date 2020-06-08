@@ -6,7 +6,7 @@ Off-The-Record Messaging (OTR)
 Description
 ~~~~~~~~~~~
 
-OTR messaging is a protocol for securing instant messaging communication
+:term:`OTR messaging` is a protocol for securing instant messaging communication
 between people :cite:`borisov:otr`. It intends to be the
 online equivalent of a private, real-life conversation. It encrypts
 messages, preventing eavesdroppers from reading them. It also
@@ -21,13 +21,13 @@ The deniability and perfect forward secrecy properties are very
 different from those of other systems such as OpenPGP. OpenPGP
 intentionally guarantees non-repudiability. It's a great property if
 you're signing software packages, talking on mailing lists or signing
-business invoices, but the authors of OTR argue that those aren't
+business invoices, but the authors of :term:`OTR` argue that those aren't
 desirable properties for the online equivalent of one-on-one
 conversations. Furthermore, OpenPGP's static model of communication
-makes the constant key renegotiation to facilitate OTR's perfect forward
+makes the constant key renegotiation to facilitate :term:`OTR`'s perfect forward
 secrecy impossible.
 
-OTR is typically configured opportunistically, which means that it will
+:term:`OTR` is typically configured opportunistically, which means that it will
 attempt to secure any communication between two peers, if both
 understand the protocol, without interfering with communication where
 the other peer does not. The protocol is supported in many different
@@ -35,22 +35,22 @@ instant messaging clients either directly, or with a plugin. Because it
 works over instant messages, it can be used across many different
 instant messaging protocols.
 
-A peer can signal that they would like to speak OTR with an explicit
-message, called the OTR Query message. If the peer is just willing to
-speak OTR but doesn't require it, they can optionally invisibly add that
+A peer can signal that they would like to speak :term:`OTR` with an explicit
+message, called the :term:`OTR` Query message. If the peer is just willing to
+speak :term:`OTR` but doesn't require it, they can optionally invisibly add that
 information to a plaintext message. That happens with a clever system of
 whitespace tags: a bunch of whitespace such as spaces and tab characters
-are used to encode that information. An OTR-capable client can interpret
-that tag and start an OTR conversation; an client that isn't OTR-capable
+are used to encode that information. An :term:`OTR`\-capable client can interpret
+that tag and start an :term:`OTR` conversation; an client that isn't :term:`OTR`\-capable
 just displays some extra whitespace.
 
-OTR uses many of the primitives we've seen so far:
+:term:`OTR` uses many of the primitives we've seen so far:
 
 -  Symmetric key encryption (AES in CTR mode)
--  Message authentication codes (HMAC with SHA-1)
+-  :term:`Message authentication codes <message authentication code>` (HMAC with SHA-1)
 -  Diffie-Hellman key exchange
 
-OTR also utilizes another mechanism, called the SMP, to check if peers
+:term:`OTR` also utilizes another mechanism, called the SMP, to check if peers
 arrived at the same shared secret.
 
 .. _key-exchange-1:
@@ -58,7 +58,7 @@ arrived at the same shared secret.
 Key exchange
 ~~~~~~~~~~~~
 
-In OTR, AKE relies heavily on Diffie-Hellman key exchange, extended with
+In :term:`OTR`, AKE relies heavily on Diffie-Hellman key exchange, extended with
 a significant number of extra, interlocking checks. The Diffie-Hellman
 exchange itself uses a fixed 1536-bit prime with a fixed generator
 :math:`g`.
@@ -70,22 +70,22 @@ we'll call (:math:`p_A, s_A)` and :math:`(p_B, s_B)` respectively.
 
 The protocol also relies on a number of other primitives:
 
--  A 128-bit block cipher. In OTR, this is always AES. In this section,
+-  A 128-bit block cipher. In :term:`OTR`, this is always AES. In this section,
    we'll call block cipher encryption and decryption :math:`E` and
    :math:`D`, respectively.
--  A hash function, :math:`H`. In OTR, this is SHA1.
--  A message authentication code, :math:`M`. In OTR, this is HMAC-SHA1.
+-  A hash function, :math:`H`. In :term:`OTR`, this is SHA1.
+-  A :term:`message authentication code`, :math:`M`. In :term:`OTR`, this is HMAC-SHA1.
 -  A signing function, :math:`S`.
 
 Commit message
 ^^^^^^^^^^^^^^
 
 Initially Alice and Bob are in a protocol state where they wait for the
-peer to initiate an OTR connection, and advertise their own capability
-of speaking OTR.
+peer to initiate an :term:`OTR` connection, and advertise their own capability
+of speaking :term:`OTR`.
 
-Let's suppose that Bob chooses to initiate an OTR conversation with
-Alice. His client sends an OTR Commit Message, and then transitions to a
+Let's suppose that Bob chooses to initiate an :term:`OTR` conversation with
+Alice. His client sends an :term:`OTR` Commit Message, and then transitions to a
 state where he waits for a reply from from Alice's client.
 
 To send a commit message, a client picks a random 128-bit value
@@ -96,7 +96,7 @@ peer.
 Key message
 ^^^^^^^^^^^
 
-Alice's client has received Bob's client's advertisement to start an OTR
+Alice's client has received Bob's client's advertisement to start an :term:`OTR`
 session. Her client replies with a key message, which involves creating
 a new Diffie-Hellman key pair. She picks a 320-bit (or larger)
 Diffie-Hellman secret :math:`y` and sends :math:`g^y` to Bob.
@@ -122,7 +122,7 @@ he derives several keys from :math:`s`: two AES keys
 He chooses an identification number :math:`i_B` for his current
 Diffie-Hellman key pair :math:`(x, g^x)`. This will be important once
 Alice and Bob generate new key pairs, which they will do later on in the
-OTR protocol.
+:term:`OTR` protocol.
 
 Bob computes:
 

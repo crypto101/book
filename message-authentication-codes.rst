@@ -344,7 +344,7 @@ One-time MACs
 
 So far, we've always assumed that MAC functions can be used with a
 single key to produce secure MACs for a very large number of messages.
-By contrast, one-time MACs are MAC functions that can only securely be
+By contrast, :term:`one-time MAC`\s are MAC functions that can only securely be
 used once with a single key. That might sound like a silly idea, since
 we've already talked about regular secure MACs. An algorithm that only
 works once just seems objectively worse. However, they have several big
@@ -354,10 +354,10 @@ advantages:
    messages.
 -  They have a compelling security proof based on the information
    content of the tag.
--  A construction exists to turn a one-time MAC into a secure
+-  A construction exists to turn a :term:`one-time MAC` into a secure
    multiple-use MAC, removing the principal problem.
 
-A typical simple example of such one-time MACs consists of a simple
+A typical simple example of such :term:`one-time MAC`\s consists of a simple
 multiplication and addition modulo some large prime :math:`p`. In this
 case, the secret key consists of two truly random numbers :math:`a` and
 :math:`b`, both between 1 and :math:`p`.
@@ -386,7 +386,7 @@ efficiently evaluated by iteratively factoring out the common factor
 By computing each multiplication modulo :math:`p`, the numbers will
 remain conveniently small.
 
-In many ways, a one-time MAC is to authentication what a one-time pad is
+In many ways, a :term:`one-time MAC` is to authentication what a one-time pad is
 to encryption. The security argument is similar: as long as the key is
 only used once, an attacker learns no information about the key or the
 message, because they are being irreversibly mixed. This demonstrates
@@ -447,61 +447,61 @@ Plugging :math:`a` into either the equation for :math:`t_1` or
 
 As you can see, as with one-time pads, re-using the key even once leads
 to a complete failure of the cryptosystem to preserve privacy or
-integrity, as the case may be. As a result, one-time MACs are a bit
+integrity, as the case may be. As a result, :term:`one-time MAC`\s are a bit
 dangerous to use directly. Fortunately, this weakness can be solved with
-a construction called a Carter-Wegman MAC, which we'll see in the next
+a construction called a :term:`Carter-Wegman MAC`, which we'll see in the next
 section.
 
 Carter-Wegman MAC
 ~~~~~~~~~~~~~~~~~
 
-As we've already stated, the obvious problem with one-time MACs is their
+As we've already stated, the obvious problem with :term:`one-time MAC`\s is their
 limited practicality. Fortunately, it turns out that there is a
-construction, called a Carter-Wegman MAC, that turns any secure one-time
+construction, called a :term:`Carter-Wegman MAC`, that turns any secure one-time
 MAC into a secure many-time MAC while preserving most of the performance
 benefit.
 
-The idea behind a Carter-Wegman MAC is that you can use a one-time MAC
+The idea behind a :term:`Carter-Wegman MAC` is that you can use a :term:`one-time MAC`
 :math:`O` to produce a tag for the bulk of the data, and then encrypt a
-nonce :math:`n` with a pseudorandom function :math:`F`, such as a block
+:term:`nonce` :math:`n` with a pseudorandom function :math:`F`, such as a block
 cipher, to protect that one-time tag:
 
 .. math::
 
    CW((k_1, k_2), n, M) = F(k_1, n) \xor O(k_2, M)
 
-As long as :math:`F` is a secure pseudorandom function, the nonce's
+As long as :math:`F` is a secure pseudorandom function, the :term:`nonce`'s
 encryption is totally unpredictable. In the eyes of an attacker, that
-means the XOR operation will randomly flip the bits of the one-time MAC
+means the XOR operation will randomly flip the bits of the :term:`one-time MAC`
 tag :math:`O(k_2, M)`. Because this masks the real value of the one-time
 MAC tag, the attacker can not perform the algebraic tricks we saw for
-one-time MACs recovering the key when it is used more than once.
+:term:`one-time MAC`\s recovering the key when it is used more than once.
 
-Keep in mind that while Carter-Wegman MACs take two distinct keys
-:math:`k_1` and :math:`k_2`, and that Carter-Wegman MACs are related to
-one-time MACs, some of which also take two distinct keys :math:`a` and
+Keep in mind that while :term:`Carter-Wegman MAC`\s take two distinct keys
+:math:`k_1` and :math:`k_2`, and that :term:`Carter-Wegman MAC`\s are related to
+:term:`one-time MAC`\s, some of which also take two distinct keys :math:`a` and
 :math:`b`, they are not the same two keys. The Carter-Wegman MAC's
-:math:`k_2` is the only key passed to the fast one-time MAC :math:`O`.
-If that fast one-time MAC is our earlier example that takes two keys
+:math:`k_2` is the only key passed to the fast :term:`one-time MAC` :math:`O`.
+If that fast :term:`one-time MAC` is our earlier example that takes two keys
 :math:`a` and :math:`b`, that :math:`k_2` would have to get split up
-into those two keys. The Carter-Wegman MAC key would then be
+into those two keys. The :term:`Carter-Wegman MAC` key would then be
 :math:`(k_1, k_2) = (k_1, (a, b))`.
 
-You can tell how a Carter-Wegman MAC exploits the benefits of both kinds
+You can tell how a :term:`Carter-Wegman MAC` exploits the benefits of both kinds
 of MACs by considering the two terms of the equation separately. In
 :math:`F(k_1, n)`, :math:`F` is just a regular pseudorandom function,
 such as a block cipher. It is quite slow by comparison to the one-time
-MAC. However, its input, the nonce, is very small. The unpredictable
-output of the block cipher masks the output of the one-time MAC. In the
+MAC. However, its input, the :term:`nonce`, is very small. The unpredictable
+output of the block cipher masks the output of the :term:`one-time MAC`. In the
 second term, :math:`O(k_2, M)`, the large input message :math:`M` is
-only handled by the very fast one-time MAC :math:`O`.
+only handled by the very fast :term:`one-time MAC` :math:`O`.
 
 These constructions, in particular Poly1305-AES, currently represent
 some of the state of the art in MAC functions. The paper
 (:cite:`umac`) and RFC (:cite:`rfc4418`) for an
 older, related MAC function called UMAC may also be good sources of
 extra background information, since they go into extensive details of
-the hows and whys of a practical Carter-Wegman MAC.
+the hows and whys of a practical :term:`Carter-Wegman MAC`.
 
 Authenticated encryption modes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -513,7 +513,7 @@ they treat encryption and authentication as fundamentally different
 steps.
 
 Alternatively, we could make authentication a fundamental part of the
-mode of operation. After all, we've already seen that unauthenticated
+:term:`mode of operation`. After all, we've already seen that unauthenticated
 encryption is virtually never what you want; it is, at best, something
 you occasionally have to live with. It makes sense to use constructions
 that not only guarantee the privacy of an arbitrary stream, but also its
@@ -529,7 +529,7 @@ AEAD
 ^^^^
 
 AEAD is a feature of certain modes of authenticated encryption. Such
-modes of operation are called AEAD modes. It starts with the premise
+modes of operation are called :term:`AEAD mode`\s. It starts with the premise
 that many messages actually consist of two parts:
 
 -  The actual content itself
@@ -553,7 +553,7 @@ messages being delivered to the wrong inbox. That also means that an
 attacker can force e-mail to be delivered to the wrong person, or not
 delivered at all.
 
-AEAD modes address this issue by providing a specified way to add
+:term:`AEAD mode`\s address this issue by providing a specified way to add
 metadata to encrypted content, so that the whole of the encrypted
 content and the metadata is authenticated, and not the two pieces
 separately:
@@ -568,19 +568,19 @@ OCB mode
 
 Usually, you will want to use a much more high level cryptosystem, such as OpenPGP, NaCl or TLS.
 
-OCB mode is an AEAD mode of operation. It is one of the earliest
-developed AEAD modes.
+:term:`OCB mode` is an :term:`AEAD mode` of operation. It is one of the earliest
+developed :term:`AEAD mode`\s.
 
 .. figure:: Illustrations/OCB/Encryption.svg
    :align: center
 
-As you can see, most of this scheme looks quite similar to :ref:`ECB
-mode <ECB mode>`. The name OCB is quite similar to electronic codebook,
+As you can see, most of this scheme looks quite similar to
+:term:`ECB mode`. The name OCB is quite similar to electronic codebook,
 as well. OCB does not share the security issues ECB mode has, however,
 as there are several important differences, such as the offsets
 :math:`\Delta_i` introduced in each individual block encryption.
 
-Being an AEAD mode, OCB mode provides a cryptographically secure
+Being an :term:`AEAD mode`, :term:`OCB mode` provides a cryptographically secure
 authentication tag :math:`t`, which is built from :math:`X`, a very
 simple (not cryptographically secure by itself) checksum of the
 plaintext. There is also another, separate tag :math:`t_a`, which
@@ -595,22 +595,22 @@ very fast: only requiring roughly one block cipher operation per
 encrypted or associate data block, as well as one additional block
 cipher operation for the final tag. The offsets (:math:`\Delta_i`) are
 also extremely easy to compute. The checksum block :math:`X` is just all
-of the plaintext blocks :math:`P_i` XORed together. Finally, OCB mode is
+of the plaintext blocks :math:`P_i` XORed together. Finally, :term:`OCB mode` is
 easy to compute in parallel; only the final authentication tag is
 dependent on all the preceding information.
 
-OCB mode also comes with a built-in padding scheme: it behaves slightly
+:term:`OCB mode` also comes with a built-in padding scheme: it behaves slightly
 differently when the plaintexts or authentication text is not exactly a
 multiple of the block size. This means that, unlike with PKCS#5/PKCS#7
 padding, there isn't an entire block of “wasted” padding if the
 plaintext happens to be a multiple of the block size.
 
-Despite having several interesting properties going for it, OCB mode has
+Despite having several interesting properties going for it, :term:`OCB mode` has
 not received as much attention as some of the alternatives; one of the
 main reasons being that it is patent encumbered. Even though a number of
 patent licenses are available, including a free-of-charge one for open
 source software, this does not appear to have significantly impacted how
-much OCB mode is used in the field. :cite:`ocb:license`
+much :term:`OCB mode` is used in the field. :cite:`ocb:license`
 
 GCM mode
 ~~~~~~~~
@@ -619,14 +619,14 @@ GCM mode
 
 Usually, you will want to use a much more high level cryptosystem, such as OpenPGP, NaCl or TLS.
 
-GCM mode is an AEAD mode with an unfortunate case of RAS (redundant
+:term:`GCM mode` is an :term:`AEAD mode` with an unfortunate case of RAS (redundant
 acronym syndrome) syndrome: GCM itself stands for “Galois Counter Mode”.
 It is formalized in a NIST Special Publication :cite:`gcm`
 and roughly boils down to a combination of classical CTR mode with a
-Carter-Wegman MAC. That MAC can be used by itself as well, which is
-called GMAC.
+:term:`Carter-Wegman MAC`. That MAC can be used by itself as well, which is
+called :term:`GMAC`.
 
 Authentication
 ^^^^^^^^^^^^^^
 
-GCM mode (and by extension GMAC)
+:term:`GCM mode` (and by extension :term:`GMAC`)

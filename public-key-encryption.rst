@@ -6,14 +6,14 @@ Public-key encryption
 Description
 ~~~~~~~~~~~
 
-So far, we have only done secret-key encryption. Suppose, that you could
+So far, we have only done :term:`secret-key encryption`. Suppose, that you could
 have a cryptosystem that didn't involve a single secret key, but instead
 had a key pair: one public key, which you freely distribute, and a
 private one, which you keep to yourself.
 
 People can encrypt information intended for you by using your public
 key. The information is then impossible to decipher without your private
-key. This is called public-key encryption.
+key. This is called :term:`public-key encryption`.
 
 For a long time, people thought this was impossible. However, starting
 in the 1970s, such algorithms started appearing. The first publicly
@@ -22,12 +22,12 @@ MIT: Ron Rivest, Adi Shamir and Leonard Adleman. The algorithm they
 published is still the most common one today, and carries the first
 letters of their last names: RSA.
 
-public-key algorithms aren't limited to encryption. In fact, you've
-already seen a public-key algorithm in this book that isn't directly
+:term:`public-key algorithm`\s aren't limited to encryption. In fact, you've
+already seen a :term:`public-key algorithm` in this book that isn't directly
 used for encryption. There are actually three related classes of
-public-key algorithms:
+:term:`public-key algorithm`\s:
 
-#. Key exchange algorithms, such as Diffie-Hellman, which allow you to
+#. :term:`Key exchange <key exchange>` algorithms, such as Diffie-Hellman, which allow you to
    agree on a shared secret across an insecure medium.
 #. Encryption algorithms, such as the ones we'll discuss in this
    chapter, which allow people to encrypt without having to agree on a
@@ -40,17 +40,17 @@ public-key algorithms:
 Why not use public-key encryption for everything?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-At face value, it seems that public-key encryption algorithms obsolete
-all our previous secret-key encryption algorithms. We could just use
+At face value, it seems that :term:`public-key encryption` algorithms obsolete
+all our previous :term:`secret-key encryption` algorithms. We could just use
 public key encryption for everything, avoiding all the added complexity
-of having to do key agreement for our symmetric algorithms. However,
+of having to do :term:`key agreement` for our symmetric algorithms. However,
 when we look at practical cryptosystems, we see that they're almost
-always *hybrid* cryptosystems: while public-key algorithms play a very
+always *hybrid* cryptosystems: while :term:`public-key algorithm`\s play a very
 important role, the bulk of the encryption and authentication work is
 done by secret-key algorithms.
 
 By far the most important reason for this is performance. Compared to
-our speedy stream ciphers (native or otherwise), public-key encryption
+our speedy :term:`stream cipher`\s (native or otherwise), :term:`public-key encryption`
 mechanisms are extremely slow. RSA is limited to at most its key size,
 which for 2048-bit means 256 bytes. Under these circumstances encryption
 takes 0.29 megacycles, and decryption takes a whopping 11.12 megacycles.
@@ -73,7 +73,7 @@ RSA
 ~~~
 
 As we already mentioned, RSA is one of the first practical
-public-key encryption schemes. It remains the most common one to this
+:term:`public-key encryption` schemes. It remains the most common one to this
 day.
 
 Encryption and decryption
@@ -174,7 +174,7 @@ complete cryptosystems, it implements its own, using RSA and AES
 provided by a third party package.
 
 .. [#]
-   So, there's Salt the provisioning system, salts the things used in
+   So, there's Salt the provisioning system, :term:`salt`\s the things used in
    broken password stores, NaCl pronounced “salt” the cryptography
    library, and NaCl which runs native code in some browsers, and
    probably a bunch I'm forgetting. Can we stop naming things after it?
@@ -260,16 +260,16 @@ TODO: This
 Remaining problem: unauthenticated encryption
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Most public-key encryption schemes can only encrypt small chunks of data
+Most :term:`public-key encryption` schemes can only encrypt small chunks of data
 at a time, much smaller than the messages we want to be able to send.
 They are also generally quite slow, much slower than their symmetric
 counterparts. Therefore public-key cryptosystems are almost always used
 in conjunction with secret-key cryptosystems.
 
-When we discussed stream ciphers, one of the remaining issues that we
+When we discussed :term:`stream cipher`\s, one of the remaining issues that we
 were facing was that we still had to exchange secret keys with a large
 number of people. With public-key cryptosystems such as public
-encryption and key exchange protocols, we've now seen two ways that we
+encryption and :term:`key exchange` protocols, we've now seen two ways that we
 can solve that problem. That means that we can now communicate with
 anyone, using only public information, completely secure from
 eavesdroppers.
@@ -292,7 +292,7 @@ well as encrypt our secret communications. This is done by adding extra
 information to the message that only the sender could have computed.
 Just like encryption, authentication comes in both private-key
 (symmetric) and public-key (asymmetric) forms. Symmetric authentication
-schemes are typically called message authentication codes, while the
+schemes are typically called :term:`message authentication code`\s, while the
 public-key equivalent is typically called a signature.
 
 First, we will introduce a new cryptographic primitive: hash functions.

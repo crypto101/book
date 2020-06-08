@@ -8,7 +8,7 @@ Key exchange
 Description
 ~~~~~~~~~~~
 
-Key exchange protocols attempt to solve a problem that, at first glance,
+:term:`Key exchange <key exchange>` protocols attempt to solve a problem that, at first glance,
 seems impossible. Alice and Bob, who've never met before, have to agree
 on a secret value. The channel they use to communicate is insecure:
 we're assuming that everything they send across the channel is being
@@ -22,7 +22,7 @@ secret.
 
 That protocol is called Diffie-Hellman, named after Whitfield Diffie and
 Martin Hellman, the two cryptographic pioneers who discovered it. They
-suggested calling the protocol Diffie-Hellman-Merkle key exchange, to
+suggested calling the protocol Diffie-Hellman-Merkle :term:`key exchange`, to
 honor the contributions of Ralph Merkle. While his contributions
 certainly deserve honoring, that term hasn't really caught on. For the
 benefit of the reader we'll use the more common term.
@@ -54,7 +54,7 @@ mixing colors. We can mix colors according to the following rules:
 We'll demonstrate that with a mixing function like this one, we can
 produce a secret color only known by Alice and Bob. Later, we'll simply
 have to describe the concrete implementation of those functions to get a
-concrete key exchange scheme.
+concrete :term:`key exchange` scheme.
 
 To illustrate why this remains secure in the face of eavesdroppers,
 we'll walk through an entire exchange with Eve, the eavesdropper, in the

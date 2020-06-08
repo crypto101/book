@@ -11,11 +11,11 @@ Description
 A key derivation function is a function that derives one or more secret
 values (the *keys*) from one secret value.
 
-Many key derivation functions can also take a (usually optional) salt
+Many key derivation functions can also take a (usually optional) :term:`salt`
 parameter. This parameter causes the key derivation function to not
 always return the same output keys for the same input secret. As with
-other cryptosystems, salts are fundamentally different from the secret
-input: salts generally do not have to be secret, and can be re-used.
+other cryptosystems, :term:`salt`\s are fundamentally different from the secret
+input: :term:`salt`\s generally do not have to be secret, and can be re-used.
 
 Key derivation functions can be useful, for example, when a
 cryptographic protocol starts with a single secret value, such as a
@@ -48,7 +48,7 @@ derivation functions in this category.
 
 On the other hand, the secret value could also have a high entropy
 content. For example, it could be a shared secret derived from a
-Diffie-Hellman key agreement protocol, or an API key consisting of
+Diffie-Hellman :term:`key agreement` protocol, or an API key consisting of
 cryptographically random bytes (we'll discuss cryptographically secure
 random number generation in the next chapter). In that case, it isn't
 necessary to have a key derivation function that's hard to compute: even
@@ -83,7 +83,7 @@ designed to be secure for low-entropy inputs such as passwords.
 HKDF exists to give people an appropriate, off-the-shelf key derivation
 function. Previously, key derivation was often something that was done
 ad hoc for a particular standard. Usually these ad hoc solutions did not
-have the extra provisions HKDF does, such as salts or the optional info
+have the extra provisions HKDF does, such as :term:`salt`\s or the optional info
 parameter (which we'll discuss later in this section); and that's only
 in the best case scenario where the KDF wasn't fundamentally broken to
 begin with.
@@ -109,19 +109,19 @@ The extraction phase is responsible for extracting a small amount of
 data with a high entropy content from a potentially large amount of data
 with a smaller entropy density.
 
-The extraction phase just uses HMAC with a salt:
+The extraction phase just uses HMAC with a :term:`salt`:
 
 .. code:: python
 
    def extract(salt, data):
        return hmac(salt, data)
 
-The salt value is optional. If the salt is not specified, a string of
+The :term:`salt` value is optional. If the :term:`salt` is not specified, a string of
 zeroes equal to the length of the hash function's output is used. While
-the salt is technically optional, the designers stress its importance,
+the :term:`salt` is technically optional, the designers stress its importance,
 because it makes the independent uses of the key derivation function
 (for example, in different applications, or with different users)
-produce independent results. Even a fairly low-entropy salt can already
+produce independent results. Even a fairly low-entropy :term:`salt` can already
 contribute significantly to the security of the key derivation function.
 :cite:`rfc5869` :cite:`hkdf`
 
@@ -151,7 +151,7 @@ extraction phase is expanded into as much data as is required.
 
 The expansion step is also quite simple: chunks of data are produced
 using HMAC, this time with the extracted secret, not with the public
-salt, until enough bytes are produced. The data being HMACed is the
+:term:`salt`, until enough bytes are produced. The data being HMACed is the
 previous output (starting with an empty string), an “info” parameter (by
 default also the empty string), and a counter byte that counts which
 block is currently being produced.
@@ -184,11 +184,11 @@ block is currently being produced.
 
        return "".join(outputs)[:desired_length]
 
-Like the salt in the extraction phase, the “info” parameter is entirely
+Like the :term:`salt` in the extraction phase, the “info” parameter is entirely
 optional, but can actually greatly increase the security of the
 application. The “info” parameter is intended to contain some
 application-specific context in which the key derivation function is
-being used. Like the salt, it will cause the key derivation function to
+being used. Like the :term:`salt`, it will cause the key derivation function to
 produce different values in different contexts, further increasing its
 security. For example, the info parameter may contain information about
 the user being dealt with, the part of the protocol the key derivation

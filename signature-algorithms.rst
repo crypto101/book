@@ -9,8 +9,8 @@ Description
 A signature algorithm is the public-key equivalent of a message
 authentication code. It consists of three parts:
 
-#. a key generation algorithm, which can be shared with other public-key
-   algorithms
+#. a key generation algorithm, which can be shared with other
+   :term:`public-key algorithm`\s
 #. a signature generation algorithm
 #. a signature verification algorithm
 
@@ -19,7 +19,7 @@ private key, we produce a value based on the message, usually using a
 cryptographic hash function. Anyone can then use the public key to
 retrieve that value, compute what the value should be from the message,
 and compare the two to verify. The obvious difference between this and
-public-key encryption is that in signing, the private key is used to
+:term:`public-key encryption` is that in signing, the private key is used to
 produce the message (in this case the signature) and the public key is
 used to interpret it, which is the opposite of how encryption and
 decryption work.
@@ -143,11 +143,11 @@ implementation mistake results in a broken scheme.
 In particular, the choice of the signature parameter :math:`k` is
 critical. The requirements for this number are among the strictest of
 all random numbers in cryptographic algorithms. For example, many
-algorithms require a nonce. A nonce just has to be unique: you can use
+algorithms require a :term:`nonce`. A :term:`nonce` just has to be unique: you can use
 it once, and then you can never use it again. It doesn't have to be
-secret. It doesn't even have to be unpredictable. A nonce can be
+secret. It doesn't even have to be unpredictable. A :term:`nonce` can be
 implemented by a simple counter, or a monotonic clock. Many other
-algorithms, such as CBC mode, use an initialization vector. It doesn't
+algorithms, such as :term:`CBC mode`, use an initialization vector. It doesn't
 have to be unique: it only has to be unpredictable. It also doesn't have
 to be secret: initialization vectors are typically tacked on to the
 ciphertext. DSA's requirements for the :math:`k` value are a combination
@@ -275,7 +275,7 @@ TODO: explain (see #53)
 
 As with regular DSA, the choice of :math:`k` is extremely critical.
 There are attacks that manage to recover the signing key using a few
-thousand signatures when only a few bits of the nonce leak.
+thousand signatures when only a few bits of the :term:`nonce` leak.
 :cite:`demulder:ecdsa`
 
 Repudiable authenticators

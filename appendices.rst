@@ -11,7 +11,7 @@ Modular arithmetic
 ------------------
 
 Modular arithmetic is used for many public key cryptosystems, including
-public-key encryption algorithms like RSA and key exchange protocols
+:term:`public-key encryption` algorithms like RSA and key exchange protocols
 like Diffie-Hellman.
 
 Modular arithmetic is something most people actually already understand,

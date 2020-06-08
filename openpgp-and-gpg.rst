@@ -25,7 +25,7 @@ Like TLS, OpenPGP is a hybrid cryptosystem. Users have key pairs
 consisting of a public key and a private key. Public key algorithms are
 used both for signing and encryption. Symmetric key algorithms are used
 to encrypt the message body; the symmetric key itself is protected using
-public-key encryption. This also makes it easy to encrypt a message for
+:term:`public-key encryption`. This also makes it easy to encrypt a message for
 multiple recipients: only the secret key has to be encrypted multiple
 times.
 

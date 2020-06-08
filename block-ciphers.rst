@@ -12,7 +12,7 @@ Block ciphers
 Description
 ~~~~~~~~~~~
 
-A block cipher is an algorithm that allows us to encrypt blocks of a
+A :term:`block cipher` is an algorithm that allows us to encrypt blocks of a
 fixed length. It provides an encryption function :math:`E` that turns
 plaintext blocks :math:`P` into ciphertext blocks :math:`C`, using a
 secret key :math:`k`:
@@ -24,7 +24,7 @@ secret key :math:`k`:
 The plaintext and ciphertext blocks are sequences of bits. They are
 always the same size as one another, and that size is fixed by the block
 cipher: it's called the block cipher's *block size*. The set of all
-possible keys is called the keyspace.
+possible keys is called the :term:`keyspace`.
 
 Once we've encrypted plaintext blocks into ciphertext blocks, they later
 have to be decrypted again to recover the original plaintext block. This
@@ -42,10 +42,10 @@ Or, in blocks:
 .. figure:: Illustrations/BlockCipher/BlockCipher.svg
    :align: center
 
-Block ciphers are an example of a symmetric-key encryption scheme, also
-known as a secret-key encryption scheme. This means that the same secret
+Block ciphers are an example of a :term:`symmetric-key encryption` scheme, also
+known as a :term:`secret-key encryption` scheme. This means that the same secret
 key is used for both encryption and decryption. We will contrast this
-with public-key encryption algorithms, which have a distinct key for
+with :term:`public-key encryption` algorithms, which have a distinct key for
 encryption and decryption, later in the book.
 
 A block cipher is a *keyed permutation*. It's a *permutation*, because
@@ -207,7 +207,7 @@ them only on reduced-round versions of AES
    related key attack, these attacks aren't considered practical
    concerns. In practice cryptographic keys are generated via a
    cryptographically secure pseudorandom number generator, or a
-   similarly secure key agreement scheme or key derivation scheme (we'll
+   similarly secure :term:`key agreement` scheme or key derivation scheme (we'll
    see more about those later). Therefore, the odds of selecting two
    such related keys by accident is nonexistent. These attacks are
    interesting from an academic perspective: they can help provide
@@ -220,7 +220,7 @@ A closer look at Rijndael
 .. advanced::
 
 AES consists of several independent steps. At a high level, AES is a
-substitution-permutation network.
+:term:`substitution-permutation network`.
 
 Key schedule
 ''''''''''''
@@ -336,7 +336,7 @@ improve and processing power grows.
 
 Far better alternatives, such as AES, are available. Not only are they
 more secure than 3DES, they are also generally much, much faster. On the
-same hardware and in the same mode of operation (we'll explain what that
+same hardware and in the same :term:`mode of operation` (we'll explain what that
 means in the next chapter), AES-128 only takes 12.6 cycles per byte,
 while 3DES takes up to 134.5 cycles per byte.
 :cite:`cryptopp:bench` Despite being worse from a security

@@ -8,9 +8,9 @@ Stream ciphers
 Description
 ~~~~~~~~~~~
 
-A stream cipher is a symmetric-key encryption algorithm that encrypts a
+A :term:`stream cipher` is a :term:`symmetric-key encryption` algorithm that encrypts a
 stream of bits. Ideally, that stream could be as long as we'd like;
-real-world stream ciphers have limits, but they are normally
+real-world :term:`stream cipher`\s have limits, but they are normally
 sufficiently large that they don't pose a practical problem.
 
 .. _ECB mode:
@@ -18,7 +18,7 @@ sufficiently large that they don't pose a practical problem.
 A naive attempt with block ciphers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Let's try to build a stream cipher using the tools we already have.
+Let's try to build a :term:`stream cipher` using the tools we already have.
 Since we already have block ciphers, we could simply divide an incoming
 stream into different blocks, and encrypt each block:
 
@@ -30,7 +30,7 @@ stream into different blocks, and encrypt each block:
    \overbrace{\mathtt{APOHGMMW}} & \overbrace{\mathtt{PVMEHQOM}} & \overbrace{\mathtt{MEEZSNFM}} & ...
    \end{matrix}
 
-This scheme is called ECB mode (Electronic Code Book Mode), and it is
+This scheme is called :term:`ECB mode` (Electronic Code Book Mode), and it is
 one of the many ways that block ciphers can be used to construct stream
 ciphers. Unfortunately, while being very common in home-grown
 cryptosystems, it poses very serious security flaws. For example, in ECB
@@ -50,11 +50,11 @@ would be able to decrypt anything. By dividing the ciphertext stream up
 into blocks, an attacker would only be able to see that a ciphertext
 block, and therefore a plaintext block, was repeated.
 
-We'll now illustrate the many flaws of ECB mode with two attacks. First,
+We'll now illustrate the many flaws of :term:`ECB mode` with two attacks. First,
 we'll exploit the fact that repeating plaintext blocks result in
 repeating ciphertext blocks, by visually inspecting an encrypted image.
 Then, we'll demonstrate that attackers can often decrypt messages
-encrypted in ECB mode by communicating with the person performing the
+encrypted in :term:`ECB mode` by communicating with the person performing the
 encryption.
 
 Visual inspection of an encrypted stream
@@ -76,7 +76,7 @@ image [#]_. We'll then visually inspect the different outputs.
 .. figure:: ./Illustrations/ECB/ecb-matrix.svg
 
    Plaintext image with ciphertext images under idealized
-   encryption and ECB mode encryption with various block sizes.
+   encryption and :term:`ECB mode` encryption with various block sizes.
    Information about the macro-structure of the image clearly leaks.
    This becomes less apparent as block sizes increase, but only at
    block sizes far larger than typical block ciphers. Only the first
@@ -109,22 +109,22 @@ Encryption oracle attack
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 In the previous section, we've focused on how an attacker can inspect a
-ciphertext encrypted using ECB mode. That's a *passive*, ciphertext-only
+ciphertext encrypted using :term:`ECB mode`. That's a *passive*, ciphertext-only
 attack. It's passive because the attacker doesn't really interfere in
 any communication; they're simply examining a ciphertext. In this
 section, we'll study a different, *active* attack, where the attacker
 actively communicates with their target. We'll see how the active attack
-can enable an attacker to decrypt ciphertexts encrypted using ECB mode.
+can enable an attacker to decrypt ciphertexts encrypted using :term:`ECB mode`.
 
-To do this, we'll introduce a new concept called an oracle. Formally
-defined oracles are used in the study of computer science, but for our
-purposes it's sufficient to just say that an oracle is something that
+To do this, we'll introduce a new concept called an :term:`oracle`. Formally
+defined :term:`oracle`\s are used in the study of computer science, but for our
+purposes it's sufficient to just say that an :term:`oracle` is something that
 will compute some particular function for you.
 
-In our case, the oracle will perform a specific encryption for the
-attacker, which is why it's called an encryption oracle. Given some data
-:math:`A` chosen by the attacker, the oracle will encrypt that data,
-followed by a secret suffix :math:`S`, in ECB mode. Or, in symbols:
+In our case, the :term:`oracle` will perform a specific encryption for the
+attacker, which is why it's called an :term:`encryption oracle`. Given some data
+:math:`A` chosen by the attacker, the :term:`oracle` will encrypt that data,
+followed by a secret suffix :math:`S`, in :term:`ECB mode`. Or, in symbols:
 
 .. math::
 
@@ -133,28 +133,28 @@ followed by a secret suffix :math:`S`, in ECB mode. Or, in symbols:
 The secret suffix :math:`S` is specific to this system. The attacker's
 goal is to decrypt it. We'll see that being able to encrypt other
 messages surprisingly allows the attacker to decrypt the suffix. This
-oracle might seem artificial, but is quite common in practice. A simple
+:term:`oracle` might seem artificial, but is quite common in practice. A simple
 example would be a cookie encrypted with ECB, where the prefix :math:`A`
 is a name or an e-mail address field, controlled by the attacker.
 
-You can see why the concept of an oracle is important here: the attacker
+You can see why the concept of an :term:`oracle` is important here: the attacker
 would not be able to compute :math:`C` themselves, since they do not
 have access to the encryption key :math:`k` or the secret suffix
-:math:`S`. The goal of the oracle is for those values to remain secret,
+:math:`S`. The goal of the :term:`oracle` is for those values to remain secret,
 but we'll see how an attacker will be able to recover the secret suffix
 :math:`S` (but not the key :math:`k`) anyway. The attacker does this by
 inspecting the ciphertext :math:`C` for many carefully chosen values of
 the attacker-chosen prefix :math:`A`.
 
-Assuming that an attacker would have access to such an oracle might seem
+Assuming that an attacker would have access to such an :term:`oracle` might seem
 like a very artificial scenario. It turns out that in practice, a lot of
 software can be tricked into behaving like one. Even if an attacker
 can't control the real software as precisely as they can query an
-oracle, the attacker generally isn't thwarted. Time is on their side:
+:term:`oracle`, the attacker generally isn't thwarted. Time is on their side:
 they only have to convince the software to give the answer they want
 *once*. Systems where part of the message is secret and part of the
 message can be influenced by the attacker are actually very common, and,
-unfortunately, so is ECB mode.
+unfortunately, so is :term:`ECB mode`.
 
 Decrypting a block using the oracle
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -180,7 +180,7 @@ will match the ciphertext block :math:`C_{R1}` they remembered earlier.
 
 The attacker can repeat this for the penultimate byte. They submit a
 plaintext :math:`A` that's two bytes shorter than the block size. The
-oracle will encrypt a first block consisting of that :math:`A` followed
+:term:`oracle` will encrypt a first block consisting of that :math:`A` followed
 by the first two bytes of the secret suffix, :math:`s_0s_1`. The
 attacker remembers that block.
 
@@ -209,7 +209,7 @@ an attacker has to try all of the possible blocks, which would be:
 For a typical block size of 16 bytes (or 128 bits), brute forcing would
 mean trying :math:`256^{16}` combinations. That's a huge, 39-digit
 number. It's so large that trying all of those combinations is
-considered impossible. An ECB encryption oracle allows an attacker to do
+considered impossible. An ECB :term:`encryption oracle` allows an attacker to do
 it in at most :math:`256 \cdot 16 = 4096` tries, a far more manageable
 number.
 
@@ -217,9 +217,9 @@ Conclusion
 ^^^^^^^^^^
 
 In the real world, block ciphers are used in systems that encrypt large
-amounts of data all the time. We've seen that when using ECB mode, an
+amounts of data all the time. We've seen that when using :term:`ECB mode`, an
 attacker can both analyze ciphertexts to recognize repeating patterns,
-and even decrypt messages when given access to an encryption oracle.
+and even decrypt messages when given access to an :term:`encryption oracle`.
 
 Even when we use idealized block ciphers with unrealistic properties,
 such as block sizes of more than a thousand bits, an attacker ends up
@@ -234,14 +234,14 @@ problem, it's our ECB construction. Clearly, we need something better.
 Block cipher modes of operation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-One of the more common ways of producing a stream cipher is to use a
+One of the more common ways of producing a :term:`stream cipher` is to use a
 block cipher in a particular configuration. The compound system behaves
-like a stream cipher. These configurations are commonly called
-mode of operations. They aren't specific to a particular block cipher.
+like a :term:`stream cipher`. These configurations are commonly called
+:term:`mode of operation`\s. They aren't specific to a particular block cipher.
 
-ECB mode, which we've just seen, is the simplest such mode of operation.
+:term:`ECB mode`, which we've just seen, is the simplest such :term:`mode of operation`.
 The letters ``ECB`` stand for electronic code book [#]_. For reasons
-we've already gone into, ECB mode is very ineffective. Fortunately,
+we've already gone into, :term:`ECB mode` is very ineffective. Fortunately,
 there are plenty of other choices.
 
 .. [#]
@@ -251,15 +251,15 @@ there are plenty of other choices.
 CBC mode
 ~~~~~~~~
 
-CBC mode, which stands for cipher block chaining, is a very common
-mode of operation where plaintext blocks are XORed with the previous
+:term:`CBC mode`, which stands for cipher block chaining, is a very common
+:term:`mode of operation` where plaintext blocks are XORed with the previous
 ciphertext block before being encrypted by the block cipher.
 
 Of course, this leaves us with a problem for the first plaintext block:
 there is no previous ciphertext block to XOR it with. Instead, we pick
 an IV: a random number that takes the place of the “first” ciphertext in
-this construction. initialization vectors also appear in many other
-algorithms. An initialization vector should be unpredictable; ideally,
+this construction. :term:`initialization vector`\s also appear in many other
+algorithms. An :term:`initialization vector` should be unpredictable; ideally,
 they will be cryptographically random. They do not have to be secret:
 IVs are typically just added to ciphertext messages in plaintext. It may
 sound contradictory that something has to be unpredictable, but doesn't
@@ -267,7 +267,7 @@ have to be secret; it's important to remember that an attacker must not
 be able to predict *ahead of time* what a given IV will be. We will
 illustrate this later with an attack on predictable CBC IVs.
 
-The following diagram demonstrates encryption in CBC mode:
+The following diagram demonstrates encryption in :term:`CBC mode`:
 
 .. figure:: ./Illustrations/CBC/Encryption.svg
    :align: center
@@ -278,10 +278,10 @@ mode instead of encryption mode:
 .. figure:: ./Illustrations/CBC/Decryption.svg
    :align: center
 
-While CBC mode itself is not inherently insecure (unlike ECB mode), its
+While :term:`CBC mode` itself is not inherently insecure (unlike :term:`ECB mode`), its
 particular use in TLS 1.0 was. This eventually led to the BEAST attack,
 which we'll cover in more detail in the section on SSL/TLS. The short
-version is that instead of using unpredictable initialization vectors,
+version is that instead of using unpredictable :term:`initialization vector`\s,
 for example by choosing random IVs, the standard used the previous
 ciphertext block as the IV for the next message. Unfortunately, it turns
 out that attackers figured out how to exploit that property.
@@ -292,7 +292,7 @@ Attacks on CBC mode with predictable IVs
 Suppose there's a database that stores secret user information, like
 medical, payroll or even criminal records. In order to protect that
 information, the server that handles it encrypts it using a strong block
-cipher in CBC mode with a fixed key. For now, we'll assume that that
+cipher in :term:`CBC mode` with a fixed key. For now, we'll assume that that
 server is secure, and there's no way to get it to leak the key.
 
 Mallory gets a hold of all of the rows in the database. Perhaps she did
@@ -350,7 +350,7 @@ wouldn't be encrypted using the same key.
 Attacks on CBC mode with the key as the IV
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Many CBC systems set the key as the initialization vector. This seems
+Many CBC systems set the key as the :term:`initialization vector`. This seems
 like a good idea: you always need a shared secret key already anyway. It
 yields a nice performance benefit, because the sender and the receiver
 don't have to communicate the IV explicitly, they already know the key
@@ -365,7 +365,7 @@ Mallory, an active adversary who can intercept and modify the message,
 can perform a chosen ciphertext attack to recover the key.
 
 Alice turns her plaintext message :math:`P` into three blocks
-:math:`P_1 P_2 P_3` and encrypts it in CBC mode with the secret key
+:math:`P_1 P_2 P_3` and encrypts it in :term:`CBC mode` with the secret key
 :math:`k` and also uses :math:`k` as the IV. She gets a three block
 ciphertext :math:`C = C_1 C_2 C_3`, which she sends to Bob.
 
@@ -420,9 +420,9 @@ what you're doing.
 CBC bit flipping attacks
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-An interesting attack on CBC mode is called a bit flipping attack. Using
+An interesting attack on :term:`CBC mode` is called a bit flipping attack. Using
 a CBC bit flipping attack, attackers can modify ciphertexts encrypted in
-CBC mode so that it will have a predictable effect on the plaintext.
+:term:`CBC mode` so that it will have a predictable effect on the plaintext.
 
 This may seem like a very strange definition of “attack” at first. The
 attacker will not even attempt to decrypt any messages, but they will
@@ -572,7 +572,7 @@ CBC padding attacks
 We can refine CBC bit flipping attacks to trick a recipient into
 decrypting arbitrary messages!
 
-As we've just discussed, CBC mode requires padding the message to a
+As we've just discussed, :term:`CBC mode` requires padding the message to a
 multiple of the block size. If the padding is incorrect, the recipient
 typically rejects the message, saying that the padding was invalid. We
 can use that tiny bit of information about the padding of the plaintext
@@ -595,7 +595,7 @@ To mount this attack, an attacker only needs two things:
 #. A *padding oracle*: a function that takes ciphertexts and tells the
    attacker if the padding was correct
 
-As with the ECB encryption oracle, the availability of a padding oracle
+As with the ECB :term:`encryption oracle`, the availability of a padding oracle
 may sound like a very unrealistic assumption. The massive impact of this
 attack proves otherwise. For a long time, most systems did not even
 attempt to hide if the padding was valid or not. This attack remained
@@ -849,11 +849,11 @@ chapter on message authentication.
 Native stream ciphers
 ~~~~~~~~~~~~~~~~~~~~~
 
-In addition to block ciphers being used in a particular mode of
-operation, there are also “native” stream ciphers algorithms that are
-designed from the ground up to be a stream cipher.
+In addition to block ciphers being used in a particular
+:term:`mode of operation`, there are also “native” :term:`stream cipher`\s algorithms
+that are designed from the ground up to be a :term:`stream cipher`.
 
-The most common type of stream cipher is called a *synchronous* stream
+The most common type of :term:`stream cipher` is called a *synchronous* stream
 cipher. These algorithms produce a long stream of pseudorandom bits from
 a secret symmetric key. This stream, called the keystream, is then XORed
 with the plaintext to produce the ciphertext. Decryption is the
@@ -866,34 +866,34 @@ plaintext.
 
 You can see how this construction looks quite similar to a one-time pad,
 except that the truly random one-time pad has been replaced by a
-pseudorandom stream cipher.
+pseudorandom :term:`stream cipher`.
 
-There are also *asynchronous* or *self-synchronizing* stream ciphers,
+There are also *asynchronous* or *self-synchronizing* :term:`stream cipher`\s,
 where the previously produced ciphertext bits are used to produce the
 current keystream bit. This has the interesting consequence that a
 receiver can eventually recover if some ciphertext bits are dropped.
 This is generally not considered to be a desirable property anymore in
 modern cryptosystems, which instead prefer to send complete,
-authenticated messages. As a result, these stream ciphers are very rare,
+authenticated messages. As a result, these :term:`stream cipher`\s are very rare,
 and we don't talk about them explicitly in this book. Whenever someone
 says “stream cipher”, it's safe to assume they mean the synchronous
 kind.
 
-Historically, native stream ciphers have had their issues. NESSIE, an
+Historically, native :term:`stream cipher`\s have had their issues. NESSIE, an
 international competition for new cryptographic primitives, for example,
-did not result in any new stream ciphers, because all of the
+did not result in any new :term:`stream cipher`\s, because all of the
 participants were broken before the competition ended. RC4, one of the
-most popular native stream ciphers, has had serious known issues for
+most popular native :term:`stream cipher`\s, has had serious known issues for
 years. By comparison, some of the constructions using block ciphers seem
 bulletproof.
 
 Fortunately, more recently, several new cipher algorithms provide new
-hope that we can get practical, secure and performant stream ciphers.
+hope that we can get practical, secure and performant :term:`stream cipher`\s.
 
 RC4
 ~~~
 
-By far the most common native stream cipher in common use on desktop and
+By far the most common native :term:`stream cipher` in common use on desktop and
 mobile devices is RC4.
 
 RC4 is sometimes also called ARCFOUR or ARC4, which stands for *alleged*
@@ -903,13 +903,13 @@ the RC4 trademark) has never acknowledged that it is the real algorithm.
 
 It quickly became popular because it's very simple and very fast. It's
 not just extremely simple to implement, it's also extremely simple to
-apply. Being a synchronous stream cipher, there's little that can go
+apply. Being a synchronous :term:`stream cipher`, there's little that can go
 wrong; with a block cipher, you'd have to worry about things like modes
 of operation and padding. Clocking in at around 13.9 cycles per byte,
 it's comparable to AES-128 in CTR (12.6 cycles per byte) or CBC (16.0
 cycles per byte) modes. AES came out a few years after RC4; when RC4 was
 designed, the state of the art was 3DES, which was excruciatingly slow
-by comparison (134.5 cycles per byte in CTR mode).
+by comparison (134.5 cycles per byte in :term:`CTR mode`).
 :cite:`cryptopp:bench`
 
 An in-depth look at RC4
@@ -1035,7 +1035,7 @@ authenticate the message. We won't discuss these in this section. Right
 now, we're only talking about issues specific to the RC4 algorithm
 itself.
 
-Intuitively, we can understand how an ideal stream cipher would produce
+Intuitively, we can understand how an ideal :term:`stream cipher` would produce
 a stream of random bits. After all, if that's what it did, we'd end up
 in a situation quite similar to that of a one-time pad.
 
@@ -1045,15 +1045,15 @@ in a situation quite similar to that of a one-time pad.
 
 .. figure:: Illustrations/StreamCipher/Synchronous.svg
 
-   A synchronous stream cipher scheme. Note similarity to the one-time pad
+   A synchronous :term:`stream cipher` scheme. Note similarity to the one-time pad
    scheme. The critical difference is that while the one-time pad :math:`k_i` is
    truly random, the keystream :math:`K_i` is only pseudorandom.
 
 
-The stream cipher is ideal if the best way we have to attack it is to
+The :term:`stream cipher` is ideal if the best way we have to attack it is to
 try all of the keys, a process called brute-forcing the key. If there's
 an easier way, such as through a bias in the output bytes, that's a flaw
-of the stream cipher.
+of the :term:`stream cipher`.
 
 Throughout the history of RC4, people have found many such biases. In
 the mid-nineties, Andrew Roos noticed two such flaws:
@@ -1063,7 +1063,7 @@ the mid-nineties, Andrew Roos noticed two such flaws:
 -  The first few bytes of the state are related to the key with a simple
    (linear) relation.
 
-For an ideal stream cipher, the first byte of the keystream should tell
+For an ideal :term:`stream cipher`, the first byte of the keystream should tell
 me nothing about the key. In RC4, it gives me some information about the
 first three bytes of the key. The latter seems less serious: after all,
 the attacker isn't supposed to know the state of the cipher.
@@ -1078,11 +1078,11 @@ showing large biases in the first bytes of the keystream.
 :cite:`fms:rc4` They also showed that knowing even small
 parts of the key would allow attackers to make strong predictions about
 the state and outputs of the cipher. Unlike RC4, most modern stream
-ciphers provide a way to combine a long-term key with a nonce (a number
+ciphers provide a way to combine a long-term key with a :term:`nonce` (a number
 used once), to produce multiple different keystreams from the same
 long-term key. RC4, by itself, doesn't do that. The most common approach
 was also the simplest: concatenate [#]_ the long-term key :math:`k`
-with the nonce :math:`n`: :math:`k \| n`, taking advantage of RC4's
+with the :term:`nonce` :math:`n`: :math:`k \| n`, taking advantage of RC4's
 flexible key length requirements. In this context, concatenation means
 the bits of :math:`n` are appended to the bits of :math:`k`. This scheme
 meant attackers could recover parts of the combined key, eventually
@@ -1097,8 +1097,8 @@ of messages).
 
 WEP, a standard for protecting wireless networks that was popular at the
 time, was heavily affected by this attack, because it used this
-simplistic nonce combination scheme. A scheme where the long-term key
-and the nonce had been securely combined (for example using a key
+simplistic :term:`nonce` combination scheme. A scheme where the long-term key
+and the :term:`nonce` had been securely combined (for example using a key
 derivation function or a cryptographic hash function) wouldn't have had
 this weakness. Many other standards including TLS were therefore not
 affected.
@@ -1128,7 +1128,7 @@ http://www.isg.rhul.ac.uk/tls/RC4_keystream_dist_2_45.txt
 
 The second attack is based on double byte biases anywhere in the
 keystream. It turns out that adjacent bytes of the keystream have an
-exploitable relation, whereas in an ideal stream cipher you would expect
+exploitable relation, whereas in an ideal :term:`stream cipher` you would expect
 them to be completely independent.
 
 ==================== ========================================= =============================
@@ -1150,16 +1150,16 @@ Byte pair            Byte position (mod 256) :math:`i`          Probability
 
 This table may seem a bit daunting at first. The probability expression
 in the rightmost column may look a bit complex, but there's a reason
-it's expressed that way. Suppose that RC4 was a good stream cipher, and
+it's expressed that way. Suppose that RC4 was a good :term:`stream cipher`, and
 all values occurred with equal probability. Then you'd expect the
 probability for any given byte value to be :math:`2^{-8}` since there
-are :math:`2^8` different byte values. If RC4 was a good stream cipher,
+are :math:`2^8` different byte values. If RC4 was a good :term:`stream cipher`,
 two adjacent bytes would each have probability :math:`2^{-8}`, so any
 given pair of two bytes would have probability :math:`2^{-8} \cdot
-2^{-8} = 2^{-16}`. However, RC4 isn't an ideal stream cipher, so these
+2^{-8} = 2^{-16}`. However, RC4 isn't an ideal :term:`stream cipher`, so these
 properties aren't true. By writing the probability in the
 :math:`2^{-16} (1 + 2^{-k})` form, it's easier to see how much RC4 deviates from what you'd
-expect from an ideal stream cipher.
+expect from an ideal :term:`stream cipher`.
 
 So, let's try to read the first line of the table. It says that when the
 first byte :math:`i = 1` of any 256-byte chunk from the cipher is
@@ -1189,7 +1189,7 @@ notably SSL/TLS, in a later chapter).
 Salsa20
 ~~~~~~~
 
-Salsa20 is a newer stream cipher designed by Dan Bernstein. Bernstein is
+Salsa20 is a newer :term:`stream cipher` designed by Dan Bernstein. Bernstein is
 well-known for writing a lot of open source (public domain) software,
 most of which is either directly security related or built with
 information security very much in mind.
@@ -1222,7 +1222,7 @@ per byte for the 12-round version and about 2 cycles per byte for the
 slightly faster still. To put that into comparison, that's more than
 three times faster than RC4 [#rc4-bench]_, approximately three times faster than
 AES-CTR with a 128 bit key at 12.6 cycles per byte, and roughly in the
-ballpark of AES GCM mode [#gcm-mode]_ with specialized hardware instructions.
+ballpark of AES :term:`GCM mode` [#gcm-mode]_ with specialized hardware instructions.
 
 .. [#rc4-bench]
    The quoted benchmarks don't mention RC4 but MARC4, which stands for
@@ -1231,7 +1231,7 @@ ballpark of AES GCM mode [#gcm-mode]_ with specialized hardware instructions.
    weakness in RC4.
 
 .. [#gcm-mode]
-   GCM mode is an authenticated encryption mode, which we will see in
+   :term:`GCM mode` is an authenticated encryption mode, which we will see in
    more detail in a later chapter.
 
 .. _keystream jump:
@@ -1242,8 +1242,8 @@ without computing all previous bits. This can be useful, for example, if
 a large file is encrypted, and you'd like to be able to do random reads
 in the middle of the file. While many encryption schemes require the
 entire file to be decrypted, with Salsa20, you can just select the
-portion you need. Another construction that has this property is a mode
-of operation called CTR mode, which we'll talk about later.
+portion you need. Another construction that has this property is a
+:term:`mode of operation` called :term:`CTR mode`, which we'll talk about later.
 
 This ability to “jump” also means that blocks from Salsa20 can be
 computed independently of one another, allowing for encryption or
@@ -1257,7 +1257,7 @@ fixed-number of constant-time operations. The result is that every block
 is produced with exactly the same number of operations, regardless of
 what the key is.
 
-Both stream ciphers are based on an ARX design. One benefit of ARX
+Both :term:`stream cipher`\s are based on an ARX design. One benefit of ARX
 ciphers is that they are intrinsically constant time. There are no
 secret memory access patterns that might leak information, as with AES.
 These ciphers also perform well on modern CPU architectures without
@@ -1282,24 +1282,24 @@ Salsa20.
 Native stream ciphers versus modes of operation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Some texts only consider native stream ciphers to be stream ciphers.
+Some texts only consider native :term:`stream cipher`\s to be :term:`stream cipher`\s.
 This book emphasizes what the functionality of the algorithm is. Since
-both block ciphers in a mode of operation and a native stream cipher
+both block ciphers in a :term:`mode of operation` and a native :term:`stream cipher`
 take a secret key and can be used to encrypt a stream, and the two can
 usually replace each other in a cryptosystem, we just call both of them
-stream ciphers and are done with it.
+:term:`stream cipher`\s and are done with it.
 
-We will further emphasize the tight link between the two with CTR mode,
-a mode of operation which produces a synchronous stream cipher. While
+We will further emphasize the tight link between the two with :term:`CTR mode`,
+a :term:`mode of operation` which produces a synchronous :term:`stream cipher`. While
 there are also modes of operation (like OFB and CFB) that can produce
-self-synchronizing stream ciphers, these are far less common, and not
+self-synchronizing :term:`stream cipher`\s, these are far less common, and not
 discussed here.
 
 CTR mode
 ~~~~~~~~
 
-CTR mode, short for counter mode, is a mode of operation that works by
-concatenating a nonce with a counter. The counter is incremented with
+:term:`CTR mode`, short for counter mode, is a :term:`mode of operation` that works by
+concatenating a :term:`nonce` with a counter. The counter is incremented with
 each block, and padded with zeroes so that the whole is as long as the
 block size. The resulting concatenated string is run through a block
 cipher. The outputs of the block cipher are then used as the keystream.
@@ -1307,14 +1307,14 @@ cipher. The outputs of the block cipher are then used as the keystream.
 .. figure:: Illustrations/CTR/CTR.svg
    :align: center
 
-   CTR mode: a single nonce :math:`N` with a zero-padded counter :math:`i` is
+   :term:`CTR mode`: a single :term:`nonce` :math:`N` with a zero-padded counter :math:`i` is
    encrypted by the block cipher to produce a keystream block; this block is
    XORed with the plaintext block :math:`P_i` to produce the ciphertext block
    :math:`C_i`.
 
 
 This illustration shows a single input block
-:math:`N \| 00 \ldots \| i`, consisting of nonce :math:`N`, current
+:math:`N \| 00 \ldots \| i`, consisting of :term:`nonce` :math:`N`, current
 counter value :math:`i` and padding, being encrypted by the block cipher
 :math:`E` using key :math:`k` to produce keystream block :math:`S_i`,
 which is then XORed with the plaintext block :math:`P_i` to produce
@@ -1327,17 +1327,17 @@ decryption is the same thing: in both cases you produce the keystream,
 and you XOR either the plaintext or the ciphertext with it in order to
 get the other one.
 
-For CTR mode to be secure, it is critical that nonces aren't reused. If
+For :term:`CTR mode` to be secure, it is critical that :term:`nonce`\s aren't reused. If
 they are, the entire keystream will be repeated, allowing an attacker to
 mount multi-time pad attacks.
 
-This is different from an initialization vector such as the one used by
+This is different from an :term:`initialization vector` such as the one used by
 CBC. An IV has to be unpredictable. An attacker being able to predict a
-CTR nonce doesn't really matter: without the secret key, they have no
+CTR :term:`nonce` doesn't really matter: without the secret key, they have no
 idea what the output of the block cipher (the sequence in the keystream)
 would be.
 
-Like Salsa20, CTR mode has the interesting property that you can jump to
+Like Salsa20, :term:`CTR mode` has the interesting property that you can jump to
 any point in the keystream easily: just increment the counter to that
 point. :ref:`The Salsa20 paragraph on this topic <keystream jump>`
 explains why that might be useful.
@@ -1349,14 +1349,14 @@ encryption and decryption are very easy to compute in parallel.
 Stream cipher bit flipping attacks
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Synchronous stream ciphers, such as native stream ciphers or a block
-cipher in CTR mode, are also vulnerable to a bit flipping attack. It's
+Synchronous :term:`stream cipher`\s, such as native :term:`stream cipher`\s or a block
+cipher in :term:`CTR mode`, are also vulnerable to a bit flipping attack. It's
 similar to CBC bit flipping attacks in the sense that an attacker flips
 several bits in the ciphertext, and that causes some bits to be flipped
 in the plaintext.
 
-This attack is actually much simpler to perform on stream ciphers than
-it is on CBC mode. First of all, a flipped bit in the ciphertext results
+This attack is actually much simpler to perform on :term:`stream cipher`\s than
+it is on :term:`CBC mode`. First of all, a flipped bit in the ciphertext results
 in the same bit being flipped in the plaintext, not the corresponding
 bit in the following block. Additionally, it only affects that bit; in
 CBC bit flipping attacks, the plaintext of the modified block is

@@ -24,8 +24,8 @@ hybrid cryptosystem: it uses both symmetric and asymmetric algorithms in
 unison. For example, asymmetric algorithms such as signature algorithms
 can be used to authenticate peers, while public key encryption
 algorithms or Diffie-Hellman exchanges can be used to negotiate shared
-secrets and authenticate certificates. On the symmetric side, stream
-ciphers (both native ones and block ciphers in a mode of operation) are
+secrets and authenticate certificates. On the symmetric side,
+:term:`stream cipher`\s (both native ones and block ciphers in a :term:`mode of operation`) are
 used to encrypt the actual data being transmitted, and MAC algorithms
 are used to authenticate that data.
 
@@ -255,7 +255,7 @@ supplied in the body of the web page:
           value="TOKEN_VALUE_HERE">
 
 … they can prefix the guess with the known part of that. In this case,
-it's a CSRF token; a random token selected by the server and given to
+it's a :term:`CSRF` token; a random token selected by the server and given to
 the client. This token is intended to prevent malicious third party
 websites from using the ambient authority present in the browser (such
 as session cookies) to make authenticated requests. Without a CSRF
@@ -269,10 +269,10 @@ byte correctly, the ciphertext will be just a little shorter: the
 compression algorithm will notice that it's seen this pattern before,
 and be able to compress the plaintext before encrypting. The plaintext,
 and hence the compressed ciphertext, will therefore be smaller. They can
-do this directly when the connection is using a stream cipher or a
-similar construction such as CTR mode, since they produce ciphertexts
+do this directly when the connection is using a :term:`stream cipher` or a
+similar construction such as :term:`CTR mode`, since they produce ciphertexts
 that are exactly as long as the plaintexts. If the connection is using a
-block-oriented mode such as CBC mode, the difference might get lost in
+block-oriented mode such as :term:`CBC mode`, the difference might get lost in
 the block padding. The attacker can solve that by simply controlling the
 prefix so that the difference in ciphertext size will be an entire
 block.
@@ -292,7 +292,7 @@ require any particularly advanced tools: you only need to convince the
 user to make requests to a vulnerable website, and you only need to be
 able to measure the size of the responses. It's also extremely
 effective: the researchers that published BREACH report being able to
-extract secrets, such as CSRF tokens, within one minute.
+extract secrets, such as :term:`CSRF` tokens, within one minute.
 
 In order to defend against CRIME, disable TLS compression. This is
 generally done in most systems by default. In order to defend against

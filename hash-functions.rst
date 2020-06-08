@@ -132,7 +132,7 @@ function. :cite:`Shattered` In the past methods to cause
 collisions on reduced versions of SHA-1 have been published, including
 one by Xiaoyun Wang. “The SHAppening” demonstrated freestart collisions
 for SHA-1. A freestart collision allows one to pick the initial value
-known as the initialization vector at the start of the compression
+known as the :term:`initialization vector` at the start of the compression
 function. :cite:`cryptoeprint:2015:967`
 
 Once again the hashlib Python module can be used to generate a SHA-1
@@ -298,7 +298,7 @@ The reason rainbow tables were so incredibly effective was because
 everyone was using one of a handful of hash functions. The same password
 would result in the same hash everywhere.
 
-This problem was generally solved by using salts. By mixing (appending
+This problem was generally solved by using :term:`salt`\s. By mixing (appending
 or prepending [#]_) the password with some random value before hashing
 it, you could produce completely different hash values out of the same
 hash function. It effectively turns a hash function into a whole family
@@ -308,38 +308,38 @@ performance properties, except with completely different output values.
 .. [#]
    While you could also do this with XOR, it's needlessly more
    error-prone, and doesn't provide better results. Unless you zero-pad
-   both the password and the salt, you might be truncating either one.
+   both the password and the :term:`salt`, you might be truncating either one.
 
-The salt value is stored next to the password hash in the database. When
-the user authenticates using the password, you just combine the salt
+The :term:`salt` value is stored next to the password hash in the database. When
+the user authenticates using the password, you just combine the :term:`salt`
 with the password, hash it, and compare it against the stored hash.
 
 If you pick a sufficiently large (say, 160 bits/32 bytes),
-cryptographically random salt, you've completely defeated ahead-of-time
+cryptographically random :term:`salt`, you've completely defeated ahead-of-time
 attacks like rainbow tables. In order to successfully mount a rainbow
 table attack, an attacker would have to have a separate table for each
-of those salt values. Since even a single table was usually quite large,
+of those :term:`salt` values. Since even a single table was usually quite large,
 storing a large amount of them would be impossible. Even if an attacker
 would be able to store all that data, they'd still have to compute it
 first. Computing a single table takes a decent amount of time; computing
 :math:`2^{160}` different tables is impossible.
 
-Many systems used a single salt for all users. While that prevented an
+Many systems used a single :term:`salt` for all users. While that prevented an
 ahead-of-time rainbow table attack, it still allowed attackers to attack
-all passwords simultaneously, once they knew the value of the salt. An
-attacker would simply compute a single rainbow table for that salt, and
+all passwords simultaneously, once they knew the value of the :term:`salt`. An
+attacker would simply compute a single rainbow table for that :term:`salt`, and
 compare the results with the hashed passwords from the database. While
-this would have been prevented by using a different salt for each user,
-systems that use a cryptographic hash with a per-user salt are still
+this would have been prevented by using a different :term:`salt` for each user,
+systems that use a cryptographic hash with a per-user :term:`salt` are still
 considered fundamentally broken today; they are just *harder* to crack,
 but not at all secure.
 
-Perhaps the biggest problem with salts is that many programmers were
+Perhaps the biggest problem with :term:`salt`\s is that many programmers were
 suddenly convinced they were doing the right thing. They'd heard of
 broken password storage schemes, and they knew what to do instead, so
 they ignored all talk about how a password database could be
 compromised. They weren't the ones storing passwords in plaintext, or
-forgetting to salt their hashes, or re-using salts for different users.
+forgetting to :term:`salt` their hashes, or re-using :term:`salt`\s for different users.
 It was all of those other people that didn't know what they were doing
 that had those problems. Unfortunately, that's not true. Perhaps that's
 why broken password storage schemes are still the norm.
@@ -347,18 +347,18 @@ why broken password storage schemes are still the norm.
 Modern attacks on weak password systems
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To a modern attack, salts quite simply don't help. Modern attacks take
+To a modern attack, :term:`salt`\s quite simply don't help. Modern attacks take
 advantage of the fact that the hash function being used is easy to
 compute. Using faster hardware, in particular video cards, we can simply
-enumerate all of the passwords, regardless of salt.
+enumerate all of the passwords, regardless of :term:`salt`.
 
 TODO: more concrete performance numbers about GPUs
 
-Salts may make precomputed attacks impossible, but they do very little
-against an attacker that actually knows the salt. One approach you might
-be inclined to take is to attempt to hide the salt from the attacker.
+:term:`Salt <salt>`\s may make precomputed attacks impossible, but they do very little
+against an attacker that actually knows the :term:`salt`. One approach you might
+be inclined to take is to attempt to hide the :term:`salt` from the attacker.
 This typically isn't very useful: if an attacker can manage to access
-the database, attempts to hide the salt are unlikely to be successful.
+the database, attempts to hide the :term:`salt` are unlikely to be successful.
 Like many ineffective home-grown crypto schemes, this only protects
 against an incredibly improbable event. It would be much more useful to
 just use a good password store to begin with, than trying to fix a
