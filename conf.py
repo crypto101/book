@@ -125,6 +125,8 @@ latex_elements = {
         (
             # titles should be black
             "TitleColor={rgb}{0.0,0.0,0.0}",
+            # external links color
+            "OuterLinkColor={rgb}{0.929,0.094,0.588}",
             # set the title font family to bold
             "HeaderFamily={\\bfseries}",
         )
