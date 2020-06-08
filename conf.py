@@ -28,14 +28,7 @@ numfig = True
 source_suffix = ".rst"
 
 # paths to exclude from the document source scan
-exclude_patterns = [
-    "_release",
-    "_build",
-    "_build_*",
-    "Thumbs.db",
-    ".DS_Store",
-    ".venv",
-]
+exclude_patterns = ["_release", "_build", "_build_*", "Thumbs.db", ".DS_Store", ".venv"]
 
 # the name of the root document
 master_doc = "index"
@@ -47,8 +40,14 @@ author = "lvh"
 
 # these can be accessed as |version| and |release| inside the .rst source
 import subprocess
-version = subprocess.check_output(["git", "rev-parse", "--short", "HEAD"]).decode().strip()
-release = subprocess.check_output(["git", "describe"]).decode().strip()
+
+
+def run_command(*args):
+    return subprocess.check_output(args).decode().strip()
+
+
+version = run_command("git", "rev-parse", "--short", "HEAD")
+release = run_command("git", "describe")
 
 # i18n configuration
 locale_dirs = ["locale/"]
@@ -122,12 +121,14 @@ latex_elements = {
     "papersize": "ebook",
     "fncychap": "",
     "extraclassoptions": "table,dvipsnames,oneside,openany",
-    "sphinxsetup": ",".join((
-        # titles should be black
-        "TitleColor={rgb}{0.0,0.0,0.0}",
-        # set the title font family to bold
-        "HeaderFamily={\\bfseries}",
-    )),
+    "sphinxsetup": ",".join(
+        (
+            # titles should be black
+            "TitleColor={rgb}{0.0,0.0,0.0}",
+            # set the title font family to bold
+            "HeaderFamily={\\bfseries}",
+        )
+    ),
     "fontpkg": r"""
 \usepackage{fontspec}
 \defaultfontfeatures{Ligatures=TeX}
