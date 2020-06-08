@@ -148,7 +148,8 @@ utterly broken.
 
 TODO: talk about the FUD in the Linux man page for urandom
 
-.. advanced::
+.. canned_admonition::
+   :from_template: advanced
 
    Since this is a specific cryptographically secure
    pseudorandom number generator algorithm, you don't actually need to
@@ -157,7 +158,8 @@ TODO: talk about the FUD in the Linux man page for urandom
 Yarrow
 ~~~~~~
 
-.. advanced::
+.. canned_admonition::
+   :from_template: advanced
 
 The Yarrow algorithm is a cryptographically secure pseudorandom number
 generator.
@@ -178,7 +180,8 @@ it (slow)
 ``Dual_EC_DRBG``
 ~~~~~~~~~~~~~~~~
 
-.. advanced::
+.. canned_admonition::
+   :from_template: advanced
 
 ``Dual_EC_DRBG`` is a NIST standard for a cryptographically secure
 pseudorandom bit generator. It sparked a large amount of controversy:
@@ -457,7 +460,8 @@ properties, it is *not* cryptographically secure.
 An in-depth look at the Mersenne Twister
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. advanced::
+.. canned_admonition::
+   :from_template: advanced
 
 To demonstrate why Mersenne Twister isn't cryptographically secure,
 we'll take a look at how the algorithm works. Fortunately, it's not very

@@ -377,7 +377,8 @@ other systems: specifically, for any abelian group.
 Deriving the ladder
 ^^^^^^^^^^^^^^^^^^^
 
-.. advanced::
+.. canned_admonition::
+   :from_template: advanced
 
    This section involves a good deal of arithmetic tricks. You might want to get
    out some paper and pencil to follow along.

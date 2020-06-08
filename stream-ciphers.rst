@@ -915,7 +915,8 @@ by comparison (134.5 cycles per byte in :term:`CTR mode`).
 An in-depth look at RC4
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-.. advanced::
+.. canned_admonition::
+   :from_template: advanced
 
 On the other hand, RC4 is incredibly simple, and it may be worth skimming this section.
 
@@ -1025,7 +1026,8 @@ We can express this in Python:
 Attacks
 ^^^^^^^
 
-.. advanced::
+.. canned_admonition::
+   :from_template: advanced
 
 The section on the attacks on RC4 is a good deal more complicated than RC4 itself, so you may want to skip this even if you've read this far.
 

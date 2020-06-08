@@ -61,7 +61,20 @@ to achieve that goal. They're in the book anyway, just in case you're
 curious; but I generally recommend skipping these sections. They'll be
 marked like this:
 
-.. advanced::
+
+.. declare_admonition::
+   :name: advanced
+   :type: attention
+
+   .. figure:: ./Illustrations/Propeller/Propeller.svg
+      :width: 80px
+      :align: left
+
+   This is an optional, in-depth section. It almost certainly won't help you write better software,
+   so feel free to skip it. It is only here to satisfy your inner geek's curiosity.
+
+.. canned_admonition::
+   :from_template: advanced
 
 Development
 -----------

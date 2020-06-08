@@ -473,8 +473,8 @@ cipher, to protect that one-time tag:
 As long as :math:`F` is a secure pseudorandom function, the :term:`nonce`'s
 encryption is totally unpredictable. In the eyes of an attacker, that
 means the XOR operation will randomly flip the bits of the :term:`one-time MAC`
-tag :math:`O(k_2, M)`. Because this masks the real value of the one-time
-MAC tag, the attacker can not perform the algebraic tricks we saw for
+tag :math:`O(k_2, M)`. Because this masks the real value of the :term:`one-time MAC`
+tag, the attacker can not perform the algebraic tricks we saw for
 :term:`one-time MAC`\s recovering the key when it is used more than once.
 
 Keep in mind that while :term:`Carter-Wegman MAC`\s take two distinct keys
@@ -564,7 +564,8 @@ separately:
 OCB mode
 ~~~~~~~~
 
-.. advanced::
+.. canned_admonition::
+   :from_template: advanced
 
 Usually, you will want to use a much more high level cryptosystem, such as OpenPGP, NaCl or TLS.
 
@@ -615,7 +616,8 @@ much :term:`OCB mode` is used in the field. :cite:`ocb:license`
 GCM mode
 ~~~~~~~~
 
-.. advanced::
+.. canned_admonition::
+   :from_template: advanced
 
 Usually, you will want to use a much more high level cryptosystem, such as OpenPGP, NaCl or TLS.
 

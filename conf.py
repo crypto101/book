@@ -16,9 +16,7 @@ extensions = [
     "sphinxcontrib.bibtex",
     "sphinxcontrib.rsvgconverter",
     "sphinx.ext.imgmath",
-    # advanced_admonition is a custom extension to render
-    # the .. advanced:: warnings. the source is in advanced_admonition.py
-    "advanced_admonition",
+    "admonition_templates",
 ]
 
 # number figures
@@ -127,6 +125,8 @@ latex_elements = {
             "TitleColor={rgb}{0.0,0.0,0.0}",
             # external links color
             "OuterLinkColor={rgb}{0.929,0.094,0.588}",
+            # attention admonitions are used by the advanced warnings
+            "attentionBgColor={rgb}{0.694,0.753,0.835}",
             # set the title font family to bold
             "HeaderFamily={\\bfseries}",
         )
@@ -149,11 +149,3 @@ latex_elements = {
 }
 
 latex_additional_files = ["./Illustrations/CC/CC-BY-NC.pdf"]
-
-# the text shown by the ".. advanced::" admonition
-advanced_admonition_text = str(
-    _(
-        "This is an optional, in-depth section. It almost certainly won't help you write better software, "
-        "so feel free to skip it. It is only here to satisfy your inner geek's curiosity."
-    )
-)

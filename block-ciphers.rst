@@ -217,7 +217,8 @@ them only on reduced-round versions of AES
 A closer look at Rijndael
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. advanced::
+.. canned_admonition::
+   :from_template: advanced
 
 AES consists of several independent steps. At a high level, AES is a
 :term:`substitution-permutation network`.

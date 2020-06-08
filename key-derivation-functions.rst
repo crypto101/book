@@ -95,7 +95,8 @@ function you want.
 A closer look at HKDF
 ^^^^^^^^^^^^^^^^^^^^^
 
-.. advanced::
+.. canned_admonition::
+   :from_template: advanced
 
 HKDF consists of two phases. In the first phase, called the *extraction
 phase*, a fixed-length key is extracted from the input entropy. In the
