@@ -4,9 +4,10 @@ from docutils import nodes
 from docutils.parsers.rst import Directive
 from docutils.parsers.rst import directives
 from sphinx.errors import ExtensionError
-
+from copy import copy, deepcopy
 from sphinx.locale import _, __
 from sphinx.util.docutils import SphinxDirective
+from sphinx.transforms import SphinxTransformer
 
 
 class canned_admonition(nodes.Admonition, nodes.Element):
@@ -30,6 +31,9 @@ def depart_canned_admonition_node(self, node):
 
 
 def latex_visit_canned_admonition_node(self, node):
+    node_title = node["title"]
+    if node_title is None:
+        node_title = ""
     self.body.append('\n\\begin{%s}{%s}{%s}' % (node.box_class(), node["type"], node_title))
     if not node_title:
         # when there's no title, remove the spacing
@@ -113,10 +117,26 @@ def find_custom_admonition(admonitions, name):
             return admonition
     return None
 
-
-def process_canned_admonition_nodes(app, doctree, _):
+def process_canned_admonition_nodes(app, doctree, docname):
     """edit the canned_admonition nodes to copy properties from the declaration"""
     env = app.builder.env
+
+    def fixup_node(node):
+        # super dirty hack to get converters to run on stored AST nodes
+        try:
+            # set env.docname during applying post-transforms
+            backup = copy(env.temp_data)
+            env.temp_data['docname'] = docname
+
+            transformer = SphinxTransformer(node)
+            transformer.set_environment(env)
+            transformer.add_transforms(app.registry.get_post_transforms())
+            transformer.apply_transforms()
+        except ExtensionError:
+            import pdb; pdb.post_mortem()
+        finally:
+            env.temp_data = backup
+
 
     for node in doctree.traverse(canned_admonition):
         template_node_name = node["template"]
@@ -130,14 +150,15 @@ def process_canned_admonition_nodes(app, doctree, _):
         template_title = template_node["title"]
         node_title = node["title"]
 
-        for template_node in reversed(list(template_node)):
-            node.insert(0, template_node.deepcopy())
+        for template_node in reversed(template_node.children):
+            node.insert(0, deepcopy(template_node))
 
         title = template_title
         if node_title is not None:
             title = node_title
 
         node["title"] = title
+        fixup_node(node)
 
 
 def register_admonition_declarations(app, doctree):
