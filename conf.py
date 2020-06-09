@@ -69,10 +69,11 @@ html_theme_options = {
 }
 
 html_show_sourcelink = False
-html_static_path = ["_static/custom.css"]
+html_static_path = ["_static"]
 htmlhelp_basename = "crypto101"
-epub_basename = "crypto101"
 
+epub_basename = "crypto101"
+epub_css_files = ["epub_style.css"]
 
 def read_latex_source(name: str) -> str:
     name += ".tex"

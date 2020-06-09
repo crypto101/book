@@ -67,7 +67,7 @@ marked like this:
    :type: attention
 
    .. figure:: ./Illustrations/Propeller/Propeller.svg
-      :width: 80px
+      :width: 80
       :align: left
 
    This is an optional, in-depth section. It almost certainly won't help you write better software,
