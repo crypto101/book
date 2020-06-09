@@ -5,10 +5,16 @@ from docutils.parsers.rst import Directive
 from docutils.parsers.rst import directives
 from sphinx.errors import ExtensionError
 from copy import copy, deepcopy
+import sphinx
 from sphinx.locale import _, __
 from sphinx.util.docutils import SphinxDirective
 from sphinx.transforms import SphinxTransformer
 
+sphinx_version = tuple(int(e) for e in sphinx.__version__.split("."))
+
+has_latex_floats_counter = False
+if sphinx_version >= (2, 1, 0):
+    has_latex_floats_counter = True
 
 class canned_admonition(nodes.Admonition, nodes.Element):
     def box_class(self):
@@ -38,12 +44,14 @@ def latex_visit_canned_admonition_node(self, node):
     if not node_title:
         # when there's no title, remove the spacing
         self.body.append("\n\\vspace{-1.4\\baselineskip}")
-    self.no_latex_floats += 1
+    if has_latex_floats_counter:
+        self.no_latex_floats += 1
 
 
 def latex_depart_canned_admonition_node(self, node):
- 	self.body.append('\\end{%s}\n' % node.box_class())
- 	self.no_latex_floats -= 1
+    self.body.append('\\end{%s}\n' % node.box_class())
+    if has_latex_floats_counter:
+        self.no_latex_floats -= 1
 
 
 ADMONITION_TYPES = ("attention", "caution", "danger", "error", "hint", "important", "note", "tip", "warning", "admonition")
