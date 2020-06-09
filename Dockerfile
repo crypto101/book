@@ -1,21 +1,20 @@
 FROM fedora:32
 
 RUN dnf install -y \
-    findutils \
     git \
     graphviz \
-    inkscape \
     latexmk \
     make \
+    potrace \
     texlive-adjustbox \
     texlive-blindtext \
     texlive-collection-metapost \
+    texlive-framed \
     texlive-context \
     texlive-ctablestack \
     texlive-glossaries \
     texlive-memoir \
     texlive-microtype \
-    texlive-minted \
     texlive-polyglossia \
     texlive-sourcecodepro \
     texlive-sourceserifpro \
@@ -29,13 +28,13 @@ RUN dnf install -y \
     texlive-parskip \
     texlive-needspace \
     texlive-amscls \
-    texlive-times \
     texlive-helvetic \
     texlive-anyfontsize \
     texlive-gnu-freefont \
     texlive-dvisvgm \
     texlive-xindy \
     texlive-idxlayout \
+    texlive-upquote \
     pdf2svg \
     python3-sphinx \
     python3-sphinx-intl \
