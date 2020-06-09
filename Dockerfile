@@ -43,6 +43,10 @@ RUN dnf install -y \
     ghostscript && \
     chmod +x $(readlink -f /usr/bin/mptopdf)
 
+# setup texlive to handle having no home directory
+ENV TEXMFVAR /tmp/texmf-var
+ENV TEXMFCACHE /tmp/texmf-cache
+
 # Add Tini
 ENV TINI_VERSION v0.19.0
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
