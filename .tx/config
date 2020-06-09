@@ -2,122 +2,121 @@
 host = https://www.transifex.com
 
 [crypto101.building-blocks]
-file_filter = locale/<lang>/LC_MESSAGES/building-blocks.po
+file_filter = src/locale/<lang>/LC_MESSAGES/building-blocks.po
 source_file = _build_en/gettext/building-blocks.pot
 source_lang = en
 type = PO
 
 [crypto101.index]
-file_filter = locale/<lang>/LC_MESSAGES/index.po
+file_filter = src/locale/<lang>/LC_MESSAGES/index.po
 source_file = _build_en/gettext/index.pot
 source_lang = en
 type = PO
 
 [crypto101.complete-cryptosystems]
-file_filter = locale/<lang>/LC_MESSAGES/complete-cryptosystems.po
+file_filter = src/locale/<lang>/LC_MESSAGES/complete-cryptosystems.po
 source_file = _build_en/gettext/complete-cryptosystems.pot
 source_lang = en
 type = PO
 
 [crypto101.appendices]
-file_filter = locale/<lang>/LC_MESSAGES/appendices.po
+file_filter = src/locale/<lang>/LC_MESSAGES/appendices.po
 source_file = _build_en/gettext/appendices.pot
 source_lang = en
 type = PO
 
 [crypto101.references]
-file_filter = locale/<lang>/LC_MESSAGES/zreferences.po
+file_filter = src/locale/<lang>/LC_MESSAGES/zreferences.po
 source_file = _build_en/gettext/zreferences.pot
 source_lang = en
 type = PO
 
 [crypto101.foreword]
-file_filter = locale/<lang>/LC_MESSAGES/foreword.po
+file_filter = src/locale/<lang>/LC_MESSAGES/foreword.po
 source_file = _build_en/gettext/foreword.pot
 source_lang = en
 type = PO
 
 [crypto101.block-ciphers]
-file_filter = locale/<lang>/LC_MESSAGES/block-ciphers.po
+file_filter = src/locale/<lang>/LC_MESSAGES/block-ciphers.po
 source_file = _build_en/gettext/block-ciphers.pot
 source_lang = en
 type = PO
 
 [crypto101.exclusive-or]
-file_filter = locale/<lang>/LC_MESSAGES/exclusive-or.po
+file_filter = src/locale/<lang>/LC_MESSAGES/exclusive-or.po
 source_file = _build_en/gettext/exclusive-or.pot
 source_lang = en
 type = PO
 
 [crypto101.glossary-]
-file_filter = locale/<lang>/LC_MESSAGES/glossary.po
+file_filter = src/locale/<lang>/LC_MESSAGES/glossary.po
 source_file = _build_en/gettext/glossary.pot
 source_lang = en
 type = PO
 
 [crypto101.hash-functions]
-file_filter = locale/<lang>/LC_MESSAGES/hash-functions.po
+file_filter = src/locale/<lang>/LC_MESSAGES/hash-functions.po
 source_file = _build_en/gettext/hash-functions.pot
 source_lang = en
 type = PO
 
 [crypto101.key-derivation-functions]
-file_filter = locale/<lang>/LC_MESSAGES/key-derivation-functions.po
+file_filter = src/locale/<lang>/LC_MESSAGES/key-derivation-functions.po
 source_file = _build_en/gettext/key-derivation-functions.pot
 source_lang = en
 type = PO
 
 [crypto101.key-exchange]
-file_filter = locale/<lang>/LC_MESSAGES/key-exchange.po
+file_filter = src/locale/<lang>/LC_MESSAGES/key-exchange.po
 source_file = _build_en/gettext/key-exchange.pot
 source_lang = en
 type = PO
 
 [crypto101.message-authentication-codes]
-file_filter = locale/<lang>/LC_MESSAGES/message-authentication-codes.po
+file_filter = src/locale/<lang>/LC_MESSAGES/message-authentication-codes.po
 source_file = _build_en/gettext/message-authentication-codes.pot
 source_lang = en
 type = PO
 
 [crypto101.off-the-record-messaging]
-file_filter = locale/<lang>/LC_MESSAGES/off-the-record-messaging.po
+file_filter = src/locale/<lang>/LC_MESSAGES/off-the-record-messaging.po
 source_file = _build_en/gettext/off-the-record-messaging.pot
 source_lang = en
 type = PO
 
 [crypto101.openpgp-and-gpg]
-file_filter = locale/<lang>/LC_MESSAGES/openpgp-and-gpg.po
+file_filter = src/locale/<lang>/LC_MESSAGES/openpgp-and-gpg.po
 source_file = _build_en/gettext/openpgp-and-gpg.pot
 source_lang = en
 type = PO
 
 [crypto101.public-key-encryption]
-file_filter = locale/<lang>/LC_MESSAGES/public-key-encryption.po
+file_filter = src/locale/<lang>/LC_MESSAGES/public-key-encryption.po
 source_file = _build_en/gettext/public-key-encryption.pot
 source_lang = en
 type = PO
 
 [crypto101.random-number-generators]
-file_filter = locale/<lang>/LC_MESSAGES/random-number-generators.po
+file_filter = src/locale/<lang>/LC_MESSAGES/random-number-generators.po
 source_file = _build_en/gettext/random-number-generators.pot
 source_lang = en
 type = PO
 
 [crypto101.signature-algorithms]
-file_filter = locale/<lang>/LC_MESSAGES/signature-algorithms.po
+file_filter = src/locale/<lang>/LC_MESSAGES/signature-algorithms.po
 source_file = _build_en/gettext/signature-algorithms.pot
 source_lang = en
 type = PO
 
 [crypto101.ssl-and-tls]
-file_filter = locale/<lang>/LC_MESSAGES/ssl-and-tls.po
+file_filter = src/locale/<lang>/LC_MESSAGES/ssl-and-tls.po
 source_file = _build_en/gettext/ssl-and-tls.pot
 source_lang = en
 type = PO
 
 [crypto101.stream-ciphers]
-file_filter = locale/<lang>/LC_MESSAGES/stream-ciphers.po
+file_filter = src/locale/<lang>/LC_MESSAGES/stream-ciphers.po
 source_file = _build_en/gettext/stream-ciphers.pot
 source_lang = en
 type = PO
-

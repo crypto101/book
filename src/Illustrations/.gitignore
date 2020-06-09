@@ -1,0 +1,3 @@
+*/*.pdf
+*/*.svg
+!CC/CC-BY-NC.pdf

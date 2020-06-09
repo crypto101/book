@@ -5,7 +5,7 @@
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
 SPHINXPROJ    = crypto101
-SOURCEDIR     = .
+SOURCEDIR     = src
 DEFAULT_BUILDDIR = _build_en
 BUILDDIR      ?= $(DEFAULT_BUILDDIR)
 
@@ -35,5 +35,5 @@ tx_pull:
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile
-	make -f Makefile.assets
+	make -C src/ -f Makefile.assets
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
