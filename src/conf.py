@@ -17,10 +17,13 @@ extensions = [
     "sphinxcontrib.rsvgconverter",
     "sphinx.ext.imgmath",
     "admonition_templates",
+    "subfig",
 ]
 
 # number figures
 numfig = True
+numfig_secnum_depth = 2
+numfig_format = {'figure': 'Figure %s', 'table': 'Table %s', 'code-block': 'Code Block %s', "subfigure": "Figure %s"}
 
 # only parse rst files
 source_suffix = ".rst"

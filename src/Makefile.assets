@@ -60,14 +60,12 @@ ASSETS += Illustrations/HMAC/HMAC.svg
 ASSETS += Illustrations/Hashes/HashChain.svg
 
 # .tex assets
-ASSETS += Illustrations/ECB/ecb-matrix.svg
 ASSETS += Illustrations/DiffieHellman/alice-bob-shared-mixed.svg
 ASSETS += Illustrations/DiffieHellman/mixed-secret.svg
 ASSETS += Illustrations/DiffieHellman/alice-bob-eve-secret.svg
 ASSETS += Illustrations/DiffieHellman/alice-bob-secret.svg
 ASSETS += Illustrations/DiffieHellman/alice-bob-eve.svg
 ASSETS += Illustrations/DiffieHellman/alice-bob-eve-mixed.svg
-ASSETS += Illustrations/KeyReuse/keyreuse-matrix.svg
 
 assets: $(ASSETS)
 

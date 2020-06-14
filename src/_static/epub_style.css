@@ -11,3 +11,19 @@ img.align-left, .figure.align-left, object.align-left {
     float: left;
     margin-right: 1em;
 }
+
+.subfigure .caption {
+    margin-top: 0;
+}
+
+.figure.figmatrix > .caption {
+    text-align: left;
+}
+
+div.subfigure {
+    display: inline-block;
+    vertical-align: top;
+    padding-left: 7px;
+    padding-right: 7px;
+    box-sizing: border-box;
+}

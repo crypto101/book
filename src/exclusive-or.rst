@@ -217,11 +217,45 @@ bit information about the plaintexts themselves. We'll illustrate this
 visually with some images from a broken “one-time” pad process, starting
 with :numref:`fig-multitimepad`.
 
+.. figmatrix::
+   :label: fig-multitimepad
+   :width: 0.48
 
-.. _fig-multitimepad:
+   .. subfigure:: ./Illustrations/KeyReuse/Broken.png
+      :alt:
+      :align: center
 
-.. figure:: Illustrations/KeyReuse/keyreuse-matrix.svg
-   :align: center
+      First plaintext.
+
+   .. subfigure:: ./Illustrations/KeyReuse/Crypto.png
+      :alt:
+      :align: center
+
+      Second plaintext.
+
+   .. subfigure:: ./Illustrations/KeyReuse/BrokenEncrypted.png
+      :alt:
+      :align: center
+
+      First ciphertext.
+
+   .. subfigure:: ./Illustrations/KeyReuse/CryptoEncrypted.png
+      :alt:
+      :align: center
+
+      Second ciphertext.
+
+   .. subfigure:: ./Illustrations/KeyReuse/Key.png
+      :alt:
+      :align: center
+
+      Reused key.
+
+   .. subfigure:: ./Illustrations/KeyReuse/CiphertextsXOR.png
+      :alt:
+      :align: center
+
+      XOR of ciphertexts.
 
    Two plaintexts, the re-used key, their respective
    ciphertexts, and the XOR of the ciphertexts. Information about the

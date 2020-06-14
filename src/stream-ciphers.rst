@@ -69,19 +69,57 @@ image [#]_. We'll then visually inspect the different outputs.
    other media, the effect isn't significantly less damning: it's just
    less visual.
 
-.. _fig-ECBDemo5px:
-.. _fig-ECBDemoPlaintext:
-.. _fig-ECBDemoIdealizedCiphertext:
+.. figmatrix::
+   :label: fix-encrypted-ecb
+   :width: 0.48
 
-.. figure:: ./Illustrations/ECB/ecb-matrix.svg
+   .. _fig-ECBDemoPlaintext:
+   .. subfigure:: ./Illustrations/ECB/Plaintext.png
+      :alt: Plaintext image
+      :align: center
+
+      Plaintext image, 2000 by 1400 pixels, 24 bit color depth.
+
+   .. _fig-ECBDemo5px:
+   .. subfigure:: ./Illustrations/ECB/Ciphertext5.png
+      :alt: ECB mode ciphertext, 5 pixel (120 bit) block size.
+      :align: center
+
+      ECB mode ciphertext, 5 pixel (120 bit) block size.
+
+   .. subfigure:: ./Illustrations/ECB/Ciphertext30.png
+      :alt: ECB mode ciphertext, 30 pixel (720 bit) block size.
+      :align: center
+
+      ECB mode ciphertext, 30 pixel (720 bit) block size.
+
+   .. subfigure:: ./Illustrations/ECB/Ciphertext100.png
+      :alt: ECB mode ciphertext, 100 pixel (2400 bit) block size.
+      :align: center
+
+      ECB mode ciphertext, 100 pixel (2400 bit) block size.
+
+   .. subfigure:: ./Illustrations/ECB/Ciphertext400.png
+      :alt: ECB mode ciphertext, 400 pixel (9600 bit) block size.
+      :align: center
+
+      ECB mode ciphertext, 400 pixel (9600 bit) block size.
+
+   .. _fig-ECBDemoIdealizedCiphertext:
+   .. subfigure:: ./Illustrations/ECB/Random.png
+      :alt: Ciphertext under idealized encryption.
+      :align: center
+
+      Ciphertext under idealized encryption.
 
    Plaintext image with ciphertext images under idealized
    encryption and :term:`ECB mode` encryption with various block sizes.
    Information about the macro-structure of the image clearly leaks.
    This becomes less apparent as block sizes increase, but only at
    block sizes far larger than typical block ciphers. Only the first
-   block size (figure :math:`b`, a block size of 5
+   block size (:numref:`fig-ECBDemoIdealizedCiphertext`, a block size of 5
    pixels or 120 bits) is realistic.
+
 
 Because identical blocks of pixels in the plaintext will map to
 identical blocks of pixels in the ciphertext, the global structure of

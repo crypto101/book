@@ -16,3 +16,19 @@ div.admonition.attention {
     background-color: rgb(176, 192, 212);
     border: 1px solid #000;
 }
+
+.subfigure .caption {
+    margin-top: 0;
+}
+
+.figure.figmatrix > .caption {
+    text-align: left;
+}
+
+div.subfigure {
+    display: inline-block;
+    vertical-align: top;
+    padding-left: 7px;
+    padding-right: 7px;
+    box-sizing: border-box;
+}
