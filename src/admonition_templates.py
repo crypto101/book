@@ -188,6 +188,7 @@ def setup(app):
     app.add_node(declare_admonition)
     app.add_node(canned_admonition,
                  html=(visit_canned_admonition_node, depart_canned_admonition_node),
+                 singlehtml=(visit_canned_admonition_node, depart_canned_admonition_node),
                  latex=(latex_visit_canned_admonition_node, latex_depart_canned_admonition_node),
                  text=(visit_canned_admonition_node, depart_canned_admonition_node))
 
