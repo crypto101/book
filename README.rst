@@ -31,30 +31,12 @@ source files into rendered versions of all supported formats.
 Dependencies
 ------------
 
-Due to the high number of dependencies, Using the provided docker container is highly recommanded:
+Due to the high number of dependencies, using docker is highly recommanded:
 
 .. code-block:: sh
 
-   docker build -t crypto101 .
+   docker build -t crypto101 docker/
    docker run --rm -it -v "$(realpath .)":/repo -u "$(id -u)" crypto101 ./make-lang YOUR_LANGUAGE_CODE html latexpdf epub
 
-Here are the dependencies for Ubuntu if you don't want to use docker:
-
-- ``graphviz``
-- ``latexmk``
-- ``make``
-- ``potrace``
-- a huge chunk of ``texlive`` (On Ubuntu, you will need at *least*
-  ``texlive-latex-recommended``, ``texlive-metapost``, ``texlive-xetex``
-  and ``texlive-latex-extra``)
-- ``context`` (for metafun)
-- ``pdf2svg``
-- ``python3-sphinx``
-- ``sphinx-intl``
-- ``python3-sphinxcontrib.bibtex``
-- ``python3-sphinxcontrib.svg2pdfconverter``
-- ``ghostscript``
-- ``xindy``
-- Source Serif Pro
-
- You can also find the dependencies for fedora in the [Dockerfile](Dockerfile).
+You can find the install procedure for the dependencies for `ubuntu <docker/Dockerfile.ubuntu>`_ and `fedora <docker/Dockerfile.fedora>`_ in
+their dedicated dockerfiles.
