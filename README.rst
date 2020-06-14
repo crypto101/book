@@ -25,7 +25,7 @@ into your own language <https://github.com/crypto101/book/issues/372>`_.
 Building
 ========
 
-Run ``make`` in the root directory of the repository to convert the
+Run ``make book`` in the root directory of the repository to convert the
 source files into rendered versions of all supported formats.
 
 Dependencies

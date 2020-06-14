@@ -20,7 +20,7 @@ release_dir="$1"
 mkdir -p "${release_dir}"
 
 for lang in en fr; do
-  ./make-lang "$lang" html latexpdf epub
+  ./make-lang "$lang" book
   tar czf "${release_dir}"/"crypto101-${lang}"_html.tar.gz -C _build_"${lang}"/html .
   ln -f _build_"${lang}"/latex/crypto101.pdf "${release_dir}"/"crypto101-${lang}".pdf
   ln -f _build_"${lang}"/epub/crypto101.epub "${release_dir}"/"crypto101-${lang}".epub

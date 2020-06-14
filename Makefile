@@ -13,7 +13,9 @@ BUILDDIR      ?= $(DEFAULT_BUILDDIR)
 help:
 	@$(SPHINXBUILD) -M help "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
 
-.PHONY: help Makefile
+book: html latexpdf epub
+
+.PHONY: help book Makefile
 
 # Serve _build/html with Python built-in server
 serve: html
