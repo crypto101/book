@@ -14,7 +14,7 @@ about cryptography by lvh_.
 License
 =======
 
-See the LICENSE file.
+See the `LICENSE <LICENSE>`_ file.
 
 Translations
 ============
