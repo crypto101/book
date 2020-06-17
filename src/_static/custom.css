@@ -32,3 +32,16 @@ div.subfigure {
     padding-right: 7px;
     box-sizing: border-box;
 }
+
+dl.citation > dt.label {
+    margin: .4rem 0;
+    font-size: 90%;
+    background: #eee;
+    border-top: solid 3px #bbb;
+    padding: 6px;
+    float: none;
+}
+
+dl.citation > dd {
+    margin-bottom: 2rem;
+}
