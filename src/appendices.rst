@@ -20,7 +20,6 @@ of modular arithmetic using a clock.
 
 .. figure:: ./Illustrations/ModularArithmetic/Clock2.svg
    :align: center
-   :scale: 50%
 
    A clock, pointing to 2.
 
@@ -43,7 +42,6 @@ add 5, and end up with 7, as you can see in :numref:`fig-Clock2Plus5`.
 
 .. figure:: ./Illustrations/ModularArithmetic/Clock2Plus5.svg
    :align: center
-   :scale: 50%
 
    :math:`2 + 5 = 7`, on the clock.
 
@@ -56,7 +54,6 @@ to know what time it was two hours ago, you subtract 2 and end up with
 
 .. figure:: ./Illustrations/ModularArithmetic/Clock10Minus2.svg
    :align: center
-   :scale: 50%
 
    :math:`10 - 2 = 8`, on the clock.
 
