@@ -119,6 +119,15 @@ def purge_declare_admonitions(app, env, docname):
     ]
 
 
+def env_merge_info(app, env, docnames, other) -> None:
+    if not hasattr(other, 'custom_admonitions'):
+        return
+
+    if not hasattr(env, 'custom_admonitions'):
+        env.custom_admonitions = []
+
+    env.custom_admonitions.extend(other.custom_admonitions)
+
 def find_custom_admonition(admonitions, name):
     for admonition in admonitions:
         if admonition["name"] == name:
@@ -197,6 +206,7 @@ def setup(app):
     app.connect('doctree-read', register_admonition_declarations)
     app.connect('doctree-resolved', process_canned_admonition_nodes)
     app.connect('env-purge-doc', purge_declare_admonitions)
+    app.connect('env-merge-info', env_merge_info)
 
     return {
         'version': '0.1',
