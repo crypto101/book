@@ -38,5 +38,9 @@ Due to the high number of dependencies, using docker is highly recommanded:
    docker build -t crypto101 docker/
    docker run --rm -it -v "$(realpath .)":/repo -u "$(id -u)" crypto101 ./make-lang YOUR_LANGUAGE_CODE html latexpdf epub
 
+``YOUR_LANGUAGE_CODE`` must a valid `sphinx language code
+<https://www.sphinx-doc.org/en/master/usage/configuration.html#confval-language>`_,
+like ``en``, ``fr``, ``ko`` or ``zh_CN``.
+
 You can find the install procedure for the dependencies for `ubuntu <docker/Dockerfile.ubuntu>`_ and `fedora <docker/Dockerfile.fedora>`_ in
 their dedicated dockerfiles.
