@@ -1,0 +1,59 @@
+% configure the depth of the table of content
+\setcounter{tocdepth}{1}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\newcommand{\xor}{\oplus}
+\newcommand{\madd}{\boxplus}
+
+% Advanced command definitions
+\usepackage{xparse}
+
+% Figures and subfigures
+\usepackage{float}
+\usepackage{rotating}
+\usepackage{subcaption}
+\usepackage{array}
+\usepackage{calc}
+\usepackage{framed}
+\usepackage{wrapfig}
+\usepackage{longtable}
+\newcolumntype{C}[1]{>{\centering\arraybackslash$$}p{#1}<{$$}}
+\usepackage[export]{adjustbox}
+
+% chapter page configuration
+\usepackage{tikz, blindtext}
+\makechapterstyle{box}{
+  \renewcommand*{\printchaptername}{}
+  \renewcommand*{\printchapternum}{
+    \flushright
+    \begin{tikzpicture}
+      \draw[fill,color=black] (0,0) rectangle (2cm,2cm);
+      \draw[color=white] (1cm,1cm) node { \chapnumfont\thechapter };
+    \end{tikzpicture}
+  }
+  \renewcommand*{\printchaptertitle}[1]{\flushright\chaptitlefont##1}
+}
+\chapterstyle{box}
+
+% Title page dependencies
+\usepackage{geometry}
+\usepackage{titlesec}
+
+% display the index on a single column
+\usepackage[columns=1]{idxlayout}
+
+% on normal pages, get the page number on the right and the chapter name on the left
+\usepackage{fancyhdr}
+\fancypagestyle{normal}{
+  \fancyhf{}
+  \fancyhead[LE,RO]{\thepage}
+  \fancyhead[RE,LO]{\itshape \leftmark}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+
+\usepackage{caption}
+% \captionsetup[figure]{labelfont=it,textfont={bf,it}}
+% change the style of subfigure captions to be centered + italic
+\captionsetup[subfigure]{textfont=it, justification=centering}

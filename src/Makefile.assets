@@ -1,0 +1,96 @@
+# when building, mp2pdf creates a file called mptextmp.mp in the current directory,
+# which prevents building in parallel at this level.
+MAKEFLAGS += -j 1
+
+# .pbm assets
+ASSETS += Illustrations/PGP/WebOfTrustIndirect.svg
+ASSETS += Illustrations/PGP/WebOfTrustDirect.svg
+ASSETS += Illustrations/PGP/WebOfTrustIslands.svg
+ASSETS += Illustrations/DiffieHellman/Alice.svg
+ASSETS += Illustrations/DiffieHellman/BobSecret.svg
+ASSETS += Illustrations/DiffieHellman/Bob.svg
+ASSETS += Illustrations/DiffieHellman/AliceSecret.svg
+ASSETS += Illustrations/DiffieHellman/Plus.svg
+ASSETS += Illustrations/DiffieHellman/AliceMixedSecret.svg
+ASSETS += Illustrations/DiffieHellman/Eve.svg
+ASSETS += Illustrations/DiffieHellman/Base.svg
+ASSETS += Illustrations/DiffieHellman/Arrow.svg
+ASSETS += Illustrations/DiffieHellman/MITM.svg
+ASSETS += Illustrations/DiffieHellman/Equals.svg
+ASSETS += Illustrations/DiffieHellman/BobMixedSecret.svg
+ASSETS += Illustrations/DiffieHellman/Table.svg
+ASSETS += Illustrations/DiffieHellman/SharedSecret.svg
+
+# .dot assets
+ASSETS += Illustrations/BlockCipher/AllNodes.svg
+ASSETS += Illustrations/BlockCipher/Decryption.svg
+ASSETS += Illustrations/BlockCipher/Encryption2.svg
+ASSETS += Illustrations/BlockCipher/Encryption.svg
+
+# .mp assets
+ASSETS += Illustrations/CTR/CTR.svg
+ASSETS += Illustrations/OCB/Encryption.svg
+ASSETS += Illustrations/OCB/Auth.svg
+ASSETS += Illustrations/OAEP/Diagram.svg
+ASSETS += Illustrations/ECBEncryptionOracle/GuessFirst.svg
+ASSETS += Illustrations/ECBEncryptionOracle/GuessSecond.svg
+ASSETS += Illustrations/ECBEncryptionOracle/RememberSecond.svg
+ASSETS += Illustrations/ECBEncryptionOracle/RememberFirst.svg
+ASSETS += Illustrations/AES/SubBytes.svg
+ASSETS += Illustrations/AES/AddRoundKey.svg
+ASSETS += Illustrations/AES/ShiftRows.svg
+ASSETS += Illustrations/AES/MixColumns.svg
+ASSETS += Illustrations/XOR/XOR.svg
+ASSETS += Illustrations/XOR/OTPEve.svg
+ASSETS += Illustrations/XOR/OTP.svg
+ASSETS += Illustrations/XOR/ProgrammableInverter.svg
+ASSETS += Illustrations/BlockCipher/BlockCipher.svg
+ASSETS += Illustrations/Dual_EC_DRBG/Diagram.svg
+ASSETS += Illustrations/AEAD/AEAD.svg
+ASSETS += Illustrations/StreamCipher/Synchronous.svg
+ASSETS += Illustrations/CBC/Encryption.svg
+ASSETS += Illustrations/CBC/Decryption.svg
+ASSETS += Illustrations/CBC/BitFlipping.svg
+ASSETS += Illustrations/CBC/PaddingAttack.svg
+ASSETS += Illustrations/RC4/FindIndex.svg
+ASSETS += Illustrations/RC4/Swap.svg
+ASSETS += Illustrations/RC4/IdentityPermutation.svg
+ASSETS += Illustrations/RC4/PRNGOutput.svg
+ASSETS += Illustrations/HMAC/HMAC.svg
+ASSETS += Illustrations/Hashes/HashChain.svg
+
+# .tex assets
+ASSETS += Illustrations/DiffieHellman/alice-bob-shared-mixed.svg
+ASSETS += Illustrations/DiffieHellman/mixed-secret.svg
+ASSETS += Illustrations/DiffieHellman/alice-bob-eve-secret.svg
+ASSETS += Illustrations/DiffieHellman/alice-bob-secret.svg
+ASSETS += Illustrations/DiffieHellman/alice-bob-eve.svg
+ASSETS += Illustrations/DiffieHellman/alice-bob-eve-mixed.svg
+
+assets: $(ASSETS)
+
+%.svg: %.pdf
+	pdf2svg $< $@
+
+%.pdf: %.pbm
+	potrace -b pdf $<
+
+# %.pdf: %.svg
+# 	inkscape $(realpath $<) --export-pdf=$(addprefix ${CURDIR}/,$@)
+
+%.pdf: %.dot
+	neato -Tpdf $(realpath $<) > $(addprefix ${CURDIR}/,$@)
+
+%.pdf: %.mp
+	cd $(dir $<) && mptopdf --metafun $(notdir $<)
+	mv $(addsuffix -mps.pdf,$(basename $<)) $(addsuffix .pdf,$(basename $<))
+
+
+# compress pdf assets, which otherwise are big enough to make librsvg crash
+GS_QUALITY = ebook
+GS_COMPRESS = gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/$(GS_QUALITY) -dNOPAUSE -dQUIET -dBATCH
+
+%.pdf: %-illustration.tex
+	name=$(notdir $<); cd $(dir $<) && pdflatex $$name && $(GS_COMPRESS) -sOutputFile=$(notdir $@) $${name%.tex}.pdf && rm -f $${name%.tex}.pdf
+
+.PHONY: assets

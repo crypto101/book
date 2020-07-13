@@ -1,0 +1,28 @@
+#!/bin/sh
+
+source_language='en'
+
+project_root="$(dirname "$(realpath "$0")")"
+
+if [ $# -lt 1 ]; then
+    # set foreground color to red
+    tput setaf 1 2>/dev/null
+
+    printf 'Usage: %s LANGUAGE [MAKE OPTIONS]...\n' "$0"
+    printf 'Runs the project makefile with LANGUAGE configured.\n'
+    printf 'LANGUAGE must be a language code such as fr, ko, it, ...\n'
+
+    # reset foreground color
+    tput sgr0 2>/dev/null
+    exit 1
+fi >&2
+
+language="$1"
+shift
+
+if [ "${language}" = "${source_language}" ]; then
+    exec make -C "${project_root}" "$@"
+else
+    export BUILDDIR="_build_${language}"
+    exec make -C "${project_root}" -e SPHINXOPTS="-D language='${language}'" "$@"
+fi

@@ -1,0 +1,27 @@
+#!/bin/sh
+
+set -e
+set -x
+
+if [ $# -ne 1 ]; then
+    # set foreground color to red
+    tput setaf 1 || : 2>/dev/null
+
+    printf 'Usage: %s RELEASE_DIR\n' "$0"
+    printf 'Builds a new release in RELEASE_DIR.\n'
+
+    # reset foreground color
+    tput sgr0 || : 2>/dev/null
+    exit 1
+fi >&2
+
+release_dir="$1"
+
+mkdir -p "${release_dir}"
+
+for lang in en fr; do
+  ./make-lang "$lang" book
+  tar czf "${release_dir}"/"crypto101-${lang}"_html.tar.gz -C _build_"${lang}"/html .
+  ln -f _build_"${lang}"/latex/crypto101.pdf "${release_dir}"/"crypto101-${lang}".pdf
+  ln -f _build_"${lang}"/epub/crypto101.epub "${release_dir}"/"crypto101-${lang}".epub
+done

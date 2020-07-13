@@ -1,0 +1,47 @@
+div.body h5 {
+    font-weight: bold;
+    font-size: 115%;
+}
+
+div.body h6 {
+    font-weight: bold;
+    font-size: 105%;
+}
+
+.figure.align-left {
+    margin-left: 0;
+}
+
+div.admonition.attention {
+    background-color: rgb(176, 192, 212);
+    border: 1px solid #000;
+}
+
+.subfigure .caption {
+    margin-top: 0;
+}
+
+.figure.figmatrix > .caption {
+    text-align: left;
+}
+
+div.subfigure {
+    display: inline-block;
+    vertical-align: top;
+    padding-left: 7px;
+    padding-right: 7px;
+    box-sizing: border-box;
+}
+
+dl.citation > dt.label {
+    margin: .4rem 0;
+    font-size: 90%;
+    background: #eee;
+    border-top: solid 3px #bbb;
+    padding: 6px;
+    float: none;
+}
+
+dl.citation > dd {
+    margin-bottom: 2rem;
+}

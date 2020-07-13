@@ -26,12 +26,12 @@ Crypto101.epub
 *~
 # Source highlighting
 _minted-Crypto101
-# Illustrations, vectorized
-Illustrations/*/*.pdf
 *.mps
 *.mpx
 *.mpo
-# Illustrations that start as PDF
-!Illustrations/CC/CC-BY-NC.pdf
 # OS X stuff
 .DS_Store
+.auctex-auto
+.mypy_cache
+.venv
+_build
