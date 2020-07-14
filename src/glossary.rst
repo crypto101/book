@@ -203,7 +203,7 @@ Glossary
 
    OTR messaging
       Off-the-record messaging, messaging protocol that intends to mimic the
-      properties of a real-live private conversation. Piggy-backs onto existing
+      properties of a real-life private conversation. Piggy-backs onto existing
       instant messaging protocols
 
    cross-site request forgery
