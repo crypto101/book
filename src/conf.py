@@ -6,6 +6,16 @@ import pathlib
 from string import Template
 from sphinx.locale import _
 
+try:
+    # monkey patch the list of nodes to be treated as literal nodes during translation
+    # workaround for https://github.com/sphinx-doc/sphinx/issues/7968
+    import sphinx.transforms.i18n as i18n
+    import docutils.nodes as nodes
+    if nodes.math_block not in i18n.LITERAL_TYPE_NODES:
+        i18n.LITERAL_TYPE_NODES = i18n.LITERAL_TYPE_NODES + (nodes.math_block,)
+except:
+    pass
+
 root = pathlib.Path(__file__).parent
 sys.path.insert(0, str(root))
 
