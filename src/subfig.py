@@ -194,9 +194,10 @@ class FigmatrixDirective(Directive):
                     caption_nodes.extend(child.children)
                     node.remove(child)
 
-            caption = nodes.caption(
-                "".join(e.rawsource for e in caption_nodes), "", *caption_nodes
-            )
+            caption_rawsource = "".join(e.rawsource for e in caption_nodes)
+            caption = nodes.caption(caption_rawsource, "", *caption_nodes)
+            # finding the source file / line is required for i18n
+            caption.source, caption.line = self.state_machine.get_source_and_line(self.lineno)
             node += caption
 
         label = self.options.get("label", None)

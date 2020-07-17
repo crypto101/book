@@ -26,7 +26,7 @@ deploy: html
 
 tx_push:
 	# regenerate the .pot translatable strings files
-	sphinx-build -b gettext . $(DEFAULT_BUILDDIR)/gettext
+	$(SPHINXBUILD) -M gettext "$(SOURCEDIR)" $(DEFAULT_BUILDDIR)
 	# push the strings to transifex
 	tx push -s
 
