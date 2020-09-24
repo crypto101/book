@@ -220,51 +220,51 @@ A closer look at Rijndael
 .. canned_admonition::
    :from_template: advanced
 
-AES consists of several independent steps. At a high level, AES is a
+AES includes several independent steps. At a high level, AES is a
 :term:`substitution-permutation network`.
 
 Key schedule
 ''''''''''''
 
-AES requires separate keys for each round in the next steps. The key
-schedule is the process which AES uses to derive 128-bit keys for each
+The next steps show how AES requires separate keys for each round. In the key
+schedule process, AES derives 128-bit keys for each
 round from one master key.
 
-First, the key is separated into 4 byte columns. The key is rotated and
-then each byte is run through an S-box (substitution box) that maps it
+First, the key separates into 4 byte columns. The key rotates and
+each byte runs through an S-box (substitution box), which maps it
 to something else. Each column is then XORed with a round constant. The
 last step is to XOR the result with the previous round key.
 
-The other columns are then XORed with the previous round key to produce
+The next columns are XORed with the previous round key to produce
 the remaining columns.
 
 SubBytes
 ''''''''
 
-SubBytes is the step that applies the S-box (substitution box) in AES.
-The S-box itself substitutes a byte with another byte, and this S-box is
+The AES SubBytes step applies to the S-box (substitution box).
+The S-box substitutes a byte with another byte, and the S-box is
 applied to each byte in the AES state.
 
-It works by taking the multiplicative inverse over the Galois field, and
-then applying an affine transformation so that there are no values
-:math:`x` so that :math:`x \xor S(x) = 0` or :math:`x \xor S(x)=\texttt{0xff}`.
-To rephrase: there are no values of :math:`x` that the substitution box maps to
-:math:`x` itself, or :math:`x` with all bits flipped. This makes the cipher
-resistant to linear cryptanalysis, unlike the earlier DES algorithm,
-whose fifth S-box caused serious security problems.  [#]_
+The SubBytes formula takes the multiplicative inverse over the Galois field. An
+affine transformation applies so that there are no values
+:math:`x`, additionally :math:`x \xor S(x) = 0` or :math:`x \xor S(x)=\texttt{0xff}`.
+To rephrase, there are no values of :math:`x` that the substitution box maps to
+:math:`x` itself, nor to :math:`x` with all bits flipped. This creates a cipher
+resistant to linear cryptanalysis. It is unlike the earlier DES algorithm with
+a fifth S-box that caused serious security problems.  [#]_
 
 .. figure:: Illustrations/AES/SubBytes.svg
    :align: center
 
 .. [#]
-   In its defense, linear attacks were not publicly known back when DES
+   In its defense, linear attacks were publicly unknown back when DES
    was designed.
 
 ShiftRows
 '''''''''
 
-After having applied the SubBytes step to the 16 bytes of the block, AES
-shifts the rows in the :math:`4 \times 4` array:
+After applying the SubBytes step to the 16 bytes of the block, AES
+shifts the rows in a :math:`4 \times 4` array:
 
 .. figure:: Illustrations/AES/ShiftRows.svg
    :align: center
@@ -282,8 +282,8 @@ ShiftRows and MixColumns represent the diffusion properties of AES.
 AddRoundKey
 '''''''''''
 
-As the name implies, the AddRoundKey step adds the bytes from the round
-key produced by the key schedule to the state of the cipher.
+As the name implies, the AddRoundKey step adds bytes from the round
+key to the state of the cipher.
 
 .. figure:: Illustrations/AES/AddRoundKey.svg
    :align: center
@@ -291,90 +291,89 @@ key produced by the key schedule to the state of the cipher.
 DES and 3DES
 ~~~~~~~~~~~~
 
-The DES is one of the oldest block ciphers that saw widespread use. It
+The DES is among the oldest block ciphers that saw widespread use. DES
 was published as an official FIPS standard in 1977. It is no longer
 considered secure, mainly due to its tiny key size of 56 bits. (The DES
-algorithm actually takes a 64 bit key input, but the remaining 8 bits
-are only used for parity checking, and are discarded immediately.) It
-shouldn't be used in new systems. On modern hardware, DES can be brute
+algorithm takes a 64 bit key input, but the remaining 8 bits
+are only used for parity checking, and are immediately discarded. DES
+should not be used in new systems. On modern hardware, DES can be brute
 forced in less than a day. :cite:`sciengines:breakdes`
 
-In an effort to extend the life of the DES algorithm, in a way that
-allowed much of the spent hardware development effort to be reused,
-people came up with 3DES: a scheme where input is first encrypted, then
+In efforts to extend the DES algorithm life in that
+the spent hardware development can be reused,
+people created 3DES. It is a scheme where input is first encrypted, then
 decrypted, then encrypted again:
 
 .. math::
 
    C = E_{DES}(k_1, D_{DES}(k_2, E_{DES}(k_3, p)))
 
-This scheme provides two improvements:
+The scheme provides two key improvements:
 
--  By applying the algorithm three times, the cipher becomes harder to
+-  Applying the algorithm three times makes the cipher harder to
    attack directly through cryptanalysis.
--  By having the option of using many more total key bits, spread over
-   the three keys, the set of all possible keys becomes much larger,
-   making brute-forcing impractical.
+-  The option of using more total key bits spread over
+   the three keys introduces a larger set of all possible keys, and
+   brute-force becomes impractical.
 
-The three keys could all be chosen independently (yielding 168 key
+The three keys can be chosen independently (yielding 168 key
 bits), or :math:`k_3 = k_1` (yielding 112 key bits), or
 :math:`k_1 = k_2 = k_3`, which, of course, is just plain old DES (with
 56 key bits). In the last keying option, the middle decryption reverses
-the first encryption, so you really only get the effect of the last
-encryption. This is intended as a backwards compatibility mode for
+the first encryption. You really only get the effect of the last
+encryption. It is intended as a backwards compatibility mode for
 existing DES systems. If 3DES had been defined as
 :math:`E(k_1, E(k_2, E(k_3, p)))`, it would have been impossible to use
-3DES implementations for systems that required compatibility with DES.
-This is particularly important for hardware implementations, where it is
-not always possible to provide a secondary, regular “single DES”
-interface next to the primary 3DES interface.
+3DES implementations for systems that require DES compatibility.
+This is particularly important for hardware implementations because 
+providing a secondary, regular “single DES”
+interface next to the primary 3DES interface is not always possible.
 
-Some attacks on 3DES are known, reducing their effective security. While
+Some attacks on 3DES are known, which reduces their effective security. While
 breaking 3DES with the first keying option is currently impractical,
-3DES is a poor choice for any modern cryptosystem. The security margin
-is already small, and continues to shrink as cryptographic attacks
+3DES is a poor choice for a modern cryptosystem. The security margin
+is small and continues to shrink as cryptographic attacks
 improve and processing power grows.
 
-Far better alternatives, such as AES, are available. Not only are they
-more secure than 3DES, they are also generally much, much faster. On the
-same hardware and in the same :term:`mode of operation` (we'll explain what that
-means in the next chapter), AES-128 only takes 12.6 cycles per byte,
+Far better alternatives, such as AES, are available. AES are
+more secure than 3DES and much faster. On the
+same hardware and :term:`mode of operation` (we will explain what that
+means in the next chapter), AES-128 only takes 12.6 cycles per byte
 while 3DES takes up to 134.5 cycles per byte.
-:cite:`cryptopp:bench` Despite being worse from a security
-point of view, it is literally an order of magnitude slower.
+:cite:`cryptopp:bench` Despite being risker from a security
+perspective, 3DES are literally an order of magnitude slower.
 
-While more iterations of DES might increase the security margin, they
-aren't used in practice. First of all, the process has never been
-standardized beyond three iterations. Also, the performance only becomes
+While more DES iterations can increase the security margin, they
+are not used in practice for a few reasons. First off, the process is not
+standardized beyond three iterations. Also, the performance becomes
 worse as you add more iterations. Finally, increasing the key bits has
-diminishing security returns, only increasing the security level of the
-resulting algorithm by a smaller amount as the number of key bits
-increases. While 3DES with keying option 1 has a key length of 168 bits,
-the effective security level is estimated at only 112 bits.
+diminishing security returns. The security level slightly increases as the number 
+of key bits increases. While 3DES with keying option 1 has a key length of 168 bits,
+the effective security level is estimated to be only 112 bits.
 
-Even though 3DES is significantly worse in terms of performance and
-slightly worse in terms of security, 3DES is still the workhorse of the
-financial industry. With a plethora of standards already in existence
-and new ones continuing to be created, in such an extremely
-technologically conservative industry where Fortran and Cobol still
-reign supreme on massive mainframes, it will probably continue to be
-used for many years to come, unless there are some large cryptanalytic
-breakthroughs that threaten the security of 3DES.
+Although 3DES is significantly worse in terms of performance and
+slightly worse in terms of security, 3DES is the workhorse of the
+financial industry today. It is likely used for many years to come because
+of the plethora of already existing standards 
+and new ones created. Additionally, the industry is 
+technologically conservative considering that Fortran and Cobol continue
+reigning supreme on massive mainframes. No major change is expected 
+unless there are large cryptanalytic
+breakthroughs threatening the security of 3DES.
 
 .. _remaining-problems-1:
 
 Remaining problems
 ~~~~~~~~~~~~~~~~~~
 
-Even with block ciphers, there are still some unsolved problems.
+Even with block ciphers, unsolved problems linger.
 
-For example, we can only send messages of a very limited length: the
-block length of the block cipher. Obviously, we'd like to be able to
+For example, we can only send very limited length messages: the
+block length of the block cipher. Obviously, we would like to 
 send much larger messages, or, ideally, streams of indeterminate size.
-We'll address this problem with a :ref:`stream cipher <stream-ciphers>`.
+We will address this problem with a :ref:`stream cipher <stream-ciphers>`.
 
-Although we have reduced the key size drastically (from the total size
-of all data ever sent under a one-time pad scheme versus a few bytes for
-most block ciphers), we still need to address the issue of agreeing on
-those few key bytes, potentially over an insecure channel. We'll address
-this problem in a later chapter with a :ref:`key exchange protocol <key-exchange>`.
+We reduced the key size drastically as in the total size of all data ever sent under a 
+one-time pad scheme versus a few bytes for most block ciphers. Further work 
+involves addressing the issue and aligning on those few key bytes, potentially over an insecure channel.  
+We will address this problem in a later chapter with a :ref:`key exchange protocol <key-exchange>`.
