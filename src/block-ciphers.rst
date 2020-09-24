@@ -129,7 +129,7 @@ find the right one.
 
 .. [#]
    The attentive reader may notice that this breaks into the
-   extreme. If all but one of the pairs is known, then you know the
+   extremes: if you know all but one of the pairs, then you know the 
    last one by exclusion.
 
 Our toy illustration block cipher only has 4 bit blocks, or
@@ -144,8 +144,8 @@ numbers from 1 up to and including :math:`n`:
 
    n! = 1 \cdot 2 \cdot 3 \cdot \ldots \cdot (n - 1) \cdot n
 
-Factorials grow incredibly quick. For example, :math:`5! = 120`,
-:math:`10! = 3628800`, and the rate continually increases. The number of permutations
+Factorials grow incredibly quickly. For example, :math:`5! = 120`,
+:math:`10! = 3628800`, and the rate continues to increase. The number of permutations
 in the set of blocks of a cipher with a 128 bit block size is
 :math:`(2^{128})!`. Note that :math:`2^{128}` is large already. It takes 39
 digits to write it down. So :math:`(2^{128})!` is a mind-bogglingly
@@ -156,7 +156,7 @@ fraction of all possible permutations of the blocks, but that is okay.
 The tiny fraction is nowhere near small enough for an attacker to
 just try them all.
 
-Of course, a block cipher should be simple to compute, as
+Of course, a block cipher should be quick to compute, as
 long as it does not sacrifice any of the above properties.
 
 AES
