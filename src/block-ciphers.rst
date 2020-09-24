@@ -45,10 +45,11 @@ key is used for both encryption and decryption. Later in the book, we contrast t
 with :term:`public-key encryption` algorithms, which have a distinct key for
 encryption and decryption.
 
-A block cipher is a *keyed permutation*. First, the key determines exactly which
-blocks are mapped. Second, the permutation aspect allows mapping of all possible blocks 
-to other blocks. Permutation is important because the recipient must map blocks back to the 
-original blocks by analyzing one-to-one.
+A block cipher is a *keyed permutation*. It is a *permutation* because 
+the block cipher maps each possible block to another block. It is 
+also a *keyed* permutation because the key determines exactly which 
+blocks map to which. It is important for the block cipher to be a permutation because the
+recipient must map blocks back to the original blocks.
 
 We illustrate this by looking at a block cipher with an impractical,
 tiny 4-bit block size. :math:`2^4 = 16` possible blocks. Since each
@@ -86,7 +87,7 @@ cipher.
 
 When you decrypt instead of encrypt, the block cipher 
 computes the inverse permutation. In :numref:`fig-BlockCipherDecryption`,
-we get the same illustration. The exception is that all arrowheads point
+we get the same illustration. The difference between the illustrations is that all arrowheads point
 in the opposite direction.
 
 .. _fig-BlockCipherDecryption:
@@ -99,7 +100,7 @@ in the opposite direction.
    reverse.
 
 
-Knowing the key helps in understanding which block maps to other blocks.
+The key defines which blocks map to which blocks. 
 A different key would lead to a different set of
 arrows, as you can see in :numref:`fig-BlockCipherEncryptionDifferentKey`.
 
