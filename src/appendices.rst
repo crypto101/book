@@ -1,4 +1,4 @@
-Ignore this PR, it is a test to see if I can do this thing I want to do entirely inside GitHub.
+Ignore this PR, it is a test to see if I can do this thing I want to do entirely inside GitHub. I have made extra changes later.
 
 Appendices
 ==========
