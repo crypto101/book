@@ -12,54 +12,50 @@ Block ciphers
 Description
 ~~~~~~~~~~~
 
-A :term:`block cipher` is an algorithm that allows us to encrypt blocks of a
-fixed length. It provides an encryption function :math:`E` that turns
-plaintext blocks :math:`P` into ciphertext blocks :math:`C`, using a
+A :term:`block cipher` is an algorithm that encrypts blocks of a
+fixed length. The encryption function :math:`E` transforms
+plaintext blocks :math:`P` into ciphertext blocks :math:`C` by using a
 secret key :math:`k`:
 
 .. math::
 
    C = E(k, P)
 
-The plaintext and ciphertext blocks are sequences of bits. They are
-always the same size as one another, and that size is fixed by the block
-cipher: it's called the block cipher's *block size*. The set of all
-possible keys is called the :term:`keyspace`.
+Plaintext and ciphertext blocks are sequences of bits and always match in size. The 
+block cipher's *block size* is a fixed size. :term:`Keyspace` is the set of all possible keys.
 
-Once we've encrypted plaintext blocks into ciphertext blocks, they later
-have to be decrypted again to recover the original plaintext block. This
-is done using a decryption function :math:`D`, which takes the
+Once we encrypt plaintext blocks into ciphertext blocks, they are later
+decrypted to recover original plaintext block. The original plaintext block
+:math:`P` is produced using a decryption function :math:`D`. It takes the
 ciphertext block :math:`C` and the key :math:`k` (the same one used to
-encrypt the block) as inputs, and produces the original plaintext block
-:math:`P`.
+encrypt the block) as inputs.
 
 .. math::
 
    P = D(k, C)
 
-Or, in blocks:
+Or, visually represented in blocks:
 
 .. figure:: Illustrations/BlockCipher/BlockCipher.svg
    :align: center
 
-Block ciphers are an example of a :term:`symmetric-key encryption` scheme, also
-known as a :term:`secret-key encryption` scheme. This means that the same secret
-key is used for both encryption and decryption. We will contrast this
+A block cipher is an example of a :term:`symmetric-key encryption` scheme, also
+known as a :term:`secret-key encryption` scheme. The same secret
+key is used for both encryption and decryption. Later in the book, we contrast this
 with :term:`public-key encryption` algorithms, which have a distinct key for
-encryption and decryption, later in the book.
+encryption and decryption.
 
-A block cipher is a *keyed permutation*. It's a *permutation*, because
-the block cipher maps every possible block to some other block. It's
-also a *keyed* permutation, because the key determines exactly which
-blocks map to which. It's important that it's a permutation, because the
-recipient needs to be able to map blocks back to the original blocks as
-well, which you can only do if it's one-to-one.
+A block cipher is a *keyed permutation*. It is a *permutation* because 
+the block cipher maps each possible block to another block. It is 
+also a *keyed* permutation because the key determines exactly which 
+blocks map to which. It is important for the block cipher to be a permutation because the
+recipient must map blocks back to the original blocks.
 
-We'll illustrate this by looking at a block cipher with an impractical,
-tiny 4-bit block size, so :math:`2^4 = 16` possible blocks. Since each
-of those blocks maps to a hexadecimal digit, we'll represent the blocks
+We illustrate this by looking at a block cipher with an impractical,
+tiny 4-bit block size. :math:`2^4 = 16` possible blocks. Since each
+of the blocks map to a hexadecimal digit, we represent the blocks
 by that digit. :numref:`fig-BlockCipherBlocks`
-illustrates the blocks that the cipher operates on.
+illustrates blocks that the cipher operates on.
 
 
 .. _fig-BlockCipherBlocks:
@@ -67,33 +63,32 @@ illustrates the blocks that the cipher operates on.
 .. figure:: Illustrations/BlockCipher/AllNodes.svg
    :align: center
 
-   All of the 16 nodes operated on by the block cipher. Each node is designated by a hexadecimal digit.
+   All 16 nodes operated on by the block cipher. Each node is designated by a hexadecimal digit.
 
-Once we select a secret key, the block cipher will use that to determine
-what the encryption of any given block is. We will illustrate that
-relationship with an arrow: the block at the start of the arrow,
-encrypted using :math:`E` under key :math:`k`, is mapped to the block at
-the end of the arrow.
+Once we select a secret key, the block cipher uses it to determine
+the encryption of any given block. We illustrate that
+relationship with an arrow. The tail of the arrow has the block
+encrypted with :math:`E` under key :math:`k` and the arrowhead is mapped to the block.
 
 .. _fig-BlockCipherEncryption:
 
 .. figure:: Illustrations/BlockCipher/Encryption.svg
    :align: center
 
-   An encryption permutation produced by the block cipher under a particular key :math:`k`.
+   An encryption permutation made by a block cipher under a particular key :math:`k`.
 
-In :numref:`fig-BlockCipherEncryption`, you'll notice
-that the permutation isn't just one big cycle: there's a large cycle of
-7 elements, and several smaller cycles of 4, 3 and 2 elements each. It's
+In :numref:`fig-BlockCipherEncryption`, note
+that the permutation is not just one big cycle. It contains a large cycle of
+7 elements, and several smaller cycles of 4, 3 and 2 elements each. It is
 also perfectly possible that an element encrypts to itself. This is to
 be expected when selecting random permutations, which is approximately
 what a block cipher is doing; it doesn't demonstrate a bug in the block
 cipher.
 
-When you're decrypting instead of encrypting, the block cipher just
+When you decrypt instead of encrypt, the block cipher 
 computes the inverse permutation. In :numref:`fig-BlockCipherDecryption`,
-you can see that we get the same illustration, except that all the arrows are
-going in the other direction.
+we get the same illustration. The difference between the illustrations is that all arrowheads point
+in the opposite direction.
 
 .. _fig-BlockCipherDecryption:
 
@@ -101,12 +96,12 @@ going in the other direction.
    :align: center
 
    The decryption permutation produced by the block cipher under the same key
-   :math:`k`: the inverse of the encryption permutation, that is: all the arrows
-   have been reversed.
+   :math:`k`. It is the inverse of the encryption permutation in that all arrowheads
+   reverse.
 
 
-The only way to know which block maps to which other block, is to know
-the key. A different key will lead to a completely different set of
+The key defines which blocks map to which blocks. 
+A different key would lead to a different set of
 arrows, as you can see in :numref:`fig-BlockCipherEncryptionDifferentKey`.
 
 .. _fig-BlockCipherEncryptionDifferentKey:
@@ -114,7 +109,7 @@ arrows, as you can see in :numref:`fig-BlockCipherEncryptionDifferentKey`.
 .. figure:: Illustrations/BlockCipher/Encryption2.svg
    :align: center
 
-   An encryption permutation produced by the block cipher under some other key.
+   An encryption permutation produced by the block cipher under a different key.
 
 In this illustration, you'll even notice that there are two permutations
 of length 1: an element that maps to itself. This is again something to
