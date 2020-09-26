@@ -4,30 +4,30 @@ Exclusive or
 Description
 ~~~~~~~~~~~
 
-Exclusive or, often called “XOR”, is a Boolean [#boolean]_ binary [#binary]_ operator
-that is true when either the first input or the second input, but not
+Exclusive also known as “XOR” is a Boolean [#boolean]_ binary [#binary]_ operator.
+XOR is true when either the first input or the second input, but not
 both, are true.
 
-Another way to think of XOR is as something called a “programmable
-inverter”: one input bit decides whether to invert the other input bit,
-or to just pass it through unchanged. “Inverting” bits is colloquially
-called “flipping” bits, a term we'll use often throughout the book.
+XOR can be thought of as a “programmable
+inverter.” One input bit decides whether to invert another input bit,
+or to pass it through unchanged. “Inverting” bits is colloquially
+called “flipping” bits. Flipping bits is a term we use often throughout the book.
 
 .. figure:: Illustrations/XOR/ProgrammableInverter.svg
    :alt: a programmable inverter
    :align: center
 
-In mathematics and cryptography papers, exclusive or is generally
-represented by a cross in a circle: :math:`\xor`. We'll use the same
+In mathematics and cryptography papers, exclusive or XOR is 
+represented by a cross in a circle: :math:`\xor`. We use the same
 notation in this book:
 
 .. figure:: Illustrations/XOR/XOR.svg
    :align: center
    :alt: XOR
 
-The inputs and output here are named as if we're using XOR as an
+The inputs and outputs are named as if XOR is an
 encryption operation. On the left, we have the plaintext bit
-:math:`P_i`. The :math:`i` is just an index, since we'll usually deal
+:math:`P_i`. The :math:`i` is an index, since we'll usually deal
 with more than one such bit. On top, we have the key bit :math:`k_i`,
 that decides whether or not to invert :math:`P_i`. On the right, we have
 the ciphertext bit, :math:`C_i`, which is the result of the XOR
