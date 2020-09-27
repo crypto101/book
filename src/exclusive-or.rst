@@ -58,16 +58,16 @@ both) is 1:
 
 There are a few useful arithmetic tricks we can derive from that.
 
-#. You can apply XOR in any order:
+#. XOR can be applied in any order:
    :math:`a \xor (b \xor c) = (a \xor b) \xor c`
-#. You can flip the operands around: :math:`a \xor b = b \xor a`
+#. The operands can be flipped around: :math:`a \xor b = b \xor a`
 #. Any bit XOR itself is 0: :math:`a \xor a = 0`. If :math:`a` is 0,
-   then it's :math:`0 \xor 0 = 0`; if :math:`a` is 1, then it's :math:`1 \xor 1 = 0`.
+   then :math:`0 \xor 0 = 0`; if :math:`a` is 1, then :math:`1 \xor 1 = 0`.
 #. Any bit XOR 0 is that bit again: :math:`a \xor 0 = a`. If :math:`a`
-   is 0, then it's :math:`0 \xor 0 = 0`; if :math:`a` is 1, then it's
+   is 0, then :math:`0 \xor 0 = 0`; if :math:`a` is 1, then
    :math:`1 \xor 0 = 1`.
 
-These rules also imply :math:`a \xor b \xor a = b`:
+These rules imply that :math:`a \xor b \xor a = b`:
 
 .. math::
 
@@ -77,21 +77,20 @@ These rules also imply :math:`a \xor b \xor a = b`:
                    & = b               & \; & \text{(fourth rule)}
    \end{aligned}
 
-We'll use this property often when using XOR for encryption; you can
-think of that first XOR with :math:`a` as encrypting, and the second one
-as decrypting.
+We use this property for XOR encryption. The first XOR :math:`a` can be thought of 
+as encrypting, and the second one as decrypting.
 
 Bitwise XOR
 ~~~~~~~~~~~
 
-XOR, as we've just defined it, operates only on single bits or Boolean
-values. Since we usually deal with values comprised of many bits, most
-programming languages provide a “bitwise XOR” operator: an operator that
+XOR, as defined, only operates on single bits or Boolean
+values. Most programming languages provide a “bitwise XOR” operator
+since the values are comprised of many bits. A bitwise operator
 performs XOR on the respective bits in a value.
 
-Python, for example, provides the ``^`` (caret) operator that performs
-bitwise XOR on integers. It does this by first expressing those two
-integers in binary [#binary-integer]_, and then performing XOR on their respective
+As an example, Python has the ``^`` (caret) operator performing
+bitwise XOR on integers. It first expresses two
+integers in binary [#binary-integer]_, and then performs XOR on their respective
 bits. Hence the name, *bitwise* XOR.
 
 .. math::
@@ -111,91 +110,89 @@ bits. Hence the name, *bitwise* XOR.
    \end{aligned}
 
 .. [#binary-integer]
-   Usually, numbers are already stored in binary internally, so this
-   doesn't actually take any work. When you see a number prefixed with
-   “0b”, the remaining digits are a binary representation.
+   Usually, numbers are internally stored in binary, so this
+   does not take any work. When a number is prefixed with
+   “0b” it means that the remaining digits are a binary representation.
 
 One-time pads
 ~~~~~~~~~~~~~
 
 XOR may seem like an awfully simple, even trivial operator. Even so,
-there's an encryption scheme, called a one-time pad, which consists of
-just that single operator. It's called a one-time pad because it
-involves a sequence (the “pad”) of random bits, and the security of the
-scheme depends on only using that pad once. The sequence is called a pad
+there is an encryption scheme. It is called a one-time pad, which consists of
+a single operator with a sequence (“pad”) of random bits. The security of the
+scheme depends on using the pad only once. The sequence is called a pad
 because it was originally recorded on a physical, paper pad.
 
-This scheme is unique not only in its simplicity, but also because it
-has the strongest possible security guarantee. If the bits are truly
-random (and therefore unpredictable by an attacker), and the pad is only
-used once, the attacker learns nothing about the plaintext when they see
+The scheme is unique not only in its simplicity. It
+has the highest security guarantee possible. If the bits are truly
+random, they become unpredictable for an attacker. Additionally, if the pad is only
+used once, the attacker learns nothing about the plaintext when viewing
 a ciphertext. [#msg-exists]_
 
 .. [#msg-exists]
-   The attacker does learn that the message exists, and, in this simple
-   scheme, the length of the message. While this typically isn't too
-   important, there are situations where this might matter, and there
-   are secure cryptosystems to both hide the existence and the length of
+   The attacker does learn that the message exists and the message length
+   in this simple scheme. While this typically is not too
+   important, there are situations where this matters. 
+   Secure cryptosystems exist to both hide the existence and the length of
    a message.
 
 
-Suppose we can translate our plaintext into a sequence of bits. We also
-have the pad of random bits, shared between the sender and the (one or
-more) recipients. We can compute the ciphertext by taking the bitwise
-XOR of the two sequences of bits.
+Suppose we translate our plaintext into a sequence of bits. We 
+have the pad of random bits that are shared between the sender and the recipients (one or
+more). We can compute the ciphertext by taking the bitwise
+XOR from the two sequences of bits.
 
 .. figure:: Illustrations/XOR/OTP.svg
    :align: center
    :alt: OTP
 
-If an attacker sees the ciphertext, we can prove that they will learn
-zero information about the plaintext without the key. This property is
-called *perfect security*. The proof can be understood intuitively by
-thinking of XOR as a programmable inverter, and then looking at a
+If an attacker sees the ciphertext, we can prove that
+zero information is learned about the plaintext without the key. This property is
+called *perfect security*. The proof can be understood intuitively. 
+Think of XOR as a programmable inverter, and look at a
 particular bit intercepted by Eve, the eavesdropper.
 
 .. figure:: Illustrations/XOR/OTPEve.svg
    :align: center
    :alt: OTP eve
 
-Let's say Eve sees that a particular ciphertext bit :math:`c_i` is 1.
-She has no idea if the matching plaintext bit :math:`p_i` was 0 or 1,
-because she has no idea if the key bit :math:`k_i` was 0 or 1. Since all
-of the key bits are truly random, both options are exactly equally
-probable.
+Lets say Eve sees that a particular ciphertext bit :math:`c_i` is 1.
+She does not know whether the matching plaintext bit :math:`p_i` was 0 or 1
+and she does not know if the key bit :math:`k_i` was 0 or 1. Since all
+key bits are truly random, both options are equally probable.
 
 Attacks on “one-time pads”
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The one-time pad security guarantee only holds if it is used correctly.
-First of all, the one-time pad has to consist of truly random data.
+The one-time pad security guarantee only holds if used correctly.
+First of all, the one-time pad must consist of truly random data.
 Secondly, the one-time pad can only be used once (hence the name).
 Unfortunately, most commercial products that claim to be “one-time pads”
-are snake oil [#snake-oil]_, and don't satisfy at least one of those two
+are snake oil [#snake-oil]_, and do not satisfy at least one of these two
 properties.
 
 .. [#snake-oil]
-   “Snake oil” is a term for all sorts of dubious products that claim
-   extraordinary benefits and features, but don't really realize any of
+   “Snake oil” is a term for dubious products that claim
+   extraordinary benefits and features, yet do not realize any of
    them.
 
 Not using truly random data
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The first issue is that they use various deterministic constructs to
-produce the one-time pad, instead of using truly random data. That isn't
+The first issue is that various deterministic constructs 
+produce the one-time pad instead of using truly random data. That is not
 necessarily insecure: in fact, the most obvious example, a synchronous
-stream cipher, is something we'll see later in the book. However, it
+stream cipher, is something we will see later in the book. However, it
 does invalidate the “unbreakable” security property of one-time pads.
-The end user would be better served by a more honest cryptosystem,
-instead of one that lies about its security properties.
+The end user is better served by a more honest cryptosystem,
+not one that lies about its security properties.
 
 Reusing the “one-time” pad
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The other issue is with key reuse, which is much more serious. Suppose
+A serious issue is key reuse. Suppose
 an attacker gets two ciphertexts with the same “one-time” pad. The
-attacker can then XOR the two ciphertexts, which is also the XOR of the
+attacker can XOR the two ciphertexts, which is also the XOR of the
 plaintexts:
 
 .. math::
@@ -209,12 +206,12 @@ plaintexts:
    &= p_1 \xor p_2 && (x \xor 0 = x)
    \end{aligned}
 
-At first sight, that may not seem like an issue. To extract either
-:math:`p_1` or :math:`p_2`, you'd need to cancel out the XOR operation,
-which means you need to know the other plaintext. The problem is that
+At first sight, this may not seem like an issue. The XOR operation needs to be cancelled out
+to extract either :math:`p_1` or :math:`p_2`,
+so the other plaintext should be known. The problem is that
 even the result of the XOR operation on two plaintexts contains quite a
-bit information about the plaintexts themselves. We'll illustrate this
-visually with some images from a broken “one-time” pad process, starting
+bit information about the plaintexts themselves. We illustrate this
+visually with images from a broken “one-time” pad process starting
 with :numref:`fig-multitimepad`.
 
 .. figmatrix::
@@ -258,25 +255,25 @@ with :numref:`fig-multitimepad`.
       XOR of ciphertexts.
 
    Two plaintexts, the re-used key, their respective
-   ciphertexts, and the XOR of the ciphertexts. Information about the
-   plaintexts clearly leaks through when we XOR the ciphertexts.
+   ciphertexts, and the XOR of the ciphertexts. Plaintext information clearly
+   leaks through when we XOR the ciphertexts.
 
 Crib-dragging
 ^^^^^^^^^^^^^
 
-A classical approach to breaking multi-time pad systems involves
-“crib-dragging”, a process that uses small sequences that are expected
-to occur with high probability. Those sequences are called “cribs”. The
-name crib-dragging originated from the fact that these small “cribs” are
+A classic approach to break multi-time pad systems is
+“crib-dragging.” Crib-dragging uses small sequences expected
+to occur with high probability. Those sequences are “cribs”. The
+name crib-dragging originates from the fact that these small “cribs” are
 dragged from left to right across each ciphertext, and from top to
-bottom across the ciphertexts, in the hope of finding a match somewhere.
-Those matches form the sites of the start, or “crib”, if you will, of
+bottom across the ciphertexts, in the hope of finding a match.
+The matches form the sites of the start, or “crib”, if you will, of
 further decryption.
 
 The idea is fairly simple. Suppose we have several encrypted messages
 :math:`C_i` encrypted with the same “one-time” pad :math:`K`
-[#capital-letters]_. If we could correctly guess the plaintext for one of the
-messages, let's say :math:`C_j`, we'd know :math:`K`:
+[#capital-letters]_. If we correctly guess the plaintext for one of the
+messages, lets say :math:`C_j`, then we know :math:`K`:
 
 .. [#capital-letters]
    We use capital letters when referring to an entire message, as
@@ -293,26 +290,26 @@ messages, let's say :math:`C_j`, we'd know :math:`K`:
    &= K
    \end{aligned}
 
-Since :math:`K` is the shared secret, we can now use it to decrypt all
-of the other messages, just as if we were the recipient:
+Since :math:`K` is the shared secret, we can use it to decrypt all
+other messages as if we are the recipient:
 
 .. math::
 
    P_i = C_i \xor K \qquad \text{for all }i
 
-Since we usually can't guess an entire message, this doesn't actually
-work. However, we might be able to guess parts of a message.
+This typically does not work because we cannot
+guess an entire message. However, we can guess parts of a message.
 
 If we guess a few plaintext bits :math:`p_i` correctly for *any* of the
-messages, that would reveal the key bits at that position for *all* of
-the messages, since :math:`k = c_i \xor p_i`. Hence, all of the
-plaintext bits at that position are revealed: using that value for
+messages that reveals the key bits at that position for *all* of
+the messages since :math:`k = c_i \xor p_i`. Hence, all of the
+plaintext bits at that position are revealed. Using that value for
 :math:`k`, we can compute the plaintext bits :math:`p_i = c_i \xor k`
 for all the other messages.
 
-Guessing parts of the plaintext is a lot easier than guessing the entire
+Guessing parts of the plaintext is easier than guessing the entire
 plaintext. Suppose we know that the plaintext is in English. There are
-some sequences that we know will occur very commonly, for example (the
+sequences that will occur very commonly. For example (the
 :math:`\verb*| |` symbol denotes a space):
 
 -  :math:`\verb*| the |` and variants such as :math:`\verb*|. The |`
