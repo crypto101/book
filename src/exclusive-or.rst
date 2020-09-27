@@ -27,7 +27,7 @@ notation in this book:
 
 The inputs and outputs are named as if XOR is an
 encryption operation. On the left, we have the plaintext bit
-:math:`P_i`. The :math:`i` is an index, since we'll usually deal
+:math:`P_i`. The :math:`i` is an index, since we will usually deal
 with more than one such bit. On top, we have the key bit :math:`k_i`,
 that decides whether or not to invert :math:`P_i`. On the right, we have
 the ciphertext bit, :math:`C_i`, which is the result of the XOR
@@ -42,9 +42,9 @@ operation.
 A few properties of XOR
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-Since we'll be dealing with XOR extensively during this book, we'll take
-a closer look at some of its properties. If you're already familiar with
-how XOR works, feel free to skip this section.
+Lets take a closer look at the properties of XOR since
+we deal with it extensively in this book. Feel free to skip this section
+if you are already familiar with XOR.
 
 We saw that the output of XOR is 1 when one input or the other (but not
 both) is 1:
@@ -56,7 +56,7 @@ both) is 1:
    0 \xor 1 = 1 & 1 \xor 1 = 0
    \end{array}
 
-There are a few useful arithmetic tricks we can derive from that.
+A few useful arithmetic tricks can be derived from this.
 
 #. You can apply XOR in any order:
    :math:`a \xor (b \xor c) = (a \xor b) \xor c`
