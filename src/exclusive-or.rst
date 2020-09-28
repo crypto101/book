@@ -321,52 +321,52 @@ some sequences that we know will occur very commonly, for example (the
 -  :math:`\verb*| and |` (no variants; only occurs in the middle of a sentence)
 -  :math:`\verb*| a |` and variants
 
-If we know more about the plaintext, we can make even better guesses.
-For example, if it's HTTP serving HTML, we would expect to see things
-like ``Content-Type``, ``<a>``, and so on.
+We can make better guesses if more information is known about the plaintext.
+For example, if HTTP is serving HTML we expect to see
+`Content-Type``, ``<a>``, and so on.
 
-That only tells us which plaintext sequences are likely, giving us
-likely guesses. How do we tell if any of those guesses are correct? If
-our guess is correct, we know all the other plaintexts at that position
-as well, using the technique described earlier. We could simply look at
+This only tells us which plaintext sequences are likely, giving us
+likely guesses. How can we tell if the guesses are correct? If
+our guess is correct, we know all the plaintexts at that position
+based on using the technique described earlier. We can simply look at
 those plaintexts and decide if they look correct.
 
-In practice, this process needs to be automated because there are so
-many possible guesses. Fortunately that's quite easy to do. For example,
-a very simple but effective method is to count how often different
+In practice, the process needs to be automated because of all potential 
+guesses. Fortunately that is easy to do. For example,
+a simple but effective method is to count how often different
 symbols occur in the guessed plaintexts: if the messages contain English
-text, we'd expect to see a lot of letters e, t, a, o, i, n. If we're
-seeing binary nonsense instead, we know that the guess was probably
+text, we expect to see a lot of letters e, t, a, o, i, n. If we
+see binary nonsense instead, we know that the guess was probably
 incorrect, or perhaps that message is actually binary data.
 
-These small, highly probable sequences are called “cribs” because
-they're the start of a larger decryption process. Suppose your crib,
+These small, highly probable sequences are known as “cribs” because
+they are the start of a larger decryption process. Suppose your crib,
 ``the``, was successful and found the five-letter sequence ``t thr`` in
-another message. You can then use a dictionary to find common words
-starting with ``thr``, such as ``through``. If that guess were correct,
-it would reveal four more bytes in all of the ciphertexts, which can be
-used to reveal even more. Similarly, you can use the dictionary to find
+another message. You can use a dictionary to find common words
+starting with ``thr``, such as ``through``. If that is a correct guess,
+it can reveal four more bytes in all of the ciphertexts. This information can be
+useful for revealing more. Similarly, you can use the dictionary to find
 words ending in ``t``.
 
-This becomes even more effective for some plaintexts that we know more
-about. If some HTTP data has the plaintext ``ent-Len`` in it, then we
-can expand that to ``Content-Length:``, revealing many more bytes.
+This becomes greatly effective for plaintexts that we know more
+about. If HTTP data has the plaintext ``ent-Len``, then we
+can expand that to ``Content-Length:``. More bytes are easily revealed.
 
 While this technique works as soon as two messages are encrypted with
-the same key, it's clear that this becomes even easier with more
-ciphertexts using the same key, since all of the steps become more
-effective:
+the same key, it is clear that the process becomes simpler when more
+ciphertexts use the same key. Since all of the steps become more
+effective we get:
 
--  We get more cribbing positions.
--  More plaintext bytes are revealed with each successful crib and
-   guess, leading to more guessing options elsewhere.
--  More ciphertexts are available for any given position, making guess
-   validation easier and sometimes more accurate.
+-  More cribbing positions.
+-  More plaintext bytes revealed with each successful crib and
+   guess. This leads to more guessing options elsewhere.
+-  More ciphertexts available for any given position. This simplies guess
+   validation and at times increases accuracy.
 
-These are just simple ideas for breaking multi-time pads. While they're
-already quite effective, people have invented even more effective
-methods by applying advanced, statistical models based on natural
-language analysis. This only demonstrates further just how broken
+We have reviewed simple ideas for breaking multi-time pads. While they are
+already quite effective, people invent more effective
+methods by applying advanced, statistical models using natural
+language analysis. This further demonstrates just how broken
 multi-time pads are. :cite:`mason:nltwotimepads`
 
 Remaining problems
@@ -375,28 +375,27 @@ Remaining problems
 Real one-time pads, implemented properly, have an extremely strong
 security guarantee. It would appear, then, that cryptography is over:
 encryption is a solved problem, and we can all go home. Obviously,
-that's not the case.
+that is not the case.
 
-One-time pads are rarely used, because they are horribly impractical:
-the key is at least as large as all information you'd like to transmit,
-*put together*. Plus, you'd have to exchange those keys securely, ahead
-of time, with all people you'd like to communicate with. We'd like to
-communicate securely with everyone on the Internet, and that's a very
-large number of people. Furthermore, since the keys have to consist of
-truly random data for its security property to hold, key generation is
-fairly difficult and time-consuming without specialized hardware.
+One-time pads are rarely used for being horribly impractical.
+The key is at least as large as all information you would like transmitted,
+*put together*. Plus, the keys must be exchanged securely, ahead
+of time, with all people in your communication network. We like to
+communicate securely with everyone on the Internet, and that is a very
+large number of people. Furthermore, since the keys must consist of
+truly random data for the security property to hold, key generation is
+difficult and time-consuming without specialized hardware.
 
-One-time pads pose a trade-off. It's an algorithm with a solid
-information-theoretic security guarantee, which you can not get from any
-other system. On the other hand, it also has extremely impractical key
-exchange requirements. However, as we'll see throughout this book,
-secure symmetric encryption algorithms aren't the pain point of modern
-cryptosystems. Cryptographers have designed plenty of those, while
-practical key management remains one of the toughest challenges facing
-modern cryptography. One-time pads may solve a problem, but it's the
+One-time pads pose a trade-off. An advantage is that a one-time pad is an algorithm with a solid
+information-theoretic security guarantee. The guarantee is not available with any
+other system. On the other hand, the key exchange requirements are exteremely impractical. 
+However, throughout this book,
+we will see that secure symmetric encryption algorithms are not the pain point of modern
+cryptosystems. Cryptographers designed plenty while
+practical key management is the toughest challenges facing
+modern cryptography. One-time pads may solve a problem, but it is the
 wrong problem.
 
-While they may have their uses, they're obviously not a panacea. We need
-something with manageable key sizes while maintaining secrecy. We need
-ways to negotiate keys over the Internet with people we've never met
-before.
+One-time pads may have practical use, but they are obviously not a panacea. We need
+a system with manageable key sizes and capable of maintaining secrecy. Additionally, a 
+system to negotiate keys over the Internet with complete strangers is necessary.
