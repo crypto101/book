@@ -451,8 +451,8 @@ Hash trees
 ~~~~~~~~~~
 
 Hash trees are trees [#]_ where each node is identified by a hash
-value, consisting of its contents and the hash value of its ancestor.
-The root node, not having an ancestor, simply hashes its own contents.
+value, consisting of its contents and the hash value of its children.
+Leaf nodes, not having no children, simply hash their own contents.
 
 .. [#]
    Directed graphs, where each node except the root has exactly one
