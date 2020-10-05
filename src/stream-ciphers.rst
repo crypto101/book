@@ -530,11 +530,11 @@ The plaintext getting modified will then probably be part of that
 sequence of ``Z`` bytes.
 
 An attacker may have some target bytes that they'd like to see in the
-decrypted plaintext, for example, ``;admin=1;``. In order to figure out
-which bytes they should flip (so, the value of :math:`X` in the
-illustration), they just XOR the filler bytes (~ZZZ~…) with that target.
-Because two XOR operations with the same value cancel each other out,
-the two filler values (~ZZZ~…) will cancel out, and the attacker can
+decrypted plaintext, for example, ``;admin=1;``. In deciding
+which bytes to flip (illustrated as value :math:`X`),
+the attacker simply XORs the filler bytes (~ZZZ~…) with that target.
+Since two XOR operations with the same value cancel each other out, 
+the two filler values (~ZZZ~…) cancel out as well. The attacker can
 expect to see ``;admin=1;`` pop up in the next plaintext block:
 
 .. math::
@@ -551,117 +551,117 @@ expect to see ``;admin=1;`` pop up in the next plaintext block:
    & = \mathtt{;admin=1;} \\
    \end{aligned}
 
-This attack is another demonstration of an important cryptographic
-principle: encryption is not authentication! It's virtually never
-sufficient to simply encrypt a message. It *may* prevent an attacker
-from reading it, but that's often not even necessary for the attacker to
-be able to modify it to say whatever they want it to. This particular
-problem would be solved by also securely authenticating the message.
-We'll see how you can do that later in the book; for now, just remember
-that we're going to need authentication in order to produce secure
+This attack demonstrates an important cryptographic
+principle: encryption is not authentication! It is virtually never
+sufficient to simply encrypt a message. Encryption *may* prevent an attacker
+from reading a message, but reading is often unnecessary. The attacker 
+can still modify the message to say whatever they want. This particular
+problem is solved by adding secure authentication to the message.
+We see how that is done later in the book; for now, just remember
+that we need authentication to produce secure
 cryptosystems.
 
 Padding
 ~~~~~~~
 
-So far, we've conveniently assumed that all messages just happened to
-fit exactly in our system of block ciphers, be it CBC or ECB. That means
-that all messages happen to be a multiple of the block size, which, in a
-typical block cipher such as AES, is 16 bytes. Of course, real messages
-can be of arbitrary length. We need some scheme to make them fit. That
+So far, we conveniently assume that all messages 
+fit exactly in our system of block ciphers, be it CBC or ECB. This means
+that all messages are a multiple of the block size. In a
+typical block cipher such as AES that is 16 bytes. Of course, real messages
+can be of arbitrary length. We need a scheme to make the messages fit. The
 process is called padding.
 
 Padding with zeroes (or some other pad byte)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-One way to pad would be to simply append a particular byte value until
-the plaintext is of the appropriate length. To undo the padding, you
-just remove those bytes. This scheme has an obvious flaw: you can't send
-messages that end in that particular byte value, or you will be unable
-to distinguish between padding and the actual message.
+One way to pad is by simply appending a particular byte value until
+the plaintext is the appropriate length. You undo padding by
+just removing those bytes. This scheme has an obvious flaw: messages cannot be
+sent if they end in that particular byte value.
+Padding and the actual message become indistinguishable.
 
 PKCS#5/PKCS#7 padding
 ^^^^^^^^^^^^^^^^^^^^^
 
-A better, and much more popular scheme, is PKCS#5/PKCS#7 padding.
+A better, and much more popular scheme is PKCS#5/PKCS#7 padding.
 
-PKCS#5, PKCS#7 and later CMS padding are all more or less the same
-idea [#]_. Take the number of bytes you have to pad, and pad them with
-that many times the byte with that value. For example, if the block size
-is 8 bytes, and the last block has the three bytes ``12 34 45``, the
-block becomes ``12 34 45 05 05 05 05 05`` after padding.
+PKCS#5, PKCS#7, and later CMS padding follow the same
+concept [#]_. First, consider the total number of bytes in the block you have to pad.
+For example, an 8 byte block size has three bytes ``12 34 45`` in its last block.
+This means there are 5 bytes to pad within the block size, and 5 can be used as the filler value. After padding, the block becomes
+``12 34 45 05 05 05 05 05``.
 
 .. [#]
-   Technically, PKCS#5 padding is only defined for 8 byte block sizes,
-   but the idea clearly generalizes easily, and it's also the most
-   commonly used term.
+   Technically, PKCS#5 padding is only defined for 8 byte block sizes.
+   Though the idea generalizes easily. Additionally, it is the most
+   common term used.
 
 
-If the plaintext happened to be exactly a multiple of the block size, an
-entire block of padding is used. Otherwise, the recipient would look at
-the last byte of the plaintext, treat it as a padding length, and almost
-certainly conclude the message was improperly padded.
+If the plaintext is exactly a multiple of the block size, an
+entire block of padding is used. Otherwise, the recipient looks at
+the last byte of the plaintext, treats it as a padding length, and almost
+certainly concludes that the message was improperly padded.
 
-This scheme is described in :cite:`cms:padding`.
+The scheme is described in :cite:`cms:padding`.
 
 CBC padding attacks
 ~~~~~~~~~~~~~~~~~~~
 
-We can refine CBC bit flipping attacks to trick a recipient into
+CBC bit flipping attacks can be refined to trick a recipient into
 decrypting arbitrary messages!
 
-As we've just discussed, :term:`CBC mode` requires padding the message to a
-multiple of the block size. If the padding is incorrect, the recipient
-typically rejects the message, saying that the padding was invalid. We
-can use that tiny bit of information about the padding of the plaintext
-to iteratively decrypt the entire message.
+As discussed, :term:`CBC mode` requires padding the message as a
+multiple of the block size. The recipient typically rejects the message
+if the padding is incorrect and says that the padding is invalid. We
+can use that tiny bit of information about the plaintext padding 
+to iteratively decrypt an entire message.
 
-The attacker will do this, one ciphertext block at a time, by trying to
-get an entire plaintext block worth of valid padding. We'll see that
-this tells them the decryption of their target ciphertext block, under
-the block cipher. We'll also see that you can do this efficiently and
-iteratively, just from that little leak of information about the padding
-being valid or not.
+The attacker decrypts a message one ciphertext block at a time. They 
+get an entire plaintext block worth of valid padding, which
+tells them the decryption of the target ciphertext block under
+the block cipher. We see that this is done efficiently and
+iteratively by knowning that little leak of information on the padding
+validity.
 
-It may be helpful to keep in mind that a CBC padding attack does not
-actually attack the padding for a given message; instead the attacker
-will be *constructing* paddings to decrypt a message.
+It is helpful to keep in mind that a CBC padding attack does not
+actually attack padding of a given message; instead the attacker
+*constructs* paddings for message decryption.
 
-To mount this attack, an attacker only needs two things:
+An attacker only needs two items to mount the attack:
 
 #. A target ciphertext to decrypt
-#. A *padding oracle*: a function that takes ciphertexts and tells the
-   attacker if the padding was correct
+#. A *padding oracle*: a function that takes ciphertexts and notifies the
+   attacker if the padding is correct
 
 As with the ECB :term:`encryption oracle`, the availability of a padding oracle
-may sound like a very unrealistic assumption. The massive impact of this
-attack proves otherwise. For a long time, most systems did not even
-attempt to hide if the padding was valid or not. This attack remained
-dangerous for a long time after it was originally discovered, because it
-turns out that in many systems it is extremely difficult to actually
-hide if padding is valid or not. We will go into this problem in more
-detail both in this chapter and in later chapters.
+sounds like an unrealistic assumption. The massive impact of this
+attack proves otherwise. For a long time, most systems did not 
+attempt hiding the validity of the padding. This attack remained
+dangerous for a long time after it was originally discovered because 
+it is extremely difficult in many systems to 
+hide the validity of padding. We go into more detail on this problem, both,
+in this chapter and following chapters.
 
-In this chapter, we'll assume that PKCS#5/PKCS#7 padding is being used,
-since that's the most popular option. The attack is general enough to
+In this chapter, we assume that PKCS#5/PKCS#7 padding is used
+since that is the most popular option. The attack is general enough to
 work on other kinds of padding, with minor modifications.
 
 Decrypting the first byte
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The attacker fills a block with arbitrary bytes
-:math:`R = r_1, r_2\ldots r_b`. They also pick a target block :math:`C_i` from
-the ciphertext that they'd like to decrypt. The attacker asks the padding oracle
+:math:`R = r_1, r_2\ldots r_b`. A target block :math:`C_i` is selected from
+the ciphertext up for decryption. The attacker asks the padding oracle
 if the plaintext of :math:`R \| C_i` has valid padding. Statistically speaking,
-such a random plaintext probably won't have valid padding: the odds are
-in the half-a-percent ballpark. If by pure chance the message happens to
-already have valid padding, the attacker can simply skip the next step.
+such a random plaintext probably does not have valid padding: the odds are
+in the half-a-percent ballpark. By chance, if the message happens to
+have valid padding, the attacker simply skips the next step.
 
 .. figure:: Illustrations/CBC/PaddingAttack.svg
    :align: center
 
-Next, the attacker tries to modify the message so that it does have
-valid padding. They can do that by indirectly modifying the last byte of
+Next, the attacker tries modifying the message to have
+valid padding. They indirectly change the last byte of
 the plaintext: eventually that byte will be ``01``, which is always
 valid padding. In order to modify the last byte of a plaintext block,
 the attacker modifies the last byte of the *previous* ciphertext block.
