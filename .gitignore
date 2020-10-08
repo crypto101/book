@@ -35,3 +35,6 @@ _minted-Crypto101
 .mypy_cache
 .venv
 _build
+_build_*
+__pycache__
+mptextmp.mp
