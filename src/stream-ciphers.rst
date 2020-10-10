@@ -1132,44 +1132,43 @@ of messages).
 
 .. [#]
    Here we use :math:`\|` as the operator for concatenation. Other
-   common symbols for concatenation include :math:`+` (for some
-   programming languages, such as Python) and ⋅ (for formal languages).
+   common symbols for concatenation include :math:`+` (for 
+   programming languages like Python) and ⋅ (for formal languages).
 
-WEP, a standard for protecting wireless networks that was popular at the
-time, was heavily affected by this attack, because it used this
-simplistic :term:`nonce` combination scheme. A scheme where the long-term key
-and the :term:`nonce` had been securely combined (for example using a key
-derivation function or a cryptographic hash function) wouldn't have had
-this weakness. Many other standards including TLS were therefore not
-affected.
+WEP was a popular standard for wireless network protection at the
+time. It was heavily affected by this attack because of the
+simplistic :term:`nonce` combination scheme. A scheme does not have this weakness when the long-term key
+and the :term:`nonce` is securely combined. For example, by using key
+derivation or cryptographic hash functions.
+Therefore, many other standards including TLS were 
+unaffected.
 
-Again, attacks only get better. Andreas Klein showed more extensive
+Again, attacks only get better. Andreas Klein show more extensive
 correlation between the key and the keystream.
 :cite:`klein:rc4` Instead of tens of millions of messages
-with the Fluhrer, Mantin, Shamir attacks, attackers now only needed
-several tens of thousands of messages to make the attack practical. This
-was applied against WEP with great effect.
+with the Fluhrer, Mantin, Shamir attacks, attackers now only need
+several tens of thousands of messages for a practical attack. This
+applies against WEP with great effect.
 
-In 2013, a team of researchers at Royal Holloway in London produced a
-combination of two independent practical attacks
-:cite:`rhul:rc4`. These attacks proved to be very damning
-for RC4: while RC4's weaknesses had been known for a long time, they
-finally drove the point home for everyone that it really shouldn't be
-used anymore.
+In 2013, a research team at Royal Holloway in London 
+combined two independent practical attacks
+:cite:`rhul:rc4`. The attacks were so damning
+for RC4. While RC4's weaknesses were flagged for a long time, 
+the point finally hit home for not 
+using it further.
 
-The first attack is based on single-byte biases in the first 256 bytes
-of the keystream. By performing statistical analysis on the keystreams
-produced by a large number of keys, they were able to analyze the
-already well-known biases in the early keystream bytes of RC4 in much
-greater detail.
+The first attack is based on single-byte biases in the keystream's first 256 bytes.
+Statistical analysis of the keystreams
+produced by a large number of keys led to more detailed interpretation of
+already well-known biases in the early RC4 keystream bytes.
 
 TODO: illustrate:
 http://www.isg.rhul.ac.uk/tls/RC4_keystream_dist_2_45.txt
 
-The second attack is based on double byte biases anywhere in the
-keystream. It turns out that adjacent bytes of the keystream have an
-exploitable relation, whereas in an ideal :term:`stream cipher` you would expect
-them to be completely independent.
+The second attack stems from double byte biases anywhere in the
+keystream. Adjacent bytes of the keystream have an
+exploitable relation, whereas an ideal :term:`stream cipher` has
+completely independent bytes.
 
 ==================== ========================================= =============================
 Byte pair            Byte position (mod 256) :math:`i`          Probability
@@ -1188,18 +1187,18 @@ Byte pair            Byte position (mod 256) :math:`i`          Probability
 :math:`(129, 129)`   :math:`i = 2`                              :math:`2^{-16} (1 + 2^{-8})`
 ==================== ========================================= =============================
 
-This table may seem a bit daunting at first. The probability expression
-in the rightmost column may look a bit complex, but there's a reason
-it's expressed that way. Suppose that RC4 was a good :term:`stream cipher`, and
-all values occurred with equal probability. Then you'd expect the
+Initially, the table above may seem daunting. The probability notations
+in the rightmost column may appear complex and there is reason
+behind this expression. Suppose that RC4 is a good :term:`stream cipher` and
+all values can occur with equal probability. Then you can expect the
 probability for any given byte value to be :math:`2^{-8}` since there
-are :math:`2^8` different byte values. If RC4 was a good :term:`stream cipher`,
-two adjacent bytes would each have probability :math:`2^{-8}`, so any
-given pair of two bytes would have probability :math:`2^{-8} \cdot
-2^{-8} = 2^{-16}`. However, RC4 isn't an ideal :term:`stream cipher`, so these
-properties aren't true. By writing the probability in the
-:math:`2^{-16} (1 + 2^{-k})` form, it's easier to see how much RC4 deviates from what you'd
-expect from an ideal :term:`stream cipher`.
+are :math:`2^8` different byte values. If RC4 is a good :term:`stream cipher`,
+two adjacent bytes each have probability of :math:`2^{-8}`. This means that any
+given pair of two bytes have probability of :math:`2^{-8} \cdot
+2^{-8} = 2^{-16}`. However, RC4 is an unideal :term:`stream cipher`with untrue
+properties. By writing the probability in the
+:math:`2^{-16} (1 + 2^{-k})` format, it is apparent how expectations for RC4 deviates
+from an ideal :term:`stream cipher`.
 
 So, let's try to read the first line of the table. It says that when the
 first byte :math:`i = 1` of any 256-byte chunk from the cipher is
