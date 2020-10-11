@@ -227,7 +227,7 @@ algorithm needs much smaller key
 sizes :cite:`rsa:keysizes` :cite:`nist:keymanagement` [#]_:
 
 .. [#]
-   These figures are actually for the RSA problem versus the equivalent
+   The figures are actually for the RSA problem versus the equivalent
    elliptic curve problem, but their security levels are sufficiently
    close to give you an idea.
 
@@ -247,41 +247,41 @@ Remaining problems
 ~~~~~~~~~~~~~~~~~~
 
 Using Diffie-Hellman, we can agree on shared secrets across an insecure
-Internet, safe from eavesdroppers. However, while an attacker may not be
-able to simply get the secret from eavesdropping, an active attacker can
-still break the system. If such an attacker, usually called Mallory, is
-in between Alice and Bob, she can still perform the Diffie-Hellman
-protocol twice: once with Alice, where Mallory pretends to be Bob, and
+Internet that is safe from eavesdroppers. While an attacker cannot
+simply retrieve the secret by eavesdropping, an active attacker can
+still break the system. An attacker, usually called Mallory, can perform 
+the Diffie-Hellman's protocol twice if she is between Alice and Bob.
+Once with Alice, where Mallory pretends to be Bob, and
 once with Bob, where Mallory pretends to be Alice.
 
 .. figure:: ./Illustrations/DiffieHellman/MITM.svg
    :align: center
 
-There are two shared secrets here: one between Alice and Mallory, and
-one between Mallory and Bob. The attacker (Mallory) can then simply take
-all the messages they get from one person and send them to the other,
-they can look at the plaintext messages, remove messages, and they can
-also modify them in any way they choose.
+Two shared secrets exist here: one between Alice and Mallory, and
+one between Mallory and Bob. Mallory, the attacker, then simply takes
+all messages received from one person and sends them to the other.
+They can look at the plaintext messages, remove messages, and 
+modify messages in any way.
 
-To make matters worse, even if one of the two participants was somehow
-aware that this was going on, they would have no way to get the other
-party to believe them. After all: Mallory performed the successful
-Diffie-Hellman exchange with the unwitting victim, she has all the
+To make matters worse, even if one of the two participants knows 
+what is happening, they have no way of convincing the other
+party to believe them. After all, Mallory performs the successful
+Diffie-Hellman exchange with the unwitting victim. She has all the
 correct shared secrets. Bob has no shared secrets with Alice, just with
-Mallory; there's no way for him to prove that he's the legitimate
+Mallory; there is no way he can prove himself as the legitimate
 participant. As far as Alice can tell, Bob just chose a few random
-numbers. There's no way to link any key that Bob has with any key that
-Alice has.
+numbers. Linking any key that Bob has with any key that
+Alice has is not possible.
 
-Attacks like these are called MITM attacks, because the attacker
-(Mallory) is in between the two peers (Alice and Bob). Given that the
-network infrastructure that we typically use to send messages is run by
-many different operators, this kind of attack scenario is very
-realistic, and a secure cryptosystem will have to address them somehow.
+These are known as MITM attacks because the attacker
+(Mallory) sits between the two peers (Alice and Bob). The
+network infrastructure typically used for sending messages is run by
+many different operators. That being said, this kind of attack scenario is quite
+realistic and a secure cryptosystem has to address them somehow.
 
-While the Diffie-Hellman protocol successfully produced a shared secret
-between two peers, there are clearly some pieces of the puzzle still
-missing to build those cryptosystems. We need tools that help us
-authenticate Alice to Bob and vice versa, and we need tools that help
-guarantee message integrity, allowing the receiver to verify that the
-received messages are in fact the messages the sender intended to send.
+While the Diffie-Hellman protocol successfully produces a shared secret
+between two peers, clearly some pieces of the puzzle are still
+missing to build those cryptosystems. We need tools that help
+authenticate Alice to Bob and vice versa. We need tools that 
+guarantee message integrity. This guarantee can allow the receiver to verify 
+received messages are in fact the intended messages from the sender.
