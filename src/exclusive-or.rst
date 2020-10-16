@@ -148,7 +148,7 @@ XOR of the two sequences of bits.
 
 If an attacker sees the ciphertext, we can prove that
 zero information is learned about the plaintext without the key. This property is
-called *perfect security*. The proof can be understood intuitively. 
+called *perfect secrecy*. The proof can be understood intuitively. 
 Think of XOR as a programmable inverter, and look at a
 particular bit intercepted by Eve, the eavesdropper.
 
