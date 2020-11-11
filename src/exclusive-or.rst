@@ -320,7 +320,7 @@ sequences that will occur very commonly. For example (the
 -  :math:`\verb*| a |` and variants
 
 We can make better guesses if more information is known about the plaintext.
-For example, if HTTP is serving HTML we expect to see
+For example, if HTML is served over HTTP we expect to see
 `Content-Type``, ``<a>``, and so on.
 
 This only tells us which plaintext sequences are likely, giving us
@@ -358,7 +358,7 @@ effective we get:
 -  More cribbing positions.
 -  More plaintext bytes revealed with each successful crib and
    guess. This leads to more guessing options elsewhere.
--  More ciphertexts available for any given position. This simplies guess
+-  More ciphertexts available for any given position. This simplifies guess
    validation and at times increases accuracy.
 
 We have reviewed simple ideas for breaking multi-time pads. While they are
