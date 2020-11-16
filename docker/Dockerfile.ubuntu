@@ -16,6 +16,7 @@ RUN export DEBIAN_FRONTEND=noninteractive; \
     pdf2svg \
     python3-sphinx \
     sphinx-intl \
+    python3-stemmer \
     python3-sphinxcontrib.bibtex \
     python3-sphinxcontrib.svg2pdfconverter \
     ghostscript \

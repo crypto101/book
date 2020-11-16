@@ -1,1 +1,1 @@
-Dockerfile.fedora
+Dockerfile.ubuntu
