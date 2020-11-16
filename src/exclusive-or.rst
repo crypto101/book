@@ -378,7 +378,7 @@ that is not the case.
 One-time pads are rarely used for being horribly impractical.
 The key is at least as large as all information you would like transmitted,
 *put together*. Plus, the keys must be exchanged securely, ahead
-of time, with all people in your communication network. We like to
+of time, with all people you would like to communicate with. We would like to
 communicate securely with everyone on the Internet, and that is a very
 large number of people. Furthermore, since the keys must consist of
 truly random data for the security property to hold, key generation is
