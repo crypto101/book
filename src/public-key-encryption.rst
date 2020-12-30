@@ -73,8 +73,7 @@ RSA
 ~~~
 
 As we already mentioned, RSA is one of the first practical
-:term:`public-key encryption` schemes. It remains the most common one to this
-day.
+:term:`public-key encryption` schemes. It remains the most common scheme today.
 
 Encryption and decryption
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -83,18 +82,18 @@ RSA encryption and decryption relies on modular arithmetic. You may want
 to review the :ref:`modular arithmetic primer <modular-arithmetic>`
 before continuing.
 
-This section describes the simplified math problem behind RSA, commonly
-referred to as “textbook RSA”. By itself, this doesn't produce a secure
-encryption scheme. We'll see a secure construction called OAEP that
-builds on top of it in a later section.
+This section describes the simplified math problem behind RSA 
+known as “textbook RSA”. RSA does not produce a secure
+encryption scheme by itself. OAEP, a secure construction 
+builds on top of RSA, which is discussed in a later section.
 
-In order to generate a key, you pick two large prime numbers :math:`p`
-and :math:`q`. These numbers have to be picked at random, and in secret.
-You multiply them together to produce the modulus :math:`N`, which is
+In order to generate a key, you select two large prime numbers :math:`p`
+and :math:`q`. The numbers are picked at random, and secretly.
+Multiplying them together produces the modulus :math:`N`, which is
 public. Then, you pick an *encryption exponent* :math:`e`, which is also
-public. Usually, this value is either 3 or 65537. Because those numbers
-have a small number of ``1``'s in their binary expansion, you can
-compute the exponentiation more efficiently. Put together,
+public. Usually, the resulting value is either 3 or 65537. Since those numbers
+have a small amount of ``1``'s in their binary expansion, you can
+compute the exponentiation more efficiently. Combined,
 :math:`(N, e)` is the public key. Anyone can use the public key to
 encrypt a message :math:`M` into a ciphertext :math:`C`:
 
@@ -102,64 +101,64 @@ encrypt a message :math:`M` into a ciphertext :math:`C`:
 
    C \equiv M^e \pmod{N}
 
-The next problem is decryption. It turns out that there is a value
-:math:`d`, the *decryption exponent*, that can turn :math:`C` back into
-:math:`M`. That value is fairly easy to compute assuming that you know
-:math:`p` and :math:`q`, which we do. Using :math:`d`, you can decrypt
+Decryption is the next problem. It turns out that there is a value
+:math:`d`, the *decryption exponent*, that transforms :math:`C` back into
+:math:`M`. The value is fairly easy to compute assuming that
+:math:`p` and :math:`q` are known. Using :math:`d`, you can decrypt
 the message like so:
 
 .. math::
 
    M \equiv C^d \pmod{N}
 
-The security of RSA relies on that decryption operation being impossible
-without knowing the secret exponent :math:`d`, and that the secret
+The security of RSA lies in the decryption operation being impossible
+to figure out without knowing the secret exponent :math:`d`. The secret
 exponent :math:`d` is very hard (practically impossible) to compute from
-the public key :math:`(N, e)`. We'll see approaches for breaking RSA in
+the public key :math:`(N, e)`. We see approaches for breaking RSA in
 the next section.
 
 Breaking RSA
 ^^^^^^^^^^^^
 
 Like many cryptosystems, RSA relies on the presumed difficulty of a
-particular mathematical problem. For RSA, this is the RSA problem,
-specifically: to find the plaintext message :math:`M`, given a
+particular mathematical problem. For RSA specifically, this is the RSA problem:
+to find the plaintext message :math:`M`, given a
 ciphertext :math:`C`, and public key :math:`(N, e)` in the equation:
 
 .. math::
 
    C \equiv M^e \pmod{N}
 
-The easiest way we know how to do that is to factor :math:`N` back into
-:math:`p \cdot q`. Given :math:`p` and :math:`q`, the attacker can just repeat
-the process that the legitimate owner of the key does during key
-generation in order to compute the private exponent :math:`d`.
+The easiest approach is by factoring :math:`N` back into
+:math:`p \cdot q`. Given :math:`p` and :math:`q`, the attacker repeats
+the same steps as the legitimate key owner during key
+generation to compute the private exponent :math:`d`.
 
-Fortunately, we don't have an algorithm that can factor such large
-numbers in reasonable time. Unfortunately, we also haven't proven it
-doesn't exist. Even more unfortunate is that there is a theoretical
-algorithm, called Shor's algorithm, that *would* be able to factor such
+Fortunately, we do not have an algorithm that factors such large
+numbers in reasonable time. Unfortunately, we also have not proven its
+nonexistence. Even more unfortunate is that Shor's algorithm, a theoretical
+algorithm, *would* factor such
 a number in reasonable time on a quantum computer. Right now, quantum
-computers are far from practical, but it does appear that if someone in
-the future manages to build one that's sufficiently large, RSA becomes
+computers are far from practical. Though if someone in
+the future builds a sufficiently large quantum computer, RSA becomes
 ineffective.
 
-In this section, we have only considered a private key recovery attack
-that attacks the purely abstract mathematical RSA problem by factoring
-the modulus. In the next section, we will see all sorts of realistic
-attacks on RSA that rely on flaws in the *implementation*, rather than
+In this section, we only saw a private key recovery attack
+that targets the abstract mathematical RSA problem by factoring the modulus.
+In the next section, we see all sorts of realistic
+attacks on RSA. They rely on flaws in the *implementation*, rather than
 the mathematical problem stated above.
 
 Implementation pitfalls
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-Right now, there are no known practical complete breaks against RSA.
-That's not to say that systems employing RSA aren't routinely broken.
+Currently, no practical complete breaks exist against RSA.
+It is not to say that systems employing RSA are not routinely broken.
 Like with most broken cryptosystems, there are plenty of cases where
 sound components, improperly applied, result in a useless system. For a
-more complete overview of the things that can go wrong with RSA
+more complete overview of what can go wrong with RSA
 implementations, please refer to :cite:`boneh:twentyyears`
-and :cite:`anderson:mindingyourpsandqs`. In this book, we'll
+and :cite:`anderson:mindingyourpsandqs`. In this book, we
 just highlight a few interesting ones.
 
 PKCSv1.5 padding
@@ -168,49 +167,49 @@ PKCSv1.5 padding
 Salt
 ''''
 
-Salt [#]_ is a provisioning system written in Python. It has one major
-flaw: it has a module named ``crypt``. Instead of reusing existing
-complete cryptosystems, it implements its own, using RSA and AES
-provided by a third party package.
+Salt [#]_ is a provisioning system written in Python. Salt has one major
+flaw: a module named ``crypt``. Instead of reusing existing
+complete cryptosystems, Salt implements its own. It also uses RSA and AES
+from a third party package.
 
 .. [#]
-   So, there's Salt the provisioning system, :term:`salt`\s the things used in
+   So, there is Salt the provisioning system, :term:`salt`\s the things used in
    broken password stores, NaCl pronounced “salt” the cryptography
    library, and NaCl which runs native code in some browsers, and
    probably a bunch I'm forgetting. Can we stop naming things after it?
 
-For a long time, Salt used a public exponent (:math:`e`) of 1, which
-meant the encryption phase didn't actually do anything:
-:math:`P^e \equiv P^1 \equiv P \pmod N`. This meant that the resulting ciphertext was in fact
-just the plaintext. While this issue has now been fixed, this only goes
-to show that you probably shouldn't implement your own cryptography.
-Salt currently also supports SSH as a transport, but the aforementioned
-DIY RSA/AES system remains, and is at time of writing still the
-recommended and the default transport.
+For a long time, Salt used a public exponent (:math:`e`) of 1. This
+meant the encryption phase did not do anything:
+:math:`P^e \equiv P^1 \equiv P \pmod N`. The resulting ciphertext was in fact
+just the plaintext. While this issue is fixed, this goes
+to show that you probably should not implement your own cryptography.
+Salt also supports SSH as a transport, however, the aforementioned
+DIY RSA/AES system remains, and is at the time of writing still the
+recommended, default transport.
 
 OAEP
 ^^^^
 
-OAEP, short for optimal asymmetric encryption padding, is the state of
-the art in RSA padding. It was introduced by Mihir Bellare and Phillip
+OAEP is short for optimal asymmetric encryption padding. OAEP is 
+state-of-the-art RSA padding first introduced by Mihir Bellare and Phillip
 Rogaway in 1995. :cite:`bellarerogaway:oaep`. Its structure
 looks like this:
 
 .. figure:: Illustrations/OAEP/Diagram.svg
    :align: center
 
-The thing that eventually gets encrypted is :math:`X \| Y`, which is
-:math:`n` bits long, where :math:`n` is the number of bits of :math:`N`,
-the RSA modulus. It takes a random block :math:`R` that's :math:`k` bits
+:math:`X \| Y` eventually gets encrypted, which is
+:math:`n` bits long, and :math:`n` is the number of bits in :math:`N`,
+the RSA modulus. It takes a random block :math:`R` that is :math:`k` bits
 long, where :math:`k` is a constant specified by the standard. The
-message is first padded with zeroes to be :math:`n - k` bits long. If
-you look at the above “ladder”, everything on the left half is
+message is first padded with zeroes to be :math:`n - k` bits long. 
+Looking at the above “ladder”, everything on the left half is
 :math:`n - k` bits long, and everything on the right half is :math:`k`
 bits long. The random block :math:`R` and zero-padded message
-:math:`M \| 000\ldots` are combined using two “trapdoor” functions, :math:`G` and
-:math:`H`. A trapdoor function is a function that's very easy to compute
-in one direction and very hard to reverse. In practice, these are
-cryptographic hash functions; we'll see more about those later.
+:math:`M \| 000\ldots` combine using two “trapdoor” functions, :math:`G` and
+:math:`H`. A trapdoor function is very easy to compute
+in one direction and very hard to reverse. In practice, these are 
+cryptographic hash functions, which we see more about later.
 
 As you can tell from the diagram, :math:`G` takes :math:`k` bits and
 turns them into :math:`n - k` bits, and :math:`H` is the other way
