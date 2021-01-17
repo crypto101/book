@@ -111,20 +111,20 @@ arrows, as you can see in :numref:`fig-BlockCipherEncryptionDifferentKey`.
 
    An encryption permutation produced by the block cipher under a different key.
 
-In this illustration, you'll even notice that there are two permutations
-of length 1: an element that maps to itself. This is again something to
-be expected when selecting random permutations.
+In this illustration, you will notice that there are two permutations
+of length 1. An element maps to itself. This is expected when selecting 
+random permutations.
 
-Knowing a bunch of (input, output) pairs for a given key shouldn't give
-you any information about any other (input, output) pairs under that
-key [#]_. As long as we're talking about a hypothetical perfect block
-cipher, there's no easier way to decrypt a block other than to
-“brute-force” the key: i.e. just try every single one of them until you
+Knowing many (input, output) pairs for a given key should not give
+you any information about other (input, output) pairs under that
+key [#]_. In a hypothetically perfect, block
+cipher, there is no simple way to decrypt a block other than to
+“brute-force” the key. For example, just try every key until you
 find the right one.
 
 .. [#]
-   The attentive reader may have noticed that this breaks in the
-   extremes: if you know all but one of the pairs, then you know the
+   The attentive reader may notice that this breaks into the
+   extremes: if you know all but one of the pairs, then you know the 
    last one by exclusion.
 
 Our toy illustration block cipher only has 4 bit blocks, or
@@ -132,7 +132,7 @@ Our toy illustration block cipher only has 4 bit blocks, or
 larger block sizes, such as 128 bits, or :math:`2^{128}` (slightly more
 than :math:`10^{38.5}`) possible blocks. Mathematics tells us that there
 are :math:`n!` (pronounced “:math:`n` factorial”) different permutations
-of an :math:`n` element set. It's defined as the product of all of the
+of an :math:`n` element set. It is defined as the product of all
 numbers from 1 up to and including :math:`n`:
 
 .. math::
@@ -141,18 +141,18 @@ numbers from 1 up to and including :math:`n`:
 
 Factorials grow incredibly quickly. For example, :math:`5! = 120`,
 :math:`10! = 3628800`, and the rate continues to increase. The number of permutations
-of the set of blocks of a cipher with a 128 bit block size is
-:math:`(2^{128})!`. Just :math:`2^{128}` is large already (it takes 39
-digits to write it down), so :math:`(2^{128})!` is a mind-bogglingly
-huge number, impossible to comprehend. Common key sizes are only in the
-range of 128 to 256 bits, so there are only between :math:`2^{128}` and
-:math:`2^{256}` permutations a cipher can perform. That's just a tiny
-fraction of all possible permutations of the blocks, but that's okay:
-that tiny fraction is still nowhere near small enough for an attacker to
+in the set of blocks of a cipher with a 128 bit block size is
+:math:`(2^{128})!`. Note that :math:`2^{128}` is large already. It takes 39
+digits to write it down. So :math:`(2^{128})!` is a mind-bogglingly
+huge number, which is impossible to comprehend. Common key sizes are only in the
+range of 128 to 256 bits. This means that there are only between :math:`2^{128}` and
+:math:`2^{256}` permutations a cipher can perform. A tiny
+fraction of all possible permutations of the blocks, but that is okay.
+The tiny fraction is nowhere near small enough for an attacker to
 just try them all.
 
-Of course, a block cipher should be as easy to compute as possible, as
-long as it doesn't sacrifice any of the above properties.
+Of course, a block cipher should be quick to compute, as
+long as it does not sacrifice any of the above properties.
 
 AES
 ~~~
