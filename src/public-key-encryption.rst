@@ -6,67 +6,67 @@ Public-key encryption
 Description
 ~~~~~~~~~~~
 
-So far, we have only done :term:`secret-key encryption`. Suppose, that you could
-have a cryptosystem that didn't involve a single secret key, but instead
-had a key pair: one public key, which you freely distribute, and a
+So far, we have explored :term:`secret-key encryption`. Suppose that you 
+have a cryptosystem that did not involve a single secret key. A cryptosystem that instead
+has a key pair: one public key, which you freely distribute, and a
 private one, which you keep to yourself.
 
-People can encrypt information intended for you by using your public
-key. The information is then impossible to decipher without your private
+People encrypt information intended for you by using your public
+key. The information is impossible to decipher without your private
 key. This is called :term:`public-key encryption`.
 
-For a long time, people thought this was impossible. However, starting
-in the 1970s, such algorithms started appearing. The first publicly
+For a long time, people thought :term:`public-key encryption` was impossible. However, starting
+in the 1970s, such algorithms began appearing. The first publicly
 available encryption scheme was produced by three cryptographers from
 MIT: Ron Rivest, Adi Shamir and Leonard Adleman. The algorithm they
 published is still the most common one today, and carries the first
 letters of their last names: RSA.
 
-:term:`public-key algorithm`\s aren't limited to encryption. In fact, you've
-already seen a :term:`public-key algorithm` in this book that isn't directly
-used for encryption. There are actually three related classes of
-:term:`public-key algorithm`\s:
+:term:`Public-key algorithm`\s are not limited to encryption. In fact, you
+already saw a :term:`public-key algorithm` in this book that is not directly
+used for encryption. Three related classes of
+:term:`public-key algorithm`\s exist:
 
-#. :term:`Key exchange <key exchange>` algorithms, such as Diffie-Hellman, which allow you to
+#. :term:`Key exchange <key exchange>` algorithms like Diffie-Hellman. They allow you to
    agree on a shared secret across an insecure medium.
-#. Encryption algorithms, such as the ones we'll discuss in this
-   chapter, which allow people to encrypt without having to agree on a
+#. Encryption algorithms, such as the ones we discuss in this
+   chapter. They allow people to encrypt without agreement on a
    shared secret.
-#. Signature algorithms, which we'll discuss in a later chapter, which
-   allow you to sign any piece of information using your private key in
-   a way that allows anyone else to easily verify it using your public
+#. Signature algorithms, which we discuss in a later chapter. They
+   allow you to sign any piece of information using your private key.
+   Anyone else can easily verify using your public
    key.
 
 Why not use public-key encryption for everything?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-At face value, it seems that :term:`public-key encryption` algorithms obsolete
-all our previous :term:`secret-key encryption` algorithms. We could just use
-public key encryption for everything, avoiding all the added complexity
-of having to do :term:`key agreement` for our symmetric algorithms. However,
-when we look at practical cryptosystems, we see that they're almost
-always *hybrid* cryptosystems: while :term:`public-key algorithm`\s play a very
-important role, the bulk of the encryption and authentication work is
-done by secret-key algorithms.
+At face value, it seems like :term:`public-key encryption` algorithms obsolete
+all previous :term:`secret-key encryption` algorithms. We can use
+public-key encryption for everything, avoiding the added complexity
+in doing a :term:`key agreement` for symmetric algorithms. However,
+practical cryptosystems are almost
+always *hybrid* cryptosystems. While :term:`public-key algorithm`\s play a 
+major role, the bulk of encryption and authentication is
+completed by secret-key algorithms.
 
-By far the most important reason for this is performance. Compared to
+By far the most important reason is for performance. Compared to
 our speedy :term:`stream cipher`\s (native or otherwise), :term:`public-key encryption`
 mechanisms are extremely slow. RSA is limited to at most its key size,
 which for 2048-bit means 256 bytes. Under these circumstances encryption
 takes 0.29 megacycles, and decryption takes a whopping 11.12 megacycles.
 :cite:`cryptopp:bench` To put this into perspective,
 symmetric key algorithms work within an order of magnitude of 10 or so
-cycles per byte in either direction. This means it will take a symmetric
-key algorithm approximately 3 kilocycles in order to decrypt 256 bytes,
-which is about 4000 times faster than the asymmetric version. The state
-of the art in secure symmetric ciphers is even faster: AES-GCM with
-hardware acceleration or Salsa20/ChaCha20 only need about 2 to 4 cycles
-per byte, further widening the performance gap.
+cycles per byte in either direction. It takes a symmetric
+key algorithm approximately 3 kilocycles to decrypt 256 bytes,
+which is about 4000 times faster than the asymmetric version. The 
+state-of-the-art technology in secure symmetric ciphers, AES-GCM, is even faster. AES-GCM with
+hardware acceleration or Salsa20/ChaCha20 only needs about 2 to 4 cycles
+per byte, which further widens the performance gap.
 
-There are a few other problems with most practical cryptosystems. For
-example, RSA can't encrypt anything larger than its modulus, which is
-generally less than or equal 4096 bits, far smaller than the largest
-messages we'd like to send. Still, the most important reason is the
+A few other problems occur with most practical cryptosystems. For
+example, RSA cannot encrypt anything larger than its modulus. The modulus is
+generally less than or equal 4096 bits, and far smaller than the largest
+messages we would like to send. Still, the most important reason is the
 speed argument given above.
 
 RSA
