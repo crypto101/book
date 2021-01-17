@@ -1110,23 +1110,23 @@ the attacker isn't supposed to know the state of the cipher.
 
 As always, attacks never get worse. They only get better.
 
-Adi Shamir and Itsik Mantin showed that the second byte produced by the
+Adi Shamir and Itsik Mantin demonstrated that the second byte produced by the
 cipher is *twice* as likely to be zero as it should be. Other
-researchers showed similar biases in the first few bytes of the
-keystream. This sparked further research by Mantin, Shamir and Fluhrer,
-showing large biases in the first bytes of the keystream.
-:cite:`fms:rc4` They also showed that knowing even small
-parts of the key would allow attackers to make strong predictions about
+researchers found similar biases in the first few bytes of the
+keystream. Further research by Mantin, Shamir and Fluhrer
+revealed large biases in the first bytes of the keystream.
+:cite:`fms:rc4` Knowing even small
+parts of the key allows attackers to make strong predictions on
 the state and outputs of the cipher. Unlike RC4, most modern stream
-ciphers provide a way to combine a long-term key with a :term:`nonce` (a number
-used once), to produce multiple different keystreams from the same
-long-term key. RC4, by itself, doesn't do that. The most common approach
-was also the simplest: concatenate [#]_ the long-term key :math:`k`
-with the :term:`nonce` :math:`n`: :math:`k \| n`, taking advantage of RC4's
+ciphers allow combination of a long-term key with a :term:`nonce` (a number
+used once). This produces multiple different keystreams while using the same
+long-term key. RC4, by itself, does not do that. The most common approach
+is also the simplest: concatenate [#]_ the long-term key :math:`k`
+with the :term:`nonce` :math:`n`: :math:`k \| n`. This takes advantage of RC4's
 flexible key length requirements. In this context, concatenation means
-the bits of :math:`n` are appended to the bits of :math:`k`. This scheme
-meant attackers could recover parts of the combined key, eventually
-allowing them to slowly recover the long-term key from a large amount of
+the bits of :math:`n` append to the bits of :math:`k`. 
+Attackers recover parts of the combined key and
+slowly recover the long-term key from a large amount of
 messages (around :math:`2^{24}` to :math:`2^{26}`, or tens of millions
 of messages).
 
