@@ -747,48 +747,48 @@ looks like this:
 
    p^{\prime}_0 p^{\prime}_1 p^{\prime}_2 p^{\prime}_3 p^{\prime}_4 \mathtt{02} \mathtt{03} \mathtt{03}
 
-Since ``02 03 03`` isn't valid PKCS#5 padding, the server will reject
-the message. At that point, we know that once we modify six bytes, the
-padding breaks. That means the sixth byte is the first byte of the
+Since ``02 03 03`` is not valid PKCS#5 padding, the server rejects
+the message. At that point, we know the padding breaks once six bytes are modified.
+This means the sixth byte is the first byte of the
 padding. Since the block is 8 bytes long, we know that the padding
 consists of the sixth, seventh and eighth bytes. So, the padding is
 three bytes long, and, in PKCS#5, equal to ``03 03 03``.
 
-A clever attacker who's trying to minimize the number of oracle queries
+A clever attacker who tries minimizing the number of oracle queries
 can leverage the fact that longer valid padding becomes progressively
-more rare. They can do this by starting from the penultimate byte
-instead of the beginning of the block. The advantage to this method is
-that short paddings (which are more common) are detected more quickly.
-For example, if the padding is ``0x01`` and an attacker starts modifying
-the penultimate byte, they only need one query to learn what the padding
-was. If the penultimate byte is changed to any other value and the
-padding is still valid, the padding must be ``0x01``. If the padding is
-not valid, the padding must be at least ``0x02 0x02``. So, they go back
-to the original block and start modifying the third byte from the back.
-If that passes, the padding was indeed ``0x02 0x02``, otherwise the
+rare. This is done by starting from the penultimate byte
+instead of the beginning of the block. The advantage of this method is
+that short paddings (more common) are detected quicker.
+For example, if the padding is ``0x01`` and an attacker modifies
+the penultimate byte, only one query is needed to learn about the padding.
+If the penultimate byte changes to any other value and the
+padding is still valid, the padding must be ``0x01``. Alternatively, if the padding is
+invalid, the padding must be at least ``0x02 0x02``. The attacker returns
+to the original block and begins modifying the third byte from the back.
+If the modification passes, the padding is indeed ``0x02 0x02``, otherwise the
 padding must be at least ``0x03 0x03 0x03``. The process repeats until
-they've found the correct length. This is a little trickier to
-implement; you can't just keep modifying the same block (if it's
-mutable), and you're waiting for the oracle to fail instead of pass,
-which can be confusing. But other than being faster at the cost of being
+the attacker finds the correct length, which is a bit trickier to
+implement. You cannot keep modifying the same block (if it is
+mutable) and wait for the oracle to fail instead of pass. It 
+causes confusion. But other than being faster at the cost of being
 slightly more complex, this technique is equivalent to the one described
 above.
 
-For the next section, we'll assume that it was just ``01``, since that
-is the most common case. The attack doesn't really change depending on
-the length of the padding. If you guess more bytes of padding correctly,
-that just means that there are fewer remaining bytes you will have to
-guess manually. (This will become clear once you understand the rest of
-the attack.)
+For the next section, we assume the byte is just ``01`` since that
+is the most common case. The attack does not really change based on
+the padding length. If you guess more bytes of padding correctly,
+you just have less bytes to guess 
+manually. This becomes clearer once you understand the rest of
+the attack.
 
 Decrypting one byte
 ^^^^^^^^^^^^^^^^^^^
 
-At this point, the attacker has already successfully decrypted the last
-byte of the target block of ciphertext! Actually, we've decrypted as
-many bytes as we have valid padding; we're just assuming the worst case
+At this point, the attacker successfully decrypted the last
+byte in the target block of ciphertext! Actually, we decrypted as
+many bytes as we have valid padding; we assume the worst case
 scenario where there is only a single byte. How? The attacker knows that
-the last byte of the decrypted ciphertext block :math:`C_i` (we'll call
+the last byte of the decrypted ciphertext block :math:`C_i` (we call
 that byte :math:`D(C_i)[b]`), XORed with the iteratively found value
 :math:`r_b`, is ``01``:
 
@@ -802,13 +802,13 @@ By moving the XOR operation to the other side, the attacker gets:
 
    D(C_i)[b] = \mathtt{01} \xor r_b
 
-The attacker has now tricked the receiver into revealing the value of
-the last byte of the block cipher decryption of :math:`C_i`.
+The attacker now tricks the receiver into revealing the value of
+the last byte in the block cipher decryption of :math:`C_i`.
 
 Decrypting subsequent bytes
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Next, the attacker tricks the receiver into decrypting the next byte.
+Next, the attacker tricks the receiver into decrypting the following byte.
 Remember the previous equation, where we reasoned that the last byte of
 the plaintext was ``01``:
 
@@ -816,11 +816,11 @@ the plaintext was ``01``:
 
    D(C_i)[b] \xor r_b = \mathtt{01}
 
-Now, we'd like to get that byte to say ``02``, to produce an *almost*
-valid padding: the last byte would be correct for a 2-byte PKCS#5
-padding (``02 02``), but that second-to-last byte probably isn't ``02``
-yet. To do that, we XOR with ``01`` to cancel the ``01`` that's already
-there (since two XORs with the same value cancel each other out), and
+Now, we want the byte to say ``02`` for an *almost*
+valid padding: the last byte is correct for a 2-byte PKCS#5
+padding (``02 02``), but that second-to-last byte probably is not ``02``.
+To correct the second-to-last byte, we XOR it with ``01`` to cancel the ``01`` that is already
+there (two XORs with the same value cancel each other out), and
 then we XOR with ``02`` to get ``02``:
 
 .. math::
@@ -830,7 +830,7 @@ then we XOR with ``02`` to get ``02``:
    & = \mathtt{02}
    \end{aligned}
 
-So, to produce a value of ``02`` in the final position of the decrypted
+So, to produce an ``02`` value in the final position of the decrypted
 plaintext, the attacker replaces :math:`r_b` with:
 
 .. math::
