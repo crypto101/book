@@ -1201,242 +1201,240 @@ properties aren't true. By writing the probability in the
 :math:`2^{-16} (1 + 2^{-k})` form, it's easier to see how much RC4 deviates from what you'd
 expect from an ideal :term:`stream cipher`.
 
-So, let's try to read the first line of the table. It says that when the
-first byte :math:`i = 1` of any 256-byte chunk from the cipher is
-:math:`0`, then the byte following it is slightly more likely
-(:math:`1 + 2^{-9}` times as likely, to be exact) to be 0 than for it to
-be any other number. We can also see that when one of the keystream
-bytes is :math:`255`, you can make many predictions about the next byte,
-depending on where it occurs in the keystream. It's more likely to be
-:math:`0, 1, 2, 255`, or the position in the keystream plus one or two.
+So, lets read the first line in the table. When the
+first byte :math:`i = 1` of any 256-byte chunk of the cipher is
+:math:`0`, then the byte following is likelier
+to be 0 than any other number (:math:`1 + 2^{-9}` times as likely to be exact). 
+Many predictions about the next byte are possible
+when one of the keystream bytes is :math:`255`, though it
+depends where it occurs in the keystream. It is likely to be
+:math:`0, 1, 2, 255` or the keystream position plus one or two.
 
 TODO: demonstrate attack success
 
-Again, attacks only get better. These attacks have primarily focused on
-the cipher itself, and haven't been fully optimized for practical
-attacks on, say, web services. The attacks can be greatly improved with
-some extra information about the plaintext you're attempting to recover.
+Again, attacks only get better. The attacks primarily focus on
+the cipher itself, and are not fully optimized for practical
+attacks, say on, web services. Attacks can greatly improve with
+extra information about the plaintext you are attempting to recover.
 For example, HTTP cookies are often base-64 or hex encoded.
 
-There's no way around it: we need to stop using RC4. Fortunately, we've
-also developed many secure alternatives. The continuing advances in
-cryptanalysis of RC4 helped contribute to a sense of urgency regarding
-the improvement of commonly available cryptographic primitives.
-Throughout 2013 in particular, this led to large improvements in, for
-example, browser cryptography (we will discuss browser cryptography,
-notably SSL/TLS, in a later chapter).
+There is no way around it: we need to phase out RC4. Fortunately, we
+have developed several secure alternatives. The continuing advances in
+RC4 cryptanalysis contributes to urgent
+improvements in commonly available cryptographic primitives.
+Particularly in 2013, major improvements were accomplished for
+browser cryptography (browser cryptography is discussed in a later chapter,
+notably SSL/TLS).
 
 Salsa20
 ~~~~~~~
 
 Salsa20 is a newer :term:`stream cipher` designed by Dan Bernstein. Bernstein is
-well-known for writing a lot of open source (public domain) software,
+well-known for writing open source (public domain) software,
 most of which is either directly security related or built with
-information security very much in mind.
+information security in mind.
 
-There are two minor variants of Salsa20, called Salsa20/12 and
-Salsa20/8, which are simply the same algorithm except with 12 and 8
-rounds [#]_ respectively, down from the original 20. ChaCha is another,
-orthogonal tweak of the Salsa20 cipher, which tries to increase the
+The two minor variants of Salsa20 are Salsa20/12 and
+Salsa20/8. They are the same algorithm except with 12 and 8
+rounds [#]_ respectively reduced from the original 20. ChaCha is another,
+orthogonal tweak of the Salsa20 cipher. ChaCha tries increasing the
 amount of diffusion per round while maintaining or improving
-performance. ChaCha doesn't have a “20” after it; specific algorithms do
-have a number after them (ChaCha8, ChaCha12, ChaCha20), which refers to
-the number of rounds.
+performance. ChaCha does not have a “20” after it. Specific algorithms do
+have a number after them, which represent the number of rounds 
+(ChaCha8, ChaCha12, ChaCha20).
 
 .. [#]
-   Rounds are repetitions of an internal function. Typically a number of
-   rounds are required to make an algorithm work effectively; attacks
-   often start on reduced-round versions of an algorithm.
+   Rounds repeat an internal function. Typically, a number of
+   rounds are required for an algorithm to work effectively. Attacks
+   often begin on reduced-round versions of an algorithm.
 
-Salsa20 and ChaCha are among the state of the art of modern stream
-ciphers. There are currently no publicly known attacks against Salsa20,
-ChaCha, nor against any of their recommended reduced-round variants,
-that break their practical security.
+Salsa20 and ChaCha are state-of-the-art, modern stream
+ciphers. Currently, no publicly known attacks exist against Salsa20,
+ChaCha, or any of their recommended reduced-round variants
+that break practical security.
 
 Both cipher families are also pretty fast. For long streams, Salsa20
-takes about 4 cycles per byte for the full-round version, about 3 cycles
-per byte for the 12-round version and about 2 cycles per byte for the
-8-round version, on modern Intel processors
-:cite:`salsa20:speed` and modern AMD processors
-:cite:`cryptopp:bench`. ChaCha is (on most platforms)
-slightly faster still. To put that into comparison, that's more than
+takes about 4 cycles per byte in the full-round version, 3 cycles
+per byte in the 12-round version, and 2 cycles per byte in the
+8-round version running on modern Intel processors
+:cite:`salsa20:speed` or modern AMD processors
+:cite:`cryptopp:bench`. On most platforms, ChaCha is
+slightly faster. It is more than
 three times faster than RC4 [#rc4-bench]_, approximately three times faster than
-AES-CTR with a 128 bit key at 12.6 cycles per byte, and roughly in the
-ballpark of AES :term:`GCM mode` [#gcm-mode]_ with specialized hardware instructions.
+AES-CTR with a 128 bit key at 12.6 cycles per byte, and in the same
+ballpark as AES :term:`GCM mode` [#gcm-mode]_ with specialized hardware instructions.
 
 .. [#rc4-bench]
-   The quoted benchmarks don't mention RC4 but MARC4, which stands for
-   “modified alleged RC4”. The RC4 section explains why it's “alleged”,
-   and “modified” means it throws away the first 256 bytes because of a
-   weakness in RC4.
+   Quoted benchmarks do not mention RC4 but MARC4, which stands for
+   “modified alleged RC4”. The RC4 section explains the meaning of “alleged”.
+   “Modified” indicates that the first 256 bytes are thrown away due to a
+   RC4 weakness.
 
 .. [#gcm-mode]
-   :term:`GCM mode` is an authenticated encryption mode, which we will see in
-   more detail in a later chapter.
+   :term:`GCM mode` is an authenticated encryption mode explained with
+   greater detail in a later chapter.
 
 .. _keystream jump:
 
-Salsa20 has two particularly interesting properties.
-Firstly, it is possible to “jump” to a particular point in the keystream
-without computing all previous bits. This can be useful, for example, if
-a large file is encrypted, and you'd like to be able to do random reads
-in the middle of the file. While many encryption schemes require the
-entire file to be decrypted, with Salsa20, you can just select the
-portion you need. Another construction that has this property is a
-:term:`mode of operation` called :term:`CTR mode`, which we'll talk about later.
+Salsa20 has two interesting properties.
+Firstly, a “jump” to a particular point in the keystream is possible
+without computing all previous bits. This is useful when
+a large file is encrypted and you want to do random reads
+in the middle of the file. While many encryption schemes require
+entire file decryption, with Salsa20, you can simply select the
+portion needed. Another construction with this property is a
+:term:`mode of operation` called :term:`CTR mode`, which we discuss later.
 
-This ability to “jump” also means that blocks from Salsa20 can be
-computed independently of one another, allowing for encryption or
-decryption to work in parallel, which can increase performance on
+"Jumping” also means that blocks from Salsa20 are
+computed independently of eachother. This allows encryption or
+decryption to function in parallel for enhanced performance on
 multi-core CPUs.
 
-Secondly, it is resistant to many side-channel attacks. This is done by
-ensuring that no key material is ever used to choose between different
-code paths in the cipher, and that every round is made up of a
-fixed-number of constant-time operations. The result is that every block
-is produced with exactly the same number of operations, regardless of
-what the key is.
+Secondly, Salsa20 resists many side-channel attacks. 
+No key material is ever used to choose between different
+code paths in the cipher. Also a fixed-number of constant-time operations
+make up each round. Ultimately, each block is produced
+with the exact same number of operations, regardless of
+the key.
 
 Both :term:`stream cipher`\s are based on an ARX design. One benefit of ARX
-ciphers is that they are intrinsically constant time. There are no
-secret memory access patterns that might leak information, as with AES.
+ciphers is that they are intrinsically constant time. No
+secret memory access patterns exist that might leak information, as with AES.
 These ciphers also perform well on modern CPU architectures without
-needing cipher-specific optimizations. They take advantage of generic
+requiring cipher-specific optimizations. They exploit generic
 vector instructions, where the CPU performs related operations on
-multiple pieces of data in a single instruction. As a result, ChaCha20
-performance is competitive with AES on modern Intel CPUs, even though
+multiple pieces of data in a single instruction. As a result, ChaCha20's
+performance competes with AES on modern Intel CPUs, even though
 the latter has specialized hardware.
 
-Here is an example ARX operation:
+Here is an ARX operation example:
 
 .. math::
 
    x \leftarrow x \xor (y \madd z) \lll n
 
-To find the new value of :math:`x`, first we perform a modular addition
-(:math:`\boxplus`) of :math:`y` and :math:`z`, then we XOR
-(:math:`\xor`) the result with x and finally we rotate left
-(:math:`\lll`) by :math:`n` bits. This is the core round primitive of
-Salsa20.
+Finding the new :math:`x` value involves performing a modular addition
+(:math:`\boxplus`) of :math:`y` and :math:`z`. Next we XOR
+(:math:`\xor`) the result with x, and rotate left
+(:math:`\lll`) by :math:`n` bits. This is Salsa20's core round primitive.
 
 Native stream ciphers versus modes of operation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Some texts only consider native :term:`stream cipher`\s to be :term:`stream cipher`\s.
-This book emphasizes what the functionality of the algorithm is. Since
-both block ciphers in a :term:`mode of operation` and a native :term:`stream cipher`
-take a secret key and can be used to encrypt a stream, and the two can
-usually replace each other in a cryptosystem, we just call both of them
-:term:`stream cipher`\s and are done with it.
+Some texts only consider native :term:`stream cipher`\s as :term:`stream cipher`\s.
+We emphasize algorithm functionality in this book. Since
+block ciphers in a :term:`mode of operation` and a native :term:`stream cipher`
+both take secret keys to encrypt a stream, and can
+usually replace each other in a cryptosystem, we call both of them
+:term:`stream cipher`\s. That is done and set.
 
-We will further emphasize the tight link between the two with :term:`CTR mode`,
-a :term:`mode of operation` which produces a synchronous :term:`stream cipher`. While
-there are also modes of operation (like OFB and CFB) that can produce
-self-synchronizing :term:`stream cipher`\s, these are far less common, and not
-discussed here.
+We emphasize the tight link between the two with :term:`CTR mode`,
+a :term:`mode of operation` producing a synchronous :term:`stream cipher`. 
+While modes of operation, like OFB and CFB, can create
+self-synchronizing :term:`stream cipher`\s, they are uncommon, 
+and not discussed here.
 
 CTR mode
 ~~~~~~~~
 
-:term:`CTR mode`, short for counter mode, is a :term:`mode of operation` that works by
-concatenating a :term:`nonce` with a counter. The counter is incremented with
-each block, and padded with zeroes so that the whole is as long as the
-block size. The resulting concatenated string is run through a block
-cipher. The outputs of the block cipher are then used as the keystream.
+:term:`CTR mode`, short for counter mode, is a :term:`mode of operation` that 
+concatenates a :term:`nonce` with a counter. The counter increments with
+each block and is padded with zeroes for the whole to match the
+block size length. The resulting concatenated string is run through a block
+cipher. The block cipher outputs are then used as the keystream.
 
 .. figure:: Illustrations/CTR/CTR.svg
    :align: center
 
-   :term:`CTR mode`: a single :term:`nonce` :math:`N` with a zero-padded counter :math:`i` is
-   encrypted by the block cipher to produce a keystream block; this block is
-   XORed with the plaintext block :math:`P_i` to produce the ciphertext block
+   :term:`CTR mode`: the block cipher encrypts a single :term:`nonce` :math:`N` with a 
+   zero-padded counter :math:`i`to produce a keystream block. The keystream block 
+   XORs with the plaintext block :math:`P_i` to make the ciphertext block
    :math:`C_i`.
 
 
-This illustration shows a single input block
-:math:`N \| 00 \ldots \| i`, consisting of :term:`nonce` :math:`N`, current
-counter value :math:`i` and padding, being encrypted by the block cipher
-:math:`E` using key :math:`k` to produce keystream block :math:`S_i`,
-which is then XORed with the plaintext block :math:`P_i` to produce
+The illustration shows a single input block
+:math:`N \| 00 \ldots \| i`. It consists of :term:`nonce` :math:`N`, current
+counter value :math:`i`, and padding being encrypted by the block cipher
+:math:`E`. A key :math:`k` is used to produce keystream block :math:`S_i`,
+which then XORs with the plaintext block :math:`P_i` to make
 ciphertext block :math:`C_i`.
 
-Obviously, to decrypt, you do the exact same thing again, since XORing a
+Obviously, decryption follows the exact same process. XORing a
 bit with the same value twice always produces the original bit:
 :math:`p_i \xor s_i \xor s_i = p_i`. As a consequence, CTR encryption and
-decryption is the same thing: in both cases you produce the keystream,
-and you XOR either the plaintext or the ciphertext with it in order to
+decryption are the same. In both cases, you produce the keystream
+and XOR either the plaintext or the ciphertext in order to
 get the other one.
 
-For :term:`CTR mode` to be secure, it is critical that :term:`nonce`\s aren't reused. If
-they are, the entire keystream will be repeated, allowing an attacker to
-mount multi-time pad attacks.
+Reuse of :term:`nonce`\s should be avoided to maintain :term:`CTR mode` security. If
+:term:`nonce`\s are reused, the entire keystream repeats and 
+multi-time pad attacks can be mounted.
 
-This is different from an :term:`initialization vector` such as the one used by
-CBC. An IV has to be unpredictable. An attacker being able to predict a
-CTR :term:`nonce` doesn't really matter: without the secret key, they have no
-idea what the output of the block cipher (the sequence in the keystream)
-would be.
+This differs from an :term:`initialization vector` (IV) such as the one used by
+CBC. An IV must be unpredictable. An attacker predicting a
+CTR :term:`nonce` does not matter. Without the secret key, the attacker has no
+idea about the block cipher output (the sequence in the keystream).
 
-Like Salsa20, :term:`CTR mode` has the interesting property that you can jump to
-any point in the keystream easily: just increment the counter to that
+Like Salsa20, :term:`CTR mode` has the interesting jump property. 
+Any point in the keystream is easy to access. It works by simply incrementing the counter to that
 point. :ref:`The Salsa20 paragraph on this topic <keystream jump>`
-explains why that might be useful.
+explains why it is valuable.
 
-Another interesting property is that since any keystream block can be
-computed completely separately from any other keystream block, both
-encryption and decryption are very easy to compute in parallel.
+Another interesting property is that both
+encryption and decryption easily compute in parallel.
+Any keystream block can compute 100% independently 
+from another keystream block.
 
 Stream cipher bit flipping attacks
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Synchronous :term:`stream cipher`\s, such as native :term:`stream cipher`\s or a block
-cipher in :term:`CTR mode`, are also vulnerable to a bit flipping attack. It's
-similar to CBC bit flipping attacks in the sense that an attacker flips
-several bits in the ciphertext, and that causes some bits to be flipped
-in the plaintext.
+Synchronous :term:`stream cipher`\s like native :term:`stream cipher`\s or a block
+cipher in :term:`CTR mode` are vulnerable to a bit flipping attack. It shares
+similarity to a CBC bit flipping attack in that 
+several bits flip in the ciphertext, which causes some bits to flip in the plaintext.
 
-This attack is actually much simpler to perform on :term:`stream cipher`\s than
-it is on :term:`CBC mode`. First of all, a flipped bit in the ciphertext results
-in the same bit being flipped in the plaintext, not the corresponding
-bit in the following block. Additionally, it only affects that bit; in
+This attack is simpler to perform on :term:`stream cipher`\s than
+it is on :term:`CBC mode`. Firstly, a flipped bit in the ciphertext results
+in the same bit flipping in the plaintext. The corresponding
+bit in the following block does not flip. Additionally, it only affects that bit; in
 CBC bit flipping attacks, the plaintext of the modified block is
-scrambled. Finally, since the attacker is modifying a sequence of bytes
-and not a sequence of blocks, the attacks are not limited by the
-specific block size. In CBC bit flipping attacks, for example, an
-attacker can adjust a single block, but can't adjust the adjacent block.
+scrambled. Finally, the attacks are not limited by the specific block size
+since the attacker modifies a sequence of bytes and not a sequence of blocks.
+In CBC bit flipping attacks, for example, an
+attacker adjusts a single block, but cannot adjust the adjacent block.
 
 TODO illustrate
 
-This is yet another example of why authentication has to go hand in hand
+This is yet another example of why authentication goes hand in hand
 with encryption. If the message is properly authenticated, the recipient
-can simply reject the modified messages, and the attack is foiled.
+simply rejects the modified messages, and the attack foils.
 
 Authenticating modes of operation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-There are other modes of operation that provide authentication as well
-as encryption at the same time. Since we haven't discussed
-authentication at all yet, we'll handle these later.
+Other modes of operation can provide authentication and
+encryption simultaneously. Since we have not discussed
+authentication at all yet, we can handle this later.
 
 .. _remaining-problems-2:
 
 Remaining problems
 ~~~~~~~~~~~~~~~~~~
 
-We now have tools that will encrypt large streams of data using a small
-key. However, we haven't actually discussed how we're going to agree on
-that key. As noted in a previous chapter, to communicate between
-:math:`n` people, we need :math:`\frac{n(n-1)}{2}` key exchanges. The
+We now have tools for encrypting large data streams using a small
+key. However, we have not actually discussed agreement on
+that key. As noted in a previous chapter, communication between
+:math:`n` people involves :math:`\frac{n(n-1)}{2}` key exchanges. The
 number of key exchanges grows about as fast as the number of people
-*squared*. While the key to be exchanged is a lot smaller now than it
+*squared*. While the key being exchanged is much smaller now than it
 was with one-time pads, the fundamental problem of the impossibly large
-number of key exchanges hasn't been solved yet. We will tackle that
-problem in the next section, where we'll look at key exchange protocols:
+number of key exchanges is not resolved. We tackle this
+problem in the next section where we look at key exchange protocols:
 protocols that allow us to agree on a secret key over an insecure
 medium.
 
-Additionally, we've seen that encryption isn't enough to provide
-security: without authentication, it's easy for attackers to modify the
-message, and in many flawed systems even decrypt messages. In a future
-chapter, we'll discuss how to *authenticate* messages, to prevent
-attackers from modifying them.
+Additionally, we see that encryption is insufficient for
+security: without authentication, message modification is easy for attackers,
+and even message decryption occurs in many flawed systems. In a future
+chapter, we discuss how to *authenticate* messages to prevent modification by
+attackers.
