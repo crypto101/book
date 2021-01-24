@@ -137,31 +137,30 @@ significantly fewer pixels per block than the larger block sizes in the
 example. But AES is the workhorse of modern block ciphers—it can't be at
 fault, certainly not because of an insufficient block size.
 
-When we look at a picture of what would happen with an idealized
-encryption scheme, we notice that it looks like random noise. Keep in
-mind that “looking like random noise” doesn't mean something is properly
-encrypted: it just means that we can't inspect it using methods this
-trivial.
+Notice that an idealized
+encryption scheme looks like random noise.
+“Looking like random noise” does not mean something is properly
+encrypted: it just means that we cannot inspect it using trivial methods.
 
 Encryption oracle attack
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-In the previous section, we've focused on how an attacker can inspect a
-ciphertext encrypted using :term:`ECB mode`. That's a *passive*, ciphertext-only
-attack. It's passive because the attacker doesn't really interfere in
-any communication; they're simply examining a ciphertext. In this
-section, we'll study a different, *active* attack, where the attacker
-actively communicates with their target. We'll see how the active attack
-can enable an attacker to decrypt ciphertexts encrypted using :term:`ECB mode`.
+In the previous section, we focused on how an attacker can inspect a
+ciphertext encrypted using :term:`ECB mode`. That is a *passive*, ciphertext-only
+attack. It is passive because the attacker does not interfere in
+communications. The attacker simply examines the ciphertext. In this
+section, we study a different, *active* attack, where the attacker
+actively communicates with their target. We see how the active attack
+enables an attacker to decrypt ciphertexts encrypted using :term:`ECB mode`.
 
-To do this, we'll introduce a new concept called an :term:`oracle`. Formally
-defined :term:`oracle`\s are used in the study of computer science, but for our
-purposes it's sufficient to just say that an :term:`oracle` is something that
-will compute some particular function for you.
+To do this, we introduce a new concept called an :term:`oracle`. Formally
+defined :term:`oracle`\s are used in the field of computer science. For our
+purposes it is sufficient to say that an :term:`oracle`
+computes a particular function.
 
-In our case, the :term:`oracle` will perform a specific encryption for the
-attacker, which is why it's called an :term:`encryption oracle`. Given some data
-:math:`A` chosen by the attacker, the :term:`oracle` will encrypt that data,
+In our case, the :term:`oracle` performs a specific encryption for an
+attacker as an :term:`encryption oracle`. Given some data
+:math:`A` chosen by the attacker, the :term:`oracle` encrypts that data,
 followed by a secret suffix :math:`S`, in :term:`ECB mode`. Or, in symbols:
 
 .. math::
@@ -169,11 +168,6 @@ followed by a secret suffix :math:`S`, in :term:`ECB mode`. Or, in symbols:
    C = ECB(E_k, A \| S)
 
 The secret suffix :math:`S` is specific to this system. The attacker's
-goal is to decrypt it. We'll see that being able to encrypt other
-messages surprisingly allows the attacker to decrypt the suffix. This
-:term:`oracle` might seem artificial, but is quite common in practice. A simple
-example would be a cookie encrypted with ECB, where the prefix :math:`A`
-is a name or an e-mail address field, controlled by the attacker.
 
 You can see why the concept of an :term:`oracle` is important here: the attacker
 would not be able to compute :math:`C` themselves, since they do not
@@ -181,74 +175,79 @@ have access to the encryption key :math:`k` or the secret suffix
 :math:`S`. The goal of the :term:`oracle` is for those values to remain secret,
 but we'll see how an attacker will be able to recover the secret suffix
 :math:`S` (but not the key :math:`k`) anyway. The attacker does this by
+goal is to decrypt it. Ability to encrypt other
+messages surprisingly allows the attacker to decrypt the suffix. The
+:term:`oracle` may seem artificial, but it is quite common in practice. A simple
+example is a cookie encrypted with ECB, where the attacker can control prefix :math:`A`
+as a name or an e-mail address field.
 inspecting the ciphertext :math:`C` for many carefully chosen values of
 the attacker-chosen prefix :math:`A`.
 
-Assuming that an attacker would have access to such an :term:`oracle` might seem
-like a very artificial scenario. It turns out that in practice, a lot of
+Assuming that an attacker has access to such an :term:`oracle` may seem
+like an artificial scenario. In practice, a lot of
 software can be tricked into behaving like one. Even if an attacker
-can't control the real software as precisely as they can query an
-:term:`oracle`, the attacker generally isn't thwarted. Time is on their side:
+cannot control the real software as precisely as querying an
+:term:`oracle`, the attacker is not thwarted. Time is on their side:
 they only have to convince the software to give the answer they want
 *once*. Systems where part of the message is secret and part of the
-message can be influenced by the attacker are actually very common, and,
+message can be influenced by an attacker are very common, and,
 unfortunately, so is :term:`ECB mode`.
 
 Decrypting a block using the oracle
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The attacker starts by sending in a plaintext :math:`A` that's just one
-byte shorter than the block size. That means the block that's being
-encrypted will consist of those bytes, plus the first byte of :math:`S`,
-which we'll call :math:`s_0`. The attacker remembers the encrypted
-block. They don't know the value of :math:`s_0` yet, but now they do
+The attacker begins by sending in a plaintext :math:`A` that is one
+byte shorter than the block size. This means that the block being
+encrypted consists of those bytes, plus the first byte of :math:`S`,
+which we can call :math:`s_0`. The attacker remembers the encrypted
+block. They do not know the value of :math:`s_0`, but they do
 know the value of the first encrypted block: :math:`E_k(A \| s_0)`. In
 the illustration, this is block :math:`C_{R1}`:
 
 .. figure:: Illustrations/ECBEncryptionOracle/RememberFirst.svg
    :align: center
 
-Then, the attacker tries a full-size block, trying all possible values
-for the final byte. Eventually, they'll find the value of :math:`s_0`;
-they know the guess is correct because the resulting ciphertext block
-will match the ciphertext block :math:`C_{R1}` they remembered earlier.
+The attacker then tries all possible values
+for the final byte of a full-size block. The attacker eventually finds the value of :math:`s_0`;
+the guess is correct because the resulting ciphertext block
+matches the ciphertext block :math:`C_{R1}` that was remembered earlier.
 
 .. figure:: Illustrations/ECBEncryptionOracle/GuessFirst.svg
    :align: center
 
-The attacker can repeat this for the penultimate byte. They submit a
-plaintext :math:`A` that's two bytes shorter than the block size. The
-:term:`oracle` will encrypt a first block consisting of that :math:`A` followed
+The attacker can repeat this strategy for the penultimate byte. A
+plaintext :math:`A`, two bytes shorter than the block size, is submitted. The
+:term:`oracle` encrypts a first block containing :math:`A` followed
 by the first two bytes of the secret suffix, :math:`s_0s_1`. The
-attacker remembers that block.
+attacker remembers the block.
 
 .. figure:: Illustrations/ECBEncryptionOracle/RememberSecond.svg
    :align: center
 
-Since the attacker already knows :math:`s_0`, they try :math:`A \|
-s_0` followed by all possible values of :math:`s_1`. Eventually they'll
-guess correctly, which, again, they'll know because the ciphertext
+Since the attacker already knows :math:`s_0`, guessing begins from :math:`A \|
+s_0` followed by all possible values of :math:`s_1`. Eventually the attacker's
+guesses are correct, and the ciphertext
 blocks match:
 
 .. figure:: Illustrations/ECBEncryptionOracle/GuessSecond.svg
    :align: center
 
-The attacker can then rinse and repeat, eventually decrypting an entire
-block. This allows them to brute-force a block in :math:`p \cdot b`
+The attacker rinses and repeats, eventually decrypting an entire
+block. This strategy allows brute-forcing a block in :math:`p \cdot b`
 attempts, where :math:`p` is the number of possible values for each byte
-(so, for 8-bit bytes, that's :math:`2^8 = 256`) and :math:`b` is the
-block size. This is much better than a regular brute-force attack, where
-an attacker has to try all of the possible blocks, which would be:
+(e.g. for 8-bit bytes that is :math:`2^8 = 256`) and :math:`b` is the
+block size. This aforementioned approach is better than a regular brute-force attack where
+an attacker tries all possible blocks which is:
 
 .. math::
 
    \underbrace{p \cdot p \ldots \cdot p}_{b \ \mathrm{positions}} = p^b
 
-For a typical block size of 16 bytes (or 128 bits), brute forcing would
-mean trying :math:`256^{16}` combinations. That's a huge, 39-digit
-number. It's so large that trying all of those combinations is
-considered impossible. An ECB :term:`encryption oracle` allows an attacker to do
-it in at most :math:`256 \cdot 16 = 4096` tries, a far more manageable
+For a typical block size of 16 bytes (or 128 bits) brute forcing
+means trying :math:`256^{16}` combinations. The number of tries amounts to a huge, 39-digit
+number. It is so large that trying all combinations is
+impossible. An ECB :term:`encryption oracle` allows an attacker to decrypt
+in at most :math:`256 \cdot 16 = 4096` tries, which is a far more manageable
 number.
 
 Conclusion
