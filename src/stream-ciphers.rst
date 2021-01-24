@@ -172,7 +172,7 @@ goal is to decrypt it. Ability to encrypt other
 messages surprisingly allows the attacker to decrypt the suffix. The
 :term:`oracle` may seem artificial, but it is quite common in practice. A simple
 example is a cookie encrypted with ECB, where the attacker can control prefix :math:`A`
-as a name or an e-mail address field.
+such as a name or an e-mail address field.
 
 You can see why the concept of an :term:`oracle` is important here: the attacker
 would not be able to compute :math:`C` themselves, since they do not
