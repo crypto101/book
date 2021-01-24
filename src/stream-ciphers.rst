@@ -168,11 +168,11 @@ followed by a secret suffix :math:`S`, in :term:`ECB mode`. Or, in symbols:
    C = ECB(E_k, A \| S)
 
 The secret suffix :math:`S` is specific to this system. The attacker's
-goal is to decrypt it. We'll see that being able to encrypt other
-messages surprisingly allows the attacker to decrypt the suffix. This
-:term:`oracle` might seem artificial, but is quite common in practice. A simple
-example would be a cookie encrypted with ECB, where the prefix :math:`A`
-is a name or an e-mail address field, controlled by the attacker.
+goal is to decrypt it. Ability to encrypt other
+messages surprisingly allows the attacker to decrypt the suffix. The
+:term:`oracle` may seem artificial, but it is quite common in practice. A simple
+example is a cookie encrypted with ECB, where the attacker can control prefix :math:`A`
+as a name or an e-mail address field.
 
 You can see why the concept of an :term:`oracle` is important here: the attacker
 would not be able to compute :math:`C` themselves, since they do not
@@ -180,11 +180,6 @@ have access to the encryption key :math:`k` or the secret suffix
 :math:`S`. The goal of the :term:`oracle` is for those values to remain secret,
 but we'll see how an attacker will be able to recover the secret suffix
 :math:`S` (but not the key :math:`k`) anyway. The attacker does this by
-goal is to decrypt it. Ability to encrypt other
-messages surprisingly allows the attacker to decrypt the suffix. The
-:term:`oracle` may seem artificial, but it is quite common in practice. A simple
-example is a cookie encrypted with ECB, where the attacker can control prefix :math:`A`
-as a name or an e-mail address field.
 inspecting the ciphertext :math:`C` for many carefully chosen values of
 the attacker-chosen prefix :math:`A`.
 
