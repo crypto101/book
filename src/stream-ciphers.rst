@@ -168,6 +168,11 @@ followed by a secret suffix :math:`S`, in :term:`ECB mode`. Or, in symbols:
    C = ECB(E_k, A \| S)
 
 The secret suffix :math:`S` is specific to this system. The attacker's
+goal is to decrypt it. We'll see that being able to encrypt other
+messages surprisingly allows the attacker to decrypt the suffix. This
+:term:`oracle` might seem artificial, but is quite common in practice. A simple
+example would be a cookie encrypted with ECB, where the prefix :math:`A`
+is a name or an e-mail address field, controlled by the attacker.
 
 You can see why the concept of an :term:`oracle` is important here: the attacker
 would not be able to compute :math:`C` themselves, since they do not
