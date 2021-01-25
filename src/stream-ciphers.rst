@@ -137,10 +137,9 @@ significantly fewer pixels per block than the larger block sizes in the
 example. But AES is the workhorse of modern block ciphers—it can't be at
 fault, certainly not because of an insufficient block size.
 
-Notice that an idealized
-encryption scheme looks like random noise.
-“Looking like random noise” does not mean something is properly
-encrypted: it just means that we cannot inspect it using trivial methods.
+Notice that an idealized encryption scheme looks like random noise. “Looking
+like random noise” does not mean something is properly encrypted: it just means
+that we cannot inspect it using trivial methods.
 
 Encryption oracle attack
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -168,8 +167,8 @@ followed by a secret suffix :math:`S`, in :term:`ECB mode`. Or, in symbols:
    C = ECB(E_k, A \| S)
 
 The secret suffix :math:`S` is specific to this system. The attacker's
-goal is to decrypt it. Ability to encrypt other
-messages surprisingly allows the attacker to decrypt the suffix. The
+goal is to decrypt it. The ability to encrypt other
+messages surprisingly allows the attacker to decrypt the suffix. This
 :term:`oracle` may seem artificial, but it is quite common in practice. A simple
 example is a cookie encrypted with ECB, where the attacker can control prefix :math:`A`
 such as a name or an e-mail address field.
