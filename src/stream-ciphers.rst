@@ -279,7 +279,7 @@ like a :term:`stream cipher`. These configurations are known as
 
 :term:`ECB mode`, which we have just seen, is the simplest such :term:`mode of operation`.
 The letters ``ECB`` stand for electronic code book [#]_. For reasons
-we already discussed, :term:`ECB mode` is very ineffective. Fortunately,
+we already discussed, :term:`ECB mode` is insecure. Fortunately,
 there plenty of other choices exist.
 
 .. [#]
@@ -295,7 +295,7 @@ ciphertext block before it is encrypted by the block cipher.
 
 Of course, this process presents a problem for the first plaintext block:
 there is no previous ciphertext block to XOR it with. Instead, we select
-an IV: a random number in place of the “first” ciphertext.
+an IV: a random block in place of the “first” ciphertext.
 :term:`initialization vector`\s also appears in many
 algorithms. An :term:`initialization vector` should be unpredictable, ideally,
 cryptographically random. IVs do not have to be kept secret:
