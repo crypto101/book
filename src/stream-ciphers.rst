@@ -299,7 +299,7 @@ an IV: a random block in place of the “first” ciphertext.
 :term:`initialization vector`\s also appears in many
 algorithms. An :term:`initialization vector` should be unpredictable, ideally,
 cryptographically random. IVs do not have to be kept secret:
-they are simply added to ciphertext messages in plaintext. It may
+they are typically just added to ciphertext messages in plaintext. It may
 sound contradictory that an IV must be unpredictable, but not
 kept a secret. It is important to remember that an attacker should not
 be capable of predicting a given IV *ahead of time*. We
