@@ -329,7 +329,7 @@ Attacks on CBC mode with predictable IVs
 Suppose there is a database storing secret user information, like medical,
 payroll or criminal records. The server protects the information by encrypting
 it with a strong block cipher in :term:`CBC mode` with a fixed key. For now, we
-assume the server is secure, and no way for a key leak.
+assume the server is secure, and no way for the key to leak.
 
 Mallory gets a hold of all of the rows in the database. Perhaps she did
 it through a SQL injection attack, or maybe with a little social
