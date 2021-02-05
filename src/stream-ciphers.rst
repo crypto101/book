@@ -253,54 +253,54 @@ Conclusion
 ^^^^^^^^^^
 
 In the real world, block ciphers are used in systems that encrypt large
-amounts of data all the time. We've seen that when using :term:`ECB mode`, an
-attacker can both analyze ciphertexts to recognize repeating patterns,
-and even decrypt messages when given access to an :term:`encryption oracle`.
+amounts of data all the time. We see that when using :term:`ECB mode`, an
+attacker both analyzes ciphertexts to recognize repeating patterns,
+and even decrypts messages when given access to an :term:`encryption oracle`.
 
 Even when we use idealized block ciphers with unrealistic properties,
-such as block sizes of more than a thousand bits, an attacker ends up
-being able to decrypt the ciphertexts. Real world block ciphers only
-have more limitations than our idealized examples, such as much smaller
+such as block sizes of more than a thousand bits, an attacker can
+decrypt the ciphertexts. Real world block ciphers
+have more limitations than our idealized examples, for example, having much smaller
 block sizes.
 
-We aren't even taking into account any potential weaknesses in the block
-cipher. It's not AES (or our test block ciphers) that cause this
-problem, it's our ECB construction. Clearly, we need something better.
+We are not yet even considering potential weaknesses in the block
+cipher. It is not AES nor the test block ciphers that cause the
+problem, it is our ECB construction. Clearly, something better is needed.
 
 Block cipher modes of operation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-One of the more common ways of producing a :term:`stream cipher` is to use a
+A common way of producing a :term:`stream cipher` is by using a
 block cipher in a particular configuration. The compound system behaves
-like a :term:`stream cipher`. These configurations are commonly called
-:term:`mode of operation`\s. They aren't specific to a particular block cipher.
+like a :term:`stream cipher`. These configurations are known as
+:term:`mode of operation`\s. They are not specific to a particular block cipher.
 
-:term:`ECB mode`, which we've just seen, is the simplest such :term:`mode of operation`.
+:term:`ECB mode`, which we have just seen, is the simplest such :term:`mode of operation`.
 The letters ``ECB`` stand for electronic code book [#]_. For reasons
-we've already gone into, :term:`ECB mode` is very ineffective. Fortunately,
-there are plenty of other choices.
+we already discussed, :term:`ECB mode` is insecure. Fortunately,
+there plenty of other choices exist.
 
 .. [#]
-   Traditionally, modes of operation seem to be referred to by a
+   Traditionally, modes of operation are represented as a
    three-letter acronym.
 
 CBC mode
 ~~~~~~~~
 
-:term:`CBC mode`, which stands for cipher block chaining, is a very common
-:term:`mode of operation` where plaintext blocks are XORed with the previous
-ciphertext block before being encrypted by the block cipher.
+:term:`CBC mode`, cipher block chaining, is a common
+:term:`mode of operation`. This operation involves XORing plaintext blocks with the previous
+ciphertext block before it is encrypted by the block cipher.
 
-Of course, this leaves us with a problem for the first plaintext block:
-there is no previous ciphertext block to XOR it with. Instead, we pick
-an IV: a random number that takes the place of the “first” ciphertext in
-this construction. :term:`initialization vector`\s also appear in many other
-algorithms. An :term:`initialization vector` should be unpredictable; ideally,
-they will be cryptographically random. They do not have to be secret:
-IVs are typically just added to ciphertext messages in plaintext. It may
-sound contradictory that something has to be unpredictable, but doesn't
-have to be secret; it's important to remember that an attacker must not
-be able to predict *ahead of time* what a given IV will be. We will
+Of course, this process presents a problem for the first plaintext block:
+there is no previous ciphertext block to XOR it with. Instead, we select
+an IV: a random block in place of the “first” ciphertext.
+:term:`initialization vector`\s also appears in many
+algorithms. An :term:`initialization vector` should be unpredictable, ideally,
+cryptographically random. IVs do not have to be kept secret:
+they are typically just added to ciphertext messages in plaintext. It may
+sound contradictory that an IV must be unpredictable, but not
+kept a secret. It is important to remember that an attacker should not
+be capable of predicting a given IV *ahead of time*. We
 illustrate this later with an attack on predictable CBC IVs.
 
 The following diagram demonstrates encryption in :term:`CBC mode`:
@@ -308,28 +308,26 @@ The following diagram demonstrates encryption in :term:`CBC mode`:
 .. figure:: ./Illustrations/CBC/Encryption.svg
    :align: center
 
-Decryption is the inverse construction, with block ciphers in decryption
+Decryption is the inverse construction. The block ciphers are in decryption
 mode instead of encryption mode:
 
 .. figure:: ./Illustrations/CBC/Decryption.svg
    :align: center
 
-While :term:`CBC mode` itself is not inherently insecure (unlike :term:`ECB mode`), its
-particular use in TLS 1.0 was. This eventually led to the BEAST attack,
-which we'll cover in more detail in the section on SSL/TLS. The short
-version is that instead of using unpredictable :term:`initialization vector`\s,
-for example by choosing random IVs, the standard used the previous
-ciphertext block as the IV for the next message. Unfortunately, it turns
-out that attackers figured out how to exploit that property.
+While :term:`CBC mode` is not inherently insecure (unlike :term:`ECB mode`), its
+particular use was in TLS 1.0. This eventually led to the BEAST attack,
+which we detail in the SSL/TLS section. The short
+version is that instead of using unpredictable :term:`initialization vector`\s like random IVs,
+the previous ciphertext block was used as the IV for the next message. Unfortunately,
+attackers found out how to exploit this property.
 
 Attacks on CBC mode with predictable IVs
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Suppose there's a database that stores secret user information, like
-medical, payroll or even criminal records. In order to protect that
-information, the server that handles it encrypts it using a strong block
-cipher in :term:`CBC mode` with a fixed key. For now, we'll assume that that
-server is secure, and there's no way to get it to leak the key.
+Suppose there is a database storing secret user information, like medical,
+payroll or criminal records. The server protects the information by encrypting
+it with a strong block cipher in :term:`CBC mode` with a fixed key. For now, we
+assume the server is secure, and no way for the key to leak.
 
 Mallory gets a hold of all of the rows in the database. Perhaps she did
 it through a SQL injection attack, or maybe with a little social
