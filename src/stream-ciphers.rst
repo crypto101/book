@@ -329,19 +329,19 @@ payroll or criminal records. The server protects the information by encrypting
 it with a strong block cipher in :term:`CBC mode` with a fixed key. For now, we
 assume the server is secure, and no way for the key to leak.
 
-Mallory gets a hold of all of the rows in the database. Perhaps she did
+Mallory accesses all rows in the database. Perhaps she did
 it through a SQL injection attack, or maybe with a little social
 engineering. [#]_ Everything is supposed to remain secure: Mallory only
-has the ciphertexts, but she doesn't have the secret key.
+has the ciphertexts, but not the secret key.
 
 .. [#]
-   Social engineering means tricking people into things they shouldn't
-   be doing, like giving out secret keys, or performing certain
-   operations. It's usually the most effective way to break otherwise
+   Social engineering tricks people into doing things they should not
+   be doing. For example, giving out secret keys or performing certain
+   operations. It is usually the most effective way to break
    secure cryptosystems.
 
 Mallory wants to figure out what Alice's record says. For simplicity's
-sake, let's say there's only one ciphertext block. That means Alice's
+sake, lets say there is only one ciphertext block. This means Alice's
 ciphertext consists of an IV and one ciphertext block.
 
 Mallory can still try to use the application as a normal user, meaning
@@ -351,8 +351,8 @@ Mallory can predict the IV that will be used for her ciphertext. Perhaps
 the server always uses the same IV for the same person, or always uses
 an all-zero IV, or…
 
-Mallory can construct her plaintext using Alice's IV :math:`IV_A` (which
-Mallory can see) and her own predicted IV :math:`IV_M`. She makes a
+Mallory constructs her plaintext using Alice's IV :math:`IV_A` (which
+Mallory sees) and her own predicted IV :math:`IV_M`. She makes a
 guess :math:`G` as to what Alice's data could be. She asks the server to
 encrypt:
 
@@ -371,43 +371,43 @@ The server dutifully encrypts that message using the predicted IV
        & = E(k, IV_A \xor G)
    \end{aligned}
 
-That ciphertext, C\ :sub:`M`, is exactly the ciphertext block Alice
-would have had if her plaintext block was G. So, depending on what the
-data is, Mallory has figured out if Alice has a criminal record or not,
-or perhaps some kind of embarrassing disease, or some other issue that
-Alice really expected the server to keep secret.
+The ciphertext, C\ :sub:`M`, is exactly the ciphertext block Alice
+would have if her plaintext block was G. Depending on the
+data, Mallory found out if Alice has a criminal record or not,
+or some kind of embarrassing disease, or some other issue that
+Alice really expects the server to keep secret.
 
-Lessons learned: don't let IVs be predictable. Also, don't roll your own
-cryptosystems. In a secure system, Alice and Mallory's records probably
-wouldn't be encrypted using the same key.
+Lessons learned: do not let IVs be predictable. Also, do not roll your own
+cryptosystems. In a secure system, records of Alice and Mallory probably
+are not encrypted using the same key.
 
 Attacks on CBC mode with the key as the IV
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Many CBC systems set the key as the :term:`initialization vector`. This seems
-like a good idea: you always need a shared secret key already anyway. It
-yields a nice performance benefit, because the sender and the receiver
-don't have to communicate the IV explicitly, they already know the key
-(and therefore the IV) ahead of time. Plus, the key is definitely
-unpredictable because it's secret: if it were predictable, the attacker
-could just predict the key directly and already have won. Conveniently,
-many block ciphers have block sizes that are the same length or less
+Many CBC systems set the key as the :term:`initialization vector`. This seems like
+a good idea as you always need a shared secret key. It
+yields a nice performance benefit because the sender and receiver
+do not have to communicate to the IV explicitly. The CBC system knows the key
+(and the IV) ahead of time. Plus, the key is an
+unpredictable secret. If it was predictable, the attacker
+can predict the key directly and already win. Conveniently,
+many block ciphers have block sizes of the same length or less
 than the key size, so the key is big enough.
 
-This setup is completely insecure. If Alice sends a message to Bob,
-Mallory, an active adversary who can intercept and modify the message,
-can perform a chosen ciphertext attack to recover the key.
+The setup is completely insecure. If Alice sends a message to Bob,
+Mallory, an active adversary can intercept and modify the message to
+perform a chosen ciphertext attack for key recovery.
 
 Alice turns her plaintext message :math:`P` into three blocks
-:math:`P_1 P_2 P_3` and encrypts it in :term:`CBC mode` with the secret key
-:math:`k` and also uses :math:`k` as the IV. She gets a three block
-ciphertext :math:`C = C_1 C_2 C_3`, which she sends to Bob.
+:math:`P_1 P_2 P_3`. It is encrypted in :term:`CBC mode` with the secret key
+:math:`k`. :math:`k` is the IV. She gets a three block
+ciphertext :math:`C = C_1 C_2 C_3` and sends it to Bob.
 
-Before the message reaches Bob, Mallory intercepts it. She modifies the
+Mallory intercepts the message before it reaches Bob. She modifies the
 message to be :math:`C^{\prime} = C_1 Z C_1`, where :math:`Z` is a block
 filled with null bytes (value zero).
 
-Bob decrypts :math:`C^{\prime}`, and gets the three plaintext blocks
+Bob decrypts :math:`C^{\prime}` to get three plaintext blocks
 :math:`P^{\prime}_1, P^{\prime}_2, P^{\prime}_3`:
 
 .. math::
@@ -429,62 +429,61 @@ Bob decrypts :math:`C^{\prime}`, and gets the three plaintext blocks
                 & = P_1 \xor IV
    \end{aligned}
 
-:math:`R` is some random block. Its value doesn't matter.
+:math:`R` is a random block. Its value does not matter.
 
-Under the chosen-ciphertext attack assumption, Mallory recovers that
-decryption. She is only interested in the first block
+Mallory recovers the decryption under the chosen-ciphertext attack assumption. 
+She is only interested in the first block
 (:math:`P^{\prime}_1 =
 P_1`) and the third block (:math:`P^{\prime}_3 = P_1 \xor IV`). By
-XORing those two together, she finds
-:math:`(P_1 \xor IV) \xor P_1 = IV`. But, the IV is the key, so Mallory
-successfully recovered the key by modifying a single message.
+XORing the two together, she finds
+:math:`(P_1 \xor IV) \xor P_1 = IV`. IV is the key, so Mallory
+successfully recovers the key by modifying a single message.
 
-Lesson learned: don't use the key as an IV. Part of the fallacy in the
-introduction is that it assumed secret data could be used for the IV,
-because it only had to be unpredictable. That's not true: “secret” is
-just a different requirement from “not secret”, not necessarily a
-*stronger* one. It is not generally okay to use secret information where
-it isn't required, precisely because if it's not supposed to be secret,
+Lesson learned: do not use the key as an IV. Part of the fallacy in the
+introduction is assuming secret data can be in the IV given 
+it only has to be unpredictable. This is not true: “secret” is
+just a different requirement from “not secret”. It does not mean a
+*stronger* one. Secret information should not be used when
+not required. Precisely because if the secret is supposed to be secret,
 the algorithm may very well treat it as non-secret, as is the case here.
-There *are* plenty of systems where it is okay to use a secret where it
-isn't required. In some cases you might even get a stronger system as a
-result, but the point is that it is not generally true, and depends on
-what you're doing.
+Plenty of systems exist where it is okay to use a secret when not
+required. In some cases you may get a stronger system.
+Though it depends on what you are doing.
 
 CBC bit flipping attacks
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-An interesting attack on :term:`CBC mode` is called a bit flipping attack. Using
-a CBC bit flipping attack, attackers can modify ciphertexts encrypted in
-:term:`CBC mode` so that it will have a predictable effect on the plaintext.
+A bit flipping attack is an interesting attack on :term:`CBC mode`.
+A CBC bit flipping attack allows attackers to modify ciphertexts encrypted in
+:term:`CBC mode`. The result is a predictable effect on the plaintext.
 
-This may seem like a very strange definition of “attack” at first. The
-attacker will not even attempt to decrypt any messages, but they will
-just be flipping some bits in a plaintext. We will demonstrate that the
-attacker can turn the ability to flip some bits in the plaintext into
-the ability to have the plaintext say *whatever they want it to say*,
-and, of course, that can lead to very serious problems in real systems.
+Initially, this seems like a strange definition of “attack”. The
+attacker does not attempt to decrypt messages, but 
+just flips some bits in a plaintext. Next, we demonstrate that the
+attacker switches the flip of some bits in the plaintext into
+having the plaintext say *whatever they want it to say*.
+Of course, that leads to serious problems in real systems.
 
-Suppose we have a CBC encrypted ciphertext. This could be, for example,
-a cookie. We take a particular ciphertext block, and we flip some bits
+Suppose we have a CBC encrypted ciphertext like 
+a cookie. We take a particular ciphertext block and flip some bits
 in it. What happens to the plaintext?
 
-When we “flip some bits”, we do that by XORing with a sequence of bits,
-which we'll call :math:`X`. If the corresponding bit in :math:`X` is 1,
-the bit will be flipped; otherwise, the bit will remain the same.
+When we “flip some bits”, we XOR it with a sequence of bits or
+:math:`X`. If the corresponding bit in :math:`X` is 1,
+the bit flips; otherwise, the bit stays the same.
 
 .. figure:: ./Illustrations/CBC/BitFlipping.svg
    :align: center
 
-When we try to decrypt the ciphertext block with the flipped bits, we
-will get indecipherable [#]_ nonsense. Remember how CBC decryption
-works: the output of the block cipher is XORed with the previous
+When attempting to decrypt the ciphertext block with flipped bits, we
+get indecipherable [#]_ nonsense. Remember how CBC decryption
+works: the block cipher output XORs with the previous
 ciphertext block to produce the plaintext block. Now that the input
-ciphertext block :math:`C_i` has been modified, the output of the block
-cipher will be some random unrelated block, and, statistically speaking,
-nonsense. After being XORed with that previous ciphertext block, it will
-still be nonsense. As a result, the produced plaintext block is still
-just nonsense. In the illustration, this unintelligible plaintext block
+ciphertext block :math:`C_i` is modified, the block
+cipher output is a random unrelated block. Statistically speaking it is
+nonsense. After XORing with that previous ciphertext block, it is
+still nonsense. As a result, the produced plaintext block is
+nonsense. As illustrated, this unintelligible plaintext block
 is :math:`P_i^{\prime}`.
 
 .. [#]
