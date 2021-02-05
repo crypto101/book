@@ -9,18 +9,18 @@ Description
 ~~~~~~~~~~~
 
 A :term:`stream cipher` is a :term:`symmetric-key encryption` algorithm that encrypts a
-stream of bits. Ideally, that stream could be as long as we'd like;
-real-world :term:`stream cipher`\s have limits, but they are normally
-sufficiently large that they don't pose a practical problem.
+stream of bits. Ideally, the stream should be as long as we like, but
+real-world :term:`stream cipher`\s have limits. Though the stream is
+sufficiently large that it does not pose practical problems.
 
 .. _ECB mode:
 
 A naive attempt with block ciphers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Let's try to build a :term:`stream cipher` using the tools we already have.
-Since we already have block ciphers, we could simply divide an incoming
-stream into different blocks, and encrypt each block:
+Lets try building a :term:`stream cipher` with tools already in our tool box.
+With block ciphers, we can simply divide an incoming
+stream into different blocks and encrypt each block:
 
 .. math::
 
@@ -30,11 +30,11 @@ stream into different blocks, and encrypt each block:
    \overbrace{\mathtt{APOHGMMW}} & \overbrace{\mathtt{PVMEHQOM}} & \overbrace{\mathtt{MEEZSNFM}} & ...
    \end{matrix}
 
-This scheme is called :term:`ECB mode` (Electronic Code Book Mode), and it is
-one of the many ways that block ciphers can be used to construct stream
+The scheme is known as :term:`ECB mode` (Electronic Code Book Mode). It is
+one of several methods in which block ciphers can construct stream
 ciphers. Unfortunately, while being very common in home-grown
 cryptosystems, it poses very serious security flaws. For example, in ECB
-mode, identical input blocks will always map to identical output blocks:
+mode, identical input blocks always map to identical output blocks:
 
 .. math::
 
@@ -44,29 +44,29 @@ mode, identical input blocks will always map to identical output blocks:
    \overbrace{\mathtt{APOHGMMW}} & \overbrace{\mathtt{APOHGMMW}} & \overbrace{\mathtt{APOHGMMW}} & ...
    \end{matrix}
 
-At first, this might not seem like a particularly serious problem.
-Assuming the block cipher is secure, it doesn't look like an attacker
-would be able to decrypt anything. By dividing the ciphertext stream up
-into blocks, an attacker would only be able to see that a ciphertext
-block, and therefore a plaintext block, was repeated.
+Initially, this may not seem like a serious problem.
+Assuming the block cipher is secure, it does not appear like an attacker
+can decrypt anything. By dividing the ciphertext stream
+into blocks, an attacker only sees that a ciphertext
+block was repeated, and therefore a plaintext block.
 
-We'll now illustrate the many flaws of :term:`ECB mode` with two attacks. First,
-we'll exploit the fact that repeating plaintext blocks result in
-repeating ciphertext blocks, by visually inspecting an encrypted image.
-Then, we'll demonstrate that attackers can often decrypt messages
+The many flaws of :term:`ECB mode` are illustrated in the following two attack examples. First,
+by visually inspecting an encrypted image, we exploit the fact that repeating 
+plaintext blocks results in repeating ciphertext blocks.
+Then, we demonstrate that attackers often decrypt messages
 encrypted in :term:`ECB mode` by communicating with the person performing the
 encryption.
 
 Visual inspection of an encrypted stream
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To demonstrate that this is, in fact, a serious problem, we'll use a
-simulated block cipher of various block sizes and apply it to an
-image [#]_. We'll then visually inspect the different outputs.
+We use a simulated block cipher of various block sizes and apply it to an
+image [#]_ to demonstrate the serious problem. 
+Visual inspection of the different outputs follows.
 
 .. [#]
-   This particular demonstration only works on uncompressed bitmaps. For
-   other media, the effect isn't significantly less damning: it's just
+   The demonstration only works on uncompressed bitmaps. For
+   other media, the effect is not significantly less damning: it is just
    less visual.
 
 .. figmatrix::
@@ -112,30 +112,30 @@ image [#]_. We'll then visually inspect the different outputs.
 
       Ciphertext under idealized encryption.
 
-   Plaintext image with ciphertext images under idealized
-   encryption and :term:`ECB mode` encryption with various block sizes.
-   Information about the macro-structure of the image clearly leaks.
-   This becomes less apparent as block sizes increase, but only at
+   A plaintext image with ciphertext images ideally 
+   encrypted and :term:`ECB mode` encryption with various block sizes.
+   Macro-structure image information clearly leaks.
+   This defect becomes less apparent as block sizes increase, but only at
    block sizes far larger than typical block ciphers. Only the first
-   block size (:numref:`fig-ECBDemoIdealizedCiphertext`, a block size of 5
-   pixels or 120 bits) is realistic.
+   block size is realistic (:numref:`fig-ECBDemoIdealizedCiphertext`, a block size of 5
+   pixels or 120 bits).
 
 
-Because identical blocks of pixels in the plaintext will map to
-identical blocks of pixels in the ciphertext, the global structure of
-the image is largely preserved.
+The image's global structure is largely preserved
+because identical blocks of pixels in the plaintext map to
+identical blocks of pixels in the ciphertext.
 
-As you can see, the situation appears to get slightly better with larger
-block sizes, but the fundamental problem still remains: the
-macrostructure of the image remains visible in all but the most extreme
-block sizes. Furthermore, all but the smallest of these block sizes are
-unrealistically large. For an uncompressed bitmap with three color
-channels of 8 bit depth, each pixel takes 24 bits to store. Since the
-block size of AES is only 128 bits, that would equate to
-:math:`\frac{128}{24}` or just over 5 pixels per block. That's
-significantly fewer pixels per block than the larger block sizes in the
-example. But AES is the workhorse of modern block ciphers—it can't be at
-fault, certainly not because of an insufficient block size.
+As you can see, the situation slightly improves with larger
+block sizes. Though the fundamental problem still remains: the image
+macrostructure remains visible in all but the most extreme
+block sizes. Furthermore, all but the smallest of the block sizes are
+unrealistically large. Each pixel takes 24 bits in storing an uncompressed 
+bitmap with three color channels of 8 bit depth. Since the
+block size of AES is only 128 bits that equates to
+:math:`\frac{128}{24}` or just over 5 pixels per block. This is
+significantly less pixels per block than the larger block sizes in the
+example. But AES is the workhorse of modern block ciphers—it cannot be at
+fault because of an insufficient block size.
 
 Notice that an idealized encryption scheme looks like random noise. “Looking
 like random noise” does not mean something is properly encrypted: it just means
