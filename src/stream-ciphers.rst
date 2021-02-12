@@ -345,7 +345,7 @@ has the ciphertexts, but not the secret key.
    secure cryptosystems.
 
 Mallory wants to figure out what Alice's record says. For simplicity's
-sake, lets say there is only one ciphertext block. This means Alice's
+sake, let's say there is only one ciphertext block. This means Alice's
 ciphertext consists of an IV and one ciphertext block.
 
 Mallory can still try to use the application as a normal user, meaning
@@ -381,24 +381,28 @@ data, Mallory found out if Alice has a criminal record or not,
 or some kind of embarrassing disease, or some other issue that
 Alice really expects the server to keep secret.
 
-Lessons learned: do not let IVs be predictable. Also, do not roll your own
-cryptosystems. In a secure system, records of Alice and Mallory probably
-are not encrypted using the same key.
+Lessons learned: do not let IVs be predictable. As we'll see later on in the
+book, just having unpredictable IVs doesn't make a system safe! This is a
+general argument against rolling your own cryptosystems: a high-quality
+implementation might have encrypted those records under different keys. Or it
+could use other controls, like relying on the associated data of an AEAD (which
+we'll see later) to make sure processes wouldn't perform cryptographic
+operations on behalf of Mallory that would also have worked for Alice.
 
 Attacks on CBC mode with the key as the IV
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Many CBC systems set the key as the :term:`initialization vector`. This seems like
-a good idea as you always need a shared secret key. It
+Some CBC systems set the key as the :term:`initialization vector`. This seems like
+a good idea because you always need a shared secret key. It
 yields a nice performance benefit because the sender and receiver
 do not have to communicate to the IV explicitly. They already know the key
 (and therefore the IV) ahead of time. Plus, the key is an
 unpredictable secret. If it was predictable, the attacker
-can predict the key directly and already win. Conveniently,
+could just predict the key directly. Conveniently,
 many block ciphers have block sizes of the same length or less
 than the key size, so the key is big enough.
 
-The setup is completely insecure. If Alice sends a message to Bob,
+This setup is completely insecure. If Alice sends a message to Bob,
 Mallory, an active adversary who can intercept and modify the message,
 can perform a chosen ciphertext attack to recover the key.
 
@@ -450,9 +454,10 @@ just a different requirement from “not secret”. It does not mean a
 *stronger* one. Secret information should not be used when
 not required. Precisely because if the secret is supposed to be secret,
 the algorithm may very well treat it as non-secret, as is the case here.
-Plenty of systems exist where it is okay to use a secret when not
-required. In some cases you may get a stronger system.
-Though it depends on what you are doing.
+There *are* plenty of systems where it is okay to use a secret where it
+isn't required. In some cases you might even get a stronger system as a
+result, but the point is that it is not generally true, and depends on
+what you're doing.
 
 CBC bit flipping attacks
 ~~~~~~~~~~~~~~~~~~~~~~~~
