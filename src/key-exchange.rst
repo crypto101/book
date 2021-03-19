@@ -8,86 +8,85 @@ Key exchange
 Description
 ~~~~~~~~~~~
 
-:term:`Key exchange <key exchange>` protocols attempt to solve a problem that, at first glance,
-seems impossible. Alice and Bob, who've never met before, have to agree
-on a secret value. The channel they use to communicate is insecure:
-we're assuming that everything they send across the channel is being
-eavesdropped on.
+:term:`Key exchange <key exchange>` protocols attempt to resolve a problem that, at first glance,
+seems impossible. Alice and Bob, who never met before, must agree
+on a secret value. The communication channel they use is insecure:
+lets assume the channel is being eavesdropped on
+and everything they send across is open knowledge.
 
-We'll demonstrate such a protocol here. Alice and Bob will end up having
-a shared secret, only communicating over the insecure channel. Despite
-Eve having literally all of the information Alice and Bob send to each
-other, she can't use any of that information to figure out their shared
+We demonstrate such a protocol here. Alice and Bob have
+a shared secret and only communicate over the insecure channel. Although
+Eve literally has all information Alice and Bob send to each
+other, she is unable to use the information to uncover their shared
 secret.
 
-That protocol is called Diffie-Hellman, named after Whitfield Diffie and
-Martin Hellman, the two cryptographic pioneers who discovered it. They
-suggested calling the protocol Diffie-Hellman-Merkle :term:`key exchange`, to
-honor the contributions of Ralph Merkle. While his contributions
-certainly deserve honoring, that term hasn't really caught on. For the
-benefit of the reader we'll use the more common term.
+Whitfield Diffie and Martin Hellman, two cryptographic pioneers discovered 
+this protocol known today as Diffie-Hellman. They
+suggested calling the protocol Diffie-Hellman-Merkle :term:`key exchange` in
+honor of Ralph Merkle's contributions. While Merkle's contributions
+certainly deserve honor, the term has not caught on. We use the common term 
+for the benefit of the reader.
 
 Practical implementations of Diffie-Hellman rely on mathematical
-problems that are believed to be very complex to solve in the “wrong”
+problems believed to be complex to solve in the “wrong”
 direction, but easy to compute in the “right” direction. Understanding
-the mathematical implementation isn't necessary to understand the
-principle behind the protocol. Most people also find it a lot easier to
-understand without the mathematical complexity. So, we'll explain
+the mathematical implementation is not necessary to understand the
+principle behind the protocol. Most people find it easy to
+understand without the mathematical complexity. So, we explain
 Diffie-Hellman in the abstract first, without any mathematical
-constructs. Afterwards, we'll look at two practical implementations.
+constructs. Afterwards, we look at two practical implementations.
 
 Abstract Diffie-Hellman
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-In order to describe Diffie-Hellman, we'll use an analogy based on
-mixing colors. We can mix colors according to the following rules:
+An analogy based on mixing colors helps describe Diffie-Hellman. 
+We mix colors following these rules:
 
--  It's very easy to mix two colors into a third color.
+-  Mixing two colors into a third color is very easy.
 -  Mixing two or more colors in different order results in the same
    color.
--  Mixing colors is *one-way*. It's impossible to determine if, let
-   alone which, multiple colors were used to produce a given color. Even
-   if you know it was mixed, and even if you know some of the colors
-   used to produce it, you have no idea what the remaining color(s)
-   were.
+-  Mixing colors is *one-way*. It is impossible to determine which colors were mixed 
+   and whether multiple colors were used to create a given color. Even
+   if you know a color was mixed, and if you know some of the colors
+   mixed, you still have no idea about the actual color(s).
 
-We'll demonstrate that with a mixing function like this one, we can
-produce a secret color only known by Alice and Bob. Later, we'll simply
-have to describe the concrete implementation of those functions to get a
+We demonstrate with a mixing function. 
+A secret color is produced only known by Alice and Bob. Later, we simply
+describe the concrete implementation of those functions for a
 concrete :term:`key exchange` scheme.
 
-To illustrate why this remains secure in the face of eavesdroppers,
-we'll walk through an entire exchange with Eve, the eavesdropper, in the
-middle. Eve is listening to all of the messages sent across the network.
-We'll keep track of everything she knows and what she can compute, and
-end up seeing *why* Eve can't compute Alice and Bob's shared secret.
+We walk through an entire exchange with Eve, the eavesdropper, to illustrate 
+why the secret remains secure.
+Eve listens to all messages sent across the network.
+We keep track of everything Eve knows, what she can compute, and
+see *why* Eve cannot compute the shared secret between Alice and Bob.
 
-To start the protocol, Alice and Bob have to agree on a base color. They
-can communicate that across the network: it's okay if Eve intercepts the
-message and finds out what the color is. Typically, this base color is a
-fixed part of the protocol; Alice and Bob don't need to communicate it.
+To launch the protocol, Alice and Bob must agree on a base color and can
+communicate across the network. It is okay if Eve intercepts the
+message and knows the color. Typically, the base color is a
+fixed part of the protocol; Alice and Bob do not need to communicate it.
 After this step, Alice, Bob and Eve all have the same information: the
 base color.
 
 .. figure:: ./Illustrations/DiffieHellman/alice-bob-eve.svg
    :align: center
 
-Alice and Bob both pick a random color, and they mix it with the base
+Alice and Bob select a random color and mix it with the base
 color.
 
 .. figure:: ./Illustrations/DiffieHellman/alice-bob-secret.svg
    :align: center
 
 At the end of this step, Alice and Bob know their respective secret
-color, the mix of the secret color and the base color, and the base
+color, a mix of the secret color and the base color, and the base
 color itself. Everyone, including Eve, knows the base color.
 
 .. figure:: ./Illustrations/DiffieHellman/alice-bob-eve-secret.svg
    :align: center
 
-Then, Alice and Bob both send their mixed colors over the network. Eve
-sees both mixed colors, but she can't figure out what either of Alice
-and Bob's *secret* colors are. Even though she knows the base, she can't
+Then, Alice and Bob send their mixed colors over the network. Eve
+sees both mixed colors, but she cannot figure out neither of their
+*secret* colors. Even though Eve knows the base, she cannot
 “un-mix” the colors sent over the network. [#]_
 
 .. figure:: ./Illustrations/DiffieHellman/mixed-secret.svg
@@ -96,7 +95,7 @@ and Bob's *secret* colors are. Even though she knows the base, she can't
 .. [#]
    While this might seem like an easy operation with black-and-white
    approximations of color mixing, keep in mind that this is just a
-   failure of the illustration: our assumption was that this was hard.
+   failure of the illustration: our assumption is that this is hard.
 
 
 At the end of this step, Alice and Bob know the base, their respective
@@ -108,26 +107,26 @@ Eve knows the base color and both mixed colors.
 
 
 Once Alice and Bob receive each other's mixed color, they add their own
-secret color to it. Since the order of the mixing doesn't matter,
-they'll both end up with the same secret.
+secret color. Since the order of the mixing is irrelevant,
+they have the same secret.
 
 .. figure:: ./Illustrations/DiffieHellman/alice-bob-shared-mixed.svg
    :align: center
 
-Eve can't perform that computation. She could finish the computation
-with either Alice or Bob's secret color, since she has both mixed
-colors, but she has neither of those secret colors. She can also try to
-mix the two mixed colors, which would have both Alice and Bob's secret
-colors mixed into them. However, that would have the base color in it
-twice, resulting in a different color than the shared secret color that
-Alice and Bob computed, which only has the base color in it once.
+Eve cannot fully perform the computation. Eve has both mixed colors, so she may consider
+finishing the computation with either Alice or Bob's secret color. 
+Though she does not have any secret color to fully perform the computation. She tries 
+mixing the two mixed colors, which have Alice's and Bob's secret
+colors mixed into them. However, the mixture has the base color added
+twice. This results in a different color than the shared secret color computed by
+Alice and Bob (base color added once).
 
 Diffie-Hellman with discrete logarithms
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This section describes a practical implementation of the Diffie-Hellman
-algorithm, based on the discrete logarithm problem. It is intended to
-provide some mathematical background, and requires modular arithmetic to
+algorithm using the discrete logarithm problem. It 
+provides mathematical background, and requires modular arithmetic to
 understand. If you are unfamiliar with modular arithmetic, you can
 either skip this chapter, or first read the :ref:`mathematical background appendix
 <modular-arithmetic>`.
@@ -140,18 +139,18 @@ Discrete log Diffie-Hellman is based on the idea that computing
    y \equiv g^x \pmod{p}
 
 However, computing :math:`x` given :math:`y`, :math:`g` and :math:`p` is
-believed to be very hard. This is called the discrete logarithm problem,
-because a similar operation without the modular arithmetic is called a
+believed to be very hard. This is a discrete logarithm problem
+because a similar operation without modular arithmetic is simply called a
 logarithm.
 
-This is just a concrete implementation of the abstract Diffie-Hellman
-process we discussed earlier. The common base color is a large prime
+Now we describe the concrete implementation of the abstract Diffie-Hellman
+process discussed earlier. The common base color is a large prime
 :math:`p` and the base :math:`g`. The “color mixing” operation is the
 equation given above, where :math:`x` is the input value and :math:`y`
 is the resulting mixed value.
 
 When Alice or Bob select their random numbers :math:`r_A` and
-:math:`r_B`, they mix them with the base to produce the mixed numbers
+:math:`r_B`, they are mixed with the base to produce the mixed numbers
 :math:`m_A` and :math:`m_B`:
 
 .. math::
@@ -162,8 +161,8 @@ When Alice or Bob select their random numbers :math:`r_A` and
 
    m_B \equiv g^{r_B} \pmod{p}
 
-These numbers are sent across the network where Eve can see them. The
-premise of the discrete logarithm problem is that it is okay to do so,
+The numbers are sent across the network where Eve sees them. The
+premise of the discrete logarithm problem is that it is okay to do so
 because figuring out :math:`r` in :math:`m \equiv g^r \pmod{p}` is
 supposedly very hard.
 
@@ -174,16 +173,16 @@ secret number to it. For example, Bob would compute:
 
    s \equiv (g^{r_A})^{r_B} \pmod{p}
 
-While Alice's computation looks different, they get the same result,
+While Alice's computation looks different, they get the same result
 because :math:`(g^{r_A})^{r_B} \equiv (g^{r_B})^{r_A} \pmod{p}`. This is
 the shared secret.
 
-Because Eve doesn't have :math:`r_A` or :math:`r_B`, she can not perform
-the equivalent computation: she only has the base number :math:`g` and
+Because Eve does not have :math:`r_A` or :math:`r_B`, she is unable to perform
+the equivalent computation. She only has the base number :math:`g`, plus the
 mixed numbers :math:`m_A \equiv g^{r_A} \pmod{p}` and
-:math:`m_B \equiv g^{r_B} \pmod{p}` , which are useless to her. She
-needs either :math:`r_A` or :math:`r_B` (or both) to make the
-computation Alice and Bob do.
+:math:`m_B \equiv g^{r_B} \pmod{p}`. These are useless to her. She
+needs :math:`r_A` and/or :math:`r_B` to make the
+computation like Alice and Bob.
 
 TODO: Say something about active MITM attacks where the attacker picks
 smooth values to produce weak secrets?
@@ -192,37 +191,37 @@ Diffie-Hellman with elliptic curves
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This section describes a practical implementation of the Diffie-Hellman
-algorithm, based on the elliptic curve discrete logarithm problem. It is
-intended to provide some mathematical background, and requires a (very
-basic) understanding of the mathematics behind elliptic curve
+algorithm using the elliptic curve discrete logarithm problem. It
+provides mathematical background, and requires a very
+basic understanding of the mathematics behind elliptic curve
 cryptography. If you are unfamiliar with elliptic curves, you can either
 skip this chapter, or first read the :ref:`mathematical background appendix
 <elliptic-curves>`.
 
-One of the benefits of the elliptic curve Diffie-Hellman variant is that
+A benefit of the elliptic curve Diffie-Hellman variant is that
 the required key size is much, much smaller than the variant based on
 the discrete log problem. This is because the fastest algorithms for
 breaking the discrete log problem have a larger asymptotic complexity
-than their elliptic curve variants. For example, the number field sieve
-for discrete logarithms, a state of the art algorithm for attacking
-discrete logarithm-based Diffie-Hellman, has time complexity:
+than their elliptic curve variants. For example, take the number field sieve
+for discrete logarithms. It is a state-of-the-art algorithm for attacking
+discrete logarithm-based Diffie-Hellman and has time complexity:
 
 .. math::
 
    L\left[1/3,\sqrt[3]{64/9}\right]
 
 Which is more than polynomial (but less than exponential) in the number
-of digits. On the other hand, the fastest algorithms that could be used
-to break the elliptic curve discrete log problem all have complexity:
+of digits. On the other hand, the fastest algorithms most useful for
+breaking the elliptic curve discrete log problem are all complex:
 
 .. math::
 
    L\left[1, 1/2\right] = O(\sqrt{n})
 
-Relatively speaking, that means that it's much harder to solve the
+Relatively speaking, it is much harder to solve the
 elliptic curve problem than it is to solve the regular discrete log
-problem, using state of the art algorithms for both. The flip side of
-that is that for equivalent security levels, the elliptic curve
+problem using state-of-the-art algorithms for both. The flip side 
+is that for equivalent security levels, the elliptic curve
 algorithm needs much smaller key
 sizes :cite:`rsa:keysizes` :cite:`nist:keymanagement` [#]_:
 
