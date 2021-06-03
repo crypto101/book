@@ -481,8 +481,8 @@ array :math:`S` consisting of 624 unsigned 32-bit integers, and an index
 
 Whenever the extraction function is called, the index to the current
 integer is incremented. When all of the current elements of the state
-have been used to produce a number, the state initialization function is
-called again. The state initialization function is also called right
+have been used to produce a number, the state generation function is
+called again. The state initialization function is called right
 before the first number is extracted.
 
 So, to recap: the state is regenerated, then the extraction function
