@@ -58,7 +58,7 @@ def run_command(*args):
 
 
 version = run_command("git", "rev-parse", "--short", "HEAD")
-release = run_command("git", "describe")
+release = run_command("git", "describe", "--always")
 
 # i18n configuration
 locale_dirs = ["locale/"]
