@@ -2,8 +2,8 @@
  Crypto 101: the book
 ======================
 
-.. image:: https://travis-ci.com/crypto101/book.svg?branch=master
-   :target: https://travis-ci.com/crypto101/book
+.. image:: https://github.com/crypto101/book/actions/workflows/ci.yml/badge.svg?branch=master
+   :target: https://github.com/crypto101/book/actions/workflows/ci.yml?branch=master
 
 This is the source repository for `Crypto 101`_, the introductory book
 about cryptography by lvh_.
