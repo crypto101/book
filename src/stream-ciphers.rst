@@ -278,7 +278,7 @@ like a :term:`stream cipher`. These configurations are known as
 :term:`ECB mode`, which we have just seen, is the simplest such :term:`mode of operation`.
 The letters ``ECB`` stand for electronic code book [#]_. For reasons
 we already discussed, :term:`ECB mode` is insecure. Fortunately,
-there plenty of other choices exist.
+ plenty of other choices exist.
 
 .. [#]
    Traditionally, modes of operation are represented as a
