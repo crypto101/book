@@ -31,7 +31,7 @@ source files into rendered versions of all supported formats.
 Dependencies
 ------------
 
-Due to the high number of dependencies, using docker is highly recommanded:
+Due to the high number of dependencies, using docker is highly recommended:
 
 .. code-block:: sh
 
