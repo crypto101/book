@@ -188,10 +188,49 @@ is the equivalent of dividing by zero in regular arithmetic.
 There are two algorithms that are used to compute modular inverses: the
 extended Euclidean algorithm, and with the help of Euler's theorem.
 
-The extended Euclidean theorem
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+The extended Euclidean algorithm
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-TODO: explain, and how you can get modular inverses with it
+The extended Euclidean algorithm is an extension to the Euclidean 
+algorithm (which gives us an efficient method for computing the greatest 
+common divisor of two integers). The extended algorithm additionally helps us 
+express this GCD of two integers as a linear combination of the two original 
+numbers:
+
+.. math::
+
+   GCD(x, y) = Px + Qy
+
+Given the numbers :math:`x` and :math:`y`, the extended Euclidean algorithms
+gives us a way to efficiently calculate the value of coefficients :math:`P` 
+and :math:`Q`.
+
+This algorithm can be further used to calculate multiplicative inverses 
+because of the known property that the inverse of number :math:`a \pmod n` 
+can only exist if gcd\ :math:`(a, n) = 1`. Therefore we can substitute 
+:math:`x` & :math:`y` with :math:`a` & :math:`n` respectively in the 
+extended Euclidean algorithm equation:
+
+.. math::
+
+   1 = Pa + Qn
+
+Writing this equation in :math:`\pmod n` will lead to elimination of 
+the :math:`Qn` factor because any multiple of :math:`n` is congruent to
+:math:`0 \pmod n`.
+
+.. math::
+
+   1 \equiv Pa \pmod n
+
+.. math::
+
+   a^{-1} \equiv P \pmod n
+
+This proves that the coeffiecient :math:`P \pmod n` is the multiplicative 
+inverse of :math:`a`, and we can use the extended Euclidean algorithm 
+to calculate the value of coefficient :math:`P`.
+
 
 Using Euler's theorem
 ^^^^^^^^^^^^^^^^^^^^^
