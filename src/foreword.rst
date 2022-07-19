@@ -85,8 +85,8 @@ The entire Crypto 101 project is publicly developed on GitHub under the
 
 This is an early pre-release of this book. All of your questions,
 comments and bug reports are highly appreciated. If you don't understand
-something after reading it, or a sentence is particularly clumsily
-worded, *that's a bug* and I would very much like to fix it! Of course,
+something after reading it, or if a sentence has particularly clumsy
+wording, *that's a bug* and I would very much like to fix it! Of course,
 if I never hear about your issue, it's very hard for me to address…
 
 The copy of this book that you are reading right now is based on the git
