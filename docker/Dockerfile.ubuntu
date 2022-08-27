@@ -33,6 +33,8 @@ RUN set -e; \
     done; \
     fc-cache -f -v
 
+RUN useradd -u 1001 runner
+
 # setup texlive to handle having no home directory
 ENV TEXMFVAR /tmp/texmf-var
 ENV TEXMFCACHE /tmp/texmf-cache
@@ -43,4 +45,5 @@ ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 RUN chmod +x /tini
 ENTRYPOINT ["/tini", "--"]
 
+USER runner
 WORKDIR /repo
