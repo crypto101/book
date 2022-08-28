@@ -29,7 +29,7 @@ ASSETS += Illustrations/BlockCipher/Encryption.svg
 
 # .mp assets
 ASSETS += Illustrations/CTR/CTR.svg
-ASSETS += Illustrations/OCB/Encryption.svg
+ASSETS += Illustrations/OCB/EncryptionOCB.svg
 ASSETS += Illustrations/OCB/Auth.svg
 ASSETS += Illustrations/OAEP/Diagram.svg
 ASSETS += Illustrations/ECBEncryptionOracle/GuessFirst.svg

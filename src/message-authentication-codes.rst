@@ -572,7 +572,7 @@ Usually, you will want to use a much more high level cryptosystem, such as OpenP
 :term:`OCB mode` is an :term:`AEAD mode` of operation. It is one of the earliest
 developed :term:`AEAD mode`\s.
 
-.. figure:: Illustrations/OCB/Encryption.svg
+.. figure:: Illustrations/OCB/EncryptionOCB.svg
    :align: center
 
 As you can see, most of this scheme looks quite similar to
