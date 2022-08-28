@@ -41,6 +41,8 @@ source_suffix = ".rst"
 # paths to exclude from the document source scan
 exclude_patterns = ["_release", "_build", "_build_*", "Thumbs.db", ".DS_Store", ".venv"]
 
+bibtex_bibfiles = ["Crypto101.bib"]
+
 # the name of the root document
 master_doc = "index"
 
