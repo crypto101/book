@@ -21,32 +21,32 @@ jobs:
           set -e
           docker run --rm -it -v ${{ github.workspace }}:/repo crypto101 ./build_release ./_release/
       - name: Upload document
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: crypto101-en.epub
           path: _release/crypto101-en.epub
       - name: Upload document
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: crypto101-en.pdf
           path: _release/crypto101-en.pdf
       - name: Upload document
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: crypto101-en_html.tar.gz
           path: _release/crypto101-en_html.tar.gz
       - name: Upload document
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: crypto101-fr.epub
           path: _release/crypto101-fr.epub
       - name: Upload document
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: crypto101-fr.pdf
           path: _release/crypto101-fr.pdf
       - name: Upload document
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: crypto101-fr_html.tar.gz
           path: _release/crypto101-fr_html.tar.gz
