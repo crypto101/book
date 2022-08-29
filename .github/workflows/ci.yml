@@ -58,32 +58,32 @@ jobs:
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     steps:
       - name: Download document
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: crypto101-en.epub
           path: /tmp
       - name: Download document
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: crypto101-en.pdf
           path: /tmp
       - name: Download document
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: crypto101-en_html.tar.gz
           path: /tmp
       - name: Download document
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: crypto101-fr.epub
           path: /tmp
       - name: Download document
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: crypto101-fr.pdf
           path: /tmp
       - name: Download document
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: crypto101-fr_html.tar.gz
           path: /tmp
