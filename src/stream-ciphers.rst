@@ -833,101 +833,101 @@ plaintext, the attacker replaces :math:`r_b` with:
 
    r_b^{\prime} = r_b \xor \mathtt{01} \xor \mathtt{02}
 
-This accomplishes the goal of almost valid padding. Then, they try all
+This accomplishes the goal of almost valid padding. Then, the attacker tries all
 possible values for the second-to-last byte (index :math:`b - 1`).
-Eventually, one of them will cause the message to have valid padding.
-Since we modified the random block so that the final byte of the
-plaintext will be ``02``, the only byte in the second-to-last position
-that can cause valid padding is ``02`` as well. Using the same math as
-above, the attacker has recovered the second-to-last byte.
+Eventually, one of the values gives valid padding to the message.
+Since we modify the random block for the plaintext final byte 
+to ``02``, ``02`` is the only byte in the second-to-last position
+that causes valid padding. Applying the same math as
+above, the attacker recovers the second-to-last byte.
 
-Then, it's just rinse and repeat. The last two bytes are modified to
-create an almost-valid padding of ``03 03``, then the third byte from
+Then, it is just rinse and repeat. The last two bytes are modified to
+create an almost-valid padding of ``03 03``. The third byte from
 the right is modified until the padding is valid, and so on. Repeating
-this for all the bytes in the block means the attacker can decrypt the
-entire block; repeating it for different blocks means the attacker can
-read the entire message.
+these steps for all bytes in the block means the attacker can decrypt the
+entire block; repeating it for different blocks means the attacker 
+reads the entire message.
 
-This attack has proven to be very subtle and hard to fix. First of all,
-messages should be authenticated, as well as encrypted. That would cause
-modified messages to be rejected. However, many systems decrypt (and
-remove padding) before authenticating the message; so the information
-about the padding being valid or not has already leaked. We will discuss
+This attack is very subtle and hard to fix. First of all,
+messages should be authenticated, as well as encrypted to reject
+modified messages. However, many systems decrypt and
+remove padding before authenticating a message. This leads to an information leak
+on the padding validity. We discuss
 secure ways of authenticating messages later in the book.
 
-You might consider just getting rid of the “invalid padding” message;
-declaring the message invalid without specifying *why* it was invalid.
-That turns out to only be a partial solution for systems that decrypt
-before authenticating. Those systems would typically reject messages
-with an invalid padding *slightly faster* than messages with a valid
-padding. After all, they didn't have to do the authentication step: if
-the padding is invalid, the message can't possibly be valid. An attack
+You may consider removing the “invalid padding” message by
+declaring it invalid without specifying *why*.
+This appoarch is a partial solution for systems that decrypt
+before authenticating. The systems typically reject messages
+with invalid padding *slightly faster* than messages with valid
+padding. After all, the authentication step is skipped. If
+the padding is invalid, the message cannot possibly be valid. An attack
 that leaks secret information through timing differences is called a
-*timing attack*, which is a special case of a *side-channel attack*:
+*timing attack*. This is a special case of a *side-channel attack*:
 attacks on the practical implementation of a cryptosystem rather than
-its “perfect” abstract representation. We will talk about these kinds of
-attacks more later in the book.
+its “perfect” abstract representation. We discuss these kinds of
+attacks later on in the book.
 
-That discrepancy was commonly exploited as well. By measuring how long
-it takes the recipient to reject the message, the attacker can tell if
-the recipient performed the authentication step. That tells them if the
-padding was correct or not, providing the padding oracle to complete the
+The discrepancy is commonly exploited as well. By measuring how long
+it takes a recipient to reject the message, the attacker knows if
+the recipient performs an authentication step. This tells the attacker whether the
+padding is correct or not, allowng the padding oracle to complete the
 attack.
 
-The principal lesson learned here is, again, not to design your own
-cryptosystems. The main way to avoid this particular problem is by
-performing constant time authentication, and authenticating the
-ciphertext before decrypting it. We will talk more about this in a later
-chapter on message authentication.
+The principal lesson learned here is to not design your own
+cryptosystem. This problem is avoidable by
+constantly autheticating the time and authenticating the
+ciphertext before decryption. We talk more about this in the message authentication
+chapter.
 
 Native stream ciphers
 ~~~~~~~~~~~~~~~~~~~~~
 
-In addition to block ciphers being used in a particular
-:term:`mode of operation`, there are also “native” :term:`stream cipher`\s algorithms
-that are designed from the ground up to be a :term:`stream cipher`.
+In addition to block ciphers functioning in a particular
+:term:`mode of operation`, “native” :term:`stream cipher` algorithms
+are designed as :term:`stream cipher`\s from the ground up.
 
-The most common type of :term:`stream cipher` is called a *synchronous* stream
-cipher. These algorithms produce a long stream of pseudorandom bits from
-a secret symmetric key. This stream, called the keystream, is then XORed
+The most common :term:`stream cipher` is known as a *synchronous* stream
+cipher. The algorithms produce a long stream of pseudorandom bits from
+a secret symmetric key. This stream, called the keystream, then XORs
 with the plaintext to produce the ciphertext. Decryption is the
 identical operation as encryption, just repeated: the keystream is
-produced from the key, and is XORed with the ciphertext to produce the
+produced from the key, and XORs with the ciphertext to produce the
 plaintext.
 
 .. figure:: ./Illustrations/StreamCipher/Synchronous.svg
    :align: center
 
-You can see how this construction looks quite similar to a one-time pad,
-except that the truly random one-time pad has been replaced by a
+This construction looks quite similar to a one-time pad,
+except that the truly random one-time pad is replaced by a
 pseudorandom :term:`stream cipher`.
 
-There are also *asynchronous* or *self-synchronizing* :term:`stream cipher`\s,
-where the previously produced ciphertext bits are used to produce the
-current keystream bit. This has the interesting consequence that a
+*Asynchronous* or *self-synchronizing* :term:`stream cipher`\s also exist,
+where the previously produced ciphertext bits help produce the
+current keystream bit. An interesting consequence is that a
 receiver can eventually recover if some ciphertext bits are dropped.
-This is generally not considered to be a desirable property anymore in
-modern cryptosystems, which instead prefer to send complete,
-authenticated messages. As a result, these :term:`stream cipher`\s are very rare,
-and we don't talk about them explicitly in this book. Whenever someone
-says “stream cipher”, it's safe to assume they mean the synchronous
+This is generally not a desirable property in
+modern cryptosystems, which prefer sending complete,
+authenticated messages. As a result, these :term:`stream cipher`\s are rare,
+and we do not discuss them explicitly in the book. Whenever someone
+says “stream cipher”, it is safe to assume the synchronous
 kind.
 
-Historically, native :term:`stream cipher`\s have had their issues. NESSIE, an
-international competition for new cryptographic primitives, for example,
-did not result in any new :term:`stream cipher`\s, because all of the
+Historically, native :term:`stream cipher`\s are known to have issues. For example, 
+new :term:`stream cipher`\s did not result from NESSIE, an
+international competition for new cryptographic primitives because all 
 participants were broken before the competition ended. RC4, one of the
-most popular native :term:`stream cipher`\s, has had serious known issues for
-years. By comparison, some of the constructions using block ciphers seem
+most popular native :term:`stream cipher`\s, had widely-known, serious issues for
+years. By comparison, a few constructions using block ciphers seem
 bulletproof.
 
 Fortunately, more recently, several new cipher algorithms provide new
-hope that we can get practical, secure and performant :term:`stream cipher`\s.
+hope for practical, secure and performant :term:`stream cipher`\s.
 
 RC4
 ~~~
 
-By far the most common native :term:`stream cipher` in common use on desktop and
+By far the most common native :term:`stream cipher` on desktop and
 mobile devices is RC4.
 
 RC4 is sometimes also called ARCFOUR or ARC4, which stands for *alleged*
