@@ -202,8 +202,8 @@ skip this chapter, or first read the :ref:`mathematical background appendix
 One of the benefits of the elliptic curve Diffie-Hellman variant is that
 the required key size is much, much smaller than the variant based on
 the discrete log problem. This is because the fastest algorithms for
-breaking the discrete log problem have a larger asymptotic complexity
-than their elliptic curve variants. For example, the number field sieve
+breaking the elliptic curve discrete log problem have a larger asymptotic
+complexity than the non-elliptic variants. For example, the number field sieve
 for discrete logarithms, a state of the art algorithm for attacking
 discrete logarithm-based Diffie-Hellman, has time complexity:
 
