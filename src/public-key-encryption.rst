@@ -51,10 +51,9 @@ done by secret-key algorithms.
 
 By far the most important reason for this is performance. Compared to
 our speedy :term:`stream cipher`\s (native or otherwise), :term:`public-key encryption`
-mechanisms are extremely slow. RSA is limited to at most its key size,
-which for 2048-bit means 256 bytes. Under these circumstances encryption
-takes 0.29 megacycles, and decryption takes a whopping 11.12 megacycles.
-:cite:`cryptopp:bench` To put this into perspective,
+mechanisms are extremely slow. For example, with a 2048-bit (256 bytes)
+RSA key, encryption takes 0.29 megacycles, and decryption takes a whopping
+11.12 megacycles. :cite:`cryptopp:bench` To put this into perspective,
 symmetric key algorithms work within an order of magnitude of 10 or so
 cycles per byte in either direction. This means it will take a symmetric
 key algorithm approximately 3 kilocycles in order to decrypt 256 bytes,
