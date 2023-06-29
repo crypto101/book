@@ -321,7 +321,7 @@ sequences that will occur very commonly. For example (the
 
 We can make better guesses if more information is known about the plaintext.
 For example, if HTML is served over HTTP we expect to see
-`Content-Type``, ``<a>``, and so on.
+``Content-Type``, ``<a>``, and so on.
 
 This only tells us which plaintext sequences are likely, giving us
 likely guesses. How can we tell if the guesses are correct? If

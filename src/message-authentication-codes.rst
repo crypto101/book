@@ -137,7 +137,7 @@ designers of TLS, this did not appear to pose a problem.
 In fact, prior to rigorous comparative study of different composition
 mechanisms, many preferred this setup. In a critique of IPSec, Schneier
 and Ferguson, two veteran cryptographers, considered IPSec's use of
-encrypt-then-authenticate was a flaw, preferring TLS's
+encrypt-then-authenticate a flaw, preferring TLS's
 authenticate-then-encrypt. :cite:`schneier:ipsec` While they
 may have had a plausible (albeit mostly heuristic) argument for the
 time, this criticism is completely superseded by the *provable* security
@@ -593,7 +593,7 @@ authenticates the AEAD associated data. That associated data tag
 
 This design has a number of interesting properties. For example, it is
 very fast: only requiring roughly one block cipher operation per
-encrypted or associate data block, as well as one additional block
+encrypted or associated data block, as well as one additional block
 cipher operation for the final tag. The offsets (:math:`\Delta_i`) are
 also extremely easy to compute. The checksum block :math:`X` is just all
 of the plaintext blocks :math:`P_i` XORed together. Finally, :term:`OCB mode` is
