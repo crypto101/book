@@ -9,7 +9,7 @@ Introduction
 ~~~~~~~~~~~~
 
 Many cryptographic systems require random numbers. So far, we've just
-assumed that they're available. In this chapter, we'll go more in depth
+assumed that they're available. In this chapter, we'll go into more depth
 about the importance and mechanics of random numbers in cryptographic
 systems.
 

@@ -7,7 +7,7 @@ Description
 ~~~~~~~~~~~
 
 A MAC is a small bit of information that can be used to check the
-authenticity and the integrity of a message. These codes are often
+authenticity and integrity of a message. These codes are often
 called “tags”. A MAC algorithm takes a message of arbitrary length and a
 secret key of fixed length, and produces the tag. The MAC algorithm also
 comes with a verification algorithm that takes a message, the key and a

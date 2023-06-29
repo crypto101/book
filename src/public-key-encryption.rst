@@ -6,7 +6,7 @@ Public-key encryption
 Description
 ~~~~~~~~~~~
 
-So far, we have only done :term:`secret-key encryption`. Suppose, that you could
+So far, we have only done :term:`secret-key encryption`. Suppose that you could
 have a cryptosystem that didn't involve a single secret key, but instead
 had a key pair: one public key, which you freely distribute, and a
 private one, which you keep to yourself.
@@ -63,8 +63,8 @@ hardware acceleration or Salsa20/ChaCha20 only need about 2 to 4 cycles
 per byte, further widening the performance gap.
 
 There are a few other problems with most practical cryptosystems. For
-example, RSA can't encrypt anything larger than its modulus, which is
-generally less than or equal 4096 bits, far smaller than the largest
+example, RSA can't encrypt anything larger than its modulus, which
+generally doesn't exceed 4096 bits, far smaller than the largest
 messages we'd like to send. Still, the most important reason is the
 speed argument given above.
 

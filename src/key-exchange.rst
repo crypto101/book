@@ -281,7 +281,7 @@ realistic, and a secure cryptosystem will have to address them somehow.
 
 While the Diffie-Hellman protocol successfully produced a shared secret
 between two peers, there are clearly some pieces of the puzzle still
-missing to build those cryptosystems. We need tools that help us
+missing to build secure cryptosystems. We need tools that help us
 authenticate Alice to Bob and vice versa, and we need tools that help
 guarantee message integrity, allowing the receiver to verify that the
 received messages are in fact the messages the sender intended to send.
