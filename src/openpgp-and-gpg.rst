@@ -26,7 +26,7 @@ consisting of a public key and a private key. Public key algorithms are
 used both for signing and encryption. Symmetric key algorithms are used
 to encrypt the message body; the symmetric key itself is protected using
 :term:`public-key encryption`. This also makes it easy to encrypt a message for
-multiple recipients: only the secret key has to be encrypted multiple
+multiple recipients: only the symmetric key has to be encrypted multiple
 times.
 
 The web of trust
