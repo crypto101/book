@@ -157,7 +157,7 @@ of all of these:
 -  It has to be unpredictable.
 -  It has to be secret.
 
-Muddle with any of these properties, and an attacker can probably
+Mess up any of these properties, and an attacker can probably
 retrieve your secret key, even with a modest amount of signatures. For
 example, an attacker can recover the secret key knowing only a few bits
 of :math:`k`, plus a large amount of valid signatures.

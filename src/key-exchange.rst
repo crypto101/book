@@ -202,8 +202,8 @@ skip this chapter, or first read the :ref:`mathematical background appendix
 One of the benefits of the elliptic curve Diffie-Hellman variant is that
 the required key size is much, much smaller than the variant based on
 the discrete log problem. This is because the fastest algorithms for
-breaking the discrete log problem have a larger asymptotic complexity
-than their elliptic curve variants. For example, the number field sieve
+breaking the elliptic curve discrete log problem have a larger asymptotic
+complexity than the non-elliptic variants. For example, the number field sieve
 for discrete logarithms, a state of the art algorithm for attacking
 discrete logarithm-based Diffie-Hellman, has time complexity:
 
@@ -281,7 +281,7 @@ realistic, and a secure cryptosystem will have to address them somehow.
 
 While the Diffie-Hellman protocol successfully produced a shared secret
 between two peers, there are clearly some pieces of the puzzle still
-missing to build those cryptosystems. We need tools that help us
+missing to build secure cryptosystems. We need tools that help us
 authenticate Alice to Bob and vice versa, and we need tools that help
 guarantee message integrity, allowing the receiver to verify that the
 received messages are in fact the messages the sender intended to send.

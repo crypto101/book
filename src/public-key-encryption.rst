@@ -6,7 +6,7 @@ Public-key encryption
 Description
 ~~~~~~~~~~~
 
-So far, we have only done :term:`secret-key encryption`. Suppose, that you could
+So far, we have only done :term:`secret-key encryption`. Suppose that you could
 have a cryptosystem that didn't involve a single secret key, but instead
 had a key pair: one public key, which you freely distribute, and a
 private one, which you keep to yourself.
@@ -51,10 +51,9 @@ done by secret-key algorithms.
 
 By far the most important reason for this is performance. Compared to
 our speedy :term:`stream cipher`\s (native or otherwise), :term:`public-key encryption`
-mechanisms are extremely slow. RSA is limited to at most its key size,
-which for 2048-bit means 256 bytes. Under these circumstances encryption
-takes 0.29 megacycles, and decryption takes a whopping 11.12 megacycles.
-:cite:`cryptopp:bench` To put this into perspective,
+mechanisms are extremely slow. For example, with a 2048-bit (256 bytes)
+RSA key, encryption takes 0.29 megacycles, and decryption takes a whopping
+11.12 megacycles. :cite:`cryptopp:bench` To put this into perspective,
 symmetric key algorithms work within an order of magnitude of 10 or so
 cycles per byte in either direction. This means it will take a symmetric
 key algorithm approximately 3 kilocycles in order to decrypt 256 bytes,
@@ -64,8 +63,8 @@ hardware acceleration or Salsa20/ChaCha20 only need about 2 to 4 cycles
 per byte, further widening the performance gap.
 
 There are a few other problems with most practical cryptosystems. For
-example, RSA can't encrypt anything larger than its modulus, which is
-generally less than or equal 4096 bits, far smaller than the largest
+example, RSA can't encrypt anything larger than its modulus, which
+generally doesn't exceed 4096 bits, far smaller than the largest
 messages we'd like to send. Still, the most important reason is the
 speed argument given above.
 

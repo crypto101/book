@@ -315,7 +315,7 @@ mode instead of encryption mode:
    :align: center
 
 While :term:`CBC mode` is not inherently insecure (unlike :term:`ECB mode`), its
-particular use was in TLS 1.0. This eventually led to the BEAST attack,
+particular use in TLS 1.0 was. This eventually led to the BEAST attack,
 which we detail in the SSL/TLS section. The short
 version is that instead of using unpredictable :term:`initialization vector`\s like random IVs,
 the previous ciphertext block was used as the IV for the next message. Unfortunately,
@@ -884,7 +884,7 @@ Native stream ciphers
 ~~~~~~~~~~~~~~~~~~~~~
 
 In addition to block ciphers being used in a particular
-:term:`mode of operation`, there are also “native” :term:`stream cipher`\s algorithms
+:term:`mode of operation`, there are also “native” :term:`stream cipher` algorithms
 that are designed from the ground up to be a :term:`stream cipher`.
 
 The most common type of :term:`stream cipher` is called a *synchronous* stream

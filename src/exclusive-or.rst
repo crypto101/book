@@ -211,7 +211,7 @@ At first sight, that may not seem like an issue. To extract either
 :math:`p_1` or :math:`p_2`, you'd need to cancel out the XOR operation,
 which means you need to know the other plaintext. The problem is that
 even the result of the XOR operation on two plaintexts contains quite a
-bit information about the plaintexts themselves. We'll illustrate this
+bit of information about the plaintexts themselves. We'll illustrate this
 visually with some images from a broken “one-time” pad process, starting
 with :numref:`fig-multitimepad`.
 
@@ -302,8 +302,8 @@ This typically does not work because we cannot
 guess an entire message. However, we can guess parts of a message.
 
 If we guess a few plaintext bits :math:`p_i` correctly for *any* of the
-messages that reveals the key bits at that position for *all* of
-the messages since :math:`k = c_i \xor p_i`. Hence, all of the
+messages, that reveals the key bits at that position for *all* of
+the messages, since :math:`k = c_i \xor p_i`. Hence, all of the
 plaintext bits at that position are revealed. Using that value for
 :math:`k`, we can compute the plaintext bits :math:`p_i = c_i \xor k`
 for all the other messages.
@@ -320,8 +320,8 @@ sequences that will occur very commonly. For example (the
 -  :math:`\verb*| a |` and variants
 
 We can make better guesses if more information is known about the plaintext.
-For example, if HTML is served over HTTP we expect to see
-`Content-Type``, ``<a>``, and so on.
+For example, if HTML is served over HTTP, we expect to see
+``Content-Type``, ``<a>``, and so on.
 
 This only tells us which plaintext sequences are likely, giving us
 likely guesses. How can we tell if the guesses are correct? If
@@ -353,7 +353,7 @@ can expand that to ``Content-Length:``. More bytes are easily revealed.
 While this technique works as soon as two messages are encrypted with
 the same key, it is clear that the process becomes simpler when more
 ciphertexts use the same key. Since all of the steps become more
-effective we get:
+effective, we get:
 
 -  More cribbing positions.
 -  More plaintext bytes revealed with each successful crib and
@@ -389,11 +389,11 @@ information-theoretic security guarantee. The guarantee is not available with an
 other system. On the other hand, the key exchange requirements are exteremely impractical. 
 However, throughout this book,
 we will see that secure symmetric encryption algorithms are not the pain point of modern
-cryptosystems. Cryptographers designed plenty while
-practical key management is the toughest challenges facing
+cryptosystems. Cryptographers have designed many such algorithms.
+Practical key management, on the other hand, is one of the toughest challenges facing
 modern cryptography. One-time pads may solve a problem, but it is the
 wrong problem.
 
 One-time pads may have practical use, but they are obviously not a panacea. We need
-a system with manageable key sizes and capable of maintaining secrecy. Additionally, a 
-system to negotiate keys over the Internet with complete strangers is necessary.
+a system with both manageable key sizes and the capability of maintaining secrecy at the same time.
+Additionally, a system to negotiate keys over the Internet with complete strangers is necessary.

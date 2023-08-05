@@ -27,7 +27,7 @@ block cipher's *block size* is a fixed size. :term:`Keyspace` is the set of all 
 Once we encrypt plaintext blocks into ciphertext blocks, they are later
 decrypted to recover original plaintext block. The original plaintext block
 :math:`P` is produced using a decryption function :math:`D`. It takes the
-ciphertext block :math:`C` and the key :math:`k` (the same one used to
+ciphertext block :math:`C` and the key :math:`k` (same as the one used to
 encrypt the block) as inputs.
 
 .. math::

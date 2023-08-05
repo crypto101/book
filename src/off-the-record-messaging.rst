@@ -41,7 +41,7 @@ speak :term:`OTR` but doesn't require it, they can optionally invisibly add that
 information to a plaintext message. That happens with a clever system of
 whitespace tags: a bunch of whitespace such as spaces and tab characters
 are used to encode that information. An :term:`OTR`\-capable client can interpret
-that tag and start an :term:`OTR` conversation; an client that isn't :term:`OTR`\-capable
+that tag and start an :term:`OTR` conversation; a client that isn't :term:`OTR`\-capable
 just displays some extra whitespace.
 
 :term:`OTR` uses many of the primitives we've seen so far:

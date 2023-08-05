@@ -201,7 +201,7 @@ numbers:
 
    GCD(x, y) = Px + Qy
 
-Given the numbers :math:`x` and :math:`y`, the extended Euclidean algorithms
+Given the numbers :math:`x` and :math:`y`, the extended Euclidean algorithm
 gives us a way to efficiently calculate the value of coefficients :math:`P` 
 and :math:`Q`.
 
@@ -750,7 +750,7 @@ addition operator, forms an Abelian group:
    points on the curve :math:`P`, :math:`P + O = O + P = P`.
 #. Each element has an inverse element. This is easiest explained
    visually TODO: Explain visually
-#. The order of operations doesn't matter, :math:`P + Q = Q + P` for all
+#. The order of operands doesn't matter, :math:`P + Q = Q + P` for all
    :math:`P, Q` on the curve.
 
 The elliptic curve discrete log problem
