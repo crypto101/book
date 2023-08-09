@@ -33,6 +33,8 @@ RUN set -e; \
     done; \
     fc-cache -f -v
 
+RUN git config --system --add safe.directory /repo
+
 RUN useradd -u 1001 runner
 
 # setup texlive to handle having no home directory
