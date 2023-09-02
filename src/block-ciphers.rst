@@ -161,23 +161,23 @@ The most common block cipher in current use is AES.
 
 Contrary to its predecessor DES (which we'll look at in more detail in
 the next chapter), AES was selected through a public, peer-reviewed
-competition following an open call for proposals. This competition
-involved several rounds where all of the contestants were presented,
+competition that arose from an open call for proposals. The competition
+involved several rounds of contestant presentations,
 subject to extensive cryptanalysis, and voted upon. The AES process was
-well-received among cryptographers, and similar processes are generally
-considered to be the preferred way to select cryptographic standards.
+well-received among cryptographers. Similar processes are preferred 
+for selecting cryptographic standards.
 
 Prior to being chosen as the Advanced Encryption Standard, the algorithm
 was known as Rijndael, a name derived from the two last names of the
 Belgian cryptographers that designed it: Vincent Rijmen and Joan Daemen.
-The Rijndael algorithm defined a family of block ciphers, with block
-sizes and key sizes that could be any multiple of 32 bits between 128
-bits and 256 bits. :cite:`daemen:aes` When Rijndael became
+The Rijndael algorithm defined a family of block ciphers. The block
+sizes and key sizes could be any multiple of 32 bits between 128
+bits to 256 bits. :cite:`daemen:aes` When Rijndael became
 AES through the FIPS standardization process, the parameters were
 restricted to a block size of 128 bits and keys sizes of 128, 192 and
 256 bits. :cite:`fips:aes`
 
-There are no practical attacks known against AES. While there have been
+No practical attacks exist against AES. While there have been
 some developments in the last few years, most of them involve
 related-key attacks :cite:`cryptoeprint:2009:317`, some of
 them only on reduced-round versions of AES
@@ -190,24 +190,24 @@ them only on reduced-round versions of AES
    easier to attack. These attacks can give insight as to how resistant
    the full cipher is.
 
-   A related key attack involves making some predictions about how AES
-   will behave under several different keys with some specific
-   mathematical relation. These relations are fairly simple, such as
+   A related key attack involves predicting how AES
+   behaves under different keys with specific
+   mathematical relations. These relations are fairly simple, such as
    XORing with an attacker-chosen constant. If an attacker is allowed to
    encrypt and decrypt a large number of blocks with these related keys,
    they can attempt to recover the original key with significantly less
    computation than would ordinarily be necessary to crack it.
 
-   While a theoretically ideal block cipher wouldn't be vulnerable to a
-   related key attack, these attacks aren't considered practical
+   While a theoretically, ideal block cipher would not be vulnerable to a
+   related key attack, these attacks are not considered practical
    concerns. In practice cryptographic keys are generated via a
    cryptographically secure pseudorandom number generator, or a
-   similarly secure :term:`key agreement` scheme or key derivation scheme (we'll
+   similarly secure :term:`key agreement` scheme, or a key derivation scheme (we'll
    see more about those later). Therefore, the odds of selecting two
    such related keys by accident is nonexistent. These attacks are
-   interesting from an academic perspective: they can help provide
-   insight in the workings of the cipher, guiding cryptographers in
-   designing future ciphers and attacks against current ciphers.
+   interesting from an academic perspective: they provide
+   insight in the workings of the cipher, guiding cryptographers in the
+   design of future ciphers and attacks against current ciphers.
 
 A closer look at Rijndael
 ^^^^^^^^^^^^^^^^^^^^^^^^^
