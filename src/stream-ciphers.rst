@@ -491,42 +491,42 @@ is :math:`P_i^{\prime}`.
    Excuse the pun.
 
 
-However, in the block *after* that, the bits we flipped in the
-ciphertext will be flipped in the plaintext as well! This is because, in
+However, the bits flipped in the
+ciphertext are also flipped in the plaintext in the block *after*! This happens because in
 CBC decryption, ciphertext blocks are decrypted by the block cipher, and
-the result is XORed with the previous ciphertext block. But since we
-modified the previous ciphertext block by XORing it with :math:`X`, the
-plaintext block :math:`P_{i + 1}` will also be XORed with :math:`X`. As
+the result is XORed with the previous ciphertext block. Since we
+modify the previous ciphertext block by XORing it with :math:`X`, the
+plaintext block :math:`P_{i + 1}` also XORs with :math:`X`. As
 a result, the attacker completely controls that plaintext block
-:math:`P_{i + 1}`, since they can just flip the bits that aren't the
-value they want them to be.
+:math:`P_{i + 1}`by flipping the bits that are not the
+desirable value.
 
 TODO: add previous illustration, but mark the path X takes to influence
-P prime {i + 1} in red or something
+P prime {i + 1} in red
 
-This may not sound like a huge deal at first. If you don't know the
-plaintext bytes of that next block, you have no idea which bits to flip
-in order to get the plaintext you want.
+This may not be a huge deal initially. If you do not know the
+plaintext bytes of the next block, you have no idea which bits to flip
+to get the plaintext you want.
 
-To illustrate how attackers can turn this into a practical attack, let's
-consider a website using cookies. When you register, your chosen user
+Lets consider a website using cookies to illustrate how attackers turn this
+into a practical attack. During registration your chosen user
 name is put into a cookie. The website encrypts the cookie and sends it
-to your browser. The next time your browser visits the website, it will
-provide the encrypted cookie; the website decrypts it and knows who you
-are.
+to your browser. In the next website visit your browser
+provides the encrypted cookie, the website decrypts it, and identifies
+you.
 
-An attacker can often control at least part of the plaintext being
-encrypted. In this example, the user name is part of the plaintext of
-the cookie. Of course, the website just lets you provide whatever value
-for the user name you want at registration, so the attacker can just add
-a very long string of ``Z`` bytes to their user name. The server will
-happily encrypt such a cookie, giving the attacker an encrypted
-ciphertext that matches a plaintext with many such ``Z`` bytes in them.
-The plaintext getting modified will then probably be part of that
-sequence of ``Z`` bytes.
+An attacker often partially controls the plaintext being
+encrypted. In this example, the user name is part of the cookie plaintext.
+Of course, the website lets you select the values for
+the user name at registration. The attacker then adds
+a very long string of ``Z`` bytes to their user name. The server
+happily encrypts such a cookie. The attacker gets an encrypted
+ciphertext matching a plaintext with many such ``Z`` bytes.
+The plaintext being modified probably becomes part of the
+``Z`` bytes sequence.
 
-An attacker may have some target bytes that they'd like to see in the
-decrypted plaintext, for example, ``;admin=1;``. In order to figure out
+An attacker may have some preference in the target bytes they would like to see in the
+decrypted plaintext. For example, ``;admin=1;``. To figure out
 which bytes they should flip (so, the value of :math:`X` in the
 illustration), they just XOR the filler bytes (~ZZZ~…) with that target.
 Because two XOR operations with the same value cancel each other out,
