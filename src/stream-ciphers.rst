@@ -700,44 +700,44 @@ causes the plaintext to have a ``02`` in that second-to-last position.
 ciphertext block, XORed with the second-to-last byte of :math:`R`, is
 ``02``.)
 
-In order to successfully decrypt the message, we still need to figure
-out which one of those options is the actual value of the padding. To do
-that, we try to discover the length of the padding by modifying bytes
-starting at the left-hand side of :math:`P_i` until the padding becomes
-invalid again. As with everything else in this attack, we modify those
+We still need to find the option that is the actual padding value
+for successful message decryption. 
+The padding length is discovered by modifying bytes
+on the left-hand side of :math:`P_i` until the padding becomes
+invalid. As with everything else in this attack, we change the
 bytes in :math:`P_i` by modifying the equivalent bytes in our chosen
-block :math:`R`. As soon as padding breaks, you know that the last byte
-you modified was part of the valid padding, which tells you how many
-padding bytes there are. Since we're using PKCS#5 padding, that also
-tells you what their value is.
+block :math:`R`. As soon as the padding breaks, you know that the last byte
+modified was part of valid padding and the number of
+padding bytes. Since we use PKCS#5 padding this also
+tells you the value.
 
-Let's illustrate this with an example. Suppose we've successfully found
-some block :math:`R` so that the plaintext of :math:`R \| C_i` has valid
-padding. Let's say that padding is ``03 03 03``. Normally, the attacker
-wouldn't know this; the point of this procedure is to discover what that
-padding is. Suppose the block size is 8 bytes. So, we (but not the
+Lets illustrate with an example. Suppose we successfully find
+a block :math:`R` so that the plaintext of :math:`R \| C_i` has valid
+padding. Lets say that padding is ``03 03 03``. Normally, the attacker
+would not know this; the point of the procedure is discovery of the
+padding. Suppose the block size is 8 bytes. So, we (not the
 attacker) know that :math:`P_i` is currently:
 
 .. math::
 
    p_0 p_1 p_2 p_3 p_4 \mathtt{03} \mathtt{03} \mathtt{03}
 
-In that equation, :math:`p_0 \ldots` are some bytes of the plaintext.
-Their actual value doesn't matter: the only thing that matters is that
-they're not part of the padding. When we modify the first byte of
-:math:`R`, we'll cause a change in the first byte of :math:`P_i`, so
-that :math:`p_0` becomes some other byte :math:`p^{\prime}_0`:
+In the equation, :math:`p_0 \ldots` are some bytes of the plaintext.
+Their actual value does not matter. What matters is that
+they are not part of the padding. When we modify the first byte of
+:math:`R`, we cause a change in the first byte of :math:`P_i`, so
+that :math:`p_0` becomes another byte :math:`p^{\prime}_0`:
 
 .. math::
 
    p^{\prime}_0 p_1 p_2 p_3 p_4 \mathtt{03} \mathtt{03} \mathtt{03}
 
-As you can see, this doesn't affect the validity of the padding. It also
-does not affect :math:`p_1`, :math:`p_2`, :math:`p_3` or :math:`p_4`.
-However, when we continue modifying subsequent bytes, we will eventually
-hit a byte that *is* part of the padding. For example, let's say we turn
+As you can see, padding validity is not affected. 
+:math:`p_1`, :math:`p_2`, :math:`p_3` or :math:`p_4` are also unaffected.
+However, when we continue modifying subsequent bytes, we eventually
+hit a byte that *is* part of the padding. For example, lets turn
 that first ``03`` into ``02`` by modifying :math:`R`. :math:`P_i` now
-looks like this:
+appears as follows:
 
 .. math::
 
