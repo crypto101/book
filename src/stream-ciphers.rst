@@ -656,28 +656,28 @@ already have valid padding, the attacker can simply skip the next step.
 .. figure:: Illustrations/CBC/PaddingAttack.svg
    :align: center
 
-Next, the attacker tries to modify the message so that it does have
-valid padding. They can do that by indirectly modifying the last byte of
-the plaintext: eventually that byte will be ``01``, which is always
+Next, the attacker modifies the message with
+valid padding. The last byte of the plaintext is indirectly modified:
+eventually that byte becomes ``01``, which is always
 valid padding. In order to modify the last byte of a plaintext block,
 the attacker modifies the last byte of the *previous* ciphertext block.
-This works exactly like it did with CBC bit flipping attacks. That
-previous ciphertext block is the block :math:`R`, so the byte being
+This works exactly like the CBC bit flipping attacks. The
+previous ciphertext block is :math:`R`, so the byte
 modified is the last byte of :math:`R`, :math:`r_b`.
 
-The attacker tries all possible values for that last byte. There are
-several ways of doing that: modular addition, XORing it with all values
-up to 256, or even picking randomly; the only thing that matters is that
-the attacker tries all of them. Eventually, the padding oracle will
-report that for some ciphertext block :math:`R`, the decrypted plaintext
-of :math:`R \| C_i` has valid padding.
+The attacker attempts all possible values for the last byte. Several
+approaches can be considered including modular addition, XORing it with all values
+up to 256, or random selection. What matters is that
+the attacker tries all approaches. Eventually, the padding oracle 
+reports that a ciphertext block :math:`R` has valid padding in the decrypted plaintext
+of :math:`R \| C_i`.
 
 Discovering the padding length
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The oracle has just told the attacker that for our chosen value of
-:math:`R`, the plaintext of :math:`R \| C_i` has valid padding. Since
-we're working with PKCS#5 padding, that means that the plaintext block
+The oracle tells the attacker that the plaintext of :math:`R \| C_i` has valid padding
+for the chosen value of :math:`R`. Since
+we work with PKCS#5 padding, the plaintext block
 :math:`P_i` ends in one of the following byte sequences:
 
 -  ``01``
@@ -685,19 +685,19 @@ we're working with PKCS#5 padding, that means that the plaintext block
 -  ``03 03 03``
 -  …
 
-The first option (``01``) is much more likely than the others, since it
-only requires one byte to have a particular value. The attacker is
-modifying that byte to take *every* possible value, so it is quite
-likely that they happened to stumble upon ``01``. All of the other valid
-padding options not only require that byte to have some particular
-value, but also one or more other bytes. For an attacker to be
-guaranteed a message with a valid ``01`` padding, they just have to try
-every possible byte. For an attacker to end up with a message with a
-valid ``02 02`` padding, they have to try every possible byte *and*
-happen to have picked a combination of :math:`C` and :math:`R` that
-causes the plaintext to have a ``02`` in that second-to-last position.
-(To rephrase: the second-to-last byte of the decryption of the
-ciphertext block, XORed with the second-to-last byte of :math:`R`, is
+The first option (``01``) is the likeliest compared with others as it
+only requires one byte to have a particular value. The attacker 
+modifies that byte to take *every* possible value, so it is quite
+likely that ``01`` is stumbled upon. All other valid
+padding options not only require that byte to have a particular
+value, but also one or more other bytes. An attacker is
+guaranteed a message with a valid ``01`` padding by trying
+every possible byte. Furthermore, an attacker receives a message with a
+valid ``02 02`` padding by trying every possible byte *and*
+by selecting a combination of :math:`C` and :math:`R`. This
+causes the plaintext to have a ``02`` in the second-to-last position.
+(To rephrase: the ciphertext block's second-to-last byte in the decryption that is
+XORed with the second-to-last byte of :math:`R` is
 ``02``.)
 
 In order to successfully decrypt the message, we still need to figure
