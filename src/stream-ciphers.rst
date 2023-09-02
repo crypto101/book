@@ -930,19 +930,19 @@ RC4
 By far the most common native :term:`stream cipher` in common use on desktop and
 mobile devices is RC4.
 
-RC4 is sometimes also called ARCFOUR or ARC4, which stands for *alleged*
-RC4. While its source code has been leaked and its implementation is now
-well-known, RSA Security (the company that authored RC4 and still holds
-the RC4 trademark) has never acknowledged that it is the real algorithm.
+At times RC4 is known as ARCFOUR or ARC4, which stands for *alleged*
+RC4. While its source code was leaked and its implementation is now
+well-known, RSA Security never acknowledged the real algorithm.
+RSA Security is the company that authored RC4 and continues to hold the RC4 trademark.
 
-It quickly became popular because it's very simple and very fast. It's
-not just extremely simple to implement, it's also extremely simple to
-apply. Being a synchronous :term:`stream cipher`, there's little that can go
-wrong; with a block cipher, you'd have to worry about things like modes
+RC4 quickly became popular for simplicity and speed. Not
+only is it extremely simple to implement, it is extremely simple to
+apply. Being a synchronous :term:`stream cipher`, there is little that can go
+wrong; with a block cipher, you worry about things like modes
 of operation and padding. Clocking in at around 13.9 cycles per byte,
-it's comparable to AES-128 in CTR (12.6 cycles per byte) or CBC (16.0
-cycles per byte) modes. AES came out a few years after RC4; when RC4 was
-designed, the state of the art was 3DES, which was excruciatingly slow
+it is comparable to AES-128 in CTR (12.6 cycles per byte) or CBC (16.0
+cycles per byte) modes. AES was released a few years after RC4. When RC4 was
+designed, 3DES was the state-of-the-art although excruciatingly slow
 by comparison (134.5 cycles per byte in :term:`CTR mode`).
 :cite:`cryptopp:bench`
 
@@ -954,58 +954,58 @@ An in-depth look at RC4
 
 On the other hand, RC4 is incredibly simple, and it may be worth skimming this section.
 
-RC4 is, unfortunately, quite broken. To better understand just how
-broken, we'll take a look at how RC4 works. The description requires
-understanding modular addition; if you aren't familiar with it, you may
-want to review :ref:`the appendix on modular addition <Modular
+Unfortunately, RC4 is quite broken. We take a look at how RC4 works 
+to understand just how broken. You need an
+understanding of modular addition, so to familiarize yourself consider
+reviewing :ref:`the appendix on modular addition <Modular
 addition>`.
 
 Everything in RC4 revolves around a state array and two indexes into
 that array. The array consists of 256 bytes forming a *permutation*:
-that is, all possible index values occur exactly once as a value in the
-array. That means it maps every possible byte value to every possible
-byte value: usually different, but sometimes the same one. We know that
-it's a permutation because :math:`S` starts as one, and all operations
-that modify :math:`S` always swap values, which obviously keeps it a
+as all possible index values occur exactly once as a value in the
+array. Every possible byte value maps to every possible
+byte value: usually different, but sometimes the same one. 
+As a permutation :math:`S` starts as one and all operations
+modifying :math:`S` always swap values, which obviously keeps it a
 permutation.
 
 RC4 consists of two major components that work on two indexes
 :math:`i, j` and the state array :math:`S`:
 
-#. The key scheduling algorithm, which produces an initial state array
+#. The key scheduling algorithm produces an initial state array
    :math:`S` for a given key.
-#. The pseudorandom generator, which produces the actual keystream bytes
-   from the state array :math:`S` which was produced by the key
-   scheduling algorithm. The pseudorandom generator itself modifies the
-   state array as it produces keystream bytes.
+#. The pseudorandom generator produces the actual keystream bytes
+   from the state array :math:`S` (produced by the key
+   scheduling algorithm). It modifies the
+   state array while producing keystream bytes.
 
 The key scheduling algorithm
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The key scheduling algorithm starts with the *identity permutation*.
-That means that each byte is mapped to itself.
+The key scheduling algorithm begins with the *identity permutation* in which
+each byte maps to itself.
 
 .. figure:: ./Illustrations/RC4/IdentityPermutation.svg
    :align: center
 
-Then, the key is mixed into the state. This is done by letting index
-:math:`i` iterate over every element of the state. The :math:`j` index
-is found by adding the current value of :math:`j` (starting at 0) with
-the next byte of the key, and the current state element:
+Afterwards, the key mixes into the state by allowing index
+:math:`i` to iterate over every state element. 
+The current value of :math:`j` (starting at 0) is added with
+the next byte of the key, and the current state element to find the :math:`j` index:
 
 .. figure:: ./Illustrations/RC4/FindIndex.svg
    :align: center
 
-Once :math:`j` has been found, :math:`S[i]` and :math:`S[j]` are
-swapped:
+Once :math:`j` is found, :math:`S[i]` and :math:`S[j]` 
+swap:
 
 .. figure:: ./Illustrations/RC4/Swap.svg
    :align: center
 
-This process is repeated for all the elements of :math:`S`. If you run
+The process repeats for all elements of :math:`S`. If you run
 out of key bytes, you just wrap around on the key. This explains why RC4
-accepts keys from anywhere between 1 and 256 bytes long. Usually, 128
-bit (16 byte) keys are used, which means that each byte in the key is
+accepts keys ranging between 1 and 256 bytes long. Usually, 128
+bit (16 byte) keys are used, so each byte in the key is
 used 16 times.
 
 Or, in Python:
@@ -1028,17 +1028,17 @@ Or, in Python:
 The pseudorandom generator
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The pseudorandom generator is responsible for producing pseudorandom
-bytes from the state :math:`S`. These bytes form the keystream, and are
-XORed with the plaintext to produce the ciphertext. For each index
+The pseudorandom generator creates pseudorandom
+bytes from the state :math:`S`. The bytes form the keystream, and 
+XOR with the plaintext to produce the ciphertext. For each index
 :math:`i`, it computes :math:`j = j + S[i]` (:math:`j` starts at 0).
-Then, :math:`S[i]` and :math:`S[j]` are swapped:
+Then, :math:`S[i]` and :math:`S[j]` swap:
 
 .. figure:: ./Illustrations/RC4/Swap.svg
    :align: center
 
-To produce the output byte, :math:`S[i]` and :math:`S[j]` are added
-together. Their sum is used as an index into :math:`S`; the value at
+The output byte is produced by adding :math:`S[i]` and :math:`S[j]`.
+Their sum is an index into :math:`S`; the value at
 :math:`S[S[i] + S[j]]` is the keystream byte :math:`K_i`:
 
 .. figure:: ./Illustrations/RC4/PRNGOutput.svg
@@ -1063,16 +1063,16 @@ Attacks
 .. canned_admonition::
    :from_template: advanced
 
-The section on the attacks on RC4 is a good deal more complicated than RC4 itself, so you may want to skip this even if you've read this far.
+This section covering attacks on RC4 is a good deal more complicated than RC4 itself. You may want to skip this even if you read this far.
 
-There are many attacks on RC4-using cryptosystems where RC4 isn't really
-the issue, but are caused by things like key reuse or failing to
-authenticate the message. We won't discuss these in this section. Right
-now, we're only talking about issues specific to the RC4 algorithm
+Many attacks on RC4-using cryptosystems exist where RC4 is not 
+the main issue. The root causes of issues can be things like key reuse or 
+message authentication failure. We do not discuss these in this section. Right
+now, we focus on issues specific to the RC4 algorithm
 itself.
 
-Intuitively, we can understand how an ideal :term:`stream cipher` would produce
-a stream of random bits. After all, if that's what it did, we'd end up
+Intuitively, we can understand how an ideal :term:`stream cipher` produces
+a stream of random bits. After all, if that is what it did, we end up
 in a situation quite similar to that of a one-time pad.
 
 .. figure:: Illustrations/XOR/OTP.svg
@@ -1082,27 +1082,27 @@ in a situation quite similar to that of a one-time pad.
 .. figure:: Illustrations/StreamCipher/Synchronous.svg
 
    A synchronous :term:`stream cipher` scheme. Note similarity to the one-time pad
-   scheme. The critical difference is that while the one-time pad :math:`k_i` is
-   truly random, the keystream :math:`K_i` is only pseudorandom.
+   scheme. The critical difference is that the one-time pad :math:`k_i` is
+   truly random while the keystream :math:`K_i` is only pseudorandom.
 
 
-The :term:`stream cipher` is ideal if the best way we have to attack it is to
-try all of the keys, a process called brute-forcing the key. If there's
-an easier way, such as through a bias in the output bytes, that's a flaw
+The :term:`stream cipher` is ideal if the best method of attack involves
+trying all keys, a process called brute-forcing the key. 
+An easier approach is through bias in the output bytes though that is a flaw
 of the :term:`stream cipher`.
 
-Throughout the history of RC4, people have found many such biases. In
-the mid-nineties, Andrew Roos noticed two such flaws:
+Throughout the history of RC4, people find many such biases. In
+the mid-nineties, Andrew Roos noticed two flaws:
 
--  The first three bytes of the key are correlated with the first byte
+-  The first three bytes of the key correlate with the first byte
    of the keystream.
--  The first few bytes of the state are related to the key with a simple
-   (linear) relation.
+-  The first few bytes of the state have a simple
+   (linear) relation to the key.
 
-For an ideal :term:`stream cipher`, the first byte of the keystream should tell
-me nothing about the key. In RC4, it gives me some information about the
+For an ideal :term:`stream cipher`, the first keystream byte should tell
+me nothing about the key. RC4 gives some information about the
 first three bytes of the key. The latter seems less serious: after all,
-the attacker isn't supposed to know the state of the cipher.
+the attacker is not supposed to know the state of the cipher.
 
 As always, attacks never get worse. They only get better.
 
