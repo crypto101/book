@@ -23,15 +23,15 @@ ASSETS += Illustrations/DiffieHellman/SharedSecret.svg
 
 # .dot assets
 ASSETS += Illustrations/BlockCipher/AllNodes.svg
-ASSETS += Illustrations/BlockCipher/Decryption.svg
-ASSETS += Illustrations/BlockCipher/Encryption2.svg
-ASSETS += Illustrations/BlockCipher/Encryption.svg
+ASSETS += Illustrations/BlockCipher/BCDecryption.svg
+ASSETS += Illustrations/BlockCipher/BCEncryption2.svg
+ASSETS += Illustrations/BlockCipher/BCEncryption.svg
 
 # .mp assets
 ASSETS += Illustrations/CTR/CTR.svg
-ASSETS += Illustrations/OCB/Encryption.svg
+ASSETS += Illustrations/OCB/OCBEncryption.svg
 ASSETS += Illustrations/OCB/Auth.svg
-ASSETS += Illustrations/OAEP/Diagram.svg
+ASSETS += Illustrations/OAEP/OAEPDiagram.svg
 ASSETS += Illustrations/ECBEncryptionOracle/GuessFirst.svg
 ASSETS += Illustrations/ECBEncryptionOracle/GuessSecond.svg
 ASSETS += Illustrations/ECBEncryptionOracle/RememberSecond.svg

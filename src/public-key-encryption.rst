@@ -195,7 +195,7 @@ the art in RSA padding. It was introduced by Mihir Bellare and Phillip
 Rogaway in 1995. :cite:`bellarerogaway:oaep`. Its structure
 looks like this:
 
-.. figure:: Illustrations/OAEP/Diagram.svg
+.. figure:: Illustrations/OAEP/OAEPDiagram.svg
    :align: center
 
 The thing that eventually gets encrypted is :math:`X \| Y`, which is

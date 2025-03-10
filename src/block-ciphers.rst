@@ -72,7 +72,7 @@ encrypted with :math:`E` under key :math:`k` and the arrowhead is mapped to the 
 
 .. _fig-BlockCipherEncryption:
 
-.. figure:: Illustrations/BlockCipher/Encryption.svg
+.. figure:: Illustrations/BlockCipher/BCEncryption.svg
    :align: center
 
    An encryption permutation made by a block cipher under a particular key :math:`k`.
@@ -92,7 +92,7 @@ in the opposite direction.
 
 .. _fig-BlockCipherDecryption:
 
-.. figure:: Illustrations/BlockCipher/Decryption.svg
+.. figure:: Illustrations/BlockCipher/BCDecryption.svg
    :align: center
 
    The decryption permutation produced by the block cipher under the same key
@@ -106,7 +106,7 @@ arrows, as you can see in :numref:`fig-BlockCipherEncryptionDifferentKey`.
 
 .. _fig-BlockCipherEncryptionDifferentKey:
 
-.. figure:: Illustrations/BlockCipher/Encryption2.svg
+.. figure:: Illustrations/BlockCipher/BCEncryption2.svg
    :align: center
 
    An encryption permutation produced by the block cipher under a different key.
