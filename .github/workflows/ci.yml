@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Build image
         run: docker build -t crypto101 docker/
       - name: Generate documents
@@ -21,32 +21,32 @@ jobs:
           set -e
           docker run --rm -it -v ${{ github.workspace }}:/repo crypto101 ./build_release ./_release/
       - name: Upload document
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: crypto101-en.epub
           path: _release/crypto101-en.epub
       - name: Upload document
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: crypto101-en.pdf
           path: _release/crypto101-en.pdf
       - name: Upload document
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: crypto101-en_html.tar.gz
           path: _release/crypto101-en_html.tar.gz
       - name: Upload document
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: crypto101-fr.epub
           path: _release/crypto101-fr.epub
       - name: Upload document
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: crypto101-fr.pdf
           path: _release/crypto101-fr.pdf
       - name: Upload document
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: crypto101-fr_html.tar.gz
           path: _release/crypto101-fr_html.tar.gz
@@ -58,32 +58,32 @@ jobs:
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
     steps:
       - name: Download document
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: crypto101-en.epub
           path: /tmp
       - name: Download document
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: crypto101-en.pdf
           path: /tmp
       - name: Download document
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: crypto101-en_html.tar.gz
           path: /tmp
       - name: Download document
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: crypto101-fr.epub
           path: /tmp
       - name: Download document
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: crypto101-fr.pdf
           path: /tmp
       - name: Download document
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: crypto101-fr_html.tar.gz
           path: /tmp
